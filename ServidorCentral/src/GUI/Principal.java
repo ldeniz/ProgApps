@@ -80,6 +80,11 @@ public class Principal extends javax.swing.JFrame {
         registro.setText("Registro");
 
         registrarCliente.setText("Registrar Cliente");
+        registrarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarClienteActionPerformed(evt);
+            }
+        });
         registro.add(registrarCliente);
 
         registrarRestaurante.setText("Registrar Restaurante");
@@ -125,6 +130,12 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void registrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarClienteActionPerformed
+        RegistrarCliente f = new RegistrarCliente();
+        jDesktopPane1.add(f);
+        f.show();            
+    }//GEN-LAST:event_registrarClienteActionPerformed
 
     /**
      * @param args the command line arguments
