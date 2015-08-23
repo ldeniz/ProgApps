@@ -48,31 +48,53 @@ public class Principal extends javax.swing.JFrame {
         verInfoPedido = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH);
+        setSize(new java.awt.Dimension(1024, 768));
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 736, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 534, Short.MAX_VALUE)
         );
 
         inicio.setText("Inicio");
 
         generarPedido.setText("Generar Pedido");
+        generarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarPedidoActionPerformed(evt);
+            }
+        });
         inicio.add(generarPedido);
 
         cancelarPedido.setText("Cancelar Pedido");
+        cancelarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarPedidoActionPerformed(evt);
+            }
+        });
         inicio.add(cancelarPedido);
 
         actualizarEstadoPedido.setText("Actualizar Estado del Pedido");
+        actualizarEstadoPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarEstadoPedidoActionPerformed(evt);
+            }
+        });
         inicio.add(actualizarEstadoPedido);
         inicio.add(jSeparator1);
 
         actualizarProducto.setText("Actualizar Producto");
+        actualizarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarProductoActionPerformed(evt);
+            }
+        });
         inicio.add(actualizarProducto);
 
         menu.add(inicio);
@@ -88,19 +110,35 @@ public class Principal extends javax.swing.JFrame {
         registro.add(registrarCliente);
 
         registrarRestaurante.setText("Registrar Restaurante");
+        registrarRestaurante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarRestauranteActionPerformed(evt);
+            }
+        });
         registro.add(registrarRestaurante);
 
         registrarProducto.setText("Registrar Producto");
+        registrarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarProductoActionPerformed(evt);
+            }
+        });
         registro.add(registrarProducto);
         registro.add(jSeparator2);
 
         altaCategoria.setText("Alta Categoría");
+        altaCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaCategoriaActionPerformed(evt);
+            }
+        });
         registro.add(altaCategoria);
 
         menu.add(registro);
 
         informacion.setText("Información");
 
+        verInfoCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
         verInfoCliente.setText("Ver Información de Cliente");
         informacion.add(verInfoCliente);
 
@@ -136,6 +174,48 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane1.add(f);
         f.show();            
     }//GEN-LAST:event_registrarClienteActionPerformed
+
+    private void registrarRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarRestauranteActionPerformed
+        RegistrarRestaurante f = new RegistrarRestaurante();
+        jDesktopPane1.add(f);
+        f.show();          // TODO add your handling code here:
+    }//GEN-LAST:event_registrarRestauranteActionPerformed
+
+    private void altaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaCategoriaActionPerformed
+        AltaCategoria f = new AltaCategoria();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_altaCategoriaActionPerformed
+
+    private void registrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarProductoActionPerformed
+        RegistrarProducto f = new RegistrarProducto();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_registrarProductoActionPerformed
+
+    private void generarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPedidoActionPerformed
+        GenerarPedido f = new GenerarPedido();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_generarPedidoActionPerformed
+
+    private void cancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarPedidoActionPerformed
+        CancelarPedido f = new CancelarPedido();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_cancelarPedidoActionPerformed
+
+    private void actualizarEstadoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarEstadoPedidoActionPerformed
+        ActualizarEstadoDelPedido f = new ActualizarEstadoDelPedido();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_actualizarEstadoPedidoActionPerformed
+
+    private void actualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarProductoActionPerformed
+        ActualizarProducto f = new ActualizarProducto();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_actualizarProductoActionPerformed
 
     /**
      * @param args the command line arguments
