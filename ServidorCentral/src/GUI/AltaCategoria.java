@@ -5,6 +5,10 @@
  */
 package GUI;
 
+import fabrica.Fabrica;
+import interfaces.IControladorCategoria;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mathi
@@ -51,6 +55,11 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
 
         jButtonRegistrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonRegistrar.setText("Registrar");
+        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,6 +106,18 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
+        // TODO add your handling code here:
+        IControladorCategoria categoria = Fabrica.getInstance().obtenerControladorCategoria();
+        String nombre = JTextFieldNombreCat.getText().toLowerCase();
+        if (categoria.existeCategoria(nombre)) {
+            JOptionPane.showMessageDialog(this, "La categoría \'"+JTextFieldNombreCat.getText()+"\' ya existe en el sistema", this.getTitle(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            categoria.altaCategoria(nombre);
+            JTextFieldNombreCat.setText("");
+        }
+    }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

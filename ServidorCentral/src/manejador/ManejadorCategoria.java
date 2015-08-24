@@ -43,7 +43,7 @@ public class ManejadorCategoria {
         Categoria c = new Categoria(nombre);
         categorias.put(nombre, c);
     }
-
+    
     /**
      * Retorna una estructura de DataCategorias
      * @return
@@ -58,5 +58,14 @@ public class ManejadorCategoria {
             }
         }
         return dataCategorias;
+    }
+
+    /**
+     * 
+     * @param nombre
+     * @return 
+     */
+    Categoria obtenerCategoria(String nombre) {
+        return categorias.get(nombre);
     }
 }

@@ -6,13 +6,14 @@
 package modelo;
 
 import datatype.DataDireccion;
+import java.io.Serializable;
 
 /**
  *
  * @author sestefan
  */
-public abstract class Usuario {
-    
+public abstract class Usuario implements Serializable {
+
     private String nickname;
     private String mail;
     private String nombre;
@@ -26,7 +27,7 @@ public abstract class Usuario {
         this.pass = pass;
         this.direccion = direccion;
     }
-    
+
     public String getNickname() {
         return nickname;
     }
@@ -66,5 +67,5 @@ public abstract class Usuario {
     public void setDireccion(DataDireccion direccion) {
         this.direccion = direccion;
     }
-    
+
 }

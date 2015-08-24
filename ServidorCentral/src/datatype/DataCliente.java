@@ -11,11 +11,11 @@ import java.util.Date;
  *
  * @author sestefan
  */
-public class DataCliente extends DataUsuario{
-    
+public class DataCliente extends DataUsuario {
+
     private String apellido;
     private Date fechaNacimiento;
-    private String rutaImagen;         
+    private String rutaImagen;
 
     public DataCliente(String apellido, Date fechaNacimiento, String rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         super(nickname, mail, nombre, pass, direccion);
@@ -35,5 +35,5 @@ public class DataCliente extends DataUsuario{
     public String getRutaImagen() {
         return rutaImagen;
     }
-    
+
 }

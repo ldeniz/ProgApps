@@ -6,13 +6,14 @@
 package modelo;
 
 import datatype.DataDireccion;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author sestefan
  */
-public class Cliente extends Usuario {
+public class Cliente extends Usuario implements Serializable {
 
     private String apellido;
     private Date fechaNacimiento;

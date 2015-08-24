@@ -24,7 +24,7 @@ public class ServidorCentral {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         IControladorCategoria categoria = Fabrica.getInstance().obtenerControladorCategoria();
         ArrayList<DataCategoria> dataCategorias = null;
         categoria.altaCategoria("nueva");
@@ -58,5 +58,5 @@ public class ServidorCentral {
         }
 
     }
-    
+    */
 }
