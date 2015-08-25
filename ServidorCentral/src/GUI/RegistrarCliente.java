@@ -5,18 +5,43 @@
  */
 package GUI;
 
+import controlador.ControladorUsuario;
+import datatype.DataDireccion;
+import interfaces.IControladorUsuario;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.Date;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author Mathi
  */
 public class RegistrarCliente extends javax.swing.JInternalFrame {
-
+    private
+        String imagenSrc;
+        String apellido;
+        Date fecha;
+        String nick;
+        String nombre;
+        String mail;
+        DataDireccion direccion;
+        IControladorUsuario cU;
+        String password;
+        String confirmaPassword;
     /**
      * Creates new form RegistrarCliente
      */
     public RegistrarCliente() {
+        cU=new ControladorUsuario();
+        imagenSrc="";
         initComponents();
-        jFileChooser1.setVisible(false);
+        
+        //jFileChooser1.setVisible(false);
     }
 
     /**
@@ -53,7 +78,6 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
         jButtonRegistrar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jFileChooser1 = new javax.swing.JFileChooser();
 
         setTitle("Registrar Cliente");
 
@@ -69,10 +93,10 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
         });
 
         jLabelNick.setForeground(new java.awt.Color(255, 0, 0));
-        jLabelNick.setText("nick no válido");
+        jLabelNick.setText("etiqueta");
 
         jLabelMail.setForeground(new java.awt.Color(255, 0, 0));
-        jLabelMail.setText("mail no válido");
+        jLabelMail.setText("etiqueta");
 
         jLabel5.setText("Correo");
 
@@ -122,6 +146,11 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
 
         jButtonRegistrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonRegistrar.setText("Registrar");
+        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarActionPerformed(evt);
+            }
+        });
 
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -137,66 +166,55 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel11))
+                            .addGap(10, 10, 10))))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTextFieldNickname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                    .addComponent(jLabelNick, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(JTextFieldCorreo, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelMail, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPasswordFieldPass, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPasswordFieldRePass, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(JTextFieldNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTextFieldApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTextFieldDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jButtonImage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(322, Short.MAX_VALUE)
+                .addComponent(jButtonCancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonRegistrar))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(181, 181, 181)
                         .addComponent(jSpinnerDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinnerMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinnerAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(304, 304, 304)
-                        .addComponent(jLabelNick))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(304, 304, 304)
-                        .addComponent(jLabelMail))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel5)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel10)
-                                                .addComponent(jLabel11))
-                                            .addGap(10, 10, 10))))
-                                .addGap(11, 11, 11)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JTextFieldCorreo)
-                                    .addComponent(jPasswordFieldPass)
-                                    .addComponent(jPasswordFieldRePass)
-                                    .addComponent(JTextFieldNickname)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(JTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(JTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(JTextFieldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 490, Short.MAX_VALUE)))
-                                .addGap(4, 4, 4)
-                                .addComponent(jButtonRegistrar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(281, 281, 281)
-                                        .addComponent(jButtonCancelar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButtonImage)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+                        .addComponent(jSpinnerAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -243,22 +261,19 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
                         .addComponent(jSpinnerDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jSpinnerMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jSpinnerAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonImage)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(27, 27, 27)
+                            .addComponent(jButtonImage)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 63, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonRegistrar)
-                            .addComponent(jButtonCancelar)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(jButtonCancelar))
+                        .addContainerGap())))
         );
 
         pack();
@@ -285,9 +300,97 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImageActionPerformed
-        // TODO add your handling code here:
-        jFileChooser1.setVisible(true);
+        FileFilter filter = new FileNameExtensionFilter("Imagenes (.jpg .png)","jpg", "png");
+
+        JFileChooser elegirImagen = new JFileChooser();
+        elegirImagen.setAcceptAllFileFilterUsed(false);
+        elegirImagen.addChoosableFileFilter(filter);
+        int opt = elegirImagen.showOpenDialog(jButtonImage);
+
+        
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            imagenSrc = elegirImagen.getSelectedFile().getPath();
+            if(imagenSrc==null){
+                
+                //Habría que agregarle una imagen por defecto si no tiene
+                
+                // Image image = Toolkit.getDefaultToolkit().createImage(IMAGEN POR DEFECTO);
+                // Icon warnIcon = new ImageIcon(image);
+                // label.setIcon(warnIcon);
+                // label.validate();
+            }
+            else{
+                
+                Image image = Toolkit.getDefaultToolkit().createImage(imagenSrc);
+                Icon warnIcon = new ImageIcon(image);
+                jLabel3.setIcon(warnIcon);
+                jLabel3.validate();
+                
+            }
+        }
+        //jFileChooser1.setVisible(true);
     }//GEN-LAST:event_jButtonImageActionPerformed
+
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
+    
+        boolean existeNick,existeMail,passwordIguales;
+        nick=JTextFieldNickname.getText();    
+        nombre=JTextFieldNombre.getText();    
+        apellido=JTextFieldApellido.getText();
+        mail=JTextFieldCorreo.getText();
+        direccion=new DataDireccion(JTextFieldDireccion.getText(),"","");
+        password=jPasswordFieldPass.getText();
+        confirmaPassword=jPasswordFieldRePass.getText();
+        fecha=new Date((int)jSpinnerDia.getValue(),(int)jSpinnerDia.getValue(),(int)jSpinnerDia.getValue());
+    
+    
+    if (!mail.contains("@") || !mail.contains(".") ||mail.length()<4){
+        JOptionPane.showMessageDialog(this, "Verifique el Mail", "", JOptionPane.WARNING_MESSAGE);
+    }
+    else{
+        
+    
+    
+        if ("".equals(apellido) ||"".equals(nick) ||"".equals(nombre) ||"".equals(mail) ||"".equals(direccion)
+                ||"".equals(password)||"".equals(confirmaPassword)){
+            JOptionPane.showMessageDialog(this, "Debe completar todos los campos", "", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            existeNick=cU.existeUsuario(nick);
+            existeMail=cU.existeMail(mail);
+            passwordIguales=password.equals(confirmaPassword);
+
+            if ( !existeNick && !existeMail && passwordIguales){
+                try{
+                       //FALTA PASSWORD
+                    cU.CargarDatosUsuario(nick,mail,nombre,direccion,apellido,fecha,imagenSrc);
+                    JOptionPane.showMessageDialog(this, "Cliente registrado Correctamente", "", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(false);                
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+                }
+
+
+
+            }
+            else{
+                if (existeNick)
+                    jLabelNick.setText("Ya existe usuario con ese Nick");
+                else
+                    jLabelNick.setText("");
+                if (existeMail)
+                    jLabelMail.setText("Ya existe usuario con ese E-Mail");
+                else
+                    jLabelMail.setText("");
+                if (!passwordIguales)
+                    jLabelMail.setText("Las contraseñas deben ser iguales");
+                else
+                    jLabelMail.setText("");
+            }
+    }
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -299,7 +402,6 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonImage;
     private javax.swing.JButton jButtonRegistrar;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
