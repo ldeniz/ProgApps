@@ -115,6 +115,8 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "La categoría \'"+JTextFieldNombreCat.getText()+"\' ya existe en el sistema", this.getTitle(), JOptionPane.WARNING_MESSAGE);
         } else {
             categoria.altaCategoria(nombre);
+            JOptionPane.showMessageDialog(this, "Categoria dada de alta", "", JOptionPane.INFORMATION_MESSAGE);
+            //this.setVisible(false);
             JTextFieldNombreCat.setText("");
         }
     }//GEN-LAST:event_jButtonRegistrarActionPerformed

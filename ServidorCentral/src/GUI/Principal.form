@@ -93,26 +93,35 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="verInfoCliente">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+C"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Ver Informaci&#xf3;n de Cliente"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verInfoClienteActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="verInfoRestaurante">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver Informaci&#xf3;n de Restaurante"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verInfoRestauranteActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="verInfoProducto">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver Informaci&#xf3;n de Producto"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verInfoProductoActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="verInfoPedido">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver Informaci&#xf3;n de Pedido"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verInfoPedidoActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -138,17 +138,36 @@ public class Principal extends javax.swing.JFrame {
 
         informacion.setText("Información");
 
-        verInfoCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
         verInfoCliente.setText("Ver Información de Cliente");
+        verInfoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verInfoClienteActionPerformed(evt);
+            }
+        });
         informacion.add(verInfoCliente);
 
         verInfoRestaurante.setText("Ver Información de Restaurante");
+        verInfoRestaurante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verInfoRestauranteActionPerformed(evt);
+            }
+        });
         informacion.add(verInfoRestaurante);
 
         verInfoProducto.setText("Ver Información de Producto");
+        verInfoProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verInfoProductoActionPerformed(evt);
+            }
+        });
         informacion.add(verInfoProducto);
 
         verInfoPedido.setText("Ver Información de Pedido");
+        verInfoPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verInfoPedidoActionPerformed(evt);
+            }
+        });
         informacion.add(verInfoPedido);
 
         menu.add(informacion);
@@ -216,6 +235,30 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane1.add(f);
         f.show();
     }//GEN-LAST:event_actualizarProductoActionPerformed
+
+    private void verInfoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInfoClienteActionPerformed
+        VerInformacionDeCliente f = new VerInformacionDeCliente();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_verInfoClienteActionPerformed
+
+    private void verInfoRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInfoRestauranteActionPerformed
+        VerInformacionDeRestaurante f = new VerInformacionDeRestaurante();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_verInfoRestauranteActionPerformed
+
+    private void verInfoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInfoProductoActionPerformed
+        VerInformacionDeProducto f = new VerInformacionDeProducto();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_verInfoProductoActionPerformed
+
+    private void verInfoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInfoPedidoActionPerformed
+        VerInformacionDePedido f = new VerInformacionDePedido();
+        jDesktopPane1.add(f);
+        f.show();
+    }//GEN-LAST:event_verInfoPedidoActionPerformed
 
     /**
      * @param args the command line arguments
