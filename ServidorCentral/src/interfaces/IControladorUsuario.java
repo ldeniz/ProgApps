@@ -16,6 +16,8 @@ public interface IControladorUsuario {
     public void seleccionarCategoria(String name);
 
     public boolean existeUsuario(String nickname);
+    
+    public boolean existeMail(String mail);
 
     public boolean existeUsuario(String nickname, String mail);
 

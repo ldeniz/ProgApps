@@ -77,6 +77,10 @@ public class ManejadorUsuario {
     public boolean existeUsuario(String mail) {
         return usuariosMail.containsKey(mail);
     }
+    
+    public boolean existeMail(String mail) {
+        return usuariosMail.containsKey(mail);
+    }
 
     public boolean existeUsuario(String nickname, String mail) {
         return usuariosNick.containsKey(nickname) || usuariosMail.containsKey(mail);

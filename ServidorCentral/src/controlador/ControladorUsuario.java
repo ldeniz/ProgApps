@@ -53,6 +53,12 @@ public class ControladorUsuario implements IControladorUsuario {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         return mu.existeUsuario(nickname, mail);
     }
+    
+    @Override
+    public boolean existeMail(String mail) {
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        return mu.existeMail(mail);
+    }
 
     @Override
     public void altaUsuario() {

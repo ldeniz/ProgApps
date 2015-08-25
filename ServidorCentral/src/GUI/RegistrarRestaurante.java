@@ -5,16 +5,44 @@
  */
 package GUI;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import datatype.DataCategoria;
+import controlador.ControladorCategoria;
+import interfaces.IControladorCategoria;
 /**
  *
  * @author Mathi
  */
 public class RegistrarRestaurante extends javax.swing.JInternalFrame {
 
+    private
+    String nick;
+            String nombre;
+            String mail;
+            String direccion;
+            char[] contraseña;
+            char[] confirmaContraseña;
+            
+            IControladorCategoria cCat;
+
+            DefaultListModel modeloLista;
+            List<DataCategoria> listaCategorias;
+
     /**
      * Creates new form RegistrarRestaurante
      */
     public RegistrarRestaurante() {
+        modeloLista = new DefaultListModel();
+        cCat=new ControladorCategoria();
+
+        listaCategorias=cCat.listarCategorias();
+        
+        for(DataCategoria current : listaCategorias){
+            modeloLista.addElement(current.getNombre());
+        }
+        
         initComponents();
     }
 
@@ -78,11 +106,7 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
 
         jButtonImages.setText("Seleccionar Imágenes");
 
-        jListCategorias.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jListCategorias.setModel(modeloLista);
         jScrollPane1.setViewportView(jListCategorias);
 
         jButtonCancelar.setText("Cancelar");
