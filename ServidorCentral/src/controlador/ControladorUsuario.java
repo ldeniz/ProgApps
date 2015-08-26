@@ -55,12 +55,6 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public boolean existeMail(String mail) {
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        return mu.existeMail(mail);
-    }
-
-    @Override
     public void altaUsuario() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         switch (tipo) {
