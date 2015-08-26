@@ -26,14 +26,14 @@ public class ControladorUsuario implements IControladorUsuario {
     private String tipo;
 
     @Override
-    public void CargarDatosUsuario(String nickname, String mail, String nombre, DataDireccion direccion, String apellido, Date fechaNacimiento, String rutaImagen) {
-        dataUsuario = new DataCliente(apellido, fechaNacimiento, rutaImagen, nickname, mail, nombre, mail, direccion);
+    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String apellido, Date fechaNacimiento, String rutaImagen) {
+        dataUsuario = new DataCliente(apellido, fechaNacimiento, rutaImagen, nickname, mail, nombre, pass, direccion);
         tipo = "cliente";
     }
 
     @Override
-    public void CargarDatosUsuario(String nickname, String mail, String nombre, DataDireccion direccion, String[] rutaImagen) {
-        dataUsuario = new DataRestaurante(rutaImagen, dataCategorias, nickname, mail, nombre, mail, direccion);
+    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) {
+        dataUsuario = new DataRestaurante(rutaImagen, dataCategorias, nickname, mail, nombre, pass, direccion);
         tipo = "restaurante";
     }
 
@@ -53,7 +53,7 @@ public class ControladorUsuario implements IControladorUsuario {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         return mu.existeUsuario(nickname, mail);
     }
-    
+
     @Override
     public boolean existeMail(String mail) {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
@@ -77,6 +77,12 @@ public class ControladorUsuario implements IControladorUsuario {
     public void limpiarMemoria() {
         dataCategorias.clear();
         dataUsuario = null;
+    }
+
+    @Override
+    public ArrayList<DataCliente> listarClientes() {
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        return mu.listarClientes();
     }
 
 }
