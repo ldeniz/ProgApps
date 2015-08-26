@@ -77,7 +77,7 @@ public class ManejadorUsuario {
     public boolean existeUsuario(String mail) {
         return usuariosMail.containsKey(mail);
     }
-    
+
     public boolean existeMail(String mail) {
         return usuariosMail.containsKey(mail);
     }
@@ -90,10 +90,12 @@ public class ManejadorUsuario {
         ArrayList<DataCliente> dataClientes = null;
         if (!clientes.isEmpty()) {
             dataClientes = new ArrayList<>();
-            ArrayList<Cliente> lc = (ArrayList<Cliente>) clientes.values();
+            ArrayList<Cliente> lc;
+            lc = new ArrayList<>(clientes.values());
             for (Cliente c : lc) {
                 dataClientes.add(new DataCliente(c.getApellido(), c.getFechaNacimiento(), c.getRutaImagen(), c.getNickname(), c.getMail(), c.getNombre(), c.getPass(), c.getDireccion()));
             }
+            lc.clear();
         }
         return dataClientes;
     }
@@ -102,7 +104,8 @@ public class ManejadorUsuario {
         ArrayList<DataRestaurante> dataRestaurantes = null;
         if (!restaurantes.isEmpty()) {
             dataRestaurantes = new ArrayList<>();
-            ArrayList<Restaurante> lr = (ArrayList<Restaurante>) restaurantes.values();
+            ArrayList<Restaurante> lr;
+            lr = new ArrayList<>(restaurantes.values());
             for (Restaurante r : lr) {
                 ArrayList<DataCategoria> dataCategorias = new ArrayList<>();
                 for (Categoria c : r.getCategorias()) {
@@ -110,6 +113,7 @@ public class ManejadorUsuario {
                 }
                 dataRestaurantes.add(new DataRestaurante(r.getRutaImagen(), dataCategorias, r.getNickname(), r.getMail(), r.getNombre(), r.getPass(), r.getDireccion()));
             }
+            lr.clear();
         }
         return dataRestaurantes;
     }
