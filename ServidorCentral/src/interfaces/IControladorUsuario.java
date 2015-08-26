@@ -2,6 +2,7 @@ package interfaces;
 
 import datatype.DataCliente;
 import datatype.DataDireccion;
+import datatype.DataRestaurante;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,5 +29,7 @@ public interface IControladorUsuario {
     public void limpiarMemoria();
 
     public ArrayList<DataCliente> listarClientes();
+
+    public ArrayList<DataRestaurante> listarRestaurantes();
 
 }
