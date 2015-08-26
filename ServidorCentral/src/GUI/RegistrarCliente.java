@@ -7,6 +7,8 @@ package GUI;
 
 import controlador.ControladorUsuario;
 import datatype.DataDireccion;
+import fabrica.Fabrica;
+import interfaces.IControladorCategoria;
 import interfaces.IControladorUsuario;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -37,10 +39,12 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
      * Creates new form RegistrarCliente
      */
     public RegistrarCliente() {
-        cU=new ControladorUsuario();
-        imagenSrc="";
-        initComponents();
         
+        imagenSrc="";
+        
+        initComponents();
+        jLabelNick.setText("");
+        jLabelMail.setText("");
         //jFileChooser1.setVisible(false);
     }
 
@@ -332,8 +336,8 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonImageActionPerformed
 
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
-    
-        boolean existeNick,existeMail,passwordIguales;
+        IControladorUsuario cU = Fabrica.getInstance().obtenerControladorUsuario();
+        boolean existeNick,existeUsu,passwordIguales;
         nick=JTextFieldNickname.getText();    
         nombre=JTextFieldNombre.getText();    
         apellido=JTextFieldApellido.getText();
@@ -357,13 +361,15 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
         }
         else{
             existeNick=cU.existeUsuario(nick);
-            existeMail=cU.existeMail(mail);
+            existeUsu=cU.existeUsuario(nick,mail);
             passwordIguales=password.equals(confirmaPassword);
 
-            if ( !existeNick && !existeMail && passwordIguales){
+            if ( !existeUsu && !existeNick && passwordIguales){
                 try{
                        //FALTA PASSWORD
-                    cU.CargarDatosUsuario(nick,mail,nombre,direccion,apellido,fecha,imagenSrc);
+                   // cU.seleccionarCategoria("cliente");
+                    cU.CargarDatosUsuario(nick,mail,nombre,password,direccion,apellido,fecha,imagenSrc);
+                    cU.altaUsuario();
                     JOptionPane.showMessageDialog(this, "Cliente registrado Correctamente", "", JOptionPane.INFORMATION_MESSAGE);
                     this.setVisible(false);                
                 }
@@ -379,7 +385,7 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
                     jLabelNick.setText("Ya existe usuario con ese Nick");
                 else
                     jLabelNick.setText("");
-                if (existeMail)
+                if (existeUsu && !existeNick)
                     jLabelMail.setText("Ya existe usuario con ese E-Mail");
                 else
                     jLabelMail.setText("");
@@ -420,4 +426,8 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JSpinner jSpinnerDia;
     private javax.swing.JSpinner jSpinnerMes;
     // End of variables declaration//GEN-END:variables
+
+    private IControladorUsuario obtenerControladorUsuario() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

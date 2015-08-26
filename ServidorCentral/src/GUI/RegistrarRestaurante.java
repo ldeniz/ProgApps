@@ -11,24 +11,26 @@ import javax.swing.DefaultListModel;
 import datatype.DataCategoria;
 import controlador.ControladorCategoria;
 import interfaces.IControladorCategoria;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Mathi
  */
 public class RegistrarRestaurante extends javax.swing.JInternalFrame {
 
-    private
-    String nick;
+    private final
+    /*String nick;
             String nombre;
             String mail;
             String direccion;
             char[] contraseña;
             char[] confirmaContraseña;
-            
-            IControladorCategoria cCat;
 
-            DefaultListModel modeloLista;
+            */
             List<DataCategoria> listaCategorias;
+            IControladorCategoria cCat;
+            DefaultListModel modeloLista;
 
     /**
      * Creates new form RegistrarRestaurante
@@ -39,11 +41,14 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
 
         listaCategorias=cCat.listarCategorias();
         
-        for(DataCategoria current : listaCategorias){
-            modeloLista.addElement(current.getNombre());
-        }
-        
-        initComponents();
+        if (listaCategorias != null) {
+            for (DataCategoria current : listaCategorias) {
+                modeloLista.addElement(current.getNombre());
+            }
+
+            initComponents();
+            
+        }else JOptionPane.showMessageDialog(this, "No hay categorías cargadas para dar de alta un Restaurante", this.getTitle(), JOptionPane.WARNING_MESSAGE);
     }
 
     /**

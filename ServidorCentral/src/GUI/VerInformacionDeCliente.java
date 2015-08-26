@@ -5,16 +5,50 @@
  */
 package GUI;
 
+import controlador.ControladorUsuario;
+import datatype.DataCliente;
+import fabrica.Fabrica;
+import interfaces.IControladorUsuario;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 /**
  *
  * @author Mathi
  */
 public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
+    private Object [][] dataClientes;
+    private IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
+    //private IUsuario iUsr=Sistema.getInstance().getIUsuario();
 
     /**
      * Creates new form VerInformacionDeCliente
      */
     public VerInformacionDeCliente() {
+        
+        ArrayList<Object[]> temp= new ArrayList();
+        ArrayList<DataCliente> clientes = iUsr.listarClientes();
+        Object[] current;
+        
+        for(DataCliente c:clientes){
+            current=new Object[]{c.getNickname(),c.getMail(),c};
+            temp.add(current);           
+        }
+
+        dataClientes=temp.toArray(new Object[temp.size()][3]);
         initComponents();
     }
 
@@ -27,8 +61,8 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scroll = new javax.swing.JScrollPane();
+        tablaDeClientes = new javax.swing.JTable();
         imagenCliente = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -50,18 +84,12 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
 
         setTitle("Ver información del Cliente");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        tablaDeClientes.setModel(new javax.swing.table.DefaultTableModel( dataClientes,  new String [] { "Nickname", "Mail" }){
+            public boolean isCellEditable(int row, int column) {
+                return (column == 23 );
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+        scroll.setViewportView(tablaDeClientes);
 
         imagenCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -140,7 +168,7 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
+                    .addComponent(scroll)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(imagenCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -179,7 +207,7 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addGap(4, 4, 4)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(imagenCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +253,33 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonVerPedidoActionPerformed
 
     private void jButtonSeleccionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarClienteActionPerformed
-        // TODO add your handling code here:
+        int i=tablaDeClientes.getSelectedRow();
+        if(i != -1){
+            DataCliente c=(DataCliente)dataClientes[i][2];
+
+            nicknameCliente.setText(c.getNickname());
+            apellidoCliente.setText(c.getApellido());
+            //direccionCliente.setText(c.getDireccion());
+            mailCliente.setText(c.getMail());
+            nombreCliente.setText(c.getNombre());
+
+            String img= c.getRutaImagen();
+
+            if(img==null){
+                    //Image image = Toolkit.getDefaultToolkit().createImage(IMAGEN POR DEFECTO);
+                    //Icon warnIcon = new ImageIcon(image);
+                   // imagenCliente.setIcon(warnIcon);
+                    //imagenCliente.validate();
+            }
+            else{
+                     
+                    Image image = Toolkit.getDefaultToolkit().createImage(img);
+                    Icon warnIcon = new ImageIcon(image);
+                    imagenCliente.setIcon(warnIcon);
+                    imagenCliente.validate();
+            
+            }
+        }
     }//GEN-LAST:event_jButtonSeleccionarClienteActionPerformed
 
     private void jButtonCancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar3ActionPerformed
@@ -237,9 +291,6 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel apellidoCliente;
     private javax.swing.JLabel direccionCliente;
     private javax.swing.JLabel imagenCliente;
-    private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JButton jButtonCancelar1;
-    private javax.swing.JButton jButtonCancelar2;
     private javax.swing.JButton jButtonCancelar3;
     private javax.swing.JButton jButtonSeleccionarCliente;
     private javax.swing.JButton jButtonVerPedido;
@@ -250,12 +301,16 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel mailCliente;
     private javax.swing.JLabel nicknameCliente;
     private javax.swing.JLabel nombreCliente;
+    private javax.swing.JScrollPane scroll;
+    private javax.swing.JTable tablaDeClientes;
     // End of variables declaration//GEN-END:variables
+
+    private IControladorUsuario obtenerControladorUsuario() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
