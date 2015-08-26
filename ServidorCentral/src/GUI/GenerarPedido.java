@@ -5,16 +5,32 @@
  */
 package GUI;
 
+import datatype.DataCliente;
+import fabrica.Fabrica;
+import interfaces.IControladorUsuario;
+import java.util.ArrayList;
+
 /**
  *
  * @author Mathi
  */
 public class GenerarPedido extends javax.swing.JInternalFrame {
-
+    private Object [][] dataClientes;
+    private IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
     /**
      * Creates new form GenerarPedido
      */
     public GenerarPedido() {
+        ArrayList<Object[]> temp= new ArrayList();
+        ArrayList<DataCliente> clientes = iUsr.listarClientes();
+        Object[] current;
+        
+        for(DataCliente c:clientes){
+            current=new Object[]{c.getNickname(),c.getMail(),c};
+            temp.add(current);           
+        }
+
+        dataClientes=temp.toArray(new Object[temp.size()][3]);
         initComponents();
     }
 
@@ -49,17 +65,11 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Seleccione un Cliente:");
 
-        jTableClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2"
+        jTableClientes.setModel(new javax.swing.table.DefaultTableModel( dataClientes,  new String [] { "Nickname", "Mail" }){
+            public boolean isCellEditable(int row, int column) {
+                return (column == 23 );
             }
-        ));
+        });
         jScrollPane1.setViewportView(jTableClientes);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
