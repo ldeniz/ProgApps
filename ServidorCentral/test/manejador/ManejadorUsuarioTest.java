@@ -60,7 +60,7 @@ public class ManejadorUsuarioTest {
     public void testIngresarUsuario_DataCliente() {
         System.out.println("ingresarUsuario");
         
-        DataCliente dataCliente = null;
+        DataCliente dataCliente = new DataCliente;
         ManejadorUsuario instance = null;
         instance.ingresarUsuario(dataCliente);
         // TODO review the generated test code and remove the default call to fail.
