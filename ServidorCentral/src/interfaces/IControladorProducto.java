@@ -1,5 +1,8 @@
 package interfaces;
 
+import datatype.DataProducto;
+import java.util.ArrayList;
+
 /**
  *
  * @author Sebastián Estefan
@@ -7,15 +10,15 @@ package interfaces;
 public interface IControladorProducto {
 
     /**
-     * Carga en memoria los datos de un producto de tipo individual ingresados
+     * Carga en memoria los datos de un producto ingresados
      * por el usuario.
      *
      * @param nombre
      * @param descripcion
-     * @param nicknameRestaurante
      * @param precio
+     * @param rutaImagen
      */
-    public void cargarDatosProducto(String nombre, String descripcion, String nicknameRestaurante, float precio);
+    public void cargarDatosProducto(String nombre, String descripcion, float precio, String rutaImagen);
 
     /**
      * Carga en memoria los datos de un producto de tipo promoción ingresados
@@ -23,11 +26,10 @@ public interface IControladorProducto {
      *
      * @param nombre
      * @param descripcion
-     * @param nicknameRestaurante
      * @param descuento
      * @param rutaImagen
      */
-    public void cargarDatosProducto(String nombre, String descripcion, String nicknameRestaurante, float descuento, String rutaImagen);
+    public void cargarDatosProducto(String nombre, String descripcion, int descuento, String rutaImagen);
 
     /**
      * Retorna true si el producto 'nombre' existe en el restaurante 'nickName'
@@ -37,6 +39,13 @@ public interface IControladorProducto {
      * @return
      */
     public boolean existeProducto(String nickName, String nombre);
+    
+    
+    /**
+     * El sistema recuerda el restaurante
+     * @param nickName 
+     */
+    public void seleccionarRestaurante(String nickName);
 
     /**
      * Agrega a la memoria un producto individual y su cantidad a asignar.
@@ -60,5 +69,17 @@ public interface IControladorProducto {
      * El sistema persiste una nueva instancia de producto.
      */
     public void altaProducto();
+
+    /**
+     * Regresa una colección de productos
+     *
+     * @return
+     */
+    public ArrayList<DataProducto> listarProductos();
+
+    /**
+     * Limpia la memoria.
+     */
+    public void limpiarMemoria();
 
 }

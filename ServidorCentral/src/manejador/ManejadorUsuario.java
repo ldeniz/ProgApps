@@ -11,6 +11,7 @@ import datatype.DataUsuario;
 import java.util.ArrayList;
 import java.util.HashMap;
 import modelo.Cliente;
+import modelo.Producto;
 import modelo.Restaurante;
 import modelo.Usuario;
 
@@ -80,8 +81,8 @@ public class ManejadorUsuario {
     public boolean existeUsuario(String nickname, String mail) {
         return usuariosNick.containsKey(nickname) || usuariosMail.containsKey(mail);
     }
-    
-    public DataUsuario obtenerDataUsuario(String nickName){
+
+    public DataUsuario obtenerDataUsuario(String nickName) {
         Usuario u = usuariosNick.get(nickName);
         return u.obtenerDatosUsuario();
     }
@@ -127,6 +128,12 @@ public class ManejadorUsuario {
             lu.clear();
         }
         return dataUsuarios;
+
+    }
+
+    void agregarProductoRestaurante(String nickName, Producto producto) {
+        Restaurante r = restaurantes.get(nickName);
+        r.agregarProducto(producto);
 
     }
 

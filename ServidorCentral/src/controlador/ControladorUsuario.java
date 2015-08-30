@@ -39,6 +39,9 @@ public class ControladorUsuario implements IControladorUsuario {
 
     @Override
     public void seleccionarCategoria(String name) {
+        if (dataCategorias == null) {
+            dataCategorias = new ArrayList<>();
+        }
         dataCategorias.add(new DataCategoria(name));
     }
 

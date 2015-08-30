@@ -7,7 +7,6 @@ package modelo;
 
 import datatype.DataIndividual;
 import datatype.DataProducto;
-import datatype.DataRestaurante;
 
 /**
  *
@@ -15,17 +14,13 @@ import datatype.DataRestaurante;
  */
 public class Individual extends Producto {
 
-    public Individual(String nombre, String descripcion, String rutaImagen) {
-        super(nombre, descripcion, rutaImagen);
-    }
-
-    public Individual(String nombre, String descripcion, String rutaImagen, StockProduco stock) {
-        super(nombre, descripcion, rutaImagen, stock);
+    public Individual(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName) {
+        super(nombre, descripcion, rutaImagen, stock, nickName);
     }
 
     @Override
     public DataProducto obtenerDatosProducto() {
-        DataProducto dataIndividual = new DataIndividual(getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), (DataRestaurante) getRestaurante().obtenerDatosUsuario());
+        DataProducto dataIndividual = new DataIndividual(getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName());
         return dataIndividual;
     }
 

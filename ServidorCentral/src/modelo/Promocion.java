@@ -8,7 +8,6 @@ package modelo;
 import datatype.DataIndividualPromocion;
 import datatype.DataProducto;
 import datatype.DataPromocion;
-import datatype.DataRestaurante;
 import java.util.ArrayList;
 
 /**
@@ -17,29 +16,26 @@ import java.util.ArrayList;
  */
 public class Promocion extends Producto {
 
-    private float descuento;
+    private int descuento;
     private boolean activa;
     private ArrayList<IndividualPromocion> individualPromocion;
 
-    public Promocion(float descuento, boolean activa, ArrayList<IndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen) {
-        super(nombre, descripcion, rutaImagen);
+    public Promocion(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName) {
+        super(nombre, descripcion, rutaImagen, stock, nickName);
+    }
+
+    public Promocion(int descuento, boolean activa, ArrayList<IndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName) {
+        super(nombre, descripcion, rutaImagen, stock, nickName);
         this.descuento = descuento;
         this.activa = activa;
         this.individualPromocion = individualPromocion;
     }
 
-    public Promocion(float descuento, boolean activa, ArrayList<IndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, StockProduco stock) {
-        super(nombre, descripcion, rutaImagen, stock);
-        this.descuento = descuento;
-        this.activa = activa;
-        this.individualPromocion = individualPromocion;
-    }
-
-    public float getDescuento() {
+    public int getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(float descuento) {
+    public void setDescuento(int descuento) {
         this.descuento = descuento;
     }
 
@@ -65,7 +61,7 @@ public class Promocion extends Producto {
         for (IndividualPromocion ip : individualPromocion) {
             dataIndividualPromocion.add(ip.obtenerDatosIndividualPromocion());
         }
-        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), (DataRestaurante) getRestaurante().obtenerDatosUsuario());
+        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName());
         return dataPromocion;
     }
 

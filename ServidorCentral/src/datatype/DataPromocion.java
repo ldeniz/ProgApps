@@ -13,18 +13,18 @@ import java.util.ArrayList;
  */
 public class DataPromocion extends DataProducto {
 
-    private float descuento;
+    private int descuento;
     private boolean activa;
     private ArrayList<DataIndividualPromocion> individualPromocion;
 
-    public DataPromocion(float descuento, boolean activa, ArrayList<DataIndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, DataStockProducto stock, DataRestaurante dataRestaurante) {
-        super(nombre, descripcion, rutaImagen, stock, dataRestaurante);
+    public DataPromocion(int descuento, boolean activa, ArrayList<DataIndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName) {
+        super(nombre, descripcion, rutaImagen, stock, nickName);
         this.descuento = descuento;
         this.activa = activa;
         this.individualPromocion = individualPromocion;
     }
 
-    public float getDescuento() {
+    public int getDescuento() {
         return descuento;
     }
 

@@ -8,7 +8,6 @@ import datatype.DataIndividual;
 import datatype.DataIndividualPromocion;
 import datatype.DataProducto;
 import datatype.DataPromocion;
-import datatype.DataRestaurante;
 import datatype.DataStockProducto;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +49,8 @@ public class ManejadorProducto {
      * @param dataIndividual
      */
     public void ingresarProducto(DataIndividual dataIndividual) {
+
+        String nickName = dataIndividual.getNickName();
         DataStockProducto dataStockProducto = dataIndividual.getStock();
         String nombre = dataIndividual.getNombre();
         String descripcion = dataIndividual.getDescripcion();
@@ -62,15 +63,18 @@ public class ManejadorProducto {
 
         StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
 
-        Individual individual = new Individual(nombre, descripcion, nombre, stockProduco);
+        Individual individual = new Individual(nombre, descripcion, nombre, stockProduco, nickName);
 
-        value = productos.get(dataIndividual.getDataRestaurante().getNickname());
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        mu.agregarProductoRestaurante(nickName, individual);
+
+        value = productos.get(nickName);
         if (value == null) {
             value = new HashMap();
         }
         value.put(dataIndividual.getNombre(), individual);
-        productos.put(dataIndividual.getDataRestaurante().getNickname(), value);
-        individuales.put(dataIndividual.getDataRestaurante().getNickname(), value);
+        productos.put(nickName, value);
+        individuales.put(nickName, value);
     }
 
     public void ingresarProducto(DataPromocion dataPromocion) {
@@ -78,13 +82,13 @@ public class ManejadorProducto {
         String nombre = dataPromocion.getNombre();
         String descricpion = dataPromocion.getDescripcion();
         String rutaImagen = dataPromocion.getRutaImagen();
-        float descuento = dataPromocion.getDescuento();
+        int descuento = dataPromocion.getDescuento();
         boolean activa = dataPromocion.isActiva();
-        DataRestaurante dataRestaurante = dataPromocion.getDataRestaurante();
+        String nickName = dataPromocion.getNickName();
         DataStockProducto dataStockProducto = dataPromocion.getStock();
         ArrayList<DataIndividualPromocion> dataIndividualPromociones = dataPromocion.getIndividualPromocion();
 
-        HashMap<String, Individual> hi = individuales.get(dataRestaurante.getNickname());
+        HashMap<String, Individual> hi = individuales.get(nickName);
 
         DataIndividual di;
         IndividualPromocion ip;
@@ -102,19 +106,19 @@ public class ManejadorProducto {
         float precio = dataStockProducto.getPrecio();
         Calendar fecha = dataStockProducto.getFecha();
         StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
-        Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco);
+        Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName);
 
-        value = productos.get(dataRestaurante.getNickname());
+        value = productos.get(nickName);
         if (value == null) {
             value = new HashMap();
         }
         value.put(dataPromocion.getNombre(), promocion);
-        productos.put(dataRestaurante.getNickname(), value);
-        promociones.put(dataRestaurante.getNickname(), value);
+        productos.put(nickName, value);
+        promociones.put(nickName, value);
     }
 
-    public boolean existeProducto(String nickname, String nombreProducto) {
-        HashMap hm = productos.get(nickname);
+    public boolean existeProducto(String nickName, String nombreProducto) {
+        HashMap hm = productos.get(nickName);
         return hm != null && hm.containsKey(nombreProducto);
     }
 
@@ -124,11 +128,20 @@ public class ManejadorProducto {
         if (!cp.isEmpty()) {
             dataProductos = new ArrayList<>();
             for (Iterator it = cp.iterator(); it.hasNext();) {
-                Producto p = (Producto) it.next();
-                dataProductos.add(p.obtenerDatosProducto());
+                HashMap mp = (HashMap) it.next();
+                ArrayList<Producto> lp = new ArrayList<>(mp.values());
+                for (Producto p : lp) {
+                    dataProductos.add(p.obtenerDatosProducto());
+                }
             }
         }
         return dataProductos;
+    }
+
+    public DataProducto obtenerDatosProducto(String nickName, String nombre) {
+        HashMap<String, Producto> hm = productos.get(nickName);
+        Producto p = hm.get(nombre);
+        return p.obtenerDatosProducto();
     }
 
 }

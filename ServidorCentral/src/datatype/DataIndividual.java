@@ -11,8 +11,8 @@ package datatype;
  */
 public class DataIndividual extends DataProducto {
 
-    public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, DataRestaurante dataRestaurante) {
-        super(nombre, descripcion, rutaImagen, stock, dataRestaurante);
+    public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName) {
+        super(nombre, descripcion, rutaImagen, stock, nickName);
     }
 
     public DataIndividual(String nombre, String descripcion, String rutaImagen) {

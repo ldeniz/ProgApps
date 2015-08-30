@@ -15,7 +15,7 @@ public abstract class DataProducto {
     private String descripcion;
     private String rutaImagen;
     private DataStockProducto stock;
-    private DataRestaurante dataRestaurante;
+    private String nickName;
 
     public DataProducto(String nombre, String descripcion, String rutaImagen) {
         this.nombre = nombre;
@@ -23,12 +23,12 @@ public abstract class DataProducto {
         this.rutaImagen = rutaImagen;
     }
 
-    public DataProducto(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, DataRestaurante dataRestaurante) {
+    public DataProducto(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.rutaImagen = rutaImagen;
         this.stock = stock;
-        this.dataRestaurante = dataRestaurante;
+        this.nickName = nickName;
     }
 
     public String getNombre() {
@@ -47,8 +47,8 @@ public abstract class DataProducto {
         return stock;
     }
 
-    public DataRestaurante getDataRestaurante() {
-        return dataRestaurante;
+    public String getNickName() {
+        return nickName;
     }
 
 }

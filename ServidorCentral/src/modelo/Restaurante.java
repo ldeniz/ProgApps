@@ -26,6 +26,8 @@ public class Restaurante extends Usuario implements Serializable {
     public Restaurante(String[] rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         super(nickname, mail, nombre, pass, direccion);
         this.rutaImagen = rutaImagen;
+        categorias = new ArrayList<>();
+        productos = new ArrayList<>();
     }
 
     public String[] getRutaImagen() {
@@ -48,15 +50,24 @@ public class Restaurante extends Usuario implements Serializable {
         categorias.add(categoria);
     }
 
+    public void agregarProducto(Producto producto) {
+        productos.add(producto);
+    }
+
     @Override
     public DataUsuario obtenerDatosUsuario() {
         ArrayList<DataCategoria> dataCategorias = new ArrayList<>();
-        for (Categoria c : categorias) {
-            dataCategorias.add(c.obtenerDatosCategoria());
-        }
         ArrayList<DataProducto> dataProductos = new ArrayList<>();
-        for (Producto p : productos) {
-            dataProductos.add(p.obtenerDatosProducto());
+
+        if (!categorias.isEmpty()) {
+            for (Categoria c : categorias) {
+                dataCategorias.add(c.obtenerDatosCategoria());
+            }
+        }
+        if (!productos.isEmpty()) {
+            for (Producto p : productos) {
+                dataProductos.add(p.obtenerDatosProducto());
+            }
         }
         DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataCategorias, dataProductos, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
         return dataUsuario;
