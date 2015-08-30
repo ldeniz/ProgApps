@@ -5,7 +5,9 @@
  */
 package modelo;
 
+import datatype.DataCliente;
 import datatype.DataDireccion;
+import datatype.DataUsuario;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -48,6 +50,12 @@ public class Cliente extends Usuario implements Serializable {
 
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
+    }
+
+    @Override
+    public DataUsuario obtenerDatosUsuario() {
+        DataUsuario dataUsuario = new DataCliente(apellido, fechaNacimiento, rutaImagen, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
+        return dataUsuario;
     }
 
 }

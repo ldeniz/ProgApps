@@ -85,4 +85,10 @@ public class ControladorUsuario implements IControladorUsuario {
         return mu.listarRestaurantes();
     }
 
+    @Override
+    public ArrayList<DataUsuario> listarUsaurios() {
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        return mu.listarUsuarios();
+    }
+
 }

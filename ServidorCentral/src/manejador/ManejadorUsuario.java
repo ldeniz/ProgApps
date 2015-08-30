@@ -10,7 +10,6 @@ import datatype.DataRestaurante;
 import datatype.DataUsuario;
 import java.util.ArrayList;
 import java.util.HashMap;
-import modelo.Categoria;
 import modelo.Cliente;
 import modelo.Restaurante;
 import modelo.Usuario;
@@ -78,48 +77,57 @@ public class ManejadorUsuario {
         return usuariosMail.containsKey(mail);
     }
 
-    public boolean existeMail(String mail) {
-        return usuariosMail.containsKey(mail);
-    }
-
     public boolean existeUsuario(String nickname, String mail) {
         return usuariosNick.containsKey(nickname) || usuariosMail.containsKey(mail);
     }
-
-    public ArrayList<DataCliente> listarClientes() {
-        ArrayList<DataCliente> dataClientes = null;
-        if (!clientes.isEmpty()) {
-            dataClientes = new ArrayList<>();
-            ArrayList<Cliente> lc;
-            lc = new ArrayList<>(clientes.values());
-            for (Cliente c : lc) {
-                dataClientes.add(new DataCliente(c.getApellido(), c.getFechaNacimiento(), c.getRutaImagen(), c.getNickname(), c.getMail(), c.getNombre(), c.getPass(), c.getDireccion()));
-            }
-            lc.clear();
-        }
-        return dataClientes;
-    }
-
-    public ArrayList<DataRestaurante> listarRestaurantes() {
-        ArrayList<DataRestaurante> dataRestaurantes = null;
-        if (!restaurantes.isEmpty()) {
-            dataRestaurantes = new ArrayList<>();
-            ArrayList<Restaurante> lr;
-            lr = new ArrayList<>(restaurantes.values());
-            for (Restaurante r : lr) {
-                ArrayList<DataCategoria> dataCategorias = new ArrayList<>();
-                for (Categoria c : r.getCategorias()) {
-                    dataCategorias.add(new DataCategoria(c.getNombre()));
-                }
-                dataRestaurantes.add(new DataRestaurante(r.getRutaImagen(), dataCategorias, r.getNickname(), r.getMail(), r.getNombre(), r.getPass(), r.getDireccion()));
-            }
-            lr.clear();
-        }
-        return dataRestaurantes;
+    
+    public DataUsuario obtenerDataUsuario(String nickName){
+        Usuario u = usuariosNick.get(nickName);
+        return u.obtenerDatosUsuario();
     }
 
     public ArrayList<DataUsuario> listarUsuarios() {
         ArrayList<DataUsuario> dataUsuarios = null;
+        if (!usuariosNick.isEmpty()) {
+            dataUsuarios = new ArrayList<>();
+            ArrayList<Usuario> lu;
+            lu = new ArrayList<>(usuariosNick.values());
+            for (Usuario u : lu) {
+                dataUsuarios.add(u.obtenerDatosUsuario());
+            }
+            lu.clear();
+        }
         return dataUsuarios;
     }
+
+    public ArrayList<DataRestaurante> listarRestaurantes() {
+        ArrayList<DataRestaurante> dataUsuarios = null;
+        if (!restaurantes.isEmpty()) {
+            dataUsuarios = new ArrayList<>();
+            ArrayList<Usuario> lu;
+            lu = new ArrayList<>(restaurantes.values());
+            for (Usuario u : lu) {
+                dataUsuarios.add((DataRestaurante) u.obtenerDatosUsuario());
+            }
+            lu.clear();
+        }
+        return dataUsuarios;
+
+    }
+
+    public ArrayList<DataCliente> listarClientes() {
+        ArrayList<DataCliente> dataUsuarios = null;
+        if (!clientes.isEmpty()) {
+            dataUsuarios = new ArrayList<>();
+            ArrayList<Usuario> lu;
+            lu = new ArrayList<>(clientes.values());
+            for (Usuario u : lu) {
+                dataUsuarios.add((DataCliente) u.obtenerDatosUsuario());
+            }
+            lu.clear();
+        }
+        return dataUsuarios;
+
+    }
+
 }

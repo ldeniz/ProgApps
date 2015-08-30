@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import datatype.DataCategoria;
 import java.io.Serializable;
 
 /**
@@ -25,6 +26,10 @@ public class Categoria implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public DataCategoria obtenerDatosCategoria() {
+        return new DataCategoria(nombre);
     }
 
 }

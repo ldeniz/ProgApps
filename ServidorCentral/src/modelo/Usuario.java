@@ -6,6 +6,7 @@
 package modelo;
 
 import datatype.DataDireccion;
+import datatype.DataUsuario;
 import java.io.Serializable;
 
 /**
@@ -67,5 +68,7 @@ public abstract class Usuario implements Serializable {
     public void setDireccion(DataDireccion direccion) {
         this.direccion = direccion;
     }
+
+    public abstract DataUsuario obtenerDatosUsuario();
 
 }

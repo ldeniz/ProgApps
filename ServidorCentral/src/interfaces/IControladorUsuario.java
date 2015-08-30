@@ -3,6 +3,7 @@ package interfaces;
 import datatype.DataCliente;
 import datatype.DataDireccion;
 import datatype.DataRestaurante;
+import datatype.DataUsuario;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -85,5 +86,11 @@ public interface IControladorUsuario {
      * @return
      */
     public ArrayList<DataRestaurante> listarRestaurantes();
+
+    /**
+     * Retorna una lista de todos los usuarios existenes en el sistema
+     * @return 
+     */
+    public ArrayList<DataUsuario> listarUsaurios();
 
 }
