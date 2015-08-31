@@ -223,6 +223,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Seleccionar Im&#xe1;genes"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImagesActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
 
