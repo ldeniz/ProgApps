@@ -36,8 +36,11 @@ public interface IControladorUsuario {
      * @param pass
      * @param direccion
      * @param rutaImagen
+     * @throws java.lang.Exception
+     * 
+     * @
      */
-    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen);
+    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) throws Exception;
 
     /**
      * Agrega a la memoria una categoria

@@ -32,7 +32,10 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) {
+    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) throws Exception{
+        if (dataCategorias == null){
+            throw new Exception("Debes seleccionar al menos una categoría.");
+        }
         dataUsuario = new DataRestaurante(rutaImagen, dataCategorias, nickname, mail, nombre, pass, direccion);
         tipo = "restaurante";
     }
