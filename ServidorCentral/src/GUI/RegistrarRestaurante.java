@@ -10,32 +10,48 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import datatype.DataCategoria;
 import controlador.ControladorCategoria;
+import datatype.DataDireccion;
+import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
+import interfaces.IControladorUsuario;
+import java.io.File;
 import java.util.Iterator;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author Mathi
  */
 public class RegistrarRestaurante extends javax.swing.JInternalFrame {
+    private 
 
-    private final
-    /*String nick;
-            String nombre;
-            String mail;
-            String direccion;
-            char[] contraseña;
-            char[] confirmaContraseña;
+        String nick;
+        String nombre;
+        String mail;
+        DataDireccion direccion;
+        String password;
+        String confirmaPassword;
 
-            */
-            List<DataCategoria> listaCategorias;
-            IControladorCategoria cCat;
-            DefaultListModel modeloLista;
+        
+        List<String> imagenes = new ArrayList<String>();
+        String[] lasImagenes = new String[imagenes.size()];
+
+
+        
+        
+        List<DataCategoria> listaCategorias;
+        IControladorCategoria cCat;
+        DefaultListModel modeloLista;
+   
 
     /**
      * Creates new form RegistrarRestaurante
      */
     public RegistrarRestaurante() {
+        //imagenes= new ArrayList(); 
+        
         modeloLista = new DefaultListModel();
         cCat=new ControladorCategoria();
 
@@ -110,6 +126,11 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
         jLabel10.setText("Seleccione las Categorías:");
 
         jButtonImages.setText("Seleccionar Imágenes");
+        jButtonImages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImagesActionPerformed(evt);
+            }
+        });
 
         jListCategorias.setModel(modeloLista);
         jScrollPane1.setViewportView(jListCategorias);
@@ -236,8 +257,91 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
-        // TODO add your handling code here:
+        IControladorUsuario cUsr = Fabrica.getInstance().obtenerControladorUsuario();
+        boolean existeUsu,contraseñasIguales,existeNick;
+    
+    
+    nick=jTextFieldNickname.getText();
+    nombre=jTextFieldNombre.getText();
+    mail=jTextFieldCorreo.getText();
+   
+    direccion= new DataDireccion(jTextFieldDireccion.getText(),"","");
+    password=jPasswordFieldPass.getText();
+    confirmaPassword=jPasswordFieldRePass.getText();
+    
+    
+    List<String> selectedCat=jListCategorias.getSelectedValuesList();
+    
+    if ("".equals(nick) ||"".equals(nombre) ||"".equals(mail) ||"".equals(direccion) || selectedCat.isEmpty()
+        ||"".equals(password)||"".equals(confirmaPassword)){
+        JOptionPane.showMessageDialog(this, "Complete todos los campos", "", JOptionPane.WARNING_MESSAGE);
+    }
+    else{
+        existeUsu=cUsr.existeUsuario(nick, mail);
+        existeNick=cUsr.existeUsuario(nick);
+        contraseñasIguales=password.equals(confirmaPassword);
+        
+        if ( !existeUsu && !existeNick && contraseñasIguales){
+            try{
+                
+                
+                Iterator<String> it = selectedCat.iterator();
+                while (it.hasNext()) {
+                    cUsr.seleccionarCategoria(it.next());
+                }
+                
+                
+                cUsr.CargarDatosUsuario(nick, mail, nombre, password, direccion, lasImagenes);
+                cUsr.altaUsuario();
+                //cUsr.altaRestaurante(nick, nombre, mail, direccion,selectedCat,imagenes,"");
+                JOptionPane.showMessageDialog(this, "Restaurante registrado", "", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);                
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+        else{
+                if (existeNick)
+                    jLabelNick.setText("Ya existe usuario con ese Nick");
+                else
+                    jLabelNick.setText("");
+                if (existeUsu && !existeNick)
+                    jLabelMail.setText("Ya existe usuario con ese E-Mail");
+                else
+                    jLabelMail.setText("");
+                if (!contraseñasIguales)
+                    jLabelMail.setText("Las contraseñas deben ser iguales");
+                else
+                    jLabelMail.setText("");
+            }       
+    }
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
+
+    private void jButtonImagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImagesActionPerformed
+            FileFilter filter = new FileNameExtensionFilter("Imagenes (.jpg .png)","jpg", "png");
+
+        JFileChooser elegirImagen = new JFileChooser();
+        elegirImagen.setMultiSelectionEnabled(rootPaneCheckingEnabled);
+        elegirImagen.setAcceptAllFileFilterUsed(false);
+        elegirImagen.addChoosableFileFilter(filter);
+        int opcion = elegirImagen.showOpenDialog(jButtonImages);
+        
+        
+        if (opcion == JFileChooser.APPROVE_OPTION) {
+            File[] f=elegirImagen.getSelectedFiles(); 
+            //imagenes.clear();
+                
+                for (File f1 : f) {
+                    imagenes.add(f1.getPath());        
+                    imagenes.toArray(lasImagenes);
+                    //imagenes.add(f1.getPath());
+                }
+            
+        }
+         
+    }//GEN-LAST:event_jButtonImagesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
