@@ -5,17 +5,33 @@
  */
 package GUI;
 
+import datatype.DataProducto;
+import fabrica.Fabrica;
+import interfaces.IControladorCategoria;
+import interfaces.IControladorProducto;
+import java.util.ArrayList;
+import java.util.Set;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mathi
  */
 public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
-
+    IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
     /**
      * Creates new form VerInformacionDeProducto
      */
     public VerInformacionDeProducto() {
         initComponents();
+        ArrayList<DataProducto> productos = cp.listarProductos();
+        for (DataProducto p : productos) {
+            String[] fila = new String[3];
+            fila[0] = p.getNombre();
+            fila[1] = p.getNickName();
+            fila[2] = p.getDescripcion();
+            modeloTablaProductos.addRow(fila);
+        }
     }
 
     /**
@@ -29,7 +45,8 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        productos = new javax.swing.JTable();
+        modeloTablaProductos = new DefaultTableModel(); modeloTablaProductos.addColumn("Producto"); modeloTablaProductos.addColumn("Restaurante"); modeloTablaProductos.addColumn("Id restaurante");
+        productos = new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } };
         seleccionarProducto = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nombreProducto = new javax.swing.JLabel();
@@ -55,17 +72,7 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Productos del Sistema:");
 
-        productos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        productos.setModel(modeloTablaProductos);
         jScrollPane1.setViewportView(productos);
 
         seleccionarProducto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -250,7 +257,11 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarProductoActionPerformed
-        // TODO add your handling code here:
+        int index = productos.getSelectedRow();
+        String idproducto = (String) productos.getValueAt(index, 0);
+        String restaurante = (String) productos.getValueAt(index, 1);
+       // cp.elegirUnProducto(idproducto,restaurante);
+  
     }//GEN-LAST:event_seleccionarProductoActionPerformed
 
     private void jButtonCancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar3ActionPerformed
@@ -279,6 +290,7 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel nombreProducto;
     private javax.swing.JTable productos;
+    private DefaultTableModel modeloTablaProductos;
     private javax.swing.JTable productosPromocion;
     private javax.swing.JTable productosPromocion1;
     private javax.swing.JButton seleccionarProducto;

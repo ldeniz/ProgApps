@@ -40,7 +40,7 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="imagenCliente" min="-2" pref="145" max="-2" attributes="0"/>
+                                      <Component id="imagenRestaurante" min="-2" pref="145" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -79,7 +79,7 @@
               <Component id="seleccionarRestaurante" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="imagenCliente" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
+                  <Component id="imagenRestaurante" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -147,7 +147,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verProductoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="imagenCliente">
+    <Component class="javax.swing.JLabel" name="imagenRestaurante">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">

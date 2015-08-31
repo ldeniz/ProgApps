@@ -29,5 +29,11 @@ public class DataRestaurante extends DataUsuario {
     public ArrayList<DataProducto> getDataProductos() {
         return dataProductos;
     }
+    
+    @Override
+    public String toString(){
+        return this.getNombre();
+    }
+            
 
 }

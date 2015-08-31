@@ -10,9 +10,14 @@ import datatype.DataProducto;
 import datatype.DataRestaurante;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -44,7 +49,6 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                 root.add(aux);
                 for (DataRestaurante rest : cat.getDataRestaurantes()){
                     aux.add(new DefaultMutableTreeNode(rest));
-                    aux.add(new DefaultMutableTreeNode(rest.getNombre()));
                 }
             }
         }
@@ -65,7 +69,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
         restaurantes = new javax.swing.JTree(modelo);
         jLabel1 = new javax.swing.JLabel();
         verProducto = new javax.swing.JButton();
-        imagenCliente = new javax.swing.JLabel();
+        imagenRestaurante = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         nicknameRestaurante = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -96,7 +100,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
             }
         });
 
-        imagenCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        imagenRestaurante.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Nickname");
@@ -161,7 +165,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(imagenCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(imagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel2)
@@ -190,7 +194,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                 .addComponent(seleccionarRestaurante)
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(imagenCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(imagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -222,7 +226,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void verProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verProductoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_verProductoActionPerformed
 
     private void seleccionarRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarRestauranteActionPerformed
@@ -243,12 +247,16 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                 modeloProductos.addElement(p.getNombre());
             }
 
-            if (!this.restSelected.getRutaImagen().equals("")){
+            if (this.restSelected.getRutaImagen().length == 0){
                 //TraerImagen por defecto
             }
             else{
-               //Asignarle Imagen al cuadrito
+               Image image = Toolkit.getDefaultToolkit().createImage(this.restSelected.getRutaImagen()[0]);
+               Icon warnIcon = new ImageIcon(image);
+               imagenRestaurante.setIcon(warnIcon);
+               imagenRestaurante.validate();
             }
+                   
         }
     }//GEN-LAST:event_seleccionarRestauranteActionPerformed
 
@@ -259,7 +267,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel direccionRestaurante;
-    private javax.swing.JLabel imagenCliente;
+    private javax.swing.JLabel imagenRestaurante;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -36,9 +36,9 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
 
         
         List<String> imagenes = new ArrayList<String>();
-        String[] lasImagenes = new String[imagenes.size()];
+        String[] lasImagenes;// = new String[imagenes.size()];
 
-
+         
         
         
         List<DataCategoria> listaCategorias;
@@ -334,10 +334,12 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
             //imagenes.clear();
                 
                 for (File f1 : f) {
+                    //lasImagenes[lasImagenes.length] = f1.getPath();
                     imagenes.add(f1.getPath());        
-                    imagenes.toArray(lasImagenes);
+                    //imagenes.toArray(lasImagenes);
                     //imagenes.add(f1.getPath());
                 }
+                this.lasImagenes = imagenes.toArray(new String[imagenes.size()]);
             
         }
          

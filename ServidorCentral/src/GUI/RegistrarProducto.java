@@ -5,17 +5,66 @@
  */
 package GUI;
 
+import datatype.DataProducto;
+import datatype.DataRestaurante;
+import fabrica.Fabrica;
+import interfaces.IControladorCategoria;
+import interfaces.IControladorProducto;
+import interfaces.IControladorUsuario;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mathi
  */
 public class RegistrarProducto extends javax.swing.JInternalFrame {
+    private 
+        DataRestaurante[] restaurantes;
+        String imagenSrc;
+        Float cPrecio;
+         
+    IControladorCategoria iCat = Fabrica.getInstance().obtenerControladorCategoria();
+    IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
+    
+    private IControladorProducto iProd;
+    
+    private DefaultListModel modeloOut=new DefaultListModel();
+    private DefaultTableModel modeloIn=(new javax.swing.table.DefaultTableModel(
+    new Object [][] {
 
+    },
+    new String [] {
+        "Producto", "Cantidad"
+    }
+));
     /**
      * Creates new form RegistrarProducto
      */
     public RegistrarProducto() {
+        List<DataRestaurante> temp=iUsr.listarRestaurantes();
+        restaurantes=temp.toArray(new DataRestaurante[temp.size()]);
         initComponents();
+        
+        this.jTextFieldNombre.setText("");
+        this.jTextAreaDescripcion.setText("");
+        this.jTextFieldNombre.setText("");
+        this.jTextFieldDescuento.setText("");
+        this.jTextFieldPrecio.setText("");
+        
+        tipoProducto.add(jRadioButtonPromocion);
+        tipoProducto.add(jRadioButtonIndividual);
+        jRadioButtonIndividual.setSelected(true);
     }
 
     /**
@@ -45,13 +94,16 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
         jTextFieldPrecio = new javax.swing.JTextField();
         panelPromocion = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        listaProductos = new javax.swing.JList();
         jButtonAgregar = new javax.swing.JButton();
         jButtonQuitar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        listaProductos2 = new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } };
         jLabel6 = new javax.swing.JLabel();
         jTextFieldDescuento = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        cantidad = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         jButtonCancelar = new javax.swing.JButton();
         jButtonRegistrar = new javax.swing.JButton();
         jButtonImage = new javax.swing.JButton();
@@ -68,7 +120,8 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Restaurante");
 
-        jComboBoxRestaurante.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxRestaurante.setModel(new javax.swing.DefaultComboBoxModel(restaurantes));
+        jComboBoxRestaurante.setSelectedItem(new javax.swing.DefaultComboBoxModel(restaurantes));
 
         tipoProducto.add(jRadioButtonIndividual);
         jRadioButtonIndividual.setSelected(true);
@@ -117,63 +170,80 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
 
         PanelGenerico.add(panelIndividual, "card2");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList1);
+        listaProductos.setModel(modeloOut);
+        jScrollPane2.setViewportView(listaProductos);
 
         jButtonAgregar.setText(">>");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
 
         jButtonQuitar.setText("<<");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null}
-            },
-            new String [] {
-                "Title 1"
+        jButtonQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonQuitarActionPerformed(evt);
             }
-        ));
-        jScrollPane3.setViewportView(jTable1);
+        });
+
+        listaProductos2.setModel(modeloIn);
+        jScrollPane3.setViewportView(listaProductos2);
 
         jLabel6.setText("Descuento");
+
+        jLabel7.setText("%");
+
+        cantidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        cantidad.setText("1");
+        cantidad.setToolTipText("");
+
+        jLabel8.setText("Cantidad");
 
         javax.swing.GroupLayout panelPromocionLayout = new javax.swing.GroupLayout(panelPromocion);
         panelPromocion.setLayout(panelPromocionLayout);
         panelPromocionLayout.setHorizontalGroup(
             panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPromocionLayout.createSequentialGroup()
-                .addGroup(panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPromocionLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldDescuento))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel8)
+                    .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAgregar)
                     .addComponent(jButtonQuitar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
+            .addGroup(panelPromocionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPromocionLayout.setVerticalGroup(
             panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPromocionLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelPromocionLayout.createSequentialGroup()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPromocionLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAgregar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonQuitar))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                        .addComponent(jButtonQuitar)
+                        .addGap(23, 23, 23)))
                 .addGap(18, 18, 18)
                 .addGroup(panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addContainerGap())
         );
 
@@ -188,8 +258,18 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
 
         jButtonRegistrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonRegistrar.setText("Registrar");
+        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarActionPerformed(evt);
+            }
+        });
 
         jButtonImage.setText("Seleccionar Imagen");
+        jButtonImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImageActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,7 +307,7 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
                                         .addComponent(jButtonRegistrar))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jRadioButtonPromocion)
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioButtonIndividual)
@@ -267,8 +347,6 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jRadioButtonPromocion.getAccessibleContext().setAccessibleParent(PanelGenerico);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -277,6 +355,13 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
         PanelGenerico.add(panelPromocion);
         PanelGenerico.repaint();
         PanelGenerico.revalidate();  
+        
+        DataRestaurante selectedRes=(DataRestaurante)this.jComboBoxRestaurante.getSelectedItem();
+        ArrayList<DataProducto> productos = iUsr.listarProductos(selectedRes.getNickname());
+        modeloOut.clear();
+        for (DataProducto p : productos){
+            modeloOut.addElement(p.getNombre());
+        }
     }//GEN-LAST:event_jRadioButtonPromocionActionPerformed
 
     private void jRadioButtonIndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonIndividualActionPerformed
@@ -290,9 +375,129 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jButtonImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImageActionPerformed
+        FileFilter filter = new FileNameExtensionFilter("Imagenes (.jpg .png)","jpg", "png");
+
+        JFileChooser elegirImagen = new JFileChooser();
+        elegirImagen.setAcceptAllFileFilterUsed(false);
+        elegirImagen.addChoosableFileFilter(filter);
+        int opt = elegirImagen.showOpenDialog(jButtonImage);
+
+        
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            imagenSrc = elegirImagen.getSelectedFile().getPath();
+            if(imagenSrc==null){
+                
+                //Habría que agregarle una imagen por defecto si no tiene
+                
+                // Image image = Toolkit.getDefaultToolkit().createImage(IMAGEN POR DEFECTO);
+                // Icon warnIcon = new ImageIcon(image);
+                // label.setIcon(warnIcon);
+                // label.validate();
+            }
+            else{
+                
+                Image image = Toolkit.getDefaultToolkit().createImage(imagenSrc);
+                //Icon warnIcon = new ImageIcon(image);
+                //imagenSrc.setIcon(warnIcon);
+                //imagenSrc.validate();
+                
+            }
+        }
+    }//GEN-LAST:event_jButtonImageActionPerformed
+
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
+        IControladorProducto iProd = Fabrica.getInstance().obtenerControladorProducto();
+        boolean camposVacios=false;
+        String cNombre,cDescripcion,cPrecio,cDescuento,cCantidad;
+        cNombre=this.jTextFieldNombre.getText();
+        cDescripcion=this.jTextAreaDescripcion.getText();
+        cPrecio= this.jTextFieldPrecio.getText();
+        cDescuento=this.jTextFieldDescuento.getText();
+       
+        
+        if("".equals(cNombre) || "".equals(cDescripcion)){
+            camposVacios=true;
+        }
+        
+        DataRestaurante selectedRes=(DataRestaurante)this.jComboBoxRestaurante.getSelectedItem();
+        
+        if (!"".equals(imagenSrc)){
+            /* INGRESAR IMAGEN
+            iProd.ingresarImagen(imagenSrc);*/
+        }
+        
+        iProd.seleccionarRestaurante(selectedRes.getNickname());
+        
+        //individual
+        if (jRadioButtonIndividual.isSelected()){
+            
+            iProd.cargarDatosProducto(cNombre, cDescripcion, Float.parseFloat(cPrecio), imagenSrc);
+            
+            if ("".equals(cPrecio)){
+                camposVacios=true;
+            }
+            
+        }
+        //promocion
+        
+        else{
+            
+            if ("".equals(cDescuento) || listaProductos2.getRowCount()==0){
+                camposVacios=true;
+            }
+            else{
+                iProd.cargarDatosProducto(cNombre, cDescripcion, Float.parseFloat(cDescuento), imagenSrc);
+                for (int i=0;i<listaProductos2.getRowCount();i++){
+                    String prod=(String)listaProductos2.getValueAt(i, 0);
+                    String cant=(String)listaProductos2.getValueAt(i, 1);
+                    
+                    iProd.seleccionarProducto(cNombre, Integer.parseInt(cant));
+                }
+            }
+        }
+        
+        if (!camposVacios){
+            try{
+                iProd.altaProducto();
+                JOptionPane.showMessageDialog(this,"Producto registrado");
+                this.setVisible(false);
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+            }            
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Complete todos los campos.", "", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonRegistrarActionPerformed
+
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        int index = listaProductos.getSelectedIndex();
+        if(index != -1){
+            String[] fila = new String[2];
+            fila[0] = (String) modeloOut.getElementAt(index);
+            fila[1] = this.cantidad.getText();;
+            modeloIn.addRow(fila);
+            modeloOut.remove(index);
+            this.cantidad.setText("1");
+
+        }
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitarActionPerformed
+        int index = listaProductos2.getSelectedRow();
+        if (index != -1){
+            modeloOut.addElement(modeloIn.getValueAt(index, 0));
+            modeloIn.removeRow(index);
+
+        }
+    }//GEN-LAST:event_jButtonQuitarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelGenerico;
+    private javax.swing.JTextField cantidad;
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonImage;
@@ -305,18 +510,20 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JList jList1;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JRadioButton jRadioButtonIndividual;
     private javax.swing.JRadioButton jRadioButtonPromocion;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextFieldDescuento;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPrecio;
+    private javax.swing.JList listaProductos;
+    private javax.swing.JTable listaProductos2;
     private javax.swing.JPanel panelIndividual;
     private javax.swing.JPanel panelPromocion;
     private javax.swing.ButtonGroup tipoProducto;
