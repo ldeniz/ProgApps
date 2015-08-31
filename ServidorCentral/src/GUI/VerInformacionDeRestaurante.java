@@ -6,10 +6,13 @@
 package GUI;
 
 import datatype.DataCategoria;
+import datatype.DataProducto;
 import datatype.DataRestaurante;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -40,6 +43,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                 aux=new DefaultMutableTreeNode(cat.getNombre());
                 root.add(aux);
                 for (DataRestaurante rest : cat.getDataRestaurantes()){
+                    aux.add(new DefaultMutableTreeNode(rest));
                     aux.add(new DefaultMutableTreeNode(rest.getNombre()));
                 }
             }
@@ -71,8 +75,10 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         direccionRestaurante = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        modeloProductos =new DefaultListModel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        productos = new javax.swing.JTable();
+        modeloProductos =new DefaultListModel();
+        productosRestaurante = new javax.swing.JList(){    public boolean isCellEditable(int row, int column) {         return (column == 23 );     }};
         seleccionarRestaurante = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
 
@@ -115,18 +121,8 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Productos:");
 
-        productos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(productos);
+        productosRestaurante.setModel(modeloProductos);
+        jScrollPane2.setViewportView(productosRestaurante);
 
         seleccionarRestaurante.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         seleccionarRestaurante.setLabel("Seleccionar Restaurante");
@@ -152,9 +148,15 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(352, Short.MAX_VALUE)
                         .addComponent(verProducto))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(seleccionarRestaurante, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,13 +176,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                                             .addComponent(nicknameRestaurante)))
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel5))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(seleccionarRestaurante, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -230,7 +226,30 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_verProductoActionPerformed
 
     private void seleccionarRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarRestauranteActionPerformed
-        // TODO add your handling code here:
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode)restaurantes.getLastSelectedPathComponent();
+        if ((node != null) && (node.isLeaf())){
+            restSelected=(DataRestaurante)node.getUserObject();
+
+
+            this.direccionRestaurante.setText(restSelected.getDireccion().getCalle());
+            this.mailRestaurante.setText(restSelected.getMail());
+            this.nicknameRestaurante.setText(restSelected.getNickname());
+            this.nombreRestaurante.setText(restSelected.getNombre());
+
+            ArrayList<DataProducto> productos=restSelected.getDataProductos();
+             
+            modeloProductos.clear();
+            for (DataProducto p : productos){
+                modeloProductos.addElement(p.getNombre());
+            }
+
+            if (!this.restSelected.getRutaImagen().equals("")){
+                //TraerImagen por defecto
+            }
+            else{
+               //Asignarle Imagen al cuadrito
+            }
+        }
     }//GEN-LAST:event_seleccionarRestauranteActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -253,7 +272,8 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
     private javax.swing.JLabel mailRestaurante;
     private javax.swing.JLabel nicknameRestaurante;
     private javax.swing.JLabel nombreRestaurante;
-    private javax.swing.JTable productos;
+    private javax.swing.JList productosRestaurante;
+    private DefaultListModel modeloProductos;
     private javax.swing.JTree restaurantes;
     private javax.swing.JButton seleccionarRestaurante;
     private javax.swing.JButton verProducto;
