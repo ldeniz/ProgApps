@@ -8,6 +8,7 @@ package controlador;
 import datatype.DataCategoria;
 import datatype.DataCliente;
 import datatype.DataDireccion;
+import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
 import interfaces.IControladorUsuario;
@@ -95,6 +96,12 @@ public class ControladorUsuario implements IControladorUsuario {
     public ArrayList<DataUsuario> listarUsaurios() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         return mu.listarUsuarios();
+    }
+
+    @Override
+    public ArrayList<DataProducto> listarProductos(String nickName) {
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        return mu.listarProductosRestaurante(nickName);
     }
 
 }

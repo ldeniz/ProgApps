@@ -2,6 +2,7 @@ package interfaces;
 
 import datatype.DataCliente;
 import datatype.DataDireccion;
+import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public interface IControladorUsuario {
      * @param direccion
      * @param rutaImagen
      * @throws java.lang.Exception
-     * 
+     *
      * @
      */
     public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) throws Exception;
@@ -92,8 +93,18 @@ public interface IControladorUsuario {
 
     /**
      * Retorna una lista de todos los usuarios existenes en el sistema
-     * @return 
+     *
+     * @return
      */
     public ArrayList<DataUsuario> listarUsaurios();
+
+    /**
+     * Retorna una lista de todos los productos existenes en el sistema del
+     * restaurante 'nickName'
+     *
+     * @param nickName
+     * @return
+     */
+    public ArrayList<DataProducto> listarProductos(String nickName);
 
 }

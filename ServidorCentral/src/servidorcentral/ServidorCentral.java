@@ -76,6 +76,12 @@ public class ServidorCentral {
                 System.out.println("Categoria: " + dc.getNombre() + ", Bar: " + dr.getNombre());
             }
         }
+
+        String nickName = "acabar";
+        ldp = u.listarProductos(nickName);
+        for (DataProducto dp : ldp) {
+            System.out.println("Bar: " + dp.getNickName() + ", Producto: " + dp.getNombre());
+        }
     }
 
 }

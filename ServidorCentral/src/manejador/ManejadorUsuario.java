@@ -6,6 +6,7 @@ package manejador;
 
 import datatype.DataCategoria;
 import datatype.DataCliente;
+import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
 import java.util.ArrayList;
@@ -136,6 +137,12 @@ public class ManejadorUsuario {
         Restaurante r = restaurantes.get(nickName);
         r.agregarProducto(producto);
 
+    }
+
+    public ArrayList<DataProducto> listarProductosRestaurante(String nickName) {
+        Restaurante r = restaurantes.get(nickName);
+        DataRestaurante dr = (DataRestaurante) r.obtenerDatosUsuario();
+        return dr.getDataProductos();
     }
 
 }

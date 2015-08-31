@@ -108,6 +108,9 @@ public class ManejadorProducto {
         StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
         Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName);
 
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        mu.agregarProductoRestaurante(nickName, promocion);
+
         value = productos.get(nickName);
         if (value == null) {
             value = new HashMap();
