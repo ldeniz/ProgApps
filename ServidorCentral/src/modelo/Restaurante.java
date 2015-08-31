@@ -5,7 +5,6 @@
  */
 package modelo;
 
-import datatype.DataCategoria;
 import datatype.DataDireccion;
 import datatype.DataProducto;
 import datatype.DataRestaurante;
@@ -20,13 +19,11 @@ import java.util.ArrayList;
 public class Restaurante extends Usuario implements Serializable {
 
     private String[] rutaImagen;
-    private ArrayList<Categoria> categorias;
     private ArrayList<Producto> productos;
 
     public Restaurante(String[] rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         super(nickname, mail, nombre, pass, direccion);
         this.rutaImagen = rutaImagen;
-        categorias = new ArrayList<>();
         productos = new ArrayList<>();
     }
 
@@ -38,38 +35,20 @@ public class Restaurante extends Usuario implements Serializable {
         this.rutaImagen = rutaImagen;
     }
 
-    public ArrayList<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(ArrayList<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
-    public void agregarCategoria(Categoria categoria) {
-        categorias.add(categoria);
-    }
-
     public void agregarProducto(Producto producto) {
         productos.add(producto);
     }
 
     @Override
     public DataUsuario obtenerDatosUsuario() {
-        ArrayList<DataCategoria> dataCategorias = new ArrayList<>();
         ArrayList<DataProducto> dataProductos = new ArrayList<>();
 
-        if (!categorias.isEmpty()) {
-            for (Categoria c : categorias) {
-                dataCategorias.add(c.obtenerDatosCategoria());
-            }
-        }
         if (!productos.isEmpty()) {
             for (Producto p : productos) {
                 dataProductos.add(p.obtenerDatosProducto());
             }
         }
-        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataCategorias, dataProductos, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
+        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
         return dataUsuario;
     }
 

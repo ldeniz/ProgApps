@@ -57,12 +57,13 @@ public class ManejadorUsuario {
     /**
      *
      * @param dataRestaurante
+     * @param ldc
      */
-    public void ingresarUsuario(DataRestaurante dataRestaurante) {
+    public void ingresarUsuario(DataRestaurante dataRestaurante, ArrayList<DataCategoria> ldc) {
         Restaurante r = new Restaurante(dataRestaurante.getRutaImagen(), dataRestaurante.getNickname(), dataRestaurante.getMail(), dataRestaurante.getNombre(), dataRestaurante.getPass(), dataRestaurante.getDireccion());
         ManejadorCategoria mc = ManejadorCategoria.getInstance();
-        for (DataCategoria dc : dataRestaurante.getDataCategorias()) {
-            r.agregarCategoria(mc.obtenerCategoria(dc.getNombre()));
+        for (DataCategoria dc : ldc) {
+            mc.agregarRestaurante(dc.getNombre(), r);
         }
         restaurantes.put(r.getNickname(), r);
         //Lo agrego a la colección de usuarios

@@ -5,13 +5,17 @@
  */
 package servidorcentral;
 
+import datatype.DataCategoria;
 import datatype.DataDireccion;
 import datatype.DataProducto;
+import datatype.DataRestaurante;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorProducto;
 import interfaces.IControladorUsuario;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,7 +34,11 @@ public class ServidorCentral {
         c.altaCategoria("pizzas");
         String[] rutaImagen = {"a", "b"};
         u.seleccionarCategoria("pizzas");
-        u.CargarDatosUsuario("acabar", "a@b.c", "Aca Bar", "123", new DataDireccion("a", "b", "c"), rutaImagen);
+        try {
+            u.CargarDatosUsuario("acabar", "a@b.c", "Aca Bar", "123", new DataDireccion("a", "b", "c"), rutaImagen);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
         u.altaUsuario();
         p.seleccionarRestaurante("acabar");
         p.cargarDatosProducto("musa", "pizza con muzzarella", (float) 150.0, "1");
@@ -59,7 +67,14 @@ public class ServidorCentral {
         for (DataProducto dp : ldp) {
             System.out.println(dp.getNickName());
             System.out.println(dp.getNombre());
+        }
 
+        ArrayList<DataCategoria> ldc = c.listarCategorias();
+        for (DataCategoria dc : ldc) {
+            ArrayList<DataRestaurante> ldr = dc.getDataRestaurantes();
+            for (DataRestaurante dr : ldr) {
+                System.out.println("Categoria: " + dc.getNombre() + ", Bar: " + dr.getNombre());
+            }
         }
     }
 

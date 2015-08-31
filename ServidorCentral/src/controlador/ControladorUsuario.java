@@ -32,11 +32,11 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) throws Exception{
-        if (dataCategorias == null){
+    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) throws Exception {
+        if (dataCategorias == null) {
             throw new Exception("Debes seleccionar al menos una categoría.");
         }
-        dataUsuario = new DataRestaurante(rutaImagen, dataCategorias, nickname, mail, nombre, pass, direccion);
+        dataUsuario = new DataRestaurante(rutaImagen, nickname, mail, nombre, pass, direccion);
         tipo = "restaurante";
     }
 
@@ -68,7 +68,7 @@ public class ControladorUsuario implements IControladorUsuario {
                 mu.ingresarUsuario((DataCliente) dataUsuario);
                 break;
             case "restaurante":
-                mu.ingresarUsuario((DataRestaurante) dataUsuario);
+                mu.ingresarUsuario((DataRestaurante) dataUsuario, dataCategorias);
                 break;
         }
     }

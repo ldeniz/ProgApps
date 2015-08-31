@@ -30,4 +30,5 @@ public interface IControladorCategoria {
      * @return
      */
     public ArrayList<DataCategoria> listarCategorias();
+
 }

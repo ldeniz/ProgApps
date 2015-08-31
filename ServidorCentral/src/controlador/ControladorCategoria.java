@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controlador;
 
 import datatype.DataCategoria;
+import datatype.DataRestaurante;
 import interfaces.IControladorCategoria;
 import java.util.ArrayList;
 import manejador.ManejadorCategoria;
@@ -15,7 +15,7 @@ import manejador.ManejadorCategoria;
  * @author Sebastián Estefan
  */
 public class ControladorCategoria implements IControladorCategoria {
-    
+
     public ControladorCategoria() {
     }
 
@@ -34,4 +34,5 @@ public class ControladorCategoria implements IControladorCategoria {
     public boolean existeCategoria(String nombre) {
         return ManejadorCategoria.getInstance().existeCategoriaNombre(nombre);
     }
+
 }
