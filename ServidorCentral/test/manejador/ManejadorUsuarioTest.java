@@ -43,12 +43,21 @@ public class ManejadorUsuarioTest {
       ManejadorCategoria n = ManejadorCategoria.getInstance();
       n.ingresarCategoria(new DataCategoria("pizas"));
     
-    
+        //Damos de alta a un cliente
         ManejadorUsuario instance = ManejadorUsuario.getInstance();
         Date fecha = new Date(1988, 12, 05);
         DataDireccion dataDireccion = new DataDireccion("Artigas","3456","1");
         DataCliente dataCliente = new DataCliente("Vazquez",fecha,"/home/jose/Imagenes/a.png","tuerto","tuerto@hotmail.com", "Manuel","aa12233", dataDireccion);
         instance.ingresarUsuario(dataCliente);
+        
+        //Damos de alta a un restaurante
+        DataDireccion dataDire = new DataDireccion("Artigas","3458","1");
+        String[] imagen = {"/home/jose/Imagnes/a.png"};
+        DataRestaurante dataRestaurante = new DataRestaurante( imagen,"EmapandasManuelita","EmapandasManuelita@hotmail.com","Emapandas Manuelita", "EmapandasManuelita",dataDire);
+        
+        ArrayList<DataCategoria> dataCategorias = new ArrayList<>();
+        dataCategorias = n.listarCategorias();
+        instance.ingresarUsuario(dataRestaurante,dataCategorias);
     
     }
     
@@ -88,7 +97,7 @@ public class ManejadorUsuarioTest {
     public void testIngresarUsuario_DataRestaurante() {
         System.out.println("ingresarUsuario");
         ManejadorUsuario instance = ManejadorUsuario.getInstance();
-         ManejadorCategoria n = ManejadorCategoria.getInstance();
+        ManejadorCategoria n = ManejadorCategoria.getInstance();
          
         DataDireccion dataDireccion = new DataDireccion("Artigas","3458","1");
         String[] imagen = {"/home/jose/Imagnes/a.png"};
@@ -169,12 +178,12 @@ public class ManejadorUsuarioTest {
     public void testListarClientes() {
         System.out.println("listarClientes");
         ManejadorUsuario instance = ManejadorUsuario.getInstance();
-        
+        ArrayList<DataCliente> expResult = new  ArrayList<>();
+
         Date fecha = new Date(1988, 12, 05);
         DataDireccion dataDireccion = new DataDireccion("Artigas","3456","1");
         DataCliente dataCliente = new DataCliente("Vazquez",fecha,"/home/jose/Imagenes/a.png","tuerto","tuerto@hotmail.com", "Manuel","aa12233", dataDireccion);
         
-        ArrayList<DataCliente> expResult = new  ArrayList<>();
         expResult.add(dataCliente);
         ArrayList<DataCliente> result = instance.listarClientes();
         
@@ -215,14 +224,38 @@ public class ManejadorUsuarioTest {
      * Test of listarRestaurantes method, of class ManejadorUsuario.
      */
     @Test
+    //@Ignore
     public void testListarRestaurantes() {
         System.out.println("listarRestaurantes");
-        ManejadorUsuario instance = null;
-        ArrayList<DataRestaurante> expResult = null;
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+        ArrayList<DataRestaurante> expResult = new ArrayList<>();
         ArrayList<DataRestaurante> result = instance.listarRestaurantes();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        DataDireccion dataDire = new DataDireccion("Artigas","3458","1");
+        String[] image = {"/home/jose/Imagnes/a.png"};
+        DataRestaurante dataRest = new DataRestaurante( image,"EmapandasManuelita","EmapandasManuelita@hotmail.com","Emapandas Manuelita", "EmapandasManuelita",dataDire);
+        
+        expResult.add(dataRest);
+        
+        
+        boolean c = false;
+        boolean cExp = true;
+        if(result.size() == expResult.size())
+        {
+            for(int x=0;x<result.size(); x++)
+            {
+                c = expResult.get(x).getNickname().equals(result.get(x).getNickname());
+                assertEquals(cExp, c);
+                
+                c = expResult.get(x).toString().equals(result.get(x).toString());
+                assertEquals(cExp, c);
+                
+          
+
+            }
+        }
+                    
+        assertEquals(cExp, c);
     }
 
     /**
