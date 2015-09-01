@@ -5,16 +5,21 @@
  */
 package manejador;
 
+import datatype.DataCategoria;
 import datatype.DataCliente;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
+import datatype.DataDireccion;
 import java.util.ArrayList;
+import modelo.Producto;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.Date;
+import org.junit.Ignore;
 
 /**
  *
@@ -35,6 +40,16 @@ public class ManejadorUsuarioTest {
     
     @Before
     public void setUp() {
+      ManejadorCategoria n = ManejadorCategoria.getInstance();
+      n.ingresarCategoria(new DataCategoria("pizas"));
+    
+    
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+        Date fecha = new Date(1988, 12, 05);
+        DataDireccion dataDireccion = new DataDireccion("Artigas","3456","1");
+        DataCliente dataCliente = new DataCliente("Vazquez",fecha,"/home/jose/Imagenes/a.png","tuerto","tuerto@hotmail.com", "Manuel","aa12233", dataDireccion);
+        instance.ingresarUsuario(dataCliente);
+    
     }
     
     @After
@@ -57,27 +72,36 @@ public class ManejadorUsuarioTest {
      * Test of ingresarUsuario method, of class ManejadorUsuario.
      */
     @Test
-    public void testIngresarUsuario_DataCliente() {
+    public void testIngresarUsuario_DataCliente() 
+    {
         System.out.println("ingresarUsuario");
-        
-        DataCliente dataCliente = new DataCliente;
-        ManejadorUsuario instance = null;
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+        Date fecha = new Date(1988, 12, 05);
+        DataDireccion dataDireccion = new DataDireccion("Artigas","3456","1");
+        DataCliente dataCliente = new DataCliente("Villalba",fecha,"/home/jose/Imagenes/a.png","pepe","josevillalba@hotmail.com", "Jose","aa12233", dataDireccion);
         instance.ingresarUsuario(dataCliente);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean result = instance.existeUsuarioNickName("pepe");
+        assertTrue(result);    
     }
 
-    /**
-     * Test of ingresarUsuario method, of class ManejadorUsuario.
-     */
-    @Test
+   @Test
     public void testIngresarUsuario_DataRestaurante() {
         System.out.println("ingresarUsuario");
-        DataRestaurante dataRestaurante = null;
-        ManejadorUsuario instance = null;
-        instance.ingresarUsuario(dataRestaurante);
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+         ManejadorCategoria n = ManejadorCategoria.getInstance();
+         
+        DataDireccion dataDireccion = new DataDireccion("Artigas","3458","1");
+        String[] imagen = {"/home/jose/Imagnes/a.png"};
+        DataRestaurante dataRestaurante = new DataRestaurante( imagen,"BarArtigas","barArtigas@hotmail.com","Bar Artigas", "barArgias",dataDireccion);
+        
+        ArrayList<DataCategoria> dataCategorias = new ArrayList<>();
+        dataCategorias = n.listarCategorias();
+        instance.ingresarUsuario(dataRestaurante,dataCategorias);
+        boolean result = instance.existeUsuarioNickName("BarArtigas");
+        assertTrue(result);
+        
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -86,13 +110,12 @@ public class ManejadorUsuarioTest {
     @Test
     public void testExisteUsuarioNickName() {
         System.out.println("existeUsuarioNickName");
-        String nickname = "";
-        ManejadorUsuario instance = null;
-        boolean expResult = false;
+        String nickname = "tuerto";
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+        boolean expResult = true;
         boolean result = instance.existeUsuarioNickName(nickname);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -101,44 +124,42 @@ public class ManejadorUsuarioTest {
     @Test
     public void testExisteUsuario_String() {
         System.out.println("existeUsuario");
-        String mail = "";
-        ManejadorUsuario instance = null;
-        boolean expResult = false;
+        String mail = "tuerto@hotmail.com";
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+        boolean expResult = true;
         boolean result = instance.existeUsuario(mail);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of existeMail method, of class ManejadorUsuario.
      */
-    @Test
+    
+    /*@Test
+    @Ignore
     public void testExisteMail() {
         System.out.println("existeMail");
-        String mail = "";
-        ManejadorUsuario instance = null;
-        boolean expResult = false;
+        String mail = "tuerto@hotmail.com";
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+        boolean expResult = true;
         boolean result = instance.existeMail(mail);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        
+    } */
 
+    
     /**
      * Test of existeUsuario method, of class ManejadorUsuario.
      */
     @Test
     public void testExisteUsuario_String_String() {
         System.out.println("existeUsuario");
-        String nickname = "";
-        String mail = "";
-        ManejadorUsuario instance = null;
-        boolean expResult = false;
+        String nickname = "tuerto";
+        String mail = "tuerto@hotmail.com";
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+        boolean expResult = true;
         boolean result = instance.existeUsuario(nickname, mail);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -147,12 +168,47 @@ public class ManejadorUsuarioTest {
     @Test
     public void testListarClientes() {
         System.out.println("listarClientes");
-        ManejadorUsuario instance = null;
-        ArrayList<DataCliente> expResult = null;
+        ManejadorUsuario instance = ManejadorUsuario.getInstance();
+        
+        Date fecha = new Date(1988, 12, 05);
+        DataDireccion dataDireccion = new DataDireccion("Artigas","3456","1");
+        DataCliente dataCliente = new DataCliente("Vazquez",fecha,"/home/jose/Imagenes/a.png","tuerto","tuerto@hotmail.com", "Manuel","aa12233", dataDireccion);
+        
+        ArrayList<DataCliente> expResult = new  ArrayList<>();
+        expResult.add(dataCliente);
         ArrayList<DataCliente> result = instance.listarClientes();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        boolean c = false;
+        boolean cExp = true;
+        if(result.size() == expResult.size())
+        {
+            for(int x=0;x<result.size(); x++)
+            {
+                //Verificamos que los nickName sean iguales si uno no lo es que la lista no fue devuelta correctamente
+                
+                c = expResult.get(x).getNickname().equals(result.get(x).getNickname());
+                assertEquals(cExp, c);
+
+                c = expResult.get(x).getApellido().equals(result.get(x).getApellido());
+                assertEquals(cExp, c);
+
+                c = expResult.get(x).getMail().equals(result.get(x).getMail());
+                assertEquals(cExp, c);
+
+                c = expResult.get(x).getNombre().equals(result.get(x).getNombre());      
+                assertEquals(cExp, c);
+                
+                c = expResult.get(x).getPass().equals(result.get(x).getPass());      
+                assertEquals(cExp, c);
+                
+                c = expResult.get(x).getRutaImagen().equals(result.get(x).getRutaImagen());      
+                assertEquals(cExp, c);               
+
+            }
+        }
+                    
+        assertEquals(cExp, c);
+       
     }
 
     /**
@@ -182,5 +238,50 @@ public class ManejadorUsuarioTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of ingresarUsuario method, of class ManejadorUsuario.
+     */
+    @Test
+    public void testIngresarUsuario_DataRestaurante_ArrayList() {
+        System.out.println("ingresarUsuario");
+        DataRestaurante dataRestaurante = null;
+        ArrayList<DataCategoria> ldc = null;
+        ManejadorUsuario instance = null;
+        instance.ingresarUsuario(dataRestaurante, ldc);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of obtenerDataUsuario method, of class ManejadorUsuario.
+     */
+    @Test
+    public void testObtenerDataUsuario() {
+        System.out.println("obtenerDataUsuario");
+        String nickName = "";
+        ManejadorUsuario instance = null;
+        DataUsuario expResult = null;
+        DataUsuario result = instance.obtenerDataUsuario(nickName);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of agregarProductoRestaurante method, of class ManejadorUsuario.
+     */
+    @Test
+    public void testAgregarProductoRestaurante() {
+        System.out.println("agregarProductoRestaurante");
+        String nickName = "";
+        Producto producto = null;
+        ManejadorUsuario instance = null;
+        instance.agregarProductoRestaurante(nickName, producto);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+    
+   
     
 }
