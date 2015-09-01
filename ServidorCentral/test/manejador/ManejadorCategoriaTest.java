@@ -7,8 +7,11 @@ package manejador;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import datatype.DataCategoria;
+import datatype.DataRestaurante;
+import datatype.DataDireccion;
 import java.util.ArrayList;
 import modelo.Categoria;
+import modelo.Restaurante;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,8 +45,13 @@ public class ManejadorCategoriaTest {
     public void setUp() {
         ManejadorCategoria n = ManejadorCategoria.getInstance();
         n.ingresarCategoria(new DataCategoria("pizas"));
-
-    }
+        
+        //DataDireccion dataDireccion = new DataDireccion("Artigas",2345,1);
+       // String[] imagen = {"/home/jose/Imagenes/a.png"};
+       // DataRestaurante dataRestaurante = new DataRestaurante(imagen,"Bar 17","bar17@hotmail.com","Bar 17 SRL","pass122",dataDireccion);
+        ///ManejadorUsuario instance = ManejadorUsuario.getInstance();
+      //  instance.ingresarUsuario(dataRestaurante, null);
+    }   
 
     @After
     public void tearDown() {
@@ -126,12 +134,67 @@ public class ManejadorCategoriaTest {
     /**
      * Test of obtenerCategoria method, of class ManejadorCategoria.
      */
-    @Test
+    /*@Test
+    @Ignore
     public void testObtenerCategoria() {
         System.out.println("obtenerCategoria");
         ManejadorCategoria instance = ManejadorCategoria.getInstance();
         assertSame(instance.obtenerCategoria("pizas"), instance.obtenerCategoria("pizas"));
 
+    }*/
+
+    /**
+     * Test of agregarRestaurante method, of class ManejadorCategoria.
+     */
+    @Test
+    public void testAgregarRestaurante() {
+        System.out.println("agregarRestaurante");
+        String nombre = "pizas";
+        ManejadorCategoria instance = ManejadorCategoria.getInstance();
+        DataDireccion dataDireccion = new DataDireccion("Artigas","2334","2");
+        String[] imagen = {"/home/jose/Imagenes/a.png"};
+        
+        ArrayList<DataRestaurante> restaurantes = new ArrayList<>();
+        boolean resultado = false;
+        boolean expResult = true;
+        
+       
+        Restaurante r = new  Restaurante(imagen,"Bar17","bar17@hotmail.com","Bar17SRL","pass122",dataDireccion);
+
+        instance.agregarRestaurante(nombre, r);
+        
+        ArrayList<DataCategoria> result = instance.listarCategorias();
+        
+     
+        for (int x = 0; x < result.size(); x++) 
+        {
+           System.out.print(result.get(x).getNombre());
+           
+           boolean c = new String("pizas").equals(result.get(x).getNombre()) ;
+           if(c == true)
+           {
+              restaurantes  = result.get(x).getDataRestaurantes();         
+              break;
+           }
+        }
+        
+        
+        
+        
+            
+         for (int y = 0; y< restaurantes.size(); y++)
+         {
+            System.out.print(restaurantes.get(y).getNombre());
+            if(new String("Bar17SRL").equals(restaurantes.get(y).getNombre()) == true)
+            {
+                resultado = true;
+            }
+         }
+        
+        assertEquals(expResult, resultado);
+
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
 }
