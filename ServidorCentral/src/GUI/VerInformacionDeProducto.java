@@ -5,11 +5,14 @@
  */
 package GUI;
 
+import datatype.DataIndividual;
 import datatype.DataProducto;
+import datatype.DataPromocion;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorProducto;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
@@ -20,18 +23,26 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
     IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
+    HashMap<Integer, DataProducto> elProducto = new HashMap<Integer, DataProducto>();
     /**
      * Creates new form VerInformacionDeProducto
      */
     public VerInformacionDeProducto() {
         initComponents();
+        
         ArrayList<DataProducto> productos = cp.listarProductos();
+        
         for (DataProducto p : productos) {
             String[] fila = new String[3];
             fila[0] = p.getNombre();
             fila[1] = p.getNickName();
             fila[2] = p.getDescripcion();
+            
+            elProducto.put(modeloTablaProductos.getRowCount() + 1, p);
+            
             modeloTablaProductos.addRow(fila);
+            
+            
         }
     }
 
@@ -338,9 +349,20 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
             precio.setText("");
             imagenProducto.setIcon(new ImageIcon());
 
-            /*FALTA CODIGO DE SI ES PROMOCION o SI ES INDIVIDUAL CARGAR LOS DATOS
-             y CARGAR LOS PEDIDOS DE ESE PRODUCTO
-            */    
+            
+            DataProducto productoSeleccionado = elProducto.get(productos.getSelectedRow());
+            
+            switch (productoSeleccionado.getTipoProducto()) {
+            case "individual":
+                
+                DataIndividual prodIndividual = (DataIndividual) productoSeleccionado;
+                
+                break;
+            case "promocion":  
+                
+                break;
+            
+            }    
                 
         }
     }//GEN-LAST:event_seleccionarProductoActionPerformed
