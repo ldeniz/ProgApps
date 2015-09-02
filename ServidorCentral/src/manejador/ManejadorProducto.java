@@ -54,6 +54,7 @@ public class ManejadorProducto {
         DataStockProducto dataStockProducto = dataIndividual.getStock();
         String nombre = dataIndividual.getNombre();
         String descripcion = dataIndividual.getDescripcion();
+        String tipoProducto = dataIndividual.getTipoProducto();
 
         int cantidad = dataStockProducto.getCantidad();
         float precio = dataStockProducto.getPrecio();
@@ -63,7 +64,7 @@ public class ManejadorProducto {
 
         StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
 
-        Individual individual = new Individual(nombre, descripcion, nombre, stockProduco, nickName);
+        Individual individual = new Individual(nombre, descripcion, nombre, stockProduco, nickName, tipoProducto);
 
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         mu.agregarProductoRestaurante(nickName, individual);
@@ -80,6 +81,7 @@ public class ManejadorProducto {
     public void ingresarProducto(DataPromocion dataPromocion) {
 
         String nombre = dataPromocion.getNombre();
+        String tipoProducto = dataPromocion.getTipoProducto();
         String descricpion = dataPromocion.getDescripcion();
         String rutaImagen = dataPromocion.getRutaImagen();
         int descuento = dataPromocion.getDescuento();
@@ -106,7 +108,7 @@ public class ManejadorProducto {
         float precio = dataStockProducto.getPrecio();
         Calendar fecha = dataStockProducto.getFecha();
         StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
-        Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName);
+        Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName, tipoProducto);
 
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         mu.agregarProductoRestaurante(nickName, promocion);

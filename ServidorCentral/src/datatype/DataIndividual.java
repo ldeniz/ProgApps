@@ -19,4 +19,8 @@ public class DataIndividual extends DataProducto {
         super(nombre, descripcion, rutaImagen);
     }
 
+    public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto) {
+        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);
+    }
+
 }

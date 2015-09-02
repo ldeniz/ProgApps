@@ -14,13 +14,13 @@ import datatype.DataProducto;
  */
 public class Individual extends Producto {
 
-    public Individual(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName) {
-        super(nombre, descripcion, rutaImagen, stock, nickName);
+    public Individual(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
+        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);
     }
 
     @Override
     public DataProducto obtenerDatosProducto() {
-        DataProducto dataIndividual = new DataIndividual(getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName());
+        DataProducto dataIndividual = new DataIndividual(getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());
         return dataIndividual;
     }
 

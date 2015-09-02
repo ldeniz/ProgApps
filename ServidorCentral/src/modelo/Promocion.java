@@ -20,12 +20,8 @@ public class Promocion extends Producto {
     private boolean activa;
     private ArrayList<IndividualPromocion> individualPromocion;
 
-    public Promocion(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName) {
-        super(nombre, descripcion, rutaImagen, stock, nickName);
-    }
-
-    public Promocion(int descuento, boolean activa, ArrayList<IndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName) {
-        super(nombre, descripcion, rutaImagen, stock, nickName);
+    public Promocion(int descuento, boolean activa, ArrayList<IndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
+        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);
         this.descuento = descuento;
         this.activa = activa;
         this.individualPromocion = individualPromocion;
@@ -61,7 +57,7 @@ public class Promocion extends Producto {
         for (IndividualPromocion ip : individualPromocion) {
             dataIndividualPromocion.add(ip.obtenerDatosIndividualPromocion());
         }
-        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName());
+        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());
         return dataPromocion;
     }
 

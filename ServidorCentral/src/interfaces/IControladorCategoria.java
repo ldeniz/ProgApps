@@ -25,7 +25,7 @@ public interface IControladorCategoria {
     public boolean existeCategoria(String nombre);
 
     /**
-     * Retorna una lista con las categorías existentes en el sistema
+     * Retorna una lista con las categorías existentes en el sistema.
      *
      * @return
      */
