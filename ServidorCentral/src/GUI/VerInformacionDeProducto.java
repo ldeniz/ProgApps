@@ -6,6 +6,7 @@
 package GUI;
 
 import datatype.DataIndividual;
+import datatype.DataIndividualPromocion;
 import datatype.DataProducto;
 import datatype.DataPromocion;
 import fabrica.Fabrica;
@@ -60,7 +61,6 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         modeloTablaProductos = new DefaultTableModel(); modeloTablaProductos.addColumn("Producto"); modeloTablaProductos.addColumn("Restaurante"); modeloTablaProductos.addColumn("Descripción");
         productos = new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } };
-        seleccionarProducto = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nombreProducto = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -106,15 +106,12 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
         jLabel1.setText("Productos del Sistema:");
 
         productos.setModel(modeloTablaProductos);
-        jScrollPane1.setViewportView(productos);
-
-        seleccionarProducto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        seleccionarProducto.setText("Seleccionar Producto");
-        seleccionarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                seleccionarProductoActionPerformed(evt);
+        productos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productosMouseClicked(evt);
             }
         });
+        jScrollPane1.setViewportView(productos);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Nombre");
@@ -260,10 +257,9 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
                                     .addComponent(descripcionProducto)
                                     .addComponent(RestauranteProducto)
                                     .addComponent(nombreProducto))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
-                                .addComponent(seleccionarProducto))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 249, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -307,14 +303,13 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addComponent(tipoProducto)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(seleccionarProducto)
-                        .addGap(57, 57, 57)
+                        .addGap(80, 80, 80)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonCancelar3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(302, 302, 302)
@@ -325,8 +320,12 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void seleccionarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarProductoActionPerformed
-        int index = productos.getSelectedRow();
+    private void jButtonCancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar3ActionPerformed
+        this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCancelar3ActionPerformed
+
+    private void productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productosMouseClicked
+                int index = productos.getSelectedRow();
         String idproducto = (String) productos.getValueAt(index, 0);
         String restaurante = (String) productos.getValueAt(index, 1);
        
@@ -358,7 +357,7 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
             RestauranteProducto.setText(productoSeleccionado.getNickName());
             descripcionProducto.setText(productoSeleccionado.getDescripcion());
             tipoProducto.setText(productoSeleccionado.getTipoProducto());
-            //FALTA PRECIO! precio.setText(productoSeleccionado.);
+            precio.setText(Float.toString(productoSeleccionado.getStock().getPrecio()));
             
             switch (productoSeleccionado.getTipoProducto()) {
             case "individual":
@@ -375,17 +374,33 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
                     estadoProducto.setText("Inactiva");
                 
                 //CARGAR LISTA DE PRODUCTOS INDIVIDUALES
+                ArrayList<DataIndividualPromocion> productosIndividuales = prodPromocion.getIndividualPromocion(); // productos incluidos en la promo
+                for (DataIndividualPromocion p : productosIndividuales) {
+                    String[] fila = new String[3];
+                    fila[0] = p.getIndividual().getNombre();
+                    fila[1] = ((Integer)p.getCantidad()).toString();
+                    modeloTablaProdPromo.addRow(fila);
+                }
+                
+                //CARGAR LISTA DE PEDIDOS 
+                /*Set<DataPedidosProd> pedidos = dp.getDataprod().getPedidos();
+                for (DataPedidosProd p : pedidos) {
+                    String[] fila = new String[3];
+                    fila[0] = p.getCliente();
+                    fila[1] = p.getPrecio().toString();
+                    fila[2] = p.getFecha().getDay() + "/" + p.getFecha().getMonth() + "/" + p.getFecha().getYear() ;
+                    
+                    
+                    modeloTablaPedidosDeProducto.addRow(fila);
+
+                }*/
                 
                 break;
             }    
             general.repaint();
             general.revalidate();    
-        }
-    }//GEN-LAST:event_seleccionarProductoActionPerformed
-
-    private void jButtonCancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar3ActionPerformed
-        this.setVisible(false);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonCancelar3ActionPerformed
+        }                                               
+    }//GEN-LAST:event_productosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -419,7 +434,6 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTable productosDePromocion;
     private DefaultTableModel modeloTablaProdPromo;
     private javax.swing.JPanel promocion;
-    private javax.swing.JButton seleccionarProducto;
     private javax.swing.JLabel tipoProducto;
     // End of variables declaration//GEN-END:variables
 }
