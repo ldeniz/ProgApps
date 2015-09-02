@@ -447,12 +447,12 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
                 camposVacios=true;
             }
             else{
-                iProd.cargarDatosProducto(cNombre, cDescripcion, Float.parseFloat(cDescuento), imagenSrc);
+                iProd.cargarDatosProducto(cNombre, cDescripcion, Integer.parseInt(cDescuento), imagenSrc);
                 for (int i=0;i<listaProductos2.getRowCount();i++){
                     String prod=(String)listaProductos2.getValueAt(i, 0);
                     String cant=(String)listaProductos2.getValueAt(i, 1);
                     
-                    iProd.seleccionarProducto(cNombre, Integer.parseInt(cant));
+                    iProd.seleccionarProducto(prod, Integer.parseInt(cant));
                 }
             }
         }

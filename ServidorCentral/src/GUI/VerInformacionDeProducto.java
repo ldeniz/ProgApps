@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
     IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
-    HashMap<Integer, DataProducto> elProducto = new HashMap<Integer, DataProducto>();
+    HashMap<Integer, DataProducto> elProducto = new HashMap<>();
     /**
      * Creates new form VerInformacionDeProducto
      */
@@ -38,7 +39,7 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
             fila[1] = p.getNickName();
             fila[2] = p.getDescripcion();
             
-            elProducto.put(modeloTablaProductos.getRowCount() + 1, p);
+            elProducto.put(modeloTablaProductos.getRowCount(), p);
             
             modeloTablaProductos.addRow(fila);
             
@@ -351,19 +352,34 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
 
             
             DataProducto productoSeleccionado = elProducto.get(productos.getSelectedRow());
+            general.removeAll();        
+            
+            nombreProducto.setText(productoSeleccionado.getNombre());
+            RestauranteProducto.setText(productoSeleccionado.getNickName());
+            descripcionProducto.setText(productoSeleccionado.getDescripcion());
+            tipoProducto.setText(productoSeleccionado.getTipoProducto());
+            //FALTA PRECIO! precio.setText(productoSeleccionado.);
             
             switch (productoSeleccionado.getTipoProducto()) {
             case "individual":
+                general.add(individual);
+
+                break;
+            case "promocion":                
+                general.add(promocion);
+                DataPromocion prodPromocion = (DataPromocion) productoSeleccionado;
+                descuentoProducto.setText(Integer.toString(prodPromocion.getDescuento())+"%");
+                if (prodPromocion.isActiva())
+                    estadoProducto.setText("Activa");
+                else
+                    estadoProducto.setText("Inactiva");
                 
-                DataIndividual prodIndividual = (DataIndividual) productoSeleccionado;
+                //CARGAR LISTA DE PRODUCTOS INDIVIDUALES
                 
                 break;
-            case "promocion":  
-                
-                break;
-            
             }    
-                
+            general.repaint();
+            general.revalidate();    
         }
     }//GEN-LAST:event_seleccionarProductoActionPerformed
 
