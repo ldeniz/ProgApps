@@ -70,5 +70,10 @@ public class ManejadorCategoria {
         Categoria c = categorias.get(nombre);
         c.agregarRestaurante(r);
     }
+    
+    public void limpiarMemoria()
+    {
+       categorias.clear();
+    }
 
 }
