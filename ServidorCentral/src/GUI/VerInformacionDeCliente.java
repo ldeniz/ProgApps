@@ -79,7 +79,6 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButtonVerPedido = new javax.swing.JButton();
-        jButtonSeleccionarCliente = new javax.swing.JButton();
         jButtonCancelar3 = new javax.swing.JButton();
 
         setTitle("Ver información del Cliente");
@@ -87,6 +86,11 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
         tablaDeClientes.setModel(new javax.swing.table.DefaultTableModel( dataClientes,  new String [] { "Nickname", "Mail" }){
             public boolean isCellEditable(int row, int column) {
                 return (column == 23 );
+            }
+        });
+        tablaDeClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaDeClientesMouseClicked(evt);
             }
         });
         scroll.setViewportView(tablaDeClientes);
@@ -145,14 +149,6 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        jButtonSeleccionarCliente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonSeleccionarCliente.setText("Seleccionar Cliente");
-        jButtonSeleccionarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSeleccionarClienteActionPerformed(evt);
-            }
-        });
-
         jButtonCancelar3.setText("Cancelar");
         jButtonCancelar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,18 +176,12 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(direccionCliente)
-                                    .addComponent(apellidoCliente)
-                                    .addComponent(nombreCliente))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(mailCliente)
-                                    .addComponent(nicknameCliente))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonSeleccionarCliente))))
+                            .addComponent(direccionCliente)
+                            .addComponent(apellidoCliente)
+                            .addComponent(nombreCliente)
+                            .addComponent(mailCliente)
+                            .addComponent(nicknameCliente))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -212,16 +202,13 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(imagenCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(nicknameCliente))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(mailCliente)))
-                            .addComponent(jButtonSeleccionarCliente))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(nicknameCliente))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(mailCliente))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -242,7 +229,7 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
                 .addComponent(jButtonVerPedido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonCancelar3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -252,7 +239,11 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVerPedidoActionPerformed
 
-    private void jButtonSeleccionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarClienteActionPerformed
+    private void jButtonCancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar3ActionPerformed
+        this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCancelar3ActionPerformed
+
+    private void tablaDeClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDeClientesMouseClicked
         int i=tablaDeClientes.getSelectedRow();
         if(i != -1){
             DataCliente c=(DataCliente)dataClientes[i][2];
@@ -279,12 +270,8 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
                     imagenCliente.validate();
             
             }
-        }
-    }//GEN-LAST:event_jButtonSeleccionarClienteActionPerformed
-
-    private void jButtonCancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar3ActionPerformed
-        this.setVisible(false);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonCancelar3ActionPerformed
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaDeClientesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -292,7 +279,6 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel direccionCliente;
     private javax.swing.JLabel imagenCliente;
     private javax.swing.JButton jButtonCancelar3;
-    private javax.swing.JButton jButtonSeleccionarCliente;
     private javax.swing.JButton jButtonVerPedido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
