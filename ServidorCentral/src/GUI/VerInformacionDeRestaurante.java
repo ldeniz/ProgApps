@@ -12,8 +12,11 @@ import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -29,6 +32,7 @@ import javax.swing.tree.DefaultTreeModel;
 public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
     private DefaultTreeModel modelo;
     private DataRestaurante restSelected;
+    
     /**
      * Creates new form VerInformacionDeRestaurante
      */
@@ -52,6 +56,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                 }
             }
         }
+        
         
         initComponents();
     }
@@ -83,9 +88,13 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         modeloProductos =new DefaultListModel();
         productosRestaurante = new javax.swing.JList(){    public boolean isCellEditable(int row, int column) {         return (column == 23 );     }};
-        seleccionarRestaurante = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
 
+        restaurantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                restaurantesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(restaurantes);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -128,14 +137,6 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
         productosRestaurante.setModel(modeloProductos);
         jScrollPane2.setViewportView(productosRestaurante);
 
-        seleccionarRestaurante.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        seleccionarRestaurante.setLabel("Seleccionar Restaurante");
-        seleccionarRestaurante.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                seleccionarRestauranteActionPerformed(evt);
-            }
-        });
-
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,10 +154,8 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                         .addContainerGap(352, Short.MAX_VALUE)
                         .addComponent(verProducto))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(seleccionarRestaurante, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addGap(0, 432, Short.MAX_VALUE)
+                        .addComponent(jButtonCancelar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,9 +189,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(seleccionarRestaurante)
-                .addGap(1, 1, 1)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(imagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -217,7 +214,7 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(verProducto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jButtonCancelar)
                 .addContainerGap())
         );
@@ -229,7 +226,22 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_verProductoActionPerformed
 
-    private void seleccionarRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarRestauranteActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void restaurantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restaurantesMouseClicked
+        //Carga Archivo de Propiedades ----------------------
+        Properties propiedades = new Properties();
+        InputStream entrada = null;
+        try {               
+            entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+            propiedades.load(entrada);
+            } 
+        catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+        //---------------------------------------------------
         DefaultMutableTreeNode node = (DefaultMutableTreeNode)restaurantes.getLastSelectedPathComponent();
         if ((node != null) && (node.isLeaf())){
             restSelected=(DataRestaurante)node.getUserObject();
@@ -246,9 +258,13 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
             for (DataProducto p : productos){
                 modeloProductos.addElement(p.getNombre());
             }
-
-            if (this.restSelected.getRutaImagen().length == 0){
-                //TraerImagen por defecto
+             
+            if (this.restSelected.getRutaImagen() == null){
+               Image image = Toolkit.getDefaultToolkit().createImage(propiedades.getProperty("restoPorDefecto"));
+               Icon warnIcon = new ImageIcon(image);
+               imagenRestaurante.setIcon(warnIcon);
+               imagenRestaurante.validate();
+               System.out.println("Carga la por defecto"+propiedades.getProperty("restoPorDefecto"));
             }
             else{
                Image image = Toolkit.getDefaultToolkit().createImage(this.restSelected.getRutaImagen()[0]);
@@ -256,13 +272,10 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
                imagenRestaurante.setIcon(warnIcon);
                imagenRestaurante.validate();
             }
+            
                    
-        }
-    }//GEN-LAST:event_seleccionarRestauranteActionPerformed
-
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        this.setVisible(false);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_restaurantesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -283,7 +296,6 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
     private javax.swing.JList productosRestaurante;
     private DefaultListModel modeloProductos;
     private javax.swing.JTree restaurantes;
-    private javax.swing.JButton seleccionarRestaurante;
     private javax.swing.JButton verProducto;
     // End of variables declaration//GEN-END:variables
 }

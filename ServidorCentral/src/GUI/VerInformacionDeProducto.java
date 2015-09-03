@@ -12,9 +12,15 @@ import datatype.DataPromocion;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorProducto;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.Set;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -26,10 +32,22 @@ import javax.swing.table.DefaultTableModel;
 public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
     IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
     HashMap<Integer, DataProducto> elProducto = new HashMap<>();
+    Properties propiedades = new Properties();
     /**
      * Creates new form VerInformacionDeProducto
      */
     public VerInformacionDeProducto() {
+        //Carga Archivo de Propiedades ----------------------
+        
+        InputStream entrada = null;
+        try {               
+            entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+            propiedades.load(entrada);
+            } 
+        catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+        //---------------------------------------------------
         initComponents();
         
         ArrayList<DataProducto> productos = cp.listarProductos();
@@ -347,11 +365,34 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
             estadoProducto.setText("");
             descuentoProducto.setText("");
             precio.setText("");
+            
+            
+            
+            
             imagenProducto.setIcon(new ImageIcon());
 
             
             DataProducto productoSeleccionado = elProducto.get(productos.getSelectedRow());
             general.removeAll();        
+            
+            
+            
+            if (productoSeleccionado.getRutaImagen() == null){
+               Image image = Toolkit.getDefaultToolkit().createImage(propiedades.getProperty("productoPorDefecto"));
+               Icon warnIcon = new ImageIcon(image);
+               imagenProducto.setIcon(warnIcon);
+               imagenProducto.validate();
+               System.out.println("Carga la por defecto "+propiedades.getProperty("productoPorDefecto"));
+            }
+            else{
+               Image image = Toolkit.getDefaultToolkit().createImage(productoSeleccionado.getRutaImagen());
+               Icon warnIcon = new ImageIcon(image);
+               imagenProducto.setIcon(warnIcon);
+               imagenProducto.validate();
+               System.out.println("Carga la imagen "+productoSeleccionado.getRutaImagen());
+            }
+            
+            
             
             nombreProducto.setText(productoSeleccionado.getNombre());
             RestauranteProducto.setText(productoSeleccionado.getNickName());

@@ -15,7 +15,13 @@ import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorUsuario;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileChannel;
 import java.util.Iterator;
+import java.util.Properties;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -33,7 +39,8 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
         DataDireccion direccion;
         String password;
         String confirmaPassword;
-
+        String imagenSrc;
+        String outFile;    
         
         List<String> imagenes = new ArrayList<String>();
         String[] lasImagenes;// = new String[imagenes.size()];
@@ -51,7 +58,8 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
      */
     public RegistrarRestaurante() {
         //imagenes= new ArrayList(); 
-        
+        imagenSrc="";
+        outFile="";
         modeloLista = new DefaultListModel();
         cCat=new ControladorCategoria();
 
@@ -261,25 +269,25 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
         boolean existeUsu,contraseñasIguales,existeNick;
     
     
-    nick=jTextFieldNickname.getText();
-    nombre=jTextFieldNombre.getText();
-    mail=jTextFieldCorreo.getText();
-   
-    direccion= new DataDireccion(jTextFieldDireccion.getText(),"","");
-    password=jPasswordFieldPass.getText();
-    confirmaPassword=jPasswordFieldRePass.getText();
+        nick=jTextFieldNickname.getText();
+        nombre=jTextFieldNombre.getText();
+        mail=jTextFieldCorreo.getText();
+
+        direccion= new DataDireccion(jTextFieldDireccion.getText(),"","");
+        password=jPasswordFieldPass.getText();
+        confirmaPassword=jPasswordFieldRePass.getText();
     
     
-    List<String> selectedCat=jListCategorias.getSelectedValuesList();
+        List<String> selectedCat=jListCategorias.getSelectedValuesList();
     
-    if ("".equals(nick) ||"".equals(nombre) ||"".equals(mail) ||"".equals(direccion) || selectedCat.isEmpty()
-        ||"".equals(password)||"".equals(confirmaPassword)){
-        JOptionPane.showMessageDialog(this, "Complete todos los campos", "", JOptionPane.WARNING_MESSAGE);
-    }
-    else{
-        existeUsu=cUsr.existeUsuario(nick, mail);
-        existeNick=cUsr.existeUsuario(nick);
-        contraseñasIguales=password.equals(confirmaPassword);
+        if ("".equals(nick) ||"".equals(nombre) ||"".equals(mail) ||"".equals(direccion) || selectedCat.isEmpty()
+            ||"".equals(password)||"".equals(confirmaPassword)){
+            JOptionPane.showMessageDialog(this, "Complete todos los campos", "", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            existeUsu=cUsr.existeUsuario(nick, mail);
+            existeNick=cUsr.existeUsuario(nick);
+            contraseñasIguales=password.equals(confirmaPassword);
         
         if ( !existeUsu && !existeNick && contraseñasIguales){
             try{
@@ -328,19 +336,50 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
         elegirImagen.addChoosableFileFilter(filter);
         int opcion = elegirImagen.showOpenDialog(jButtonImages);
         
-        
+        //Carga Archivo de Propiedades ----------------------
+        Properties propiedades = new Properties();
+        InputStream entrada = null;
+        try {               
+            entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+            propiedades.load(entrada);
+            } 
+        catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+        //---------------------------------------------------
+                
         if (opcion == JFileChooser.APPROVE_OPTION) {
             File[] f=elegirImagen.getSelectedFiles(); 
             //imagenes.clear();
                 
                 for (File f1 : f) {
-                    //lasImagenes[lasImagenes.length] = f1.getPath();
-                    imagenes.add(f1.getPath());        
-                    //imagenes.toArray(lasImagenes);
-                    //imagenes.add(f1.getPath());
+                    imagenes.add(f1.getPath());  
+                    
+                    try{
+                        String inFile = f1.getPath();
+                        outFile = propiedades.getProperty("imagenesRestaurantes")+f1.getName();
+
+                        System.out.println(inFile);
+                        System.out.println(outFile);
+
+                        FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
+                        FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
+
+                        FileChannel inChannel = fis.getChannel();
+                        FileChannel outChannel = fos.getChannel();
+
+                        inChannel.transferTo(0, inChannel.size(), outChannel);
+                        fis.close();
+                        fos.close();
+
+                       }catch (IOException ioe) {
+                        System.err.println("Error al Generar Copia");
+                    }   
+
                 }
                 this.lasImagenes = imagenes.toArray(new String[imagenes.size()]);
             
+                
         }
          
     }//GEN-LAST:event_jButtonImagesActionPerformed

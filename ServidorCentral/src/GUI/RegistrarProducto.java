@@ -13,8 +13,14 @@ import interfaces.IControladorProducto;
 import interfaces.IControladorUsuario;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,8 +37,10 @@ import javax.swing.table.DefaultTableModel;
 public class RegistrarProducto extends javax.swing.JInternalFrame {
     private 
         DataRestaurante[] restaurantes;
-        String imagenSrc;
         Float cPrecio;
+        String imagenSrc;
+        String outFile;
+        
          
     IControladorCategoria iCat = Fabrica.getInstance().obtenerControladorCategoria();
     IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
@@ -52,6 +60,8 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
      * Creates new form RegistrarProducto
      */
     public RegistrarProducto() {
+        imagenSrc="";
+        outFile="";
         List<DataRestaurante> temp=iUsr.listarRestaurantes();
         restaurantes=temp.toArray(new DataRestaurante[temp.size()]);
         initComponents();
@@ -386,22 +396,42 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
         
         if (opt == JFileChooser.APPROVE_OPTION) {
             imagenSrc = elegirImagen.getSelectedFile().getPath();
-            if(imagenSrc==null){
+            if(!imagenSrc.isEmpty()){   
+
+                //Carga Archivo de Propiedades ----------------------
+                Properties propiedades = new Properties();
+                InputStream entrada = null;
+                try {               
+                    entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+                    propiedades.load(entrada);
+                    } 
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+                //---------------------------------------------------
                 
-                //Habría que agregarle una imagen por defecto si no tiene
+                try{
+                    String inFile = imagenSrc;
+                    outFile = propiedades.getProperty("imagenesProductos")+elegirImagen.getSelectedFile().getName();
+               
+                    System.out.println(inFile);
+                    System.out.println(outFile);
+                    
+                    FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
+                    FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
+                    
+                    FileChannel inChannel = fis.getChannel();
+                    FileChannel outChannel = fos.getChannel();
+                    
+                    inChannel.transferTo(0, inChannel.size(), outChannel);
+                    fis.close();
+                    fos.close();
+
+                   }catch (IOException ioe) {
+                    System.err.println("Error al Generar Copia");
+                   }
                 
-                // Image image = Toolkit.getDefaultToolkit().createImage(IMAGEN POR DEFECTO);
-                // Icon warnIcon = new ImageIcon(image);
-                // label.setIcon(warnIcon);
-                // label.validate();
-            }
-            else{
-                
-                Image image = Toolkit.getDefaultToolkit().createImage(imagenSrc);
-                //Icon warnIcon = new ImageIcon(image);
-                //imagenSrc.setIcon(warnIcon);
-                //imagenSrc.validate();
-                
+            
             }
         }
     }//GEN-LAST:event_jButtonImageActionPerformed
@@ -432,7 +462,7 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
         //individual
         if (jRadioButtonIndividual.isSelected()){
             
-            iProd.cargarDatosProducto(cNombre, cDescripcion, Float.parseFloat(cPrecio), imagenSrc);
+            iProd.cargarDatosProducto(cNombre, cDescripcion, Float.parseFloat(cPrecio), outFile);
             
             if ("".equals(cPrecio)){
                 camposVacios=true;
@@ -447,7 +477,7 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
                 camposVacios=true;
             }
             else{
-                iProd.cargarDatosProducto(cNombre, cDescripcion, Integer.parseInt(cDescuento), imagenSrc);
+                iProd.cargarDatosProducto(cNombre, cDescripcion, Integer.parseInt(cDescuento), outFile);
                 for (int i=0;i<listaProductos2.getRowCount();i++){
                     String prod=(String)listaProductos2.getValueAt(i, 0);
                     String cant=(String)listaProductos2.getValueAt(i, 1);
