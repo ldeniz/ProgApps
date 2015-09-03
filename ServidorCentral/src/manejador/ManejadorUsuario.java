@@ -144,5 +144,12 @@ public class ManejadorUsuario {
         DataRestaurante dr = (DataRestaurante) r.obtenerDatosUsuario();
         return dr.getDataProductos();
     }
+    public void limpiarMemoria()
+    {
+        usuariosNick.clear();
+        usuariosMail.clear();
+        clientes.clear();
+        restaurantes.clear();
+    }
 
 }
