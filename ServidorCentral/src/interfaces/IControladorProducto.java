@@ -1,6 +1,8 @@
 package interfaces;
 
+import datatype.DataIndividual;
 import datatype.DataProducto;
+import datatype.DataPromocion;
 import java.util.ArrayList;
 
 /**
@@ -10,8 +12,7 @@ import java.util.ArrayList;
 public interface IControladorProducto {
 
     /**
-     * Carga en memoria los datos de un producto ingresados
-     * por el usuario.
+     * Carga en memoria los datos de un producto ingresados por el usuario.
      *
      * @param nombre
      * @param descripcion
@@ -39,11 +40,11 @@ public interface IControladorProducto {
      * @return
      */
     public boolean existeProducto(String nickName, String nombre);
-    
-    
+
     /**
      * El sistema recuerda el restaurante
-     * @param nickName 
+     *
+     * @param nickName
      */
     public void seleccionarRestaurante(String nickName);
 

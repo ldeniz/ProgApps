@@ -16,6 +16,7 @@ public abstract class DataProducto {
     private String rutaImagen;
     private DataStockProducto stock;
     private String nickName;
+    private String tipoProducto;
 
     public DataProducto(String nombre, String descripcion, String rutaImagen) {
         this.nombre = nombre;
@@ -29,6 +30,19 @@ public abstract class DataProducto {
         this.rutaImagen = rutaImagen;
         this.stock = stock;
         this.nickName = nickName;
+    }
+
+    public DataProducto(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.rutaImagen = rutaImagen;
+        this.stock = stock;
+        this.nickName = nickName;
+        this.tipoProducto = tipoProducto;
+    }
+
+    public String getTipoProducto() {
+        return tipoProducto;
     }
 
     public String getNombre() {
@@ -49,6 +63,11 @@ public abstract class DataProducto {
 
     public String getNickName() {
         return nickName;
+    }
+
+    @Override
+    public String toString() {
+        return "DataProducto{" + "nombre=" + nombre + ", descripcion=" + descripcion + ", nickName=" + nickName + '}';
     }
 
 }

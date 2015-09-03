@@ -54,6 +54,8 @@ public class ManejadorProducto {
         DataStockProducto dataStockProducto = dataIndividual.getStock();
         String nombre = dataIndividual.getNombre();
         String descripcion = dataIndividual.getDescripcion();
+        String tipoProducto = dataIndividual.getTipoProducto();
+        String rutaImagen = dataIndividual.getRutaImagen();
 
         int cantidad = dataStockProducto.getCantidad();
         float precio = dataStockProducto.getPrecio();
@@ -63,7 +65,7 @@ public class ManejadorProducto {
 
         StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
 
-        Individual individual = new Individual(nombre, descripcion, nombre, stockProduco, nickName);
+        Individual individual = new Individual(nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);
 
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         mu.agregarProductoRestaurante(nickName, individual);
@@ -80,6 +82,7 @@ public class ManejadorProducto {
     public void ingresarProducto(DataPromocion dataPromocion) {
 
         String nombre = dataPromocion.getNombre();
+        String tipoProducto = dataPromocion.getTipoProducto();
         String descricpion = dataPromocion.getDescripcion();
         String rutaImagen = dataPromocion.getRutaImagen();
         int descuento = dataPromocion.getDescuento();
@@ -106,7 +109,7 @@ public class ManejadorProducto {
         float precio = dataStockProducto.getPrecio();
         Calendar fecha = dataStockProducto.getFecha();
         StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
-        Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName);
+        Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName, tipoProducto);
 
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         mu.agregarProductoRestaurante(nickName, promocion);
@@ -136,6 +139,7 @@ public class ManejadorProducto {
                 for (Producto p : lp) {
                     dataProductos.add(p.obtenerDatosProducto());
                 }
+                lp.clear();
             }
         }
         return dataProductos;
@@ -145,6 +149,20 @@ public class ManejadorProducto {
         HashMap<String, Producto> hm = productos.get(nickName);
         Producto p = hm.get(nombre);
         return p.obtenerDatosProducto();
+    }
+
+    public ArrayList<DataProducto> listarProductos(String nickName) {
+        ArrayList<DataProducto> dataProductos = null;
+        HashMap<String, Producto> pr = productos.get(nickName);
+        if (!pr.isEmpty()) {
+            dataProductos = new ArrayList<>();
+            ArrayList<Producto> lp = new ArrayList<>(pr.values());
+            for (Producto p : lp) {
+                dataProductos.add(p.obtenerDatosProducto());
+            }
+            lp.clear();
+        }
+        return dataProductos;
     }
 
 }

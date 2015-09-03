@@ -7,12 +7,20 @@ package GUI;
 
 import controlador.ControladorUsuario;
 import datatype.DataDireccion;
+import java.util.Properties;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorUsuario;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.util.Date;
+import javax.annotation.Resources;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -26,6 +34,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class RegistrarCliente extends javax.swing.JInternalFrame {
     private
         String imagenSrc;
+        String outFile;
         String apellido;
         Date fecha;
         String nick;
@@ -35,13 +44,14 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
         IControladorUsuario cU;
         String password;
         String confirmaPassword;
+        
     /**
      * Creates new form RegistrarCliente
      */
     public RegistrarCliente() {
         
         imagenSrc="";
-        
+        outFile="";
         initComponents();
         jLabelNick.setText("");
         jLabelMail.setText("");
@@ -324,15 +334,49 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
                 // label.validate();
             }
             else{
+               
+                //Carga Archivo de Propiedades ----------------------
+                Properties propiedades = new Properties();
+                InputStream entrada = null;
+                try {               
+                    entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+                    propiedades.load(entrada);
+                    } 
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+                //---------------------------------------------------
                 
-                Image image = Toolkit.getDefaultToolkit().createImage(imagenSrc);
+                try{
+                    String inFile = imagenSrc;
+                    outFile = propiedades.getProperty("imagenesClientes")+elegirImagen.getSelectedFile().getName();
+               
+                    System.out.println(inFile);
+                    System.out.println(outFile);
+                    
+                    FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
+                    FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
+                    
+                    FileChannel inChannel = fis.getChannel();
+                    FileChannel outChannel = fos.getChannel();
+                    
+                    inChannel.transferTo(0, inChannel.size(), outChannel);
+                    fis.close();
+                    fos.close();
+
+                   }catch (IOException ioe) {
+                    System.err.println("Error al Generar Copia");
+                   }
+                
+                
+                Image image = Toolkit.getDefaultToolkit().createImage(outFile);
                 Icon warnIcon = new ImageIcon(image);
                 jLabel3.setIcon(warnIcon);
                 jLabel3.validate();
                 
             }
         }
-        //jFileChooser1.setVisible(true);
+
     }//GEN-LAST:event_jButtonImageActionPerformed
 
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
@@ -366,9 +410,7 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
 
             if ( !existeUsu && !existeNick && passwordIguales){
                 try{
-                       //FALTA PASSWORD
-                   // cU.seleccionarCategoria("cliente");
-                    cU.CargarDatosUsuario(nick,mail,nombre,password,direccion,apellido,fecha,imagenSrc);
+                    cU.CargarDatosUsuario(nick,mail,nombre,password,direccion,apellido,fecha,outFile);
                     cU.altaUsuario();
                     JOptionPane.showMessageDialog(this, "Cliente registrado Correctamente", "", JOptionPane.INFORMATION_MESSAGE);
                     this.setVisible(false);                
@@ -376,9 +418,6 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
                 catch(Exception e){
                     JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
                 }
-
-
-
             }
             else{
                 if (existeNick)

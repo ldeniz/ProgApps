@@ -24,20 +24,17 @@ public class ControladorProducto implements IControladorProducto {
     private DataProducto dataProducto;
     private DataStockProducto dataStockProducto;
     private ArrayList<DataIndividualPromocion> productosPromocion = new ArrayList<>();
-    private String tipo;
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, float precio, String rutaImagen) {
         dataStockProducto = new DataStockProducto(1, precio);
-        dataProducto = new DataIndividual(nombre, descripcion, rutaImagen, dataStockProducto, nickName);
-        tipo = "individual";
+        dataProducto = new DataIndividual(nombre, descripcion, rutaImagen, dataStockProducto, nickName, "individual");
     }
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, int descuento, String rutaImagen) {
         dataStockProducto = new DataStockProducto(1, 0);
-        dataProducto = new DataPromocion(descuento, true, productosPromocion, nombre, descripcion, rutaImagen, dataStockProducto, nickName);
-        tipo = "promocion";
+        dataProducto = new DataPromocion(descuento, true, productosPromocion, nombre, descripcion, rutaImagen, dataStockProducto, nickName, "promocion");
     }
 
     @Override
@@ -56,7 +53,7 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void altaProducto() {
         ManejadorProducto mp = ManejadorProducto.getInstance();
-        switch (tipo) {
+        switch (dataProducto.getTipoProducto()) {
             case "individual":
                 mp.ingresarProducto((DataIndividual) dataProducto);
                 break;

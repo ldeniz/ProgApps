@@ -5,6 +5,17 @@
  */
 package GUI;
 
+import datatype.DataDireccion;
+import datatype.DataProducto;
+import fabrica.Fabrica;
+import interfaces.IControladorCategoria;
+import interfaces.IControladorProducto;
+import interfaces.IControladorUsuario;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import servidorcentral.ServidorCentral;
+
 /**
  *
  * @author Mathi
@@ -41,6 +52,8 @@ public class Principal extends javax.swing.JFrame {
         registrarProducto = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         altaCategoria = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        datosPrueba = new javax.swing.JMenuItem();
         informacion = new javax.swing.JMenu();
         verInfoCliente = new javax.swing.JMenuItem();
         verInfoRestaurante = new javax.swing.JMenuItem();
@@ -133,6 +146,16 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         registro.add(altaCategoria);
+        registro.add(jSeparator4);
+
+        datosPrueba.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        datosPrueba.setText("Cargar Datos de Prueba");
+        datosPrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                datosPruebaActionPerformed(evt);
+            }
+        });
+        registro.add(datosPrueba);
 
         menu.add(registro);
 
@@ -260,6 +283,57 @@ public class Principal extends javax.swing.JFrame {
         f.show();
     }//GEN-LAST:event_verInfoPedidoActionPerformed
 
+    private void datosPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datosPruebaActionPerformed
+        
+    // CARGAR DATOS DE PRUEBA
+        IControladorCategoria c = Fabrica.getInstance().obtenerControladorCategoria();
+        IControladorUsuario u = Fabrica.getInstance().obtenerControladorUsuario();
+        IControladorProducto p = Fabrica.getInstance().obtenerControladorProducto();
+
+        c.altaCategoria("Pizzas");
+        c.altaCategoria("Sushi");
+        c.altaCategoria("Pastas");
+        c.altaCategoria("Minutas");
+        c.altaCategoria("Arabe");
+ 
+        String[] rutaImagen = {"a", "b"};
+        u.seleccionarCategoria("Sushi");
+        try {
+            u.CargarDatosUsuario("SushiGO", "contacto@sushi.com", "SushiGO", "123", new DataDireccion("a", "b", "c"), rutaImagen);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        
+        u.seleccionarCategoria("Pizzas");
+        try {
+            u.CargarDatosUsuario("El Horno de Juan", "contacto@horno.com", "El Horno de Juan", "123", new DataDireccion("a", "b", "c"), rutaImagen);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        
+        p.seleccionarRestaurante("SushiGO");
+        p.cargarDatosProducto("Roll de Pollo", "Rico roll con el mejor pollo", (float) 150.0, "1");
+        p.altaProducto();
+        p.cargarDatosProducto("Roll de Algas", "Rico roll con la mejor Alga", (float) 350.0, "1");
+        p.altaProducto();
+        
+        p.seleccionarRestaurante("El Horno de Juan");
+        p.cargarDatosProducto("Muzzarella", "Rica Pizza de Muzarella", (float) 75.0, "2");
+        p.altaProducto();
+        p.cargarDatosProducto("Faina", "De Orillo o de Borde", (float) 60.0, "2");
+        p.altaProducto();
+
+
+
+        p.seleccionarRestaurante("El Horno de Juan");
+        p.cargarDatosProducto("Promo Juanito", "Pizza y faina", 25, "c");
+        p.seleccionarProducto("Muzzarella", 2);
+        p.seleccionarProducto("Faina", 1);
+        p.altaProducto();
+    }//GEN-LAST:event_datosPruebaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -300,12 +374,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem actualizarProducto;
     private javax.swing.JMenuItem altaCategoria;
     private javax.swing.JMenuItem cancelarPedido;
+    private javax.swing.JMenuItem datosPrueba;
     private javax.swing.JMenuItem generarPedido;
     private javax.swing.JMenu informacion;
     private javax.swing.JMenu inicio;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem registrarCliente;
     private javax.swing.JMenuItem registrarProducto;

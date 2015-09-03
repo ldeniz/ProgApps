@@ -53,6 +53,7 @@ public class ServidorCentral {
         for (DataProducto dp : ldp) {
             System.out.println(dp.getNickName());
             System.out.println(dp.getNombre());
+            System.out.println(dp.getTipoProducto());
 
         }
 
@@ -67,6 +68,7 @@ public class ServidorCentral {
         for (DataProducto dp : ldp) {
             System.out.println(dp.getNickName());
             System.out.println(dp.getNombre());
+            System.out.println(dp.getTipoProducto());
         }
 
         ArrayList<DataCategoria> ldc = c.listarCategorias();
@@ -80,7 +82,7 @@ public class ServidorCentral {
         String nickName = "acabar";
         ldp = u.listarProductos(nickName);
         for (DataProducto dp : ldp) {
-            System.out.println("Bar: " + dp.getNickName() + ", Producto: " + dp.getNombre());
+            System.out.println("Bar: " + dp.getNickName() + ", Producto: " + dp.getNombre() + ", Tipo: " + dp.getTipoProducto());
         }
     }
 

@@ -19,26 +19,15 @@ public abstract class Producto implements Serializable {
     private String rutaImagen;
     private StockProduco stock;
     private String nickName;
+    private String tipoProducto;
 
-    public Producto(String nombre, String descripcion, String rutaImagen) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.rutaImagen = rutaImagen;
-    }
-
-    public Producto(String nombre, String descripcion, String rutaImagen, StockProduco stock) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.rutaImagen = rutaImagen;
-        this.stock = stock;
-    }
-
-    public Producto(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName) {
+    public Producto(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.rutaImagen = rutaImagen;
         this.stock = stock;
         this.nickName = nickName;
+        this.tipoProducto = tipoProducto;
     }
 
     public String getNombre() {
@@ -79,6 +68,14 @@ public abstract class Producto implements Serializable {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public String getTipoProducto() {
+        return tipoProducto;
+    }
+
+    public void setTipoProducto(String tipoProducto) {
+        this.tipoProducto = tipoProducto;
     }
 
     public abstract DataProducto obtenerDatosProducto();
