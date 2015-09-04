@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Cliente.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ServidorCentral&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">modelo</a> &gt; <span class="el_source">Cliente.java</span></div><h1>Cliente.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package modelo;
+
+import datatype.DataCliente;
+import datatype.DataDireccion;
+import datatype.DataUsuario;
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ *
+ * @author sestefan
+ */
+public class Cliente extends Usuario implements Serializable {
+
+    private String apellido;
+    private Date fechaNacimiento;
+    private String rutaImagen;
+
+    public Cliente(String apellido, Date fechaNacimiento, String rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
+<span class="fc" id="L25">        super(nickname, mail, nombre, pass, direccion);</span>
+<span class="fc" id="L26">        this.apellido = apellido;</span>
+<span class="fc" id="L27">        this.fechaNacimiento = fechaNacimiento;</span>
+<span class="fc" id="L28">        this.rutaImagen = rutaImagen;</span>
+<span class="fc" id="L29">    }</span>
+
+    public String getApellido() {
+<span class="nc" id="L32">        return apellido;</span>
+    }
+
+    public void setApellido(String apellido) {
+<span class="nc" id="L36">        this.apellido = apellido;</span>
+<span class="nc" id="L37">    }</span>
+
+    public Date getFechaNacimiento() {
+<span class="nc" id="L40">        return fechaNacimiento;</span>
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+<span class="nc" id="L44">        this.fechaNacimiento = fechaNacimiento;</span>
+<span class="nc" id="L45">    }</span>
+
+    public String getRutaImagen() {
+<span class="nc" id="L48">        return rutaImagen;</span>
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+<span class="nc" id="L52">        this.rutaImagen = rutaImagen;</span>
+<span class="nc" id="L53">    }</span>
+
+    @Override
+    public DataUsuario obtenerDatosUsuario() {
+<span class="fc" id="L57">        DataUsuario dataUsuario = new DataCliente(apellido, fechaNacimiento, rutaImagen, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());</span>
+<span class="fc" id="L58">        return dataUsuario;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

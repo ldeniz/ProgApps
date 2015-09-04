@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Promocion.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ServidorCentral&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">modelo</a> &gt; <span class="el_source">Promocion.java</span></div><h1>Promocion.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package modelo;
+
+import datatype.DataIndividualPromocion;
+import datatype.DataProducto;
+import datatype.DataPromocion;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author sestefan
+ */
+public class Promocion extends Producto {
+
+    private int descuento;
+    private boolean activa;
+    private ArrayList&lt;IndividualPromocion&gt; individualPromocion;
+
+    public Promocion(int descuento, boolean activa, ArrayList&lt;IndividualPromocion&gt; individualPromocion, String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
+<span class="fc" id="L24">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
+<span class="fc" id="L25">        this.descuento = descuento;</span>
+<span class="fc" id="L26">        this.activa = activa;</span>
+<span class="fc" id="L27">        this.individualPromocion = individualPromocion;</span>
+<span class="fc" id="L28">    }</span>
+
+    public int getDescuento() {
+<span class="nc" id="L31">        return descuento;</span>
+    }
+
+    public void setDescuento(int descuento) {
+<span class="nc" id="L35">        this.descuento = descuento;</span>
+<span class="nc" id="L36">    }</span>
+
+    public boolean isActiva() {
+<span class="nc" id="L39">        return activa;</span>
+    }
+
+    public void setActiva(boolean activa) {
+<span class="nc" id="L43">        this.activa = activa;</span>
+<span class="nc" id="L44">    }</span>
+
+    public ArrayList&lt;IndividualPromocion&gt; getIndividualPromocion() {
+<span class="nc" id="L47">        return individualPromocion;</span>
+    }
+
+    public void setIndividualPromocion(ArrayList&lt;IndividualPromocion&gt; individualPromocion) {
+<span class="nc" id="L51">        this.individualPromocion = individualPromocion;</span>
+<span class="nc" id="L52">    }</span>
+
+    @Override
+    public DataProducto obtenerDatosProducto() {
+<span class="nc" id="L56">        ArrayList&lt;DataIndividualPromocion&gt; dataIndividualPromocion = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        for (IndividualPromocion ip : individualPromocion) {</span>
+<span class="nc" id="L58">            dataIndividualPromocion.add(ip.obtenerDatosIndividualPromocion());</span>
+<span class="nc" id="L59">        }</span>
+<span class="nc" id="L60">        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());</span>
+<span class="nc" id="L61">        return dataPromocion;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

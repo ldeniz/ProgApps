@@ -164,5 +164,11 @@ public class ManejadorProducto {
         }
         return dataProductos;
     }
-
+    
+    public void limpiarMemoria()
+    {
+        productos.clear();
+        individuales.clear();
+        promociones.clear();
+    }
 }
