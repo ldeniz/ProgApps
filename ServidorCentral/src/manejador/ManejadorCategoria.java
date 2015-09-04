@@ -4,8 +4,6 @@
  */
 package manejador;
 
-import datatype.DataCategoria;
-import datatype.DataRestaurante;
 import java.util.ArrayList;
 import java.util.HashMap;
 import modelo.Categoria;
@@ -37,28 +35,19 @@ public class ManejadorCategoria {
 
     /**
      *
-     * @param dataCategoria
+     * @param categoria
      */
-    public void ingresarCategoria(DataCategoria dataCategoria) {
-        String nombre = dataCategoria.getNombre();
-        Categoria c = new Categoria(nombre);
-        categorias.put(nombre, c);
+    public void ingresarCategoria(Categoria categoria) {
+        String nombre = categoria.getNombre();
+        categorias.put(nombre, categoria);
     }
 
     /**
-     * Retorna una estructura de DataCategorias
      *
      * @return
      */
-    public ArrayList<DataCategoria> listarCategorias() {
-        ArrayList<DataCategoria> dataCategorias = null;
-        if (!categorias.isEmpty()) {
-            dataCategorias = new ArrayList<>();
-            for (Categoria c : categorias.values()) {
-                dataCategorias.add(c.obtenerDatosCategoria());
-            }
-        }
-        return dataCategorias;
+    public ArrayList<Categoria> listarCategorias() {
+        return (ArrayList<Categoria>) categorias.values();
     }
 
     /**
