@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package manejador;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
+
 import datatype.DataCategoria;
 import datatype.DataRestaurante;
 import datatype.DataDireccion;
@@ -16,7 +16,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.Ignore;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
@@ -27,8 +26,15 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author jose
  */
+import org.junit.Test;
+
+ 
+//Running test cases in order of method names in ascending order
+
 public class ManejadorCategoriaTest {
 
+    
+    
     public ManejadorCategoriaTest() {
     }
 
@@ -43,6 +49,7 @@ public class ManejadorCategoriaTest {
 
     @Before
     public void setUp() {
+        
         ManejadorCategoria n = ManejadorCategoria.getInstance();
         n.ingresarCategoria(new DataCategoria("pizas"));
         
@@ -55,6 +62,9 @@ public class ManejadorCategoriaTest {
 
     @After
     public void tearDown() {
+        ManejadorCategoria n = ManejadorCategoria.getInstance();
+        n.limpiarMemoria();
+        
    
     }
 
@@ -110,16 +120,11 @@ public class ManejadorCategoriaTest {
     public void testListarCategorias() {
         System.out.println("testListarCategorias");
         ManejadorCategoria instance = ManejadorCategoria.getInstance();
-        ArrayList<DataCategoria> result = instance.listarCategorias();
-        
-        
-        DataCategoria dataCategoria = new DataCategoria("polleria");
-        instance.ingresarCategoria(dataCategoria);
-        
+        ArrayList<DataCategoria> result = instance.listarCategorias();  
+                     
         ArrayList<String> expResult = new ArrayList<String>();
         ArrayList<String> resultado = new ArrayList<String>();
 
-        expResult.add("polleria");
         expResult.add("pizas");
 
         for (int x = 0; x < result.size(); x++) {
@@ -167,8 +172,7 @@ public class ManejadorCategoriaTest {
         
      
         for (int x = 0; x < result.size(); x++) 
-        {
-           System.out.print(result.get(x).getNombre());
+        { 
            
            boolean c = new String("pizas").equals(result.get(x).getNombre()) ;
            if(c == true)
@@ -184,7 +188,6 @@ public class ManejadorCategoriaTest {
             
          for (int y = 0; y< restaurantes.size(); y++)
          {
-            System.out.print(restaurantes.get(y).getNombre());
             if(new String("Bar17SRL").equals(restaurantes.get(y).getNombre()) == true)
             {
                 resultado = true;

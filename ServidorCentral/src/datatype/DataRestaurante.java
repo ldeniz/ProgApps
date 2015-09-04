@@ -34,6 +34,10 @@ public class DataRestaurante extends DataUsuario {
     public String toString(){
         return this.getNombre();
     }
+
+    public Object getApellido() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
             
 
 }

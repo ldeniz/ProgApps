@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Restaurante.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ServidorCentral&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">modelo</a> &gt; <span class="el_source">Restaurante.java</span></div><h1>Restaurante.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package modelo;
+
+import datatype.DataDireccion;
+import datatype.DataProducto;
+import datatype.DataRestaurante;
+import datatype.DataUsuario;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author sestefan
+ */
+public class Restaurante extends Usuario implements Serializable {
+
+    private String[] rutaImagen;
+    private ArrayList&lt;Producto&gt; productos;
+
+    public Restaurante(String[] rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
+<span class="fc" id="L25">        super(nickname, mail, nombre, pass, direccion);</span>
+<span class="fc" id="L26">        this.rutaImagen = rutaImagen;</span>
+<span class="fc" id="L27">        productos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L28">    }</span>
+
+    public String[] getRutaImagen() {
+<span class="nc" id="L31">        return rutaImagen;</span>
+    }
+
+    public void setRutaImagen(String[] rutaImagen) {
+<span class="nc" id="L35">        this.rutaImagen = rutaImagen;</span>
+<span class="nc" id="L36">    }</span>
+
+    public void agregarProducto(Producto producto) {
+<span class="fc" id="L39">        productos.add(producto);</span>
+<span class="fc" id="L40">    }</span>
+
+    @Override
+    public DataUsuario obtenerDatosUsuario() {
+<span class="fc" id="L44">        ArrayList&lt;DataProducto&gt; dataProductos = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (!productos.isEmpty()) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            for (Producto p : productos) {</span>
+<span class="nc" id="L48">                dataProductos.add(p.obtenerDatosProducto());</span>
+<span class="nc" id="L49">            }</span>
+        }
+<span class="fc" id="L51">        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());</span>
+<span class="fc" id="L52">        return dataUsuario;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

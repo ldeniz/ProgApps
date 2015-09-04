@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DataDireccion.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ServidorCentral&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">datatype</a> &gt; <span class="el_source">DataDireccion.java</span></div><h1>DataDireccion.java</h1><pre class="source lang-java linenums">/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package datatype;
+
+/**
+ *
+ * @author Sebastián Estefan
+ */
+public class DataDireccion {
+    String calle;
+    String numero_puerta;
+    String apto;
+    //TODO: dar soporte para cuidad de la costa
+
+<span class="fc" id="L18">    public DataDireccion(String calle, String numero_puerta, String apto) {</span>
+<span class="fc" id="L19">        this.calle = calle;</span>
+<span class="fc" id="L20">        this.numero_puerta = numero_puerta;</span>
+<span class="fc" id="L21">        this.apto = apto;</span>
+<span class="fc" id="L22">    }</span>
+
+<span class="nc" id="L24">    public DataDireccion(DataDireccion dd){</span>
+<span class="nc" id="L25">        this.calle = dd.getCalle();</span>
+<span class="nc" id="L26">        this.numero_puerta = dd.getNumero_puerta();</span>
+<span class="nc" id="L27">        this.apto = dd.apto;</span>
+<span class="nc" id="L28">    }</span>
+
+    public String getApto() {
+<span class="nc" id="L31">        return apto;</span>
+    }
+
+    public String getCalle() {
+<span class="nc" id="L35">        return calle;</span>
+    }
+
+    public String getNumero_puerta() {
+<span class="nc" id="L39">        return numero_puerta;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L44">        return calle + &quot; &quot; + numero_puerta + &quot; &quot; + apto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
