@@ -5,10 +5,10 @@
 package controlador;
 
 import datatype.DataCategoria;
-import datatype.DataRestaurante;
 import interfaces.IControladorCategoria;
 import java.util.ArrayList;
 import manejador.ManejadorCategoria;
+import modelo.Categoria;
 
 /**
  *
@@ -21,13 +21,22 @@ public class ControladorCategoria implements IControladorCategoria {
 
     @Override
     public ArrayList<DataCategoria> listarCategorias() {
-        return ManejadorCategoria.getInstance().listarCategorias();
+        ArrayList<DataCategoria> dataCategorias = null;
+        ArrayList<Categoria> categorias = ManejadorCategoria.getInstance().
+                listarCategorias();
+        if (!categorias.isEmpty()) {
+            dataCategorias = new ArrayList<>();
+            for (Categoria c : categorias) {
+                dataCategorias.add(c.obtenerDatosCategoria());
+            }
+        }
+        return dataCategorias;
     }
 
     @Override
     public void altaCategoria(String nombre) {
         ManejadorCategoria mc = ManejadorCategoria.getInstance();
-        mc.ingresarCategoria(new DataCategoria(nombre));
+        mc.ingresarCategoria(new Categoria(nombre));
     }
 
     @Override
