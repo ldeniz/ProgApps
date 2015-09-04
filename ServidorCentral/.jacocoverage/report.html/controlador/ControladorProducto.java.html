@@ -18,12 +18,12 @@ import manejador.ManejadorProducto;
  *
  * @author sestefan
  */
-<span class="nc" id="L21">public class ControladorProducto implements IControladorProducto {</span>
+<span class="fc" id="L21">public class ControladorProducto implements IControladorProducto {</span>
 
     private String nickName;
     private DataProducto dataProducto;
     private DataStockProducto dataStockProducto;
-<span class="nc" id="L26">    private ArrayList&lt;DataIndividualPromocion&gt; productosPromocion = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L26">    private ArrayList&lt;DataIndividualPromocion&gt; productosPromocion = new ArrayList&lt;&gt;();</span>
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, float precio, String rutaImagen) {
@@ -33,9 +33,9 @@ import manejador.ManejadorProducto;
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, int descuento, String rutaImagen) {
-<span class="nc" id="L36">        dataStockProducto = new DataStockProducto(1, 0);</span>
-<span class="nc" id="L37">        dataProducto = new DataPromocion(descuento, true, productosPromocion, nombre, descripcion, rutaImagen, dataStockProducto, nickName, &quot;promocion&quot;);</span>
-<span class="nc" id="L38">    }</span>
+<span class="fc" id="L36">        dataStockProducto = new DataStockProducto(1, 0);</span>
+<span class="fc" id="L37">        dataProducto = new DataPromocion(descuento, true, productosPromocion, nombre, descripcion, rutaImagen, dataStockProducto, nickName, &quot;promocion&quot;);</span>
+<span class="fc" id="L38">    }</span>
 
     @Override
     public void seleccionarProducto(String nombre, int cantidad) {
@@ -52,21 +52,21 @@ import manejador.ManejadorProducto;
 
     @Override
     public void altaProducto() {
-<span class="nc" id="L55">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
-<span class="nc bnc" id="L56" title="All 10 branches missed.">        switch (dataProducto.getTipoProducto()) {</span>
+<span class="fc" id="L55">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="pc bpc" id="L56" title="7 of 10 branches missed.">        switch (dataProducto.getTipoProducto()) {</span>
             case &quot;individual&quot;:
 <span class="nc" id="L58">                mp.ingresarProducto((DataIndividual) dataProducto);</span>
 <span class="nc" id="L59">                break;</span>
             case &quot;promocion&quot;:
-<span class="nc" id="L61">                mp.ingresarProducto((DataPromocion) dataProducto);</span>
+<span class="fc" id="L61">                mp.ingresarProducto((DataPromocion) dataProducto);</span>
                 break;
         }
-<span class="nc" id="L64">    }</span>
+<span class="fc" id="L64">    }</span>
 
     @Override
     public boolean existeProducto(String nickName, String nombre) {
-<span class="nc" id="L68">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
-<span class="nc" id="L69">        return mp.existeProducto(nickName, nombre);</span>
+<span class="fc" id="L68">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="fc" id="L69">        return mp.existeProducto(nickName, nombre);</span>
     }
 
     @Override
@@ -82,8 +82,8 @@ import manejador.ManejadorProducto;
 
     @Override
     public void seleccionarRestaurante(String nickName) {
-<span class="nc" id="L85">        this.nickName = nickName;</span>
-<span class="nc" id="L86">    }</span>
+<span class="fc" id="L85">        this.nickName = nickName;</span>
+<span class="fc" id="L86">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -16,23 +16,23 @@ import manejador.ManejadorCategoria;
  */
 public class ControladorCategoria implements IControladorCategoria {
 
-<span class="nc" id="L19">    public ControladorCategoria() {</span>
-<span class="nc" id="L20">    }</span>
+<span class="fc" id="L19">    public ControladorCategoria() {</span>
+<span class="fc" id="L20">    }</span>
 
     @Override
     public ArrayList&lt;DataCategoria&gt; listarCategorias() {
-<span class="nc" id="L24">        return ManejadorCategoria.getInstance().listarCategorias();</span>
+<span class="fc" id="L24">        return ManejadorCategoria.getInstance().listarCategorias();</span>
     }
 
     @Override
     public void altaCategoria(String nombre) {
-<span class="nc" id="L29">        ManejadorCategoria mc = ManejadorCategoria.getInstance();</span>
-<span class="nc" id="L30">        mc.ingresarCategoria(new DataCategoria(nombre));</span>
-<span class="nc" id="L31">    }</span>
+<span class="fc" id="L29">        ManejadorCategoria mc = ManejadorCategoria.getInstance();</span>
+<span class="fc" id="L30">        mc.ingresarCategoria(new DataCategoria(nombre));</span>
+<span class="fc" id="L31">    }</span>
 
     @Override
     public boolean existeCategoria(String nombre) {
-<span class="nc" id="L35">        return ManejadorCategoria.getInstance().existeCategoriaNombre(nombre);</span>
+<span class="fc" id="L35">        return ManejadorCategoria.getInstance().existeCategoriaNombre(nombre);</span>
     }
 
 }

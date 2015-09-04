@@ -19,15 +19,15 @@ public class Fabrica {
 
     private static Fabrica instancia;
 
-<span class="nc" id="L22">    private Fabrica() {</span>
+<span class="fc" id="L22">    private Fabrica() {</span>
 
-<span class="nc" id="L24">    }</span>
+<span class="fc" id="L24">    }</span>
 
     public static Fabrica getInstance() {
-<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (instancia == null) {</span>
-<span class="nc" id="L28">            instancia = new Fabrica();</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (instancia == null) {</span>
+<span class="fc" id="L28">            instancia = new Fabrica();</span>
         }
-<span class="nc" id="L30">        return instancia;</span>
+<span class="fc" id="L30">        return instancia;</span>
     }
 
     /**
@@ -36,18 +36,18 @@ public class Fabrica {
      * @return
      */
     public IControladorCategoria obtenerControladorCategoria() {
-<span class="nc" id="L39">        ControladorCategoria cc = new ControladorCategoria();</span>
-<span class="nc" id="L40">        return (IControladorCategoria) cc;</span>
+<span class="fc" id="L39">        ControladorCategoria cc = new ControladorCategoria();</span>
+<span class="fc" id="L40">        return (IControladorCategoria) cc;</span>
     }
 
     public IControladorUsuario obtenerControladorUsuario() {
-<span class="nc" id="L44">        ControladorUsuario cu = new ControladorUsuario();</span>
-<span class="nc" id="L45">        return (IControladorUsuario) cu;</span>
+<span class="fc" id="L44">        ControladorUsuario cu = new ControladorUsuario();</span>
+<span class="fc" id="L45">        return (IControladorUsuario) cu;</span>
     }
 
     public IControladorProducto obtenerControladorProducto() {
-<span class="nc" id="L49">        ControladorProducto cp = new ControladorProducto();</span>
-<span class="nc" id="L50">        return (IControladorProducto) cp;</span>
+<span class="fc" id="L49">        ControladorProducto cp = new ControladorProducto();</span>
+<span class="fc" id="L50">        return (IControladorProducto) cp;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
