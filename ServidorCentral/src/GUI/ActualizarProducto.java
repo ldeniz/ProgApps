@@ -5,17 +5,73 @@
  */
 package GUI;
 
+import datatype.DataIndividualPromocion;
+import datatype.DataProducto;
+import datatype.DataPromocion;
+import fabrica.Fabrica;
+import interfaces.IControladorProducto;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Properties;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mathi
  */
 public class ActualizarProducto extends javax.swing.JInternalFrame {
-
+    IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
+    HashMap<Integer, DataProducto> elProducto = new HashMap<>();
+    Properties propiedades = new Properties();
+    
+    private
+        String imagenSrc;
+        String outFile;
     /**
      * Creates new form ActualizarProducto
      */
     public ActualizarProducto() {
+        imagenSrc="";
+        outFile="";
+         //Carga Archivo de Propiedades ----------------------
+        
+        InputStream entrada = null;
+        try {               
+            entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+            propiedades.load(entrada);
+            } 
+        catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+        //---------------------------------------------------
         initComponents();
+        
+        ArrayList<DataProducto> productos = cp.listarProductos();
+        
+        for (DataProducto p : productos) {
+            String[] fila = new String[3];
+            fila[0] = p.getNombre();
+            fila[1] = p.getNickName();
+            fila[2] = p.getDescripcion();
+            
+            elProducto.put(modeloTablaProductos.getRowCount(), p);
+            
+            modeloTablaProductos.addRow(fila);
+            
+            
+        }
     }
 
     /**
@@ -28,49 +84,40 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
+        nombreProducto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextAreaDescripcion = new javax.swing.JTextArea();
+        descripcionProducto = new javax.swing.JTextArea();
         PanelGenerico1 = new javax.swing.JPanel();
         panelIndividual1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextFieldPrecio1 = new javax.swing.JTextField();
+        precioProducto = new javax.swing.JTextField();
         panelPromocion = new javax.swing.JPanel();
         jRadioButtonActivado = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
-        jTextFieldDescuento = new javax.swing.JTextField();
+        descuentoProducto = new javax.swing.JTextField();
         jRadioButtonDesactivado = new javax.swing.JRadioButton();
         jButtonCancelar = new javax.swing.JButton();
-        jButtonRegistrar = new javax.swing.JButton();
+        jButtonActualizar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        imagenProducto = new javax.swing.JLabel();
         jButtonImage = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        modeloTablaProductos = new DefaultTableModel(); modeloTablaProductos.addColumn("Producto"); modeloTablaProductos.addColumn("Restaurante"); modeloTablaProductos.addColumn("Descripción");
+        productos = new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } };
 
         setTitle("Actualizar Producto");
 
         jLabel1.setText("Productos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
         jLabel2.setText("Nombre");
 
         jLabel3.setText("Descripción");
 
-        jTextAreaDescripcion.setColumns(20);
-        jTextAreaDescripcion.setRows(5);
-        jScrollPane2.setViewportView(jTextAreaDescripcion);
+        descripcionProducto.setColumns(20);
+        descripcionProducto.setRows(5);
+        jScrollPane2.setViewportView(descripcionProducto);
 
         PanelGenerico1.setLayout(new java.awt.CardLayout());
 
@@ -84,7 +131,7 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addComponent(jTextFieldPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(precioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelIndividual1Layout.setVerticalGroup(
@@ -93,7 +140,7 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(panelIndividual1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextFieldPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(precioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -113,7 +160,7 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(descuentoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67)
                 .addComponent(jRadioButtonActivado)
                 .addGap(18, 18, 18)
@@ -125,7 +172,7 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
             .addGroup(panelPromocionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelPromocionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(descuentoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jRadioButtonActivado)
                     .addComponent(jRadioButtonDesactivado))
@@ -141,12 +188,12 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButtonRegistrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonRegistrar.setText("Registrar");
+        jButtonActualizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonActualizar.setText("Actualizar");
 
         jLabel4.setText("Imagen");
 
-        jLabel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        imagenProducto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jButtonImage.setText("Seleccionar Imagen");
         jButtonImage.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +202,14 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
             }
         });
 
+        productos.setModel(modeloTablaProductos);
+        productos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(productos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,14 +217,13 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonCancelar)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(84, 84, 84)
-                                .addComponent(jButtonRegistrar))))
+                                .addComponent(jButtonActualizar))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -180,15 +234,16 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldNombre))
+                                    .addComponent(nombreProducto))
                                 .addGap(112, 112, 112)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButtonImage))
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(imagenProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -201,22 +256,22 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel4)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonImage))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                    .addComponent(imagenProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRegistrar)
+                    .addComponent(jButtonActualizar)
                     .addComponent(jButtonCancelar))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,36 +289,145 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImageActionPerformed
-        // TODO add your handling code here:
+       FileFilter filter = new FileNameExtensionFilter("Imagenes (.jpg .png)","jpg", "png");
+
+        JFileChooser elegirImagen = new JFileChooser();
+        elegirImagen.setAcceptAllFileFilterUsed(false);
+        elegirImagen.addChoosableFileFilter(filter);
+        int opt = elegirImagen.showOpenDialog(jButtonImage);
+
+        
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            imagenSrc = elegirImagen.getSelectedFile().getPath();
+            if(!imagenSrc.isEmpty()){   
+
+                //Carga Archivo de Propiedades ----------------------
+                Properties propiedades = new Properties();
+                InputStream entrada = null;
+                try {               
+                    entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+                    propiedades.load(entrada);
+                    } 
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+                //---------------------------------------------------
+                
+                try{
+                    String inFile = imagenSrc;
+                    outFile = propiedades.getProperty("imagenesProductos")+elegirImagen.getSelectedFile().getName();
+               
+                    System.out.println(inFile);
+                    System.out.println(outFile);
+                    
+                    FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
+                    FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
+                    
+                    FileChannel inChannel = fis.getChannel();
+                    FileChannel outChannel = fos.getChannel();
+                    
+                    inChannel.transferTo(0, inChannel.size(), outChannel);
+                    fis.close();
+                    fos.close();
+
+                   }catch (IOException ioe) {
+                    System.err.println("Error al Generar Copia");
+                   }
+                
+            
+            }
+        }
     }//GEN-LAST:event_jButtonImageActionPerformed
+
+    private void productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productosMouseClicked
+        int index = productos.getSelectedRow();
+        String idproducto = (String) productos.getValueAt(index, 0);
+        String restaurante = (String) productos.getValueAt(index, 1);
+        
+        
+        jRadioButtonActivado.setSelected(true);
+        jRadioButtonDesactivado.setSelected(false);
+        nombreProducto.setText("");
+        descripcionProducto.setText("");
+        precioProducto.setText("");
+        descuentoProducto.setText("");
+        PanelGenerico1.removeAll();    
+        
+        if (index != -1){
+
+            imagenProducto.setIcon(new ImageIcon());
+
+            DataProducto productoSeleccionado = elProducto.get(productos.getSelectedRow());
+            
+
+            if (productoSeleccionado.getRutaImagen() == null){
+                Image image = Toolkit.getDefaultToolkit().createImage(propiedades.getProperty("productoPorDefecto"));
+                Icon warnIcon = new ImageIcon(image);
+                imagenProducto.setIcon(warnIcon);
+                imagenProducto.validate();
+                System.out.println("Carga la por defecto "+propiedades.getProperty("productoPorDefecto"));
+            }
+            else{
+                Image image = Toolkit.getDefaultToolkit().createImage(productoSeleccionado.getRutaImagen());
+                Icon warnIcon = new ImageIcon(image);
+                imagenProducto.setIcon(warnIcon);
+                imagenProducto.validate();
+                System.out.println("Carga la imagen "+productoSeleccionado.getRutaImagen());
+            }
+
+            nombreProducto.setText(productoSeleccionado.getNombre());
+            descripcionProducto.setText(productoSeleccionado.getDescripcion());
+            
+            System.out.println("PRDUCTO "+productoSeleccionado.getTipoProducto());    
+            switch (productoSeleccionado.getTipoProducto()) {
+            case "individual":
+                PanelGenerico1.add(panelIndividual1);
+                precioProducto.setText(Float.toString(productoSeleccionado.getStock().getPrecio()));
+                break;
+            case "promocion":                
+                PanelGenerico1.add(panelPromocion);
+                DataPromocion prodPromocion = (DataPromocion) productoSeleccionado;
+                descuentoProducto.setText(Integer.toString(prodPromocion.getDescuento()));
+                if (prodPromocion.isActiva()){
+                    jRadioButtonActivado.setSelected(true);
+                    jRadioButtonDesactivado.setSelected(false);
+                }
+                else{
+                    jRadioButtonActivado.setSelected(false);
+                    jRadioButtonDesactivado.setSelected(true);
+                }
+                                
+                break;
+            }    
+            PanelGenerico1.repaint();
+            PanelGenerico1.revalidate();
+        }
+    }//GEN-LAST:event_productosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelGenerico;
     private javax.swing.JPanel PanelGenerico1;
+    private javax.swing.JTextArea descripcionProducto;
+    private javax.swing.JTextField descuentoProducto;
+    private javax.swing.JLabel imagenProducto;
+    private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonImage;
-    private javax.swing.JButton jButtonRegistrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JRadioButton jRadioButtonActivado;
     private javax.swing.JRadioButton jRadioButtonDesactivado;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextAreaDescripcion;
-    private javax.swing.JTextField jTextFieldDescuento;
-    private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPrecio;
-    private javax.swing.JTextField jTextFieldPrecio1;
-    private javax.swing.JPanel panelIndividual;
+    private javax.swing.JTextField nombreProducto;
     private javax.swing.JPanel panelIndividual1;
     private javax.swing.JPanel panelPromocion;
+    private javax.swing.JTextField precioProducto;
+    private javax.swing.JTable productos;
+    private DefaultTableModel modeloTablaProductos;
     // End of variables declaration//GEN-END:variables
 }

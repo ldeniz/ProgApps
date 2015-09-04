@@ -32,22 +32,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class RegistrarRestaurante extends javax.swing.JInternalFrame {
     private 
-
+        File[] f;        
         String nick;
         String nombre;
         String mail;
         DataDireccion direccion;
         String password;
         String confirmaPassword;
-        String imagenSrc;
-        String outFile;    
+        String outFile, Extension, imagenSrc;    
         
         List<String> imagenes = new ArrayList<String>();
         String[] lasImagenes;// = new String[imagenes.size()];
 
-         
-        
-        
         List<DataCategoria> listaCategorias;
         IControladorCategoria cCat;
         DefaultListModel modeloLista;
@@ -298,6 +294,46 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
                     cUsr.seleccionarCategoria(it.next());
                 }
                 
+                //Carga Archivo de Propiedades ----------------------
+                Properties propiedades = new Properties();
+                InputStream entrada = null;
+                try {               
+                    entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+                    propiedades.load(entrada);
+                    } 
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+                //---------------------------------------------------
+                
+                Integer contador = 1;
+                for (File f1 : f) {
+                    imagenes.add(f1.getPath());  
+                    String NombreArchivo = f1.getName();
+                    Extension = NombreArchivo.substring(NombreArchivo.lastIndexOf("."),NombreArchivo.length());
+                    try{
+                        String inFile = f1.getPath();
+                        outFile = propiedades.getProperty("imagenesRestaurantes")+nick+"-"+contador+Extension;
+
+                        System.out.println(inFile);
+                        System.out.println(outFile);
+
+                        FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
+                        FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
+
+                        FileChannel inChannel = fis.getChannel();
+                        FileChannel outChannel = fos.getChannel();
+
+                        inChannel.transferTo(0, inChannel.size(), outChannel);
+                        fis.close();
+                        fos.close();
+
+                       }catch (IOException ioe) {
+                        System.err.println("Error al Generar Copia");
+                    }   
+                    contador++;        
+                }
+                this.lasImagenes = imagenes.toArray(new String[imagenes.size()]);
                 
                 cUsr.CargarDatosUsuario(nick, mail, nombre, password, direccion, lasImagenes);
                 cUsr.altaUsuario();
@@ -328,7 +364,7 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
     private void jButtonImagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImagesActionPerformed
-            FileFilter filter = new FileNameExtensionFilter("Imagenes (.jpg .png)","jpg", "png");
+        FileFilter filter = new FileNameExtensionFilter("Imagenes (.jpg .png)","jpg", "png");
 
         JFileChooser elegirImagen = new JFileChooser();
         elegirImagen.setMultiSelectionEnabled(rootPaneCheckingEnabled);
@@ -336,48 +372,13 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
         elegirImagen.addChoosableFileFilter(filter);
         int opcion = elegirImagen.showOpenDialog(jButtonImages);
         
-        //Carga Archivo de Propiedades ----------------------
-        Properties propiedades = new Properties();
-        InputStream entrada = null;
-        try {               
-            entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
-            propiedades.load(entrada);
-            } 
-        catch (IOException ex) {
-            ex.printStackTrace();
-        } 
-        //---------------------------------------------------
+        
                 
         if (opcion == JFileChooser.APPROVE_OPTION) {
-            File[] f=elegirImagen.getSelectedFiles(); 
+            f=elegirImagen.getSelectedFiles(); 
             //imagenes.clear();
                 
-                for (File f1 : f) {
-                    imagenes.add(f1.getPath());  
-                    
-                    try{
-                        String inFile = f1.getPath();
-                        outFile = propiedades.getProperty("imagenesRestaurantes")+f1.getName();
-
-                        System.out.println(inFile);
-                        System.out.println(outFile);
-
-                        FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
-                        FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
-
-                        FileChannel inChannel = fis.getChannel();
-                        FileChannel outChannel = fos.getChannel();
-
-                        inChannel.transferTo(0, inChannel.size(), outChannel);
-                        fis.close();
-                        fos.close();
-
-                       }catch (IOException ioe) {
-                        System.err.println("Error al Generar Copia");
-                    }   
-
-                }
-                this.lasImagenes = imagenes.toArray(new String[imagenes.size()]);
+                
             
                 
         }
