@@ -61,6 +61,7 @@ public class ServidorCentral {
         p.cargarDatosProducto("promo pizza", "pizza y faina", 25, "c");
         p.seleccionarProducto("musa", 1);
         p.seleccionarProducto("faina", 1);
+        boolean b = p.existeProducto("acabar", "faina");
         p.altaProducto();
 
         ldp.clear();

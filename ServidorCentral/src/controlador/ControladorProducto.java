@@ -7,12 +7,18 @@ package controlador;
 
 import datatype.DataIndividual;
 import datatype.DataIndividualPromocion;
+import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataPromocion;
 import datatype.DataStockProducto;
 import interfaces.IControladorProducto;
 import java.util.ArrayList;
+import java.util.Calendar;
 import manejador.ManejadorProducto;
+import manejador.ManejadorUsuario;
+import modelo.Individual;
+import modelo.Producto;
+import modelo.StockProduco;
 
 /**
  *
@@ -53,9 +59,28 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void altaProducto() {
         ManejadorProducto mp = ManejadorProducto.getInstance();
+        Producto p = null;
         switch (dataProducto.getTipoProducto()) {
             case "individual":
-                mp.ingresarProducto((DataIndividual) dataProducto);
+                DataIndividual dataIndividual = (DataIndividual) dataProducto;
+                String nickName = dataIndividual.getNickName();
+                DataStockProducto dataStockProducto = dataIndividual.getStock();
+                String nombre = dataIndividual.getNombre();
+                String descripcion = dataIndividual.getDescripcion();
+                String tipoProducto = dataIndividual.getTipoProducto();
+                String rutaImagen = dataIndividual.getRutaImagen();
+
+                int cantidad = dataStockProducto.getCantidad();
+                float precio = dataStockProducto.getPrecio();
+                Calendar fecha = dataStockProducto.getFecha();
+
+                StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
+
+                p = new Individual(nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);
+
+                ManejadorUsuario mu = ManejadorUsuario.getInstance();
+                mu.agregarProductoRestaurante(p);
+                mp.ingresarProducto((Individual) p);
                 break;
             case "promocion":
                 mp.ingresarProducto((DataPromocion) dataProducto);
@@ -72,7 +97,12 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public ArrayList<DataProducto> listarProductos() {
         ManejadorProducto mp = ManejadorProducto.getInstance();
-        return mp.listarProductos();
+        ArrayList<Producto> productos = mp.listarProductos();
+        ArrayList<DataProducto> dataProductos = new ArrayList<>();
+        for (Producto p : productos) {
+            dataProductos.add(p.obtenerDatosProducto());
+        }
+        return dataProductos;
     }
 
     @Override
@@ -83,6 +113,11 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void seleccionarRestaurante(String nickName) {
         this.nickName = nickName;
+    }
+
+    @Override
+    public ArrayList<DataPedido> listarPedidosProducto(String nickName, String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

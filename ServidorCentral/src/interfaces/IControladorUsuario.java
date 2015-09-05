@@ -2,6 +2,7 @@ package interfaces;
 
 import datatype.DataCliente;
 import datatype.DataDireccion;
+import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
@@ -106,5 +107,7 @@ public interface IControladorUsuario {
      * @return
      */
     public ArrayList<DataProducto> listarProductos(String nickName);
+
+    public ArrayList<DataPedido> listarPedidosCliente(String nickName);
 
 }

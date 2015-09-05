@@ -1,8 +1,7 @@
 package interfaces;
 
-import datatype.DataIndividual;
+import datatype.DataPedido;
 import datatype.DataProducto;
-import datatype.DataPromocion;
 import java.util.ArrayList;
 
 /**
@@ -82,5 +81,7 @@ public interface IControladorProducto {
      * Limpia la memoria.
      */
     public void limpiarMemoria();
+
+    public ArrayList<DataPedido> listarPedidosProducto(String nickName, String nombre);
 
 }
