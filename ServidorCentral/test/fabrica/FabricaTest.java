@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import datatype.DataCategoria;
 import java.util.Date;
 import datatype.DataCliente;
-import manejador.ManejadorUsuario;
 
 /**
  *
@@ -63,7 +62,7 @@ public class FabricaTest {
     @Test
     public void testSomeMethod() {
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      //  fail("The test case is a prototype.");
     }
     
     @Test
@@ -92,6 +91,8 @@ public class FabricaTest {
         existe = icp.existeProducto("elrey", "3y3");
 
         assertTrue(existe);
+        
+
          
      }        
 
@@ -122,12 +123,19 @@ public class FabricaTest {
         assertTrue(existe);
         
         ArrayList<DataCategoria> dcResult = icc.listarCategorias();
-        ArrayList<DataCategoria> dcExpResult = new ArrayList<>();
-        DataCategoria dc = new  DataCategoria("Armenia");
-        dcExpResult.add(dc); 
+        ArrayList<DataCategoria> dcExpResult = new ArrayList<DataCategoria>();
+        DataCategoria dc1 = new  DataCategoria("Armenia");
+        DataCategoria dc2 = new  DataCategoria("Minutas");
+        dcExpResult.add(dc1);
+        dcExpResult.add(dc2);
+        String nombre;
+        String nombreExp;
+
         for(int x=0; x<dcResult.size(); x++)
         {
-            assertTrue(dcExpResult.get(x).getNombre().equals(dcResult.get(x).getNombre()));
+           nombre = dcResult.get(x).getNombre();           
+           nombreExp = dcExpResult.get(x).getNombre();
+           assertEquals(nombreExp, nombre);
         }
         
     }
@@ -162,5 +170,17 @@ public class FabricaTest {
             assertTrue(dcExpResult.get(x).getRutaImagen().equals(dcResult.get(x).getRutaImagen()));
         }
         
-    }
+        boolean exption = false;
+        String [] rutaImagen = {"/home/jose/imagenes/a.png","/home/jose/imagenes/b.png"};        
+        try {    
+            icu.CargarDatosUsuario("elrey","elreydelaminutas@hotmail.com", "El rey de las minutas", "elrey123", direccion, rutaImagen);
+        } catch (Exception ex) {            
+            exption = true;
+        }
+        assertTrue(exption);
+        
+       
+        
+        
+}
 }

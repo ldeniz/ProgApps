@@ -19,6 +19,10 @@ public class DataIndividualPromocion {
         this.individual = (DataIndividual) individual;
     }
 
+    public DataIndividualPromocion(int i, DataStockProducto dp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getCantidad() {
         return cantidad;
     }

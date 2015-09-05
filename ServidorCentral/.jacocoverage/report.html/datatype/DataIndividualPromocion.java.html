@@ -14,17 +14,21 @@ public class DataIndividualPromocion {
     private int cantidad;
     private DataIndividual individual;
 
-<span class="nc" id="L17">    public DataIndividualPromocion(int cantidad, DataProducto individual) {</span>
-<span class="nc" id="L18">        this.cantidad = cantidad;</span>
-<span class="nc" id="L19">        this.individual = (DataIndividual) individual;</span>
-<span class="nc" id="L20">    }</span>
+<span class="fc" id="L17">    public DataIndividualPromocion(int cantidad, DataProducto individual) {</span>
+<span class="fc" id="L18">        this.cantidad = cantidad;</span>
+<span class="fc" id="L19">        this.individual = (DataIndividual) individual;</span>
+<span class="fc" id="L20">    }</span>
+
+<span class="nc" id="L22">    public DataIndividualPromocion(int i, DataStockProducto dp) {</span>
+<span class="nc" id="L23">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+    }
 
     public int getCantidad() {
-<span class="nc" id="L23">        return cantidad;</span>
+<span class="fc" id="L27">        return cantidad;</span>
     }
 
     public DataIndividual getIndividual() {
-<span class="nc" id="L27">        return individual;</span>
+<span class="fc" id="L31">        return individual;</span>
     }
 
 }
