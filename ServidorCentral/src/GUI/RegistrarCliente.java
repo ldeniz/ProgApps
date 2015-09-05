@@ -33,8 +33,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class RegistrarCliente extends javax.swing.JInternalFrame {
     private
-        String imagenSrc;
-        String outFile;
+        String imagenSrc, Extension;
+        String outFile, inFile;
         String apellido;
         Date fecha;
         String nick;
@@ -44,6 +44,7 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
         IControladorUsuario cU;
         String password;
         String confirmaPassword;
+        Properties propiedades;
         
     /**
      * Creates new form RegistrarCliente
@@ -324,52 +325,18 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
         
         if (opt == JFileChooser.APPROVE_OPTION) {
             imagenSrc = elegirImagen.getSelectedFile().getPath();
+            
+            String NombreArchivo = elegirImagen.getSelectedFile().getName();
+            Extension = NombreArchivo.substring(NombreArchivo.lastIndexOf("."),NombreArchivo.length());
+            
             if(imagenSrc==null){
                 
                 //Habría que agregarle una imagen por defecto si no tiene
-                
-                // Image image = Toolkit.getDefaultToolkit().createImage(IMAGEN POR DEFECTO);
-                // Icon warnIcon = new ImageIcon(image);
-                // label.setIcon(warnIcon);
-                // label.validate();
+
             }
             else{
                
-                //Carga Archivo de Propiedades ----------------------
-                Properties propiedades = new Properties();
-                InputStream entrada = null;
-                try {               
-                    entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
-                    propiedades.load(entrada);
-                    } 
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                } 
-                //---------------------------------------------------
-                
-                try{
-                    String inFile = imagenSrc;
-                    outFile = propiedades.getProperty("imagenesClientes")+elegirImagen.getSelectedFile().getName();
-               
-                    System.out.println(inFile);
-                    System.out.println(outFile);
-                    
-                    FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
-                    FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
-                    
-                    FileChannel inChannel = fis.getChannel();
-                    FileChannel outChannel = fos.getChannel();
-                    
-                    inChannel.transferTo(0, inChannel.size(), outChannel);
-                    fis.close();
-                    fos.close();
-
-                   }catch (IOException ioe) {
-                    System.err.println("Error al Generar Copia");
-                   }
-                
-                
-                Image image = Toolkit.getDefaultToolkit().createImage(outFile);
+                Image image = Toolkit.getDefaultToolkit().createImage(imagenSrc);
                 Icon warnIcon = new ImageIcon(image);
                 jLabel3.setIcon(warnIcon);
                 jLabel3.validate();
@@ -409,6 +376,38 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
             passwordIguales=password.equals(confirmaPassword);
 
             if ( !existeUsu && !existeNick && passwordIguales){
+                
+                //Carga Archivo de Propiedades ----------------------
+                propiedades = new Properties();
+                InputStream entrada = null;
+                try {               
+                    entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+                    propiedades.load(entrada);
+                    } 
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+                //---------------------------------------------------
+                String inFile = imagenSrc;
+                outFile = propiedades.getProperty("imagenesClientes")+nick+Extension;
+                try{
+                    
+                    System.out.println(inFile);
+                    System.out.println(outFile);
+                    
+                    FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
+                    FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
+                    
+                    FileChannel inChannel = fis.getChannel();
+                    FileChannel outChannel = fos.getChannel();
+                    
+                    inChannel.transferTo(0, inChannel.size(), outChannel);
+                    fis.close();
+                    fos.close();
+
+                   }catch (IOException ioe) {
+                    System.err.println("Error al Generar Copia");
+                   }
                 try{
                     cU.CargarDatosUsuario(nick,mail,nombre,password,direccion,apellido,fecha,outFile);
                     cU.altaUsuario();
