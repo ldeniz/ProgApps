@@ -25,14 +25,13 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jButtonCancelar" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="84" pref="84" max="-2" attributes="0"/>
-                              <Component id="jButtonRegistrar" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonActualizar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -47,7 +46,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jScrollPane2" pref="255" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldNombre" max="32767" attributes="0"/>
+                                  <Component id="nombreProducto" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -56,12 +55,13 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jButtonImage" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jLabel8" max="32767" attributes="0"/>
+                                  <Component id="imagenProducto" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -79,24 +79,24 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="177" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="179" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="jLabel4" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldNombre" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="nombreProducto" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonImage" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane2" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel8" min="-2" pref="136" max="-2" attributes="0"/>
+                  <Component id="imagenProducto" min="-2" pref="136" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <EmptySpace pref="50" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonRegistrar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonActualizar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -117,25 +117,12 @@
         <Property name="text" type="java.lang.String" value="Productos"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
-          <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="0" rowCount="0"/>
-            </Property>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+    <Component class="javax.swing.JTextField" name="nombreProducto">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -149,7 +136,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="jTextAreaDescripcion">
+        <Component class="javax.swing.JTextArea" name="descripcionProducto">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -175,7 +162,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jTextFieldPrecio1" min="-2" pref="140" max="-2" attributes="0"/>
+                      <Component id="precioProducto" min="-2" pref="140" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -186,7 +173,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldPrecio1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="precioProducto" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="17" max="32767" attributes="0"/>
                   </Group>
@@ -199,7 +186,7 @@
                 <Property name="text" type="java.lang.String" value="Precio"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldPrecio1">
+            <Component class="javax.swing.JTextField" name="precioProducto">
             </Component>
           </SubComponents>
         </Container>
@@ -217,7 +204,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextFieldDescuento" min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="descuentoProducto" min="-2" pref="54" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                       <Component id="jRadioButtonActivado" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -231,7 +218,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="jTextFieldDescuento" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="descuentoProducto" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jRadioButtonActivado" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jRadioButtonDesactivado" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -252,7 +239,7 @@
                 <Property name="text" type="java.lang.String" value="Descuento (%)"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldDescuento">
+            <Component class="javax.swing.JTextField" name="descuentoProducto">
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonDesactivado">
               <Properties>
@@ -271,12 +258,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonRegistrar">
+    <Component class="javax.swing.JButton" name="jButtonActualizar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="11" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Registrar"/>
+        <Property name="text" type="java.lang.String" value="Actualizar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -284,7 +271,7 @@
         <Property name="text" type="java.lang.String" value="Imagen"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
+    <Component class="javax.swing.JLabel" name="imagenProducto">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -301,5 +288,29 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImageActionPerformed"/>
       </Events>
     </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="VerInformacionDeProducto_jScrollPane1"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="productos">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="modeloTablaProductos" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="productosMouseClicked"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } }"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="modeloTablaProductos = new DefaultTableModel(); modeloTablaProductos.addColumn(&quot;Producto&quot;); modeloTablaProductos.addColumn(&quot;Restaurante&quot;); modeloTablaProductos.addColumn(&quot;Descripci&#xf3;n&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private DefaultTableModel modeloTablaProductos;"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

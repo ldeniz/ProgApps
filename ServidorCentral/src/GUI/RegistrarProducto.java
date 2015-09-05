@@ -38,8 +38,8 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
     private 
         DataRestaurante[] restaurantes;
         Float cPrecio;
-        String imagenSrc;
-        String outFile;
+        String imagenSrc, Extension,NombreArchivo;
+        String outFile, inFile;
         
          
     IControladorCategoria iCat = Fabrica.getInstance().obtenerControladorCategoria();
@@ -62,6 +62,7 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
     public RegistrarProducto() {
         imagenSrc="";
         outFile="";
+        NombreArchivo="";
         List<DataRestaurante> temp=iUsr.listarRestaurantes();
         restaurantes=temp.toArray(new DataRestaurante[temp.size()]);
         initComponents();
@@ -396,43 +397,7 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
         
         if (opt == JFileChooser.APPROVE_OPTION) {
             imagenSrc = elegirImagen.getSelectedFile().getPath();
-            if(!imagenSrc.isEmpty()){   
-
-                //Carga Archivo de Propiedades ----------------------
-                Properties propiedades = new Properties();
-                InputStream entrada = null;
-                try {               
-                    entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
-                    propiedades.load(entrada);
-                    } 
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                } 
-                //---------------------------------------------------
-                
-                try{
-                    String inFile = imagenSrc;
-                    outFile = propiedades.getProperty("imagenesProductos")+elegirImagen.getSelectedFile().getName();
-               
-                    System.out.println(inFile);
-                    System.out.println(outFile);
-                    
-                    FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
-                    FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
-                    
-                    FileChannel inChannel = fis.getChannel();
-                    FileChannel outChannel = fos.getChannel();
-                    
-                    inChannel.transferTo(0, inChannel.size(), outChannel);
-                    fis.close();
-                    fos.close();
-
-                   }catch (IOException ioe) {
-                    System.err.println("Error al Generar Copia");
-                   }
-                
-            
-            }
+            NombreArchivo = elegirImagen.getSelectedFile().getName();    
         }
     }//GEN-LAST:event_jButtonImageActionPerformed
 
@@ -461,6 +426,41 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
         
         //individual
         if (jRadioButtonIndividual.isSelected()){
+            
+            //Carga Archivo de Propiedades ----------------------
+                Properties propiedades = new Properties();
+                InputStream entrada = null;
+                try {               
+                    entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+                    propiedades.load(entrada);
+                    } 
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+                //---------------------------------------------------
+                
+                try{
+                    String inFile = imagenSrc;
+                    
+                    Extension = NombreArchivo.substring(NombreArchivo.lastIndexOf("."),NombreArchivo.length());
+                    outFile = propiedades.getProperty("imagenesProductos")+cNombre+"-"+selectedRes.getNickname()+Extension;
+               
+                    System.out.println(inFile);
+                    System.out.println(outFile);
+                    
+                    FileInputStream fis = new FileInputStream(inFile); //inFile -> Archivo a copiar
+                    FileOutputStream fos = new FileOutputStream(outFile); //outFile -> Copia del archivo
+                    
+                    FileChannel inChannel = fis.getChannel();
+                    FileChannel outChannel = fos.getChannel();
+                    
+                    inChannel.transferTo(0, inChannel.size(), outChannel);
+                    fis.close();
+                    fos.close();
+
+                   }catch (IOException ioe) {
+                    System.err.println("Error al Generar Copia");
+                   }
             
             iProd.cargarDatosProducto(cNombre, cDescripcion, Float.parseFloat(cPrecio), outFile);
             
