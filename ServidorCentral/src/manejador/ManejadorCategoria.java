@@ -47,7 +47,11 @@ public class ManejadorCategoria {
      * @return
      */
     public ArrayList<Categoria> listarCategorias() {
-        return (ArrayList<Categoria>) categorias.values();
+        ArrayList<Categoria> lc = new ArrayList<>();
+        for (Categoria c : categorias.values()) {
+            lc.add(c);
+        }
+        return lc;
     }
 
     /**
@@ -59,10 +63,9 @@ public class ManejadorCategoria {
         Categoria c = categorias.get(nombre);
         c.agregarRestaurante(r);
     }
-    
-    public void limpiarMemoria()
-    {
-       categorias.clear();
+
+    public void limpiarMemoria() {
+        categorias.clear();
     }
 
 }
