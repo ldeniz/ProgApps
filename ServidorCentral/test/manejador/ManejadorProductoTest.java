@@ -5,15 +5,17 @@
  */
 package manejador;
 
-import datatype.DataCategoria;
 import datatype.DataDireccion;
 import datatype.DataIndividual;
 import datatype.DataProducto;
 import datatype.DataStockProducto;
 import datatype.DataPromocion;
-import datatype.DataRestaurante;
 import java.util.ArrayList;
 import java.util.Calendar;
+import modelo.Categoria;
+import modelo.Individual;
+import modelo.Producto;
+import modelo.Restaurante;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,43 +28,39 @@ import static org.junit.Assert.*;
  * @author Usuario
  */
 public class ManejadorProductoTest {
-    
+
     public ManejadorProductoTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         ManejadorCategoria ic = ManejadorCategoria.getInstance();
         ManejadorProducto ip = ManejadorProducto.getInstance();
         ManejadorUsuario iu = ManejadorUsuario.getInstance();
-       
-        ic.ingresarCategoria(new DataCategoria("pizas"));    
+
+        ic.ingresarCategoria(new Categoria("pizas"));
         DataDireccion dataDire = new DataDireccion("Gallinal", "123", "1");
         String[] imagen = {"/home/jose/Imagnes/a.png"};
-        DataRestaurante dataRestaurante = new DataRestaurante(imagen, "CocinaItaliana", "cocinaitaliana@hotmail.com", "Cocina Italiana", "abc123", dataDire);
+        Restaurante dataRestaurante = new Restaurante(imagen, "CocinaItaliana", "cocinaitaliana@hotmail.com", "Cocina Italiana", "abc123", dataDire);
 
-        ArrayList<DataCategoria> dataCategorias = new ArrayList<>();
-        dataCategorias = ic.listarCategorias();
-        iu.ingresarUsuario(dataRestaurante, dataCategorias);
+        iu.ingresarUsuario(dataRestaurante);
 
-      
         Calendar c = Calendar.getInstance();
         c.set(2000, 12, 20);
-        DataStockProducto dp = new DataStockProducto(100, 200,c);
-        DataIndividual dataIndividual = new DataIndividual("Rabioles con tuco","Carne pica, panceta", "/home/a.png",dp,"LoDelPepe");
+        DataStockProducto dp = new DataStockProducto(100, 200, c);
+        DataIndividual dataIndividual = new DataIndividual("Rabioles con tuco", "Carne pica, panceta", "/home/a.png", dp, "LoDelPepe");
 
         //ip.ingresarProducto(dataIndividual);
-    
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -73,10 +71,10 @@ public class ManejadorProductoTest {
     @Test
     public void testGetInstance() {
         System.out.println("getInstance");
-        ManejadorProducto expResult =  ManejadorProducto.getInstance();
+        ManejadorProducto expResult = ManejadorProducto.getInstance();
         ManejadorProducto result = ManejadorProducto.getInstance();
         assertNotNull(result);
-       // assertEquals(expResult,result);
+        // assertEquals(expResult,result);
     }
 
     /**
@@ -85,7 +83,7 @@ public class ManejadorProductoTest {
     @Test
     public void testIngresarProducto_DataIndividual() {
         System.out.println("ingresarProducto");
-        DataIndividual dataIndividual = null;
+        Individual dataIndividual = null;
         ManejadorProducto instance = null;
         instance.ingresarProducto(dataIndividual);
         // TODO review the generated test code and remove the default call to fail.
@@ -128,8 +126,8 @@ public class ManejadorProductoTest {
     public void testListarProductos() {
         System.out.println("listarProductos");
         ManejadorProducto instance = null;
-        ArrayList<DataProducto> expResult = null;
-        ArrayList<DataProducto> result = instance.listarProductos();
+        ArrayList<Producto> expResult = null;
+        ArrayList<Producto> result = instance.listarProductos();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -150,5 +148,5 @@ public class ManejadorProductoTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

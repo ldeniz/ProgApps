@@ -4,10 +4,6 @@
  */
 package manejador;
 
-import datatype.DataCategoria;
-import datatype.DataCliente;
-import datatype.DataProducto;
-import datatype.DataRestaurante;
 import datatype.DataUsuario;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,26 +42,14 @@ public class ManejadorUsuario {
      *
      * @param dataCliente
      */
-    public void ingresarUsuario(DataCliente dataCliente) {
-        Cliente c = new Cliente(dataCliente.getApellido(), dataCliente.getFechaNacimiento(), dataCliente.getRutaImagen(), dataCliente.getNickname(), dataCliente.getMail(),
-                dataCliente.getNombre(), dataCliente.getPass(), dataCliente.getDireccion());
-        clientes.put(c.getNickname(), c);
+    public void ingresarUsuario(Cliente cliente) {
+        clientes.put(cliente.getNickname(), cliente);
         //Lo agrego a la colección de usuarios por nickname y mail
-        usuariosNick.put(c.getNickname(), c);
-        usuariosMail.put(c.getMail(), c);
+        usuariosNick.put(cliente.getNickname(), cliente);
+        usuariosMail.put(cliente.getMail(), cliente);
     }
 
-    /**
-     *
-     * @param dataRestaurante
-     * @param ldc
-     */
-    public void ingresarUsuario(DataRestaurante dataRestaurante, ArrayList<DataCategoria> ldc) {
-        Restaurante r = new Restaurante(dataRestaurante.getRutaImagen(), dataRestaurante.getNickname(), dataRestaurante.getMail(), dataRestaurante.getNombre(), dataRestaurante.getPass(), dataRestaurante.getDireccion());
-        ManejadorCategoria mc = ManejadorCategoria.getInstance();
-        for (DataCategoria dc : ldc) {
-            mc.agregarRestaurante(dc.getNombre(), r);
-        }
+    public void ingresarUsuario(Restaurante r) {
         restaurantes.put(r.getNickname(), r);
         //Lo agrego a la colección de usuarios
         usuariosNick.put(r.getNickname(), r);
@@ -89,63 +73,30 @@ public class ManejadorUsuario {
         return u.obtenerDatosUsuario();
     }
 
-    public ArrayList<DataUsuario> listarUsuarios() {
-        ArrayList<DataUsuario> dataUsuarios = null;
-        if (!usuariosNick.isEmpty()) {
-            dataUsuarios = new ArrayList<>();
-            ArrayList<Usuario> lu;
-            lu = new ArrayList<>(usuariosNick.values());
-            for (Usuario u : lu) {
-                dataUsuarios.add(u.obtenerDatosUsuario());
-            }
-            lu.clear();
-        }
-        return dataUsuarios;
+    public ArrayList<Usuario> listarUsuarios() {
+        return (ArrayList<Usuario>) usuariosNick.values();
     }
 
-    public ArrayList<DataRestaurante> listarRestaurantes() {
-        ArrayList<DataRestaurante> dataUsuarios = null;
-        if (!restaurantes.isEmpty()) {
-            dataUsuarios = new ArrayList<>();
-            ArrayList<Usuario> lu;
-            lu = new ArrayList<>(restaurantes.values());
-            for (Usuario u : lu) {
-                dataUsuarios.add((DataRestaurante) u.obtenerDatosUsuario());
-            }
-            lu.clear();
-        }
-        return dataUsuarios;
-
+    public ArrayList<Restaurante> listarRestaurantes() {
+        return (ArrayList<Restaurante>) restaurantes.values();
     }
 
-    public ArrayList<DataCliente> listarClientes() {
-        ArrayList<DataCliente> dataUsuarios = null;
-        if (!clientes.isEmpty()) {
-            dataUsuarios = new ArrayList<>();
-            ArrayList<Usuario> lu;
-            lu = new ArrayList<>(clientes.values());
-            for (Usuario u : lu) {
-                dataUsuarios.add((DataCliente) u.obtenerDatosUsuario());
-            }
-            lu.clear();
-        }
-        return dataUsuarios;
-
+    public ArrayList<Cliente> listarClientes() {
+        return (ArrayList<Cliente>) clientes.values();
     }
 
-    void agregarProductoRestaurante(String nickName, Producto producto) {
-        Restaurante r = restaurantes.get(nickName);
+    public void agregarProductoRestaurante(Producto producto) {
+        Restaurante r = restaurantes.get(producto.getNickName());
         r.agregarProducto(producto);
 
     }
 
-    public ArrayList<DataProducto> listarProductosRestaurante(String nickName) {
+    public Restaurante obtenerRestaurante(String nickName) {
         Restaurante r = restaurantes.get(nickName);
-        DataRestaurante dr = (DataRestaurante) r.obtenerDatosUsuario();
-        return dr.getDataProductos();
+        return r;
     }
-    public void limpiarMemoria()
-    {
+
+    public void limpiarMemoria() {
         usuariosNick.clear();
         usuariosMail.clear();
         clientes.clear();
@@ -153,5 +104,3 @@ public class ManejadorUsuario {
     }
 
 }
-
-

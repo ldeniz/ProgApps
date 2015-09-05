@@ -46,35 +46,17 @@ public class ManejadorProducto {
 
     /**
      *
-     * @param dataIndividual
+     * @param individual
      */
-    public void ingresarProducto(DataIndividual dataIndividual) {
+    public void ingresarProducto(Individual individual) {
 
-        String nickName = dataIndividual.getNickName();
-        DataStockProducto dataStockProducto = dataIndividual.getStock();
-        String nombre = dataIndividual.getNombre();
-        String descripcion = dataIndividual.getDescripcion();
-        String tipoProducto = dataIndividual.getTipoProducto();
-        String rutaImagen = dataIndividual.getRutaImagen();
-
-        int cantidad = dataStockProducto.getCantidad();
-        float precio = dataStockProducto.getPrecio();
-        Calendar fecha = dataStockProducto.getFecha();
-
+        String nickName = individual.getNickName();
         HashMap value;
-
-        StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
-
-        Individual individual = new Individual(nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);
-
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        mu.agregarProductoRestaurante(nickName, individual);
-
         value = productos.get(nickName);
         if (value == null) {
             value = new HashMap();
         }
-        value.put(dataIndividual.getNombre(), individual);
+        value.put(individual.getNombre(), individual);
         productos.put(nickName, value);
         individuales.put(nickName, value);
     }
@@ -112,7 +94,7 @@ public class ManejadorProducto {
         Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName, tipoProducto);
 
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        mu.agregarProductoRestaurante(nickName, promocion);
+        mu.agregarProductoRestaurante(promocion);
 
         value = productos.get(nickName);
         if (value == null) {
@@ -128,21 +110,21 @@ public class ManejadorProducto {
         return hm != null && hm.containsKey(nombreProducto);
     }
 
-    public ArrayList<DataProducto> listarProductos() {
-        ArrayList<DataProducto> dataProductos = null;
+    public ArrayList<Producto> listarProductos() {
+        ArrayList<Producto> lproductos = null;
         Collection cp = productos.values();
         if (!cp.isEmpty()) {
-            dataProductos = new ArrayList<>();
+            lproductos = new ArrayList<>();
             for (Iterator it = cp.iterator(); it.hasNext();) {
                 HashMap mp = (HashMap) it.next();
                 ArrayList<Producto> lp = new ArrayList<>(mp.values());
                 for (Producto p : lp) {
-                    dataProductos.add(p.obtenerDatosProducto());
+                    lproductos.add(p);
                 }
                 lp.clear();
             }
         }
-        return dataProductos;
+        return lproductos;
     }
 
     public DataProducto obtenerDatosProducto(String nickName, String nombre) {
@@ -151,22 +133,21 @@ public class ManejadorProducto {
         return p.obtenerDatosProducto();
     }
 
-    public ArrayList<DataProducto> listarProductos(String nickName) {
-        ArrayList<DataProducto> dataProductos = null;
+    public ArrayList<Producto> listarProductos(String nickName) {
+        ArrayList<Producto> lproductos = null;
         HashMap<String, Producto> pr = productos.get(nickName);
         if (!pr.isEmpty()) {
-            dataProductos = new ArrayList<>();
+            lproductos = new ArrayList<>();
             ArrayList<Producto> lp = new ArrayList<>(pr.values());
             for (Producto p : lp) {
-                dataProductos.add(p.obtenerDatosProducto());
+                lproductos.add(p);
             }
             lp.clear();
         }
-        return dataProductos;
+        return lproductos;
     }
-    
-    public void limpiarMemoria()
-    {
+
+    public void limpiarMemoria() {
         productos.clear();
         individuales.clear();
         promociones.clear();

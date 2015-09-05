@@ -8,13 +8,18 @@ package controlador;
 import datatype.DataCategoria;
 import datatype.DataCliente;
 import datatype.DataDireccion;
+import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
 import interfaces.IControladorUsuario;
 import java.util.ArrayList;
 import java.util.Date;
+import manejador.ManejadorCategoria;
 import manejador.ManejadorUsuario;
+import modelo.Cliente;
+import modelo.Restaurante;
+import modelo.Usuario;
 
 /**
  *
@@ -64,12 +69,24 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public void altaUsuario() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Usuario u = null;
         switch (tipo) {
             case "cliente":
-                mu.ingresarUsuario((DataCliente) dataUsuario);
+                DataCliente dc = (DataCliente) dataUsuario;
+                u = new Cliente(dc.getApellido(), dc.getFechaNacimiento(),
+                        dc.getRutaImagen(), dc.getNickname(), dc.getMail(),
+                        dc.getNombre(), dc.getPass(), dc.getDireccion());
+                mu.ingresarUsuario((Cliente) u);
                 break;
             case "restaurante":
-                mu.ingresarUsuario((DataRestaurante) dataUsuario, dataCategorias);
+                DataRestaurante dr = (DataRestaurante) dataUsuario;
+                u = new Restaurante(dr.getRutaImagen(), dr.getNickname(),
+                        dr.getMail(), dr.getNombre(), dr.getPass(), dr.getDireccion());
+                ManejadorCategoria mc = ManejadorCategoria.getInstance();
+                for (DataCategoria data : dataCategorias) {
+                    mc.agregarRestaurante(data.getNombre(), (Restaurante) u);
+                }
+                mu.ingresarUsuario((Restaurante) u);
                 break;
         }
     }
@@ -83,25 +100,56 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public ArrayList<DataCliente> listarClientes() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        return mu.listarClientes();
+        ArrayList<Cliente> clientes = mu.listarClientes();
+        ArrayList<DataCliente> dataUsuarios = null;
+        if (!clientes.isEmpty()) {
+            dataUsuarios = new ArrayList<>();
+            for (Usuario u : clientes) {
+                dataUsuarios.add((DataCliente) u.obtenerDatosUsuario());
+            }
+        }
+        return dataUsuarios;
     }
 
     @Override
     public ArrayList<DataRestaurante> listarRestaurantes() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        return mu.listarRestaurantes();
+        ArrayList<Restaurante> restaurantes = mu.listarRestaurantes();
+        ArrayList<DataRestaurante> dataUsuarios = null;
+        if (!restaurantes.isEmpty()) {
+            dataUsuarios = new ArrayList<>();
+            for (Usuario u : restaurantes) {
+                dataUsuarios.add((DataRestaurante) u.obtenerDatosUsuario());
+            }
+        }
+        return dataUsuarios;
     }
 
     @Override
     public ArrayList<DataUsuario> listarUsaurios() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        return mu.listarUsuarios();
+        ArrayList<Usuario> usuarios = mu.listarUsuarios();
+        ArrayList<DataUsuario> dataUsuarios = null;
+        if (!usuarios.isEmpty()) {
+            dataUsuarios = new ArrayList<>();
+            for (Usuario u : usuarios) {
+                dataUsuarios.add(u.obtenerDatosUsuario());
+            }
+        }
+        return dataUsuarios;
     }
 
     @Override
     public ArrayList<DataProducto> listarProductos(String nickName) {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        return mu.listarProductosRestaurante(nickName);
+        Restaurante r = mu.obtenerRestaurante(nickName);
+        DataRestaurante dr = (DataRestaurante) r.obtenerDatosUsuario();
+        return dr.getDataProductos();
+    }
+
+    @Override
+    public ArrayList<DataPedido> listarPedidosCliente(String nickName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -39,6 +39,10 @@ public class Restaurante extends Usuario implements Serializable {
         productos.add(producto);
     }
 
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+
     @Override
     public DataUsuario obtenerDatosUsuario() {
         ArrayList<DataProducto> dataProductos = new ArrayList<>();
