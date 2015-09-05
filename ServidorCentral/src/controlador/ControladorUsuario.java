@@ -77,7 +77,7 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public void limpiarMemoria() {
         dataCategorias.clear();
-        dataUsuario = null;
+        //dataUsuario = null;
     }
 
     @Override

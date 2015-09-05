@@ -43,10 +43,10 @@ public class Restaurante extends Usuario implements Serializable {
     public DataUsuario obtenerDatosUsuario() {
 <span class="fc" id="L44">        ArrayList&lt;DataProducto&gt; dataProductos = new ArrayList&lt;&gt;();</span>
 
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (!productos.isEmpty()) {</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">            for (Producto p : productos) {</span>
-<span class="nc" id="L48">                dataProductos.add(p.obtenerDatosProducto());</span>
-<span class="nc" id="L49">            }</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (!productos.isEmpty()) {</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            for (Producto p : productos) {</span>
+<span class="fc" id="L48">                dataProductos.add(p.obtenerDatosProducto());</span>
+<span class="fc" id="L49">            }</span>
         }
 <span class="fc" id="L51">        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());</span>
 <span class="fc" id="L52">        return dataUsuario;</span>

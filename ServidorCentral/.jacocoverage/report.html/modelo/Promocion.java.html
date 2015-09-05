@@ -53,12 +53,12 @@ public class Promocion extends Producto {
 
     @Override
     public DataProducto obtenerDatosProducto() {
-<span class="nc" id="L56">        ArrayList&lt;DataIndividualPromocion&gt; dataIndividualPromocion = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        for (IndividualPromocion ip : individualPromocion) {</span>
-<span class="nc" id="L58">            dataIndividualPromocion.add(ip.obtenerDatosIndividualPromocion());</span>
-<span class="nc" id="L59">        }</span>
-<span class="nc" id="L60">        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());</span>
-<span class="nc" id="L61">        return dataPromocion;</span>
+<span class="fc" id="L56">        ArrayList&lt;DataIndividualPromocion&gt; dataIndividualPromocion = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (IndividualPromocion ip : individualPromocion) {</span>
+<span class="fc" id="L58">            dataIndividualPromocion.add(ip.obtenerDatosIndividualPromocion());</span>
+<span class="fc" id="L59">        }</span>
+<span class="fc" id="L60">        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());</span>
+<span class="fc" id="L61">        return dataPromocion;</span>
     }
 
 }

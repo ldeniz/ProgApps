@@ -27,9 +27,9 @@ import manejador.ManejadorProducto;
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, float precio, String rutaImagen) {
-<span class="nc" id="L30">        dataStockProducto = new DataStockProducto(1, precio);</span>
-<span class="nc" id="L31">        dataProducto = new DataIndividual(nombre, descripcion, rutaImagen, dataStockProducto, nickName, &quot;individual&quot;);</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L30">        dataStockProducto = new DataStockProducto(1, precio);</span>
+<span class="fc" id="L31">        dataProducto = new DataIndividual(nombre, descripcion, rutaImagen, dataStockProducto, nickName, &quot;individual&quot;);</span>
+<span class="fc" id="L32">    }</span>
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, int descuento, String rutaImagen) {
@@ -39,7 +39,7 @@ import manejador.ManejadorProducto;
 
     @Override
     public void seleccionarProducto(String nombre, int cantidad) {
-<span class="nc" id="L42">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="fc" id="L42">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
 <span class="nc" id="L43">        DataIndividual di = (DataIndividual) mp.obtenerDatosProducto(nickName, nombre);</span>
 <span class="nc" id="L44">        DataIndividualPromocion dip = new DataIndividualPromocion(cantidad, di);</span>
 <span class="nc" id="L45">        productosPromocion.add(dip);</span>
@@ -47,16 +47,16 @@ import manejador.ManejadorProducto;
 
     @Override
     public int obtenerCantidadProductoIndividual(String nickName, String nombre) {
-<span class="nc" id="L50">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+<span class="fc" id="L50">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
     }
 
     @Override
     public void altaProducto() {
 <span class="fc" id="L55">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
-<span class="pc bpc" id="L56" title="7 of 10 branches missed.">        switch (dataProducto.getTipoProducto()) {</span>
+<span class="pc bpc" id="L56" title="4 of 10 branches missed.">        switch (dataProducto.getTipoProducto()) {</span>
             case &quot;individual&quot;:
-<span class="nc" id="L58">                mp.ingresarProducto((DataIndividual) dataProducto);</span>
-<span class="nc" id="L59">                break;</span>
+<span class="fc" id="L58">                mp.ingresarProducto((DataIndividual) dataProducto);</span>
+<span class="fc" id="L59">                break;</span>
             case &quot;promocion&quot;:
 <span class="fc" id="L61">                mp.ingresarProducto((DataPromocion) dataProducto);</span>
                 break;
@@ -71,14 +71,14 @@ import manejador.ManejadorProducto;
 
     @Override
     public ArrayList&lt;DataProducto&gt; listarProductos() {
-<span class="nc" id="L74">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
-<span class="nc" id="L75">        return mp.listarProductos();</span>
+<span class="fc" id="L74">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="fc" id="L75">        return mp.listarProductos();</span>
     }
 
     @Override
     public void limpiarMemoria() {
-<span class="nc" id="L80">        productosPromocion.clear();</span>
-<span class="nc" id="L81">    }</span>
+<span class="fc" id="L80">        productosPromocion.clear();</span>
+<span class="fc" id="L81">    }</span>
 
     @Override
     public void seleccionarRestaurante(String nickName) {
