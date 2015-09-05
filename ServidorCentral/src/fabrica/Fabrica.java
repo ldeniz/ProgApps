@@ -37,16 +37,16 @@ public class Fabrica {
      */
     public IControladorCategoria obtenerControladorCategoria() {
         ControladorCategoria cc = new ControladorCategoria();
-        return (IControladorCategoria) cc;
+        return cc;
     }
 
     public IControladorUsuario obtenerControladorUsuario() {
         ControladorUsuario cu = new ControladorUsuario();
-        return (IControladorUsuario) cu;
+        return cu;
     }
 
     public IControladorProducto obtenerControladorProducto() {
         ControladorProducto cp = new ControladorProducto();
-        return (IControladorProducto) cp;
+        return cp;
     }
 }
