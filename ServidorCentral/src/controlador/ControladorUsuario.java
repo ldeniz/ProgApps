@@ -151,5 +151,5 @@ public class ControladorUsuario implements IControladorUsuario {
     public ArrayList<DataPedido> listarPedidosCliente(String nickName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }
