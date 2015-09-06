@@ -5,10 +5,13 @@
  */
 package GUI;
 
+import static GUI.VerInformacionDeRestaurante.VIDR;
+import static GUI.VerInformacionDeRestaurante.restaurantes;
 import datatype.DataIndividual;
 import datatype.DataIndividualPromocion;
 import datatype.DataProducto;
 import datatype.DataPromocion;
+import datatype.DataRestaurante;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorProducto;
@@ -24,12 +27,15 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
  * @author Mathi
  */
 public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
+    private DataProducto ProductoSeleccionadoResto = null;
+    private DataRestaurante RestauranteSeleccionadoResto;
     IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
     HashMap<Integer, DataProducto> elProducto = new HashMap<>();
     Properties propiedades = new Properties();
@@ -47,8 +53,133 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
         catch (IOException ex) {
             ex.printStackTrace();
         } 
+        
+        
+        System.out.println(VerInformacionDeRestaurante.VIDR);
         //---------------------------------------------------
         initComponents();
+        if(VIDR){
+        //SE FIJA SI HAY ALGO SELECCIONADO EN EL OTRO FORMULARIO:
+        VerInformacionDeRestaurante.productosRestaurante.getSelectedIndex();
+        
+        int index = VerInformacionDeRestaurante.productosRestaurante.getSelectedIndex();
+        
+        
+        ProductoSeleccionadoResto = (DataProducto) VerInformacionDeRestaurante.modeloProductos.getElementAt(index);
+        System.out.println(ProductoSeleccionadoResto.getNombre());
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode)VerInformacionDeRestaurante.restaurantes.getLastSelectedPathComponent();
+        if ((node != null) && (node.isLeaf())){
+        RestauranteSeleccionadoResto =(DataRestaurante)node.getUserObject();
+        System.out.println(RestauranteSeleccionadoResto.getNickname());
+        }
+        
+        
+        
+        //---------------------
+        
+        
+        if (ProductoSeleccionadoResto!= null){
+            jScrollPane1.hide();
+             //se limpian los campos
+            int k = modeloTablaPedidosDeProducto.getRowCount();
+            for (int i = k-1; i >=0 ; i--) {
+                modeloTablaPedidosDeProducto.removeRow(i);    
+            }
+             k = modeloTablaProdPromo.getRowCount();
+            for (int i = k-1; i >=0 ; i--) {
+                modeloTablaProdPromo.removeRow(i);    
+            }
+            nombreProducto.setText("");
+            RestauranteProducto.setText("");
+            descripcionProducto.setText("");
+            tipoProducto.setText("");
+            estadoProducto.setText("");
+            descuentoProducto.setText("");
+            precio.setText("");
+            
+            
+            
+            
+            imagenProducto.setIcon(new ImageIcon());
+
+            
+            general.removeAll();        
+            
+            
+            
+            if (ProductoSeleccionadoResto.getRutaImagen() == null){
+               Image image = Toolkit.getDefaultToolkit().createImage(propiedades.getProperty("productoPorDefecto"));
+               Icon warnIcon = new ImageIcon(image);
+               imagenProducto.setIcon(warnIcon);
+               imagenProducto.validate();
+               System.out.println("Carga la por defecto "+propiedades.getProperty("productoPorDefecto"));
+            }
+            else{
+               Image image = Toolkit.getDefaultToolkit().createImage(ProductoSeleccionadoResto.getRutaImagen());
+               Icon warnIcon = new ImageIcon(image);
+               imagenProducto.setIcon(warnIcon);
+               imagenProducto.validate();
+               System.out.println("Carga la imagen "+ProductoSeleccionadoResto.getRutaImagen());
+            }
+            
+            
+            
+            nombreProducto.setText(ProductoSeleccionadoResto.getNombre());
+            RestauranteProducto.setText(ProductoSeleccionadoResto.getNickName());
+            descripcionProducto.setText(ProductoSeleccionadoResto.getDescripcion());
+            tipoProducto.setText(ProductoSeleccionadoResto.getTipoProducto());
+            precio.setText(Float.toString(ProductoSeleccionadoResto.getStock().getPrecio()));
+            
+            switch (ProductoSeleccionadoResto.getTipoProducto()) {
+            case "individual":
+                general.add(individual);
+
+                break;
+            case "promocion":                
+                general.add(promocion);
+                DataPromocion prodPromocion = (DataPromocion) ProductoSeleccionadoResto;
+                descuentoProducto.setText(Integer.toString(prodPromocion.getDescuento())+"%");
+                if (prodPromocion.isActiva())
+                    estadoProducto.setText("Activa");
+                else
+                    estadoProducto.setText("Inactiva");
+                
+                //CARGAR LISTA DE PRODUCTOS INDIVIDUALES
+                ArrayList<DataIndividualPromocion> productosIndividuales = prodPromocion.getIndividualPromocion(); // productos incluidos en la promo
+                for (DataIndividualPromocion p : productosIndividuales) {
+                    String[] fila = new String[3];
+                    fila[0] = p.getIndividual().getNombre();
+                    fila[1] = ((Integer)p.getCantidad()).toString();
+                    modeloTablaProdPromo.addRow(fila);
+                }
+                
+                //CARGAR LISTA DE PEDIDOS 
+                /*Set<DataPedidosProd> pedidos = dp.getDataprod().getPedidos();
+                for (DataPedidosProd p : pedidos) {
+                    String[] fila = new String[3];
+                    fila[0] = p.getCliente();
+                    fila[1] = p.getPrecio().toString();
+                    fila[2] = p.getFecha().getDay() + "/" + p.getFecha().getMonth() + "/" + p.getFecha().getYear() ;
+                    
+                    
+                    modeloTablaPedidosDeProducto.addRow(fila);
+
+                }*/
+                
+                break;
+            }    
+            general.repaint();
+            general.revalidate();  
+            ProductoSeleccionadoResto = null;
+        }
+        }
+        
+        
+        
+        
+        
+        //-----------------------
+        
         
         ArrayList<DataProducto> productos = cp.listarProductos();
         
@@ -119,6 +250,24 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
             }
         };
         jLabel10 = new javax.swing.JLabel();
+
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Productos del Sistema:");
@@ -442,6 +591,10 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
             general.revalidate();    
         }                                               
     }//GEN-LAST:event_productosMouseClicked
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        
+    }//GEN-LAST:event_formInternalFrameClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

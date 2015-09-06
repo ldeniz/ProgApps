@@ -378,7 +378,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem generarPedido;
     private javax.swing.JMenu informacion;
     private javax.swing.JMenu inicio;
-    private javax.swing.JDesktopPane jDesktopPane1;
+    public static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator4;
