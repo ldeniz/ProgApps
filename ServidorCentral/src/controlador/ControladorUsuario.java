@@ -149,7 +149,10 @@ public class ControladorUsuario implements IControladorUsuario {
 
     @Override
     public ArrayList<DataPedido> listarPedidosCliente(String nickName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Cliente c = (Cliente) mu.obtenerUsuario(nickName);
+        DataCliente dc = (DataCliente) c.obtenerDatosUsuario();
+        return dc.getPedidos();
     }
 
 }
