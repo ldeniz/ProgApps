@@ -88,10 +88,11 @@ public abstract class Producto implements Serializable {
         this.pedidos = pedidos;
     }
 
-    public void agregarPedido(Pedido p) {
+    public void agregarPedido(Pedido p, int cantidad) {
         this.pedidos.add(p);
-//        ArrayList<PedidoProduco> pp = p.getPedidoProducos();
-        
+        int cantidadAnterior = stock.getCantidad();
+        stock.setCantidad(cantidadAnterior - cantidad);
+
     }
 
     public abstract DataProducto obtenerDatosProducto();

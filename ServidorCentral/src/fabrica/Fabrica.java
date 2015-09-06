@@ -5,9 +5,11 @@
 package fabrica;
 
 import controlador.ControladorCategoria;
+import controlador.ControladorPedido;
 import controlador.ControladorProducto;
 import controlador.ControladorUsuario;
 import interfaces.IControladorCategoria;
+import interfaces.IControladorPedido;
 import interfaces.IControladorProducto;
 import interfaces.IControladorUsuario;
 
@@ -37,16 +39,21 @@ public class Fabrica {
      */
     public IControladorCategoria obtenerControladorCategoria() {
         ControladorCategoria cc = new ControladorCategoria();
-        return cc;
+        return (IControladorCategoria) cc;
     }
 
     public IControladorUsuario obtenerControladorUsuario() {
         ControladorUsuario cu = new ControladorUsuario();
-        return cu;
+        return (IControladorUsuario) cu;
     }
 
     public IControladorProducto obtenerControladorProducto() {
         ControladorProducto cp = new ControladorProducto();
-        return cp;
+        return (IControladorProducto) cp;
+    }
+
+    public IControladorPedido obtenerControladorPedido() {
+        ControladorPedido cp = new ControladorPedido();
+        return (IControladorPedido) cp;
     }
 }

@@ -25,18 +25,18 @@ import modelo.StockProduco;
  * @author Sebastián Estefan
  */
 public class ManejadorProducto {
-    
+
     private static ManejadorProducto instancia;
     private final HashMap<String, HashMap<String, Producto>> productos;
     private final HashMap<String, HashMap<String, Individual>> individuales;
     private final HashMap<String, HashMap<String, Promocion>> promociones;
-    
+
     private ManejadorProducto() {
         productos = new HashMap<>();
         individuales = new HashMap<>();
         promociones = new HashMap<>();
     }
-    
+
     public static ManejadorProducto getInstance() {
         if (instancia == null) {
             instancia = new ManejadorProducto();
@@ -49,7 +49,7 @@ public class ManejadorProducto {
      * @param individual
      */
     public void ingresarProducto(Individual individual) {
-        
+
         String nickName = individual.getNickName();
         HashMap value;
         value = productos.get(nickName);
@@ -60,9 +60,9 @@ public class ManejadorProducto {
         productos.put(nickName, value);
         individuales.put(nickName, value);
     }
-    
+
     public void ingresarProducto(DataPromocion dataPromocion) {
-        
+
         String nombre = dataPromocion.getNombre();
         String tipoProducto = dataPromocion.getTipoProducto();
         String descricpion = dataPromocion.getDescripcion();
@@ -72,30 +72,30 @@ public class ManejadorProducto {
         String nickName = dataPromocion.getNickName();
         DataStockProducto dataStockProducto = dataPromocion.getStock();
         ArrayList<DataIndividualPromocion> dataIndividualPromociones = dataPromocion.getIndividualPromocion();
-        
+
         HashMap<String, Individual> hi = individuales.get(nickName);
-        
+
         DataIndividual di;
         IndividualPromocion ip;
         ArrayList<IndividualPromocion> individualPromociones = new ArrayList<>();
         HashMap value;
-        
+
         for (DataIndividualPromocion d : dataIndividualPromociones) {
             di = d.getIndividual();
             Individual i = hi.get(di.getNombre());
             ip = new IndividualPromocion(d.getCantidad(), i);
             individualPromociones.add(ip);
         }
-        
+
         int cantidad = dataStockProducto.getCantidad();
         float precio = dataStockProducto.getPrecio();
         Calendar fecha = dataStockProducto.getFecha();
         StockProduco stockProduco = new StockProduco(nickName, nombre, cantidad, precio, fecha);
         Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName, tipoProducto);
-        
+
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         mu.agregarProductoRestaurante(promocion);
-        
+
         value = productos.get(nickName);
         if (value == null) {
             value = new HashMap();
@@ -104,18 +104,18 @@ public class ManejadorProducto {
         productos.put(nickName, value);
         promociones.put(nickName, value);
     }
-    
+
     public boolean existeProducto(String nickName, String nombreProducto) {
         HashMap hm = productos.get(nickName);
         return hm != null && hm.containsKey(nombreProducto);
     }
-    
-    public void agregarPedido(String nickName, String nombreProducto, Pedido p) {
+
+    public void agregarPedido(String nickName, String nombreProducto, int cantidad, Pedido p) {
         HashMap hm = productos.get(nickName);
         Producto producto = (Producto) hm.get(nombreProducto);
-        producto.agregarPedido(p);
+        producto.agregarPedido(p, cantidad);
     }
-    
+
     public ArrayList<Producto> listarProductos() {
         ArrayList<Producto> lproductos = null;
         Collection cp = productos.values();
@@ -132,13 +132,13 @@ public class ManejadorProducto {
         }
         return lproductos;
     }
-    
+
     public Producto obtenerProducto(String nickName, String nombre) {
         HashMap<String, Producto> hm = productos.get(nickName);
         Producto p = hm.get(nombre);
         return p;
     }
-    
+
     public ArrayList<Producto> listarProductos(String nickName) {
         ArrayList<Producto> lproductos = null;
         HashMap<String, Producto> pr = productos.get(nickName);
@@ -152,7 +152,7 @@ public class ManejadorProducto {
         }
         return lproductos;
     }
-    
+
     public void limpiarMemoria() {
         productos.clear();
         individuales.clear();

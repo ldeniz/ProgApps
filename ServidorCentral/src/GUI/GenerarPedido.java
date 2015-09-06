@@ -26,66 +26,62 @@ import javax.swing.tree.DefaultTreeModel;
  * @author Mathi
  */
 public class GenerarPedido extends javax.swing.JInternalFrame {
-    private Object [][] dataClientes;
+
+    private Object[][] dataClientes;
     private IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
-    private IControladorProducto iProd = Fabrica.getInstance().obtenerControladorProducto();;
+    private IControladorProducto iProd = Fabrica.getInstance().obtenerControladorProducto();
+    ;
     
     private DefaultTreeModel modelo;
     private DataRestaurante restSelected;
-    
-    private DefaultListModel modeloOut=new DefaultListModel();
-    private DefaultTableModel modeloIn=(new javax.swing.table.DefaultTableModel(
-    new Object [][] {
 
-    },
-    new String [] { "Producto", "Cantidad"
-    }
-));
-            
+    private DefaultListModel modeloOut = new DefaultListModel();
+    private DefaultTableModel modeloIn = (new javax.swing.table.DefaultTableModel(
+            new Object[][]{},
+            new String[]{"Producto", "Cantidad"
+            }
+    ));
+
     /**
      * Creates new form GenerarPedido
      */
     public GenerarPedido() {
-        
+
         //LISTAR LOS CLIENTES
-        ArrayList<Object[]> temp= new ArrayList();
+        ArrayList<Object[]> temp = new ArrayList();
         ArrayList<DataCliente> clientes = iUsr.listarClientes();
         Object[] current;
-        
-        for(DataCliente c:clientes){
-            current=new Object[]{c.getNickname(),c.getMail(),c};
-            temp.add(current);           
+
+        for (DataCliente c : clientes) {
+            current = new Object[]{c.getNickname(), c.getMail(), c};
+            temp.add(current);
         }
 
-        dataClientes=temp.toArray(new Object[temp.size()][3]);
-        
+        dataClientes = temp.toArray(new Object[temp.size()][3]);
+
         //LISTAR LOS RESTAURANTES
         IControladorCategoria cCat = Fabrica.getInstance().obtenerControladorCategoria();
-        
+
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Categorias");
         modelo = new DefaultTreeModel(root);
         JTree tree = new JTree(modelo);
-        
-        List<DataCategoria> categorias= cCat.listarCategorias();
+
+        List<DataCategoria> categorias = cCat.listarCategorias();
         DefaultMutableTreeNode aux;
-        
-        for(DataCategoria cat : categorias){
-                
-            if (!cat.getDataRestaurantes().isEmpty()){
-                aux=new DefaultMutableTreeNode(cat.getNombre());
+
+        for (DataCategoria cat : categorias) {
+
+            if (!cat.getDataRestaurantes().isEmpty()) {
+                aux = new DefaultMutableTreeNode(cat.getNombre());
                 root.add(aux);
-                for (DataRestaurante rest : cat.getDataRestaurantes()){
+                for (DataRestaurante rest : cat.getDataRestaurantes()) {
                     aux.add(new DefaultMutableTreeNode(rest));
                 }
             }
         }
-        
-        
-        
-        
+
         initComponents();
-        
-        
+
     }
 
     /**
@@ -266,10 +262,10 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
         int index = listaProductos.getSelectedIndex();
-        if(index != -1){
+        if (index != -1) {
             String[] fila = new String[2];
             fila[0] = (String) modeloProductos.getElementAt(index);
-            fila[1] = this.cantidad.getText();;
+            fila[1] = this.cantidad.getText();
             modeloIn.addRow(fila);
             modeloProductos.remove(index);
             this.cantidad.setText("1");
@@ -279,7 +275,7 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
 
     private void jButtonQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitarActionPerformed
         int index = listaProductos2.getSelectedRow();
-        if (index != -1){
+        if (index != -1) {
             modeloProductos.addElement(modeloIn.getValueAt(index, 0));
             modeloIn.removeRow(index);
 
@@ -287,22 +283,21 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonQuitarActionPerformed
 
     private void restaurantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restaurantesMouseClicked
-       DefaultMutableTreeNode node = (DefaultMutableTreeNode)restaurantes.getLastSelectedPathComponent();
-        if ((node != null) && (node.isLeaf())){
-            restSelected=(DataRestaurante)node.getUserObject();
-        ArrayList<DataProducto> productos=restSelected.getDataProductos();
-             
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) restaurantes.getLastSelectedPathComponent();
+        if ((node != null) && (node.isLeaf())) {
+            restSelected = (DataRestaurante) node.getUserObject();
+            ArrayList<DataProducto> productos = restSelected.getDataProductos();
+
             modeloProductos.clear();
-            
-            while(modeloIn.getRowCount() != 0){
+
+            while (modeloIn.getRowCount() != 0) {
                 modeloIn.removeRow(0);
             }
-               
-            
-            for (DataProducto p : productos){
+
+            for (DataProducto p : productos) {
                 modeloProductos.addElement(p.getNombre());
             }
-              }
+        }
     }//GEN-LAST:event_restaurantesMouseClicked
 
 

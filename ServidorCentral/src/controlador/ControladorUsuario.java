@@ -93,17 +93,18 @@ public class ControladorUsuario implements IControladorUsuario {
 
     @Override
     public void limpiarMemoria() {
-        dataCategorias.clear();
-        //dataUsuario = null;
+        if (dataCategorias != null) {
+            dataCategorias.clear();
+        }
+        dataUsuario = null;
     }
 
     @Override
     public ArrayList<DataCliente> listarClientes() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<Cliente> clientes = mu.listarClientes();
-        ArrayList<DataCliente> dataUsuarios = null;
+        ArrayList<DataCliente> dataUsuarios = new ArrayList<>();
         if (!clientes.isEmpty()) {
-            dataUsuarios = new ArrayList<>();
             for (Usuario u : clientes) {
                 dataUsuarios.add((DataCliente) u.obtenerDatosUsuario());
             }
@@ -151,5 +152,5 @@ public class ControladorUsuario implements IControladorUsuario {
     public ArrayList<DataPedido> listarPedidosCliente(String nickName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

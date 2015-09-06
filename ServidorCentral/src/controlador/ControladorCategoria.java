@@ -20,12 +20,12 @@ public class ControladorCategoria implements IControladorCategoria {
     }
 
     @Override
+    @SuppressWarnings("empty-statement")
     public ArrayList<DataCategoria> listarCategorias() {
-        ArrayList<DataCategoria> dataCategorias = null;
         ArrayList<Categoria> categorias = ManejadorCategoria.getInstance().
                 listarCategorias();
+        ArrayList<DataCategoria> dataCategorias = new ArrayList<>();;
         if (!categorias.isEmpty()) {
-            dataCategorias = new ArrayList<>();
             for (Categoria c : categorias) {
                 dataCategorias.add(c.obtenerDatosCategoria());
             }

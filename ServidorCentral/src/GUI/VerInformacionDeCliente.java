@@ -5,32 +5,23 @@
  */
 package GUI;
 
-import controlador.ControladorUsuario;
 import datatype.DataCliente;
 import fabrica.Fabrica;
 import interfaces.IControladorUsuario;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.table.DefaultTableModel;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
  * @author Mathi
  */
 public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
-    private Object [][] dataClientes;
+
+    private Object[][] dataClientes;
     private IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
     //private IUsuario iUsr=Sistema.getInstance().getIUsuario();
 
@@ -38,17 +29,19 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
      * Creates new form VerInformacionDeCliente
      */
     public VerInformacionDeCliente() {
-        
-        ArrayList<Object[]> temp= new ArrayList();
-        ArrayList<DataCliente> clientes = iUsr.listarClientes();
-        Object[] current;
-        
-        for(DataCliente c:clientes){
-            current=new Object[]{c.getNickname(),c.getMail(),c};
-            temp.add(current);           
-        }
 
-        dataClientes=temp.toArray(new Object[temp.size()][3]);
+        ArrayList<DataCliente> clientes = iUsr.listarClientes();
+
+        if (!clientes.isEmpty()) {
+            ArrayList<Object[]> temp = new ArrayList();
+            Object[] current;
+            for (DataCliente c : clientes) {
+                current = new Object[]{c.getNickname(), c.getMail(), c};
+                temp.add(current);
+            }
+
+            dataClientes = temp.toArray(new Object[temp.size()][3]);
+        }
         initComponents();
     }
 
@@ -244,9 +237,9 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonCancelar3ActionPerformed
 
     private void tablaDeClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDeClientesMouseClicked
-        int i=tablaDeClientes.getSelectedRow();
-        if(i != -1){
-            DataCliente c=(DataCliente)dataClientes[i][2];
+        int i = tablaDeClientes.getSelectedRow();
+        if (i != -1) {
+            DataCliente c = (DataCliente) dataClientes[i][2];
 
             nicknameCliente.setText(c.getNickname());
             apellidoCliente.setText(c.getApellido());
@@ -254,21 +247,20 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
             mailCliente.setText(c.getMail());
             nombreCliente.setText(c.getNombre());
 
-            String img= c.getRutaImagen();
+            String img = c.getRutaImagen();
 
-            if(img==null){
+            if (img == null) {
                     //Image image = Toolkit.getDefaultToolkit().createImage(IMAGEN POR DEFECTO);
-                    //Icon warnIcon = new ImageIcon(image);
-                   // imagenCliente.setIcon(warnIcon);
-                    //imagenCliente.validate();
-            }
-            else{
-                     
-                    Image image = Toolkit.getDefaultToolkit().createImage(img);
-                    Icon warnIcon = new ImageIcon(image);
-                    imagenCliente.setIcon(warnIcon);
-                    imagenCliente.validate();
-            
+                //Icon warnIcon = new ImageIcon(image);
+                // imagenCliente.setIcon(warnIcon);
+                //imagenCliente.validate();
+            } else {
+
+                Image image = Toolkit.getDefaultToolkit().createImage(img);
+                Icon warnIcon = new ImageIcon(image);
+                imagenCliente.setIcon(warnIcon);
+                imagenCliente.validate();
+
             }
         }        // TODO add your handling code here:
     }//GEN-LAST:event_tablaDeClientesMouseClicked
