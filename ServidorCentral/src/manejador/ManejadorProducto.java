@@ -4,21 +4,14 @@
  */
 package manejador;
 
-import datatype.DataIndividual;
-import datatype.DataIndividualPromocion;
-import datatype.DataPromocion;
-import datatype.DataStockProducto;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import modelo.Individual;
-import modelo.IndividualPromocion;
 import modelo.Pedido;
 import modelo.Producto;
 import modelo.Promocion;
-import modelo.StockProduco;
 
 /**
  *
@@ -61,46 +54,16 @@ public class ManejadorProducto {
         individuales.put(nickName, value);
     }
 
-    public void ingresarProducto(DataPromocion dataPromocion) {
+    public void ingresarProducto(Promocion promocion) {
 
-        String nombre = dataPromocion.getNombre();
-        String tipoProducto = dataPromocion.getTipoProducto();
-        String descricpion = dataPromocion.getDescripcion();
-        String rutaImagen = dataPromocion.getRutaImagen();
-        int descuento = dataPromocion.getDescuento();
-        boolean activa = dataPromocion.isActiva();
-        String nickName = dataPromocion.getNickName();
-        DataStockProducto dataStockProducto = dataPromocion.getStock();
-        ArrayList<DataIndividualPromocion> dataIndividualPromociones = dataPromocion.getIndividualPromocion();
-
+        String nickName = promocion.getNickName();
         HashMap<String, Individual> hi = individuales.get(nickName);
-
-        DataIndividual di;
-        IndividualPromocion ip;
-        ArrayList<IndividualPromocion> individualPromociones = new ArrayList<>();
         HashMap value;
-
-        for (DataIndividualPromocion d : dataIndividualPromociones) {
-            di = d.getIndividual();
-            Individual i = hi.get(di.getNombre());
-            ip = new IndividualPromocion(d.getCantidad(), i);
-            individualPromociones.add(ip);
-        }
-
-        int cantidad = dataStockProducto.getCantidad();
-        float precio = dataStockProducto.getPrecio();
-        Calendar fecha = dataStockProducto.getFecha();
-        StockProduco stockProduco = new StockProduco(nickName, nombre, cantidad, precio, fecha);
-        Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descricpion, rutaImagen, stockProduco, nickName, tipoProducto);
-
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        mu.agregarProductoRestaurante(promocion);
-
         value = productos.get(nickName);
         if (value == null) {
             value = new HashMap();
         }
-        value.put(dataPromocion.getNombre(), promocion);
+        value.put(promocion.getNombre(), promocion);
         productos.put(nickName, value);
         promociones.put(nickName, value);
     }

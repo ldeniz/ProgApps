@@ -44,4 +44,12 @@ public class DataStockProducto {
         return fecha;
     }
 
+    public String getNickNameRestaurante() {
+        return nickNameRestaurante;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
 }

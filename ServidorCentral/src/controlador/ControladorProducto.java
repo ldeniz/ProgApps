@@ -17,7 +17,9 @@ import java.util.Calendar;
 import manejador.ManejadorProducto;
 import manejador.ManejadorUsuario;
 import modelo.Individual;
+import modelo.IndividualPromocion;
 import modelo.Producto;
+import modelo.Promocion;
 import modelo.StockProduco;
 
 /**
@@ -59,14 +61,19 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void altaProducto() {
         ManejadorProducto mp = ManejadorProducto.getInstance();
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         Producto p;
+        String nombre;
+        String descripcion;
+        String tipoProducto;
+        String rutaImagen;
         switch (dataProducto.getTipoProducto()) {
             case "individual":
                 DataIndividual dataIndividual = (DataIndividual) dataProducto;
-                String nombre = dataIndividual.getNombre();
-                String descripcion = dataIndividual.getDescripcion();
-                String tipoProducto = dataIndividual.getTipoProducto();
-                String rutaImagen = dataIndividual.getRutaImagen();
+                nombre = dataIndividual.getNombre();
+                descripcion = dataIndividual.getDescripcion();
+                tipoProducto = dataIndividual.getTipoProducto();
+                rutaImagen = dataIndividual.getRutaImagen();
 
                 int cantidad = dataStockProducto.getCantidad();
                 float precio = dataStockProducto.getPrecio();
@@ -76,12 +83,44 @@ public class ControladorProducto implements IControladorProducto {
 
                 p = new Individual(nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);
 
-                ManejadorUsuario mu = ManejadorUsuario.getInstance();
                 mu.agregarProductoRestaurante(p);
                 mp.ingresarProducto((Individual) p);
                 break;
             case "promocion":
-                mp.ingresarProducto((DataPromocion) dataProducto);
+                precio = 0;
+                DataPromocion dataPromocion = (DataPromocion) dataProducto;
+                nombre = dataPromocion.getNombre();
+                tipoProducto = dataPromocion.getTipoProducto();
+                descripcion = dataPromocion.getDescripcion();
+                rutaImagen = dataPromocion.getRutaImagen();
+                int descuento = dataPromocion.getDescuento();
+                boolean activa = dataPromocion.isActiva();
+                String nickName = dataPromocion.getNickName();
+                DataStockProducto dataStockProducto = dataPromocion.getStock();
+                ArrayList<DataIndividualPromocion> dataIndividualPromociones = dataPromocion.getIndividualPromocion();
+
+                DataIndividual di;
+                IndividualPromocion ip;
+                ArrayList<IndividualPromocion> individualPromociones = new ArrayList<>();
+
+                for (DataIndividualPromocion d : dataIndividualPromociones) {
+                    di = d.getIndividual();
+                    Individual i = (Individual) mp.obtenerProducto(nickName,
+                            di.getNombre());
+                    ip = new IndividualPromocion(d.getCantidad(), i);
+                    individualPromociones.add(ip);
+                    stockProduco = i.getStock();
+                    precio += stockProduco.getPrecio();
+                }
+
+                cantidad = dataStockProducto.getCantidad();
+                fecha = dataStockProducto.getFecha();
+                precio = precio - ((precio * descuento) / 100);
+                stockProduco = new StockProduco(nickName, nombre, cantidad, precio, fecha);
+                Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);
+
+                mp.ingresarProducto(promocion);
+                mu.agregarProductoRestaurante(promocion);
                 break;
         }
     }

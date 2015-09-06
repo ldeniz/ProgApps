@@ -116,9 +116,8 @@ public class ControladorUsuario implements IControladorUsuario {
     public ArrayList<DataRestaurante> listarRestaurantes() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<Restaurante> restaurantes = mu.listarRestaurantes();
-        ArrayList<DataRestaurante> dataUsuarios = null;
+        ArrayList<DataRestaurante> dataUsuarios = new ArrayList<>();
         if (!restaurantes.isEmpty()) {
-            dataUsuarios = new ArrayList<>();
             for (Usuario u : restaurantes) {
                 dataUsuarios.add((DataRestaurante) u.obtenerDatosUsuario());
             }

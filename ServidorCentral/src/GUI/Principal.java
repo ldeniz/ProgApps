@@ -6,12 +6,11 @@
 package GUI;
 
 import datatype.DataDireccion;
-import datatype.DataProducto;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorProducto;
 import interfaces.IControladorUsuario;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import servidorcentral.ServidorCentral;
@@ -214,7 +213,7 @@ public class Principal extends javax.swing.JFrame {
     private void registrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarClienteActionPerformed
         RegistrarCliente f = new RegistrarCliente();
         jDesktopPane1.add(f);
-        f.show();            
+        f.show();
     }//GEN-LAST:event_registrarClienteActionPerformed
 
     private void registrarRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarRestauranteActionPerformed
@@ -284,50 +283,63 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_verInfoPedidoActionPerformed
 
     private void datosPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datosPruebaActionPerformed
-        
-    // CARGAR DATOS DE PRUEBA
+
+        // CARGAR DATOS DE PRUEBA
         IControladorCategoria c = Fabrica.getInstance().obtenerControladorCategoria();
         IControladorUsuario u = Fabrica.getInstance().obtenerControladorUsuario();
         IControladorProducto p = Fabrica.getInstance().obtenerControladorProducto();
 
-        c.altaCategoria("Pizzas");
-        c.altaCategoria("Sushi");
-        c.altaCategoria("Pastas");
+        u.CargarDatosUsuario("costas", "gcostas@gmail.com", "Gerardo", "1234",
+                new DataDireccion("Av. Italia", "2078", null), "Costas",
+                new Date(1983, 11, 15), "sda");
+        u.altaUsuario();
+        u.CargarDatosUsuario("roro", "rcotelo@yahoo.com", "Rodrigo", "  1234",
+                new DataDireccion("Pdte. Berro", "1548", null), "Cotelo",
+                new Date(1975, 8, 2), "sda");
+        u.altaUsuario();
+
+        c.altaCategoria("Chivitos");
         c.altaCategoria("Minutas");
-        c.altaCategoria("Arabe");
- 
+        c.altaCategoria("Parrilla");
+        c.altaCategoria("Pizzas");
+        c.altaCategoria("Empanadas");
+        c.altaCategoria("Milanesas");
+        c.altaCategoria("Ensaladas");
+        c.altaCategoria("Pastas");
+        c.altaCategoria("Comida China");
+        c.altaCategoria("Picadas");
+        c.altaCategoria("Woks");
+        c.altaCategoria("Comica Mexicana");
+        c.altaCategoria("Entradas");
+        c.altaCategoria("Bebidas");
+        c.altaCategoria("Sushi");
+
         String[] rutaImagen = {"a", "b"};
-        u.seleccionarCategoria("Sushi");
+        u.seleccionarCategoria("Chivitos");
+        u.seleccionarCategoria("Minutas");
+        u.seleccionarCategoria("Parrilla");
         try {
-            u.CargarDatosUsuario("SushiGO", "contacto@sushi.com", "SushiGO", "123", new DataDireccion("a", "b", "c"), rutaImagen);
+            u.CargarDatosUsuario("mera", "mera@hotmail.com", "Pizzeria Mera", "123",
+                    new DataDireccion("Av. 8 de Octubre", "2074", null), rutaImagen);
         } catch (Exception ex) {
             Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
         u.altaUsuario();
-        
-        u.seleccionarCategoria("Pizzas");
-        try {
-            u.CargarDatosUsuario("El Horno de Juan", "contacto@horno.com", "El Horno de Juan", "123", new DataDireccion("a", "b", "c"), rutaImagen);
-        } catch (Exception ex) {
-            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        u.altaUsuario();
-        
-        p.seleccionarRestaurante("SushiGO");
+        u.limpiarMemoria();
+
+        p.seleccionarRestaurante("mera");
         p.cargarDatosProducto("Roll de Pollo", "Rico roll con el mejor pollo", (float) 150.0, "1");
         p.altaProducto();
         p.cargarDatosProducto("Roll de Algas", "Rico roll con la mejor Alga", (float) 350.0, "1");
         p.altaProducto();
-        
-        p.seleccionarRestaurante("El Horno de Juan");
+
+        p.seleccionarRestaurante("mera");
         p.cargarDatosProducto("Muzzarella", "Rica Pizza de Muzarella", (float) 75.0, "2");
         p.altaProducto();
         p.cargarDatosProducto("Faina", "De Orillo o de Borde", (float) 60.0, "2");
         p.altaProducto();
 
-
-
-        p.seleccionarRestaurante("El Horno de Juan");
+        p.seleccionarRestaurante("mera");
         p.cargarDatosProducto("Promo Juanito", "Pizza y faina", 25, "c");
         p.seleccionarProducto("Muzzarella", 2);
         p.seleccionarProducto("Faina", 1);

@@ -29,6 +29,7 @@ public abstract class Usuario implements Serializable {
         this.nombre = nombre;
         this.pass = pass;
         this.direccion = direccion;
+        this.pedidos = new ArrayList<>();
     }
 
     public String getNickname() {

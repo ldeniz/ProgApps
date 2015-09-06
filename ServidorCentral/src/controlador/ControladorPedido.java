@@ -30,6 +30,10 @@ public class ControladorPedido implements IControladorPedido {
     private Pedido pedido;
     private ArrayList<PedidoProduco> productos;
 
+    public ControladorPedido() {
+        productos = new ArrayList<>();
+    }
+
     @Override
     public void seleccionarCliente(String nickName) throws Exception {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
@@ -64,27 +68,28 @@ public class ControladorPedido implements IControladorPedido {
     @Override
     public DataPedido finalizarPedido() {
         float precioTotal = 0;
-        Pedido p = new Pedido();
-        p.setEstado(EnumEstado.PREPARACION);
-        p.setPedidoProducos(productos);
-        p.setPrecioTotal(precioTotal);
-        p.setFechaPedido(Calendar.getInstance(new Locale("es", "uy")));
+        pedido = new Pedido();
+        pedido.setEstado(EnumEstado.PREPARACION);
+        pedido.setPedidoProducos(productos);
+        pedido.setFechaPedido(Calendar.getInstance(new Locale("es", "uy")));
 
         ManejadorPedido mp = ManejadorPedido.getInstance();
-        mp.ingresarPedido(p);
+        mp.ingresarPedido(pedido);
 
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        mu.agregarPedidoUsuario(nickNameCliente, p);
-        mu.agregarPedidoUsuario(nickNameRestaurante, p);
+        mu.agregarPedidoUsuario(nickNameCliente, pedido);
+        mu.agregarPedidoUsuario(nickNameRestaurante, pedido);
 
         ManejadorProducto mpr = ManejadorProducto.getInstance();
         StockProduco sp;
         for (PedidoProduco pp : productos) {
             sp = pp.getStockProduco();
             mpr.agregarPedido(nickNameRestaurante, sp.getNombreProducto(),
-                    pp.getCantidad(), p);
+                    pp.getCantidad(), pedido);
+            precioTotal += sp.getPrecio();
         }
-        return p.obtenerDatosPedido();
+        pedido.setPrecioTotal(precioTotal);
+        return pedido.obtenerDatosPedido();
     }
 
     @Override

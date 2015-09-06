@@ -11,6 +11,7 @@ import datatype.DataProducto;
 import datatype.DataRestaurante;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
+import interfaces.IControladorPedido;
 import interfaces.IControladorProducto;
 import interfaces.IControladorUsuario;
 import java.util.ArrayList;
@@ -147,6 +148,11 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
 
         jButtonRegistrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonRegistrar.setText("Registrar");
+        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarActionPerformed(evt);
+            }
+        });
 
         listaProductos.setModel(modeloProductos);
         jScrollPane5.setViewportView(listaProductos);
@@ -299,6 +305,10 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_restaurantesMouseClicked
+
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

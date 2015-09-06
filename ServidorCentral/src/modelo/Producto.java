@@ -30,6 +30,7 @@ public abstract class Producto implements Serializable {
         this.stock = stock;
         this.nickName = nickName;
         this.tipoProducto = tipoProducto;
+        pedidos = new ArrayList<>();
     }
 
     public String getNombre() {
