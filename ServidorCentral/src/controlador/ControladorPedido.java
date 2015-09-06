@@ -57,7 +57,7 @@ public class ControladorPedido implements IControladorPedido {
         ManejadorProducto mp = ManejadorProducto.getInstance();
         Producto p = mp.obtenerProducto(nickName, nombreProducto);
         StockProduco sp = p.getStock();
-        if (sp.getCantidad() > cantidad) {
+        if (sp.getCantidad() < cantidad) {
             throw new Exception("La cantidad de productos '" + nickName
                     + "' es menor a la solicitada");
         }
@@ -86,7 +86,7 @@ public class ControladorPedido implements IControladorPedido {
             sp = pp.getStockProduco();
             mpr.agregarPedido(nickNameRestaurante, sp.getNombreProducto(),
                     pp.getCantidad(), pedido);
-            precioTotal += sp.getPrecio();
+            precioTotal += sp.getPrecio() * pp.getCantidad();
         }
         pedido.setPrecioTotal(precioTotal);
         return pedido.obtenerDatosPedido();

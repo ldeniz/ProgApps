@@ -97,7 +97,7 @@ public class Pedido {
         for (PedidoProduco pp : pedidoProducos) {
             ldpp.add(pp.obtenerDatosPedidoProducto());
         }
-        DataPedido dp = new DataPedido(numero, fechaPedido, precioTotal, estado, ldpp);
+        DataPedido dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp);
         return dp;
     }
 
