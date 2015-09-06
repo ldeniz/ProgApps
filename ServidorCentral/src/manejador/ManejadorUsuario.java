@@ -4,10 +4,10 @@
  */
 package manejador;
 
-import datatype.DataUsuario;
 import java.util.ArrayList;
 import java.util.HashMap;
 import modelo.Cliente;
+import modelo.Pedido;
 import modelo.Producto;
 import modelo.Restaurante;
 import modelo.Usuario;
@@ -40,7 +40,7 @@ public class ManejadorUsuario {
 
     /**
      *
-     * @param dataCliente
+     * @param cliente
      */
     public void ingresarUsuario(Cliente cliente) {
         clientes.put(cliente.getNickname(), cliente);
@@ -68,9 +68,9 @@ public class ManejadorUsuario {
         return usuariosNick.containsKey(nickname) || usuariosMail.containsKey(mail);
     }
 
-    public DataUsuario obtenerDataUsuario(String nickName) {
+    public Usuario obtenerUsuario(String nickName) {
         Usuario u = usuariosNick.get(nickName);
-        return u.obtenerDatosUsuario();
+        return u;
     }
 
     public ArrayList<Usuario> listarUsuarios() {
@@ -89,6 +89,11 @@ public class ManejadorUsuario {
         Restaurante r = restaurantes.get(producto.getNickName());
         r.agregarProducto(producto);
 
+    }
+    
+    public void agregarPedidoUsuario(String nickName, Pedido p){
+        Usuario u = usuariosNick.get(nickName);
+        u.agregarPedido(p);
     }
 
     public Restaurante obtenerRestaurante(String nickName) {

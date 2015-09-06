@@ -46,7 +46,7 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void seleccionarProducto(String nombre, int cantidad) {
         ManejadorProducto mp = ManejadorProducto.getInstance();
-        DataIndividual di = (DataIndividual) mp.obtenerDatosProducto(nickName, nombre);
+        DataIndividual di = (DataIndividual) mp.obtenerProducto(nickName, nombre).obtenerDatosProducto();
         DataIndividualPromocion dip = new DataIndividualPromocion(cantidad, di);
         productosPromocion.add(dip);
     }
@@ -59,12 +59,10 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void altaProducto() {
         ManejadorProducto mp = ManejadorProducto.getInstance();
-        Producto p = null;
+        Producto p;
         switch (dataProducto.getTipoProducto()) {
             case "individual":
                 DataIndividual dataIndividual = (DataIndividual) dataProducto;
-                String nickName = dataIndividual.getNickName();
-                DataStockProducto dataStockProducto = dataIndividual.getStock();
                 String nombre = dataIndividual.getNombre();
                 String descripcion = dataIndividual.getDescripcion();
                 String tipoProducto = dataIndividual.getTipoProducto();
@@ -74,7 +72,7 @@ public class ControladorProducto implements IControladorProducto {
                 float precio = dataStockProducto.getPrecio();
                 Calendar fecha = dataStockProducto.getFecha();
 
-                StockProduco stockProduco = new StockProduco(cantidad, precio, fecha);
+                StockProduco stockProduco = new StockProduco(nickName, nombre, cantidad, precio, fecha);
 
                 p = new Individual(nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);
 

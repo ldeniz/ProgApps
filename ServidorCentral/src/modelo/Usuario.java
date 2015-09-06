@@ -8,6 +8,7 @@ package modelo;
 import datatype.DataDireccion;
 import datatype.DataUsuario;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +21,7 @@ public abstract class Usuario implements Serializable {
     private String nombre;
     private String pass;
     private DataDireccion direccion;
+    ArrayList<Pedido> pedidos;
 
     public Usuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         this.nickname = nickname;
@@ -67,6 +69,18 @@ public abstract class Usuario implements Serializable {
 
     public void setDireccion(DataDireccion direccion) {
         this.direccion = direccion;
+    }
+
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(ArrayList<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public void agregarPedido(Pedido p) {
+        this.pedidos.add(p);
     }
 
     public abstract DataUsuario obtenerDatosUsuario();

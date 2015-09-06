@@ -7,6 +7,7 @@ package modelo;
 
 import datatype.DataProducto;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +21,7 @@ public abstract class Producto implements Serializable {
     private StockProduco stock;
     private String nickName;
     private String tipoProducto;
+    private ArrayList<Pedido> pedidos;
 
     public Producto(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
         this.nombre = nombre;
@@ -76,6 +78,20 @@ public abstract class Producto implements Serializable {
 
     public void setTipoProducto(String tipoProducto) {
         this.tipoProducto = tipoProducto;
+    }
+
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(ArrayList<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public void agregarPedido(Pedido p) {
+        this.pedidos.add(p);
+//        ArrayList<PedidoProduco> pp = p.getPedidoProducos();
+        
     }
 
     public abstract DataProducto obtenerDatosProducto();

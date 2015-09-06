@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import datatype.DataPedidoProduco;
+
 /**
  *
  * @author sestefan
@@ -33,6 +35,11 @@ public class PedidoProduco {
 
     public void setStockProduco(StockProduco stockProduco) {
         this.stockProduco = stockProduco;
+    }
+
+    public DataPedidoProduco obtenerDatosPedidoProducto() {
+        return new DataPedidoProduco(cantidad, stockProduco.obtenerDatosStockProducto());
+
     }
 
 }

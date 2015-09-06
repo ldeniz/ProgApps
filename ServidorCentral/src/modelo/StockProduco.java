@@ -15,14 +15,35 @@ import java.util.Calendar;
  */
 public class StockProduco implements Serializable {
 
+    private String nombreProducto;
+    private String nickNameRestaurante;
     private int cantidad;
     private float precio;
     private Calendar fecha;
 
-    public StockProduco(int cantidad, float precio, Calendar fecha) {
+    public StockProduco(String nickNameRestaurante, String nombreProducto,
+            int cantidad, float precio, Calendar fecha) {
+        this.nickNameRestaurante = nickNameRestaurante;
+        this.nombreProducto = nombreProducto;
         this.cantidad = cantidad;
         this.precio = precio;
         this.fecha = fecha;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public String getNickNameRestaurante() {
+        return nickNameRestaurante;
+    }
+
+    public void setNickNameRestaurante(String nickNameRestaurante) {
+        this.nickNameRestaurante = nickNameRestaurante;
     }
 
     public int getCantidad() {
@@ -50,7 +71,7 @@ public class StockProduco implements Serializable {
     }
 
     public DataStockProducto obtenerDatosStockProducto() {
-        return new DataStockProducto(cantidad, precio, fecha);
+        return new DataStockProducto(nickNameRestaurante, nombreProducto, cantidad, precio, fecha);
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package manejador;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import modelo.Pedido;
 
@@ -18,6 +19,7 @@ public class ManejadorPedido {
     private LinkedList<Pedido> pedidos;
 
     private ManejadorPedido() {
+        pedidos = new LinkedList<>();
     }
 
     public static ManejadorPedido getInstance() {
@@ -25,6 +27,23 @@ public class ManejadorPedido {
             instancia = new ManejadorPedido();
         }
         return instancia;
+    }
+
+    public void ingresarPedido(Pedido p) {
+        p.setNumero(pedidos.size() + 1);
+        pedidos.add(p);
+    }
+
+    public Pedido obtenerPedido(int numero) {
+        return pedidos.get(numero - 1);
+    }
+
+    public ArrayList<Pedido> listarPedidos() {
+        ArrayList<Pedido> lpedido = new ArrayList<>();
+        for (Pedido p : pedidos) {
+            lpedido.add(p);
+        }
+        return lpedido;
     }
 
 }

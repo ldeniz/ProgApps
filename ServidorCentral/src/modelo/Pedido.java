@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import datatype.DataPedido;
+import datatype.DataPedidoProduco;
 import datatype.EnumEstado;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +22,9 @@ public class Pedido {
     private float precioTotal;
     private EnumEstado estado;
     private ArrayList<PedidoProduco> pedidoProducos;
+
+    public Pedido() {
+    }
 
     public Pedido(int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList<PedidoProduco> pedidoProducos) {
         this.numero = numero;
@@ -67,6 +72,15 @@ public class Pedido {
 
     public void setPedidoProducos(ArrayList<PedidoProduco> pedidoProducos) {
         this.pedidoProducos = pedidoProducos;
+    }
+
+    public DataPedido obtenerDatosPedido() {
+        ArrayList<DataPedidoProduco> ldpp = new ArrayList<>();
+        for (PedidoProduco pp : pedidoProducos) {
+            ldpp.add(pp.obtenerDatosPedidoProducto());
+        }
+        DataPedido dp = new DataPedido(numero, fechaPedido, precioTotal, estado, ldpp);
+        return dp;
     }
 
 }

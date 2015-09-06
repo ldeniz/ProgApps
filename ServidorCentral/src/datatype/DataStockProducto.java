@@ -13,11 +13,15 @@ import java.util.Calendar;
  */
 public class DataStockProducto {
 
+    private String nickNameRestaurante;
+    private String nombreProducto;
     private int cantidad;
     private float precio;
     private Calendar fecha;
 
-    public DataStockProducto(int cantidad, float precio, Calendar fecha) {
+    public DataStockProducto(String nickNameRestaurante, String nombreProducto, int cantidad, float precio, Calendar fecha) {
+        this.nickNameRestaurante = nickNameRestaurante;
+        this.nombreProducto = nombreProducto;
         this.cantidad = cantidad;
         this.precio = precio;
         this.fecha = fecha;
