@@ -74,15 +74,27 @@ public class ManejadorUsuario {
     }
 
     public ArrayList<Usuario> listarUsuarios() {
-        return (ArrayList<Usuario>) usuariosNick.values();
+        ArrayList<Usuario> lu = new ArrayList<>();
+        for (Usuario u : usuariosNick.values()) {
+            lu.add(u);
+        }
+        return lu;
     }
 
     public ArrayList<Restaurante> listarRestaurantes() {
-        return (ArrayList<Restaurante>) restaurantes.values();
+        ArrayList<Restaurante> lr = new ArrayList<>();
+        for (Restaurante r : restaurantes.values()) {
+            lr.add(r);
+        }
+        return lr;
     }
 
     public ArrayList<Cliente> listarClientes() {
-        return (ArrayList<Cliente>) clientes.values();
+        ArrayList<Cliente> lc = new ArrayList<>();
+        for (Cliente c : clientes.values()) {
+            lc.add(c);
+        }
+        return lc;
     }
 
     public void agregarProductoRestaurante(Producto producto) {
@@ -90,8 +102,8 @@ public class ManejadorUsuario {
         r.agregarProducto(producto);
 
     }
-    
-    public void agregarPedidoUsuario(String nickName, Pedido p){
+
+    public void agregarPedidoUsuario(String nickName, Pedido p) {
         Usuario u = usuariosNick.get(nickName);
         u.agregarPedido(p);
     }
