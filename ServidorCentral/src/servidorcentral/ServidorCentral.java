@@ -6,6 +6,7 @@
 package servidorcentral;
 
 import datatype.DataCategoria;
+import datatype.DataCliente;
 import datatype.DataDireccion;
 import datatype.DataPedido;
 import datatype.DataProducto;
@@ -119,6 +120,19 @@ public class ServidorCentral {
         DataPedido dp = pd.finalizarPedido();
         System.out.println("Número Pedido: " + dp.getNumero());
         System.out.println("Precio total: " + dp.getPrecioTotal());
+
+        ArrayList<DataCliente> listarClientes = u.listarClientes();
+
+        for (DataCliente dc : listarClientes) {
+            ArrayList<DataPedido> lpc = dc.getPedidos();
+            if (!lpc.isEmpty()) {
+                for (DataPedido dped : lpc) {
+                    System.out.println(dped.getNumero());
+                    System.out.println(dped.getEstado());
+                    System.out.println(dped.getPrecioTotal());
+                }
+            }
+        }
     }
 
 }

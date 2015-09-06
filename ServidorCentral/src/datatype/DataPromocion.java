@@ -31,6 +31,13 @@ public class DataPromocion extends DataProducto {
         this.individualPromocion = individualPromocion;
     }
 
+    public DataPromocion(int descuento, boolean activa, ArrayList<DataIndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto, ArrayList<DataPedido> pedidos) {
+        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto, pedidos);
+        this.descuento = descuento;
+        this.activa = activa;
+        this.individualPromocion = individualPromocion;
+    }
+
     public int getDescuento() {
         return descuento;
     }

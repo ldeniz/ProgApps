@@ -6,6 +6,7 @@
 package interfaces;
 
 import datatype.DataPedido;
+import java.util.ArrayList;
 
 /**
  *
@@ -50,6 +51,6 @@ public interface IControladorPedido {
     /**
      *
      */
-    public void listarPedidos();
+    public ArrayList<DataPedido> listarPedidos();
 
 }

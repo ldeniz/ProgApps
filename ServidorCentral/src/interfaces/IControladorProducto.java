@@ -82,6 +82,4 @@ public interface IControladorProducto {
      */
     public void limpiarMemoria();
 
-    public ArrayList<DataPedido> listarPedidosProducto(String nickName, String nombre);
-
 }

@@ -7,8 +7,10 @@ package modelo;
 
 import datatype.DataCliente;
 import datatype.DataDireccion;
+import datatype.DataPedido;
 import datatype.DataUsuario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -54,7 +56,15 @@ public class Cliente extends Usuario implements Serializable {
 
     @Override
     public DataUsuario obtenerDatosUsuario() {
-        DataUsuario dataUsuario = new DataCliente(apellido, fechaNacimiento, rutaImagen, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
+        ArrayList<DataPedido> ldp = new ArrayList<>();
+        if (!this.getPedidos().isEmpty()) {
+            for (Pedido p : this.getPedidos()) {
+                ldp.add(p.obtenerDatosPedido());
+            }
+        }
+        DataUsuario dataUsuario = new DataCliente(apellido, fechaNacimiento, rutaImagen,
+                this.getNickname(), this.getMail(), this.getNombre(), this.getPass(),
+                this.getDireccion(), ldp);
         return dataUsuario;
     }
 

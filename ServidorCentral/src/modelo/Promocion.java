@@ -6,6 +6,7 @@
 package modelo;
 
 import datatype.DataIndividualPromocion;
+import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataPromocion;
 import java.util.ArrayList;
@@ -57,7 +58,13 @@ public class Promocion extends Producto {
         for (IndividualPromocion ip : individualPromocion) {
             dataIndividualPromocion.add(ip.obtenerDatosIndividualPromocion());
         }
-        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());
+        ArrayList<DataPedido> ldp = new ArrayList<DataPedido>();
+        if (!this.getPedidos().isEmpty()) {
+            for (Pedido p : this.getPedidos()) {
+                ldp.add(p.obtenerDatosPedido());
+            }
+        }
+        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto(), ldp);
         return dataPromocion;
     }
 

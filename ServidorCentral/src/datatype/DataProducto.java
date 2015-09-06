@@ -5,6 +5,8 @@
  */
 package datatype;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sestefan
@@ -17,6 +19,7 @@ public abstract class DataProducto {
     private DataStockProducto stock;
     private String nickName;
     private String tipoProducto;
+    private ArrayList<DataPedido> pedidos;
 
     public DataProducto(String nombre, String descripcion, String rutaImagen) {
         this.nombre = nombre;
@@ -41,6 +44,16 @@ public abstract class DataProducto {
         this.tipoProducto = tipoProducto;
     }
 
+    public DataProducto(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto, ArrayList<DataPedido> pedidos) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.rutaImagen = rutaImagen;
+        this.stock = stock;
+        this.nickName = nickName;
+        this.tipoProducto = tipoProducto;
+        this.pedidos = pedidos;
+    }
+
     public String getTipoProducto() {
         return tipoProducto;
     }
@@ -63,6 +76,10 @@ public abstract class DataProducto {
 
     public String getNickName() {
         return nickName;
+    }
+
+    public ArrayList<DataPedido> getPedidos() {
+        return pedidos;
     }
 
     @Override

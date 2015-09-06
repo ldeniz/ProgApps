@@ -1,5 +1,7 @@
 package datatype;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sestefan
@@ -11,6 +13,7 @@ public abstract class DataUsuario {
     private String nombre;
     private String pass;
     private DataDireccion direccion;
+    private ArrayList<DataPedido> pedidos;
 
     public DataUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         this.nickname = nickname;
@@ -18,6 +21,15 @@ public abstract class DataUsuario {
         this.nombre = nombre;
         this.pass = pass;
         this.direccion = direccion;
+    }
+
+    public DataUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, ArrayList<DataPedido> pedidos) {
+        this.nickname = nickname;
+        this.mail = mail;
+        this.nombre = nombre;
+        this.pass = pass;
+        this.direccion = direccion;
+        this.pedidos = pedidos;
     }
 
     public String getNickname() {
@@ -38,6 +50,10 @@ public abstract class DataUsuario {
 
     public DataDireccion getDireccion() {
         return direccion;
+    }
+
+    public ArrayList<DataPedido> getPedidos() {
+        return pedidos;
     }
 
 }

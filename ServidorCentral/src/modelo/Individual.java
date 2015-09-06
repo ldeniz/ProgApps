@@ -6,7 +6,9 @@
 package modelo;
 
 import datatype.DataIndividual;
+import datatype.DataPedido;
 import datatype.DataProducto;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,7 +22,13 @@ public class Individual extends Producto {
 
     @Override
     public DataProducto obtenerDatosProducto() {
-        DataProducto dataIndividual = new DataIndividual(getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());
+        ArrayList<DataPedido> ldp = new ArrayList<>();
+        for (Pedido p : this.getPedidos()) {
+            ldp.add(p.obtenerDatosPedido());
+        }
+        DataProducto dataIndividual = new DataIndividual(getNombre(), getDescripcion(),
+                getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(),
+                getTipoProducto(), ldp);
         return dataIndividual;
     }
 

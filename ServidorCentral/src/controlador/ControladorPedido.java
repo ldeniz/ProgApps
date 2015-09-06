@@ -93,8 +93,16 @@ public class ControladorPedido implements IControladorPedido {
     }
 
     @Override
-    public void listarPedidos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<DataPedido> listarPedidos() {
+        ManejadorPedido mp = ManejadorPedido.getInstance();
+        ArrayList<Pedido> lpedidos = mp.listarPedidos();
+        ArrayList<DataPedido> ldp = new ArrayList<>();
+        if (!lpedidos.isEmpty()) {
+            for (Pedido p : lpedidos) {
+                ldp.add(p.obtenerDatosPedido());
+            }
+        }
+        return ldp;
     }
 
 }

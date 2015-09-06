@@ -5,6 +5,8 @@
  */
 package datatype;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sestefan
@@ -21,6 +23,10 @@ public class DataIndividual extends DataProducto {
 
     public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto) {
         super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);
+    }
+
+    public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto, ArrayList<DataPedido> pedidos) {
+        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto, pedidos);
     }
 
 }

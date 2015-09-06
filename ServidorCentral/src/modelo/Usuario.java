@@ -21,7 +21,7 @@ public abstract class Usuario implements Serializable {
     private String nombre;
     private String pass;
     private DataDireccion direccion;
-    ArrayList<Pedido> pedidos;
+    private ArrayList<Pedido> pedidos;
 
     public Usuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         this.nickname = nickname;

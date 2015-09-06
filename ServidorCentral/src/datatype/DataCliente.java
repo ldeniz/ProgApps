@@ -5,6 +5,7 @@
  */
 package datatype;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -19,6 +20,13 @@ public class DataCliente extends DataUsuario {
 
     public DataCliente(String apellido, Date fechaNacimiento, String rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         super(nickname, mail, nombre, pass, direccion);
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.rutaImagen = rutaImagen;
+    }
+
+    public DataCliente(String apellido, Date fechaNacimiento, String rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion, ArrayList<DataPedido> pedidos) {
+        super(nickname, mail, nombre, pass, direccion, pedidos);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.rutaImagen = rutaImagen;
