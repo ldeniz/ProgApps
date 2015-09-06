@@ -17,6 +17,8 @@ import java.util.Calendar;
  */
 public class Pedido {
 
+    private String nickNameCliente;
+    private String nickNameRestaurante;
     private int numero;
     private Calendar fechaPedido;
     private float precioTotal;
@@ -72,6 +74,22 @@ public class Pedido {
 
     public void setPedidoProducos(ArrayList<PedidoProduco> pedidoProducos) {
         this.pedidoProducos = pedidoProducos;
+    }
+
+    public String getNickNameCliente() {
+        return nickNameCliente;
+    }
+
+    public void setNickNameCliente(String nickNameCliente) {
+        this.nickNameCliente = nickNameCliente;
+    }
+
+    public String getNickNameRestaurante() {
+        return nickNameRestaurante;
+    }
+
+    public void setNickNameRestaurante(String nickNameRestaurante) {
+        this.nickNameRestaurante = nickNameRestaurante;
     }
 
     public DataPedido obtenerDatosPedido() {
