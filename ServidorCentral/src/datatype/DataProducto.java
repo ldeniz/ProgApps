@@ -67,7 +67,7 @@ public abstract class DataProducto {
 
     @Override
     public String toString() {
-        return "DataProducto{" + "nombre=" + nombre + ", descripcion=" + descripcion + ", nickName=" + nickName + '}';
+        return nombre;
     }
 
 }
