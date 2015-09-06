@@ -16,7 +16,11 @@ import interfaces.IControladorProducto;
 import interfaces.IControladorUsuario;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -31,6 +35,7 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
     private Object[][] dataClientes;
     private IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
     private IControladorProducto iProd = Fabrica.getInstance().obtenerControladorProducto();
+    private IControladorPedido iPed = Fabrica.getInstance().obtenerControladorPedido();
     ;
     
     private DefaultTreeModel modelo;
@@ -42,6 +47,7 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
             new String[]{"Producto", "Cantidad"
             }
     ));
+    private Object dpc;
 
     /**
      * Creates new form GenerarPedido
@@ -307,7 +313,70 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_restaurantesMouseClicked
 
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
-        // TODO add your handling code here:        
+        int i = jTableClientes.getSelectedRow();
+        DataCliente c = (DataCliente) dataClientes[i][2];
+        String clienteSeleccionado = c.getNickname();
+        String restauranteSeleccionado = restSelected.getNickname();
+        
+        if ("".equals(clienteSeleccionado)) 
+            JOptionPane.showMessageDialog(this,"Debe seleccionar un cliente");
+         
+        else if ("".equals(restauranteSeleccionado))
+            JOptionPane.showMessageDialog(this,"Debe seleccionar un restaurante");
+        
+        else if (modeloIn.getRowCount() == 0)
+            JOptionPane.showMessageDialog(this,"Debe seleccionar al menos un producto");
+            
+        else{
+                        
+            int cantProductos = modeloIn.getRowCount();
+            int j = 0;
+            String aux1 = (String) modeloIn.getValueAt(j, 1);
+            while ((j < cantProductos) && (!"".equals(aux1))) {
+                aux1 = (String) modeloIn.getValueAt(j, 1);
+                j++;
+            }
+            if ("".equals(aux1)) {
+                JOptionPane.showMessageDialog(this,"Debe seleccionar las cantidades que desea para todos los productos");
+            }else{
+                try {
+                    iPed.seleccionarCliente(clienteSeleccionado);
+                } catch (Exception ex) {
+                    Logger.getLogger(GenerarPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    iPed.seleccionarRestaurante(restSelected.getNickname());
+                } catch (Exception ex) {
+                    Logger.getLogger(GenerarPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                for (int p = 0; p < cantProductos; p++) {
+                    String prod = (String) modeloIn.getValueAt(p, 0);
+                    String aux = (String) modeloIn.getValueAt(p, 1);
+                    int cant = Integer.parseInt(aux);
+                    try {
+                        iPed.seleccionarProducto(restauranteSeleccionado, prod, cant);
+                    } catch (Exception ex) {
+                        Logger.getLogger(GenerarPedido.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                    iPed.finalizarPedido();    
+
+
+                    String mensaje = "PEDIDO EN CAMINO!!\n\nEl pedido de "+clienteSeleccionado+" a "+restauranteSeleccionado+" se solicitó correctamente";
+
+
+
+                    JOptionPane.showMessageDialog(this,mensaje);
+                    this.setVisible(false);
+                    
+                    
+                    
+            }
+            
+            
+            
+        }        
+                
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
 
