@@ -357,14 +357,14 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
 
             if (productoSeleccionado.getRutaImagen() == null){
                 Image image = Toolkit.getDefaultToolkit().createImage(propiedades.getProperty("productoPorDefecto"));
-                Icon warnIcon = new ImageIcon(image);
+                Icon warnIcon = new ImageIcon(image.getScaledInstance(imagenProducto.getWidth(), imagenProducto.getHeight(), image.SCALE_DEFAULT));
                 imagenProducto.setIcon(warnIcon);
                 imagenProducto.validate();
                 System.out.println("Carga la por defecto "+propiedades.getProperty("productoPorDefecto"));
             }
             else{
                 Image image = Toolkit.getDefaultToolkit().createImage(productoSeleccionado.getRutaImagen());
-                Icon warnIcon = new ImageIcon(image);
+                Icon warnIcon = new ImageIcon(image.getScaledInstance(imagenProducto.getWidth(), imagenProducto.getHeight(), image.SCALE_DEFAULT));
                 imagenProducto.setIcon(warnIcon);
                 imagenProducto.validate();
                 System.out.println("Carga la imagen "+productoSeleccionado.getRutaImagen());

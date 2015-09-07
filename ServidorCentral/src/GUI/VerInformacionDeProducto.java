@@ -22,6 +22,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Set;
@@ -167,7 +168,12 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
                     String[] fila = new String[3];
                     fila[0] = p.getNickNameCliente();
                     fila[1] = Float.toString(p.getPrecioTotal());
-                    fila[2] = p.getFechaPedido().toString();
+                    Calendar FechaPedido = p.getFechaPedido();
+                    int diaHoy = FechaPedido.get(Calendar.DAY_OF_MONTH);
+                    int mes=FechaPedido.get(Calendar.MONTH);
+                    int año =FechaPedido.get(Calendar.YEAR);
+                    fila[2] = (diaHoy)+"/"+(mes)+"/"+(año);
+                     
                     
                     
                     modeloTablaPedidosDeProducto.addRow(fila);
@@ -588,7 +594,11 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
                     String[] fila = new String[3];
                     fila[0] = p.getNickNameCliente();
                     fila[1] = Float.toString(p.getPrecioTotal());
-                    fila[2] = p.getFechaPedido().toString();
+                    Calendar FechaPedido = p.getFechaPedido();
+                    int diaHoy = FechaPedido.get(Calendar.DAY_OF_MONTH);
+                    int mes=FechaPedido.get(Calendar.MONTH);
+                    int año =FechaPedido.get(Calendar.YEAR);
+                    fila[2] = (diaHoy)+"/"+(mes)+"/"+(año);
                     modeloTablaPedidosDeProducto.addRow(fila);
                 }
             general.repaint();
