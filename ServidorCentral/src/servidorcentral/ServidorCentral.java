@@ -173,6 +173,14 @@ public class ServidorCentral {
             }
         }
 
+        pd.seleccionarPedido(1);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         System.out.println("Elimino pedido");
         pd.seleccionarPedido(1);
         pd.cancelarPedido();
