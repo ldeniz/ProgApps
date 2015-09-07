@@ -337,7 +337,7 @@ public class RegistrarCliente extends javax.swing.JInternalFrame {
             else{
                
                 Image image = Toolkit.getDefaultToolkit().createImage(imagenSrc);
-                Icon warnIcon = new ImageIcon(image);
+                Icon warnIcon = new ImageIcon(image.getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), image.SCALE_DEFAULT));
                 jLabel3.setIcon(warnIcon);
                 jLabel3.validate();
                 

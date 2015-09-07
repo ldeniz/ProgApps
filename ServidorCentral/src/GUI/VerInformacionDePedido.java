@@ -16,6 +16,7 @@ import interfaces.IControladorProducto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,12 +27,13 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
     private IControladorPedido iPed = Fabrica.getInstance().obtenerControladorPedido();
     private IControladorProducto iPro = Fabrica.getInstance().obtenerControladorProducto();
     HashMap<Integer, DataPedido> elPedido = new HashMap<>();
-    private DataPedido pedidoSeleccionado;
+    private DataPedido pedidoSeleccionado, PedidoACancelar;
     /**
      * Creates new form VerInformacionDePedido
      * @param PedidoACancelar
      */
-    public VerInformacionDePedido(DataPedido PedidoACancelar) {
+    public VerInformacionDePedido(DataPedido PedidoQueViene) {
+        PedidoACancelar = PedidoQueViene;
         System.out.println("ENTRO AL PARAMETRO");
         initComponents();
         jScrollPane1.hide();
@@ -268,8 +270,10 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void cancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarPedidoActionPerformed
-        //ELIMINAR EL PEDIDO   pedidoSeleccionado.
+        iPed.seleccionarPedido(PedidoACancelar.getNumero());
+        iPed.cancelarPedido();
         this.setVisible(false);
+        JOptionPane.showMessageDialog(this,"Pedido Cancelado");
     }//GEN-LAST:event_cancelarPedidoActionPerformed
 
     private void pedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pedidosMouseClicked

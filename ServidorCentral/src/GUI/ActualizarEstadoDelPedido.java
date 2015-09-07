@@ -15,7 +15,10 @@ import fabrica.Fabrica;
 import interfaces.IControladorPedido;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class ActualizarEstadoDelPedido extends javax.swing.JInternalFrame {
     private IControladorPedido iPed = Fabrica.getInstance().obtenerControladorPedido();
     HashMap<Integer, DataPedido> elPedido = new HashMap<>();
+    DataPedido pedidoACambiar;
     /**
      * Creates new form ActualizarEstadoDelPedido
      */
@@ -85,6 +89,11 @@ public class ActualizarEstadoDelPedido extends javax.swing.JInternalFrame {
 
         jButtonActualizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonActualizar.setText("Actualizar");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Selecciona un estado para el pedido:");
 
@@ -143,16 +152,16 @@ public class ActualizarEstadoDelPedido extends javax.swing.JInternalFrame {
         modeloCombo.removeAllElements();
         boolean actualizar = false;
         if (pedidos.getSelectedRow() != -1){
-            DataPedido pedidoACambiar = elPedido.get(pedidos.getSelectedRow());
+            pedidoACambiar = elPedido.get(pedidos.getSelectedRow());
             
             EnumEstado e = pedidoACambiar.getEstado();
             if (e == PREPARACION){
-                modeloCombo.addElement("Recibido");
-                modeloCombo.addElement("Enviado");
+                modeloCombo.addElement("RECIBIDO");
+                modeloCombo.addElement("ENVIADO");
                 actualizar = true;
             }
             else if (e == ENVIADO){
-                modeloCombo.addElement("Recibido");
+                modeloCombo.addElement("RECIBIDO");
                 actualizar = true;
             }
             else if (e== RECIBIDO){
@@ -162,6 +171,24 @@ public class ActualizarEstadoDelPedido extends javax.swing.JInternalFrame {
             //ACTUALIZAR EL PEDIDO   
         }
     }//GEN-LAST:event_pedidosMouseClicked
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        
+        iPed.seleccionarPedido(pedidoACambiar.getNumero());
+        if (jComboBoxEstado.getSelectedItem() == "ENVIADO"){
+                iPed.seleccionarEstado(ENVIADO);
+        }
+        else if (jComboBoxEstado.getSelectedItem() == "RECIBIDO"){
+            iPed.seleccionarEstado(RECIBIDO);
+        }
+        
+        try {
+            iPed.actualizarPedido();
+        } catch (Exception ex) {
+            Logger.getLogger(ActualizarEstadoDelPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(this,"Pedido Actualizado Correctamente");
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -287,14 +287,14 @@ public class VerInformacionDeRestaurante extends javax.swing.JInternalFrame {
              
             if (this.restSelected.getRutaImagen() == null){
                Image image = Toolkit.getDefaultToolkit().createImage(propiedades.getProperty("restoPorDefecto"));
-               Icon warnIcon = new ImageIcon(image);
+               Icon warnIcon = new ImageIcon(image.getScaledInstance(imagenRestaurante.getWidth(), imagenRestaurante.getHeight(), image.SCALE_DEFAULT));
                imagenRestaurante.setIcon(warnIcon);
                imagenRestaurante.validate();
                System.out.println("Carga la por defecto"+propiedades.getProperty("restoPorDefecto"));
             }
             else{
                Image image = Toolkit.getDefaultToolkit().createImage(this.restSelected.getRutaImagen()[0]);
-               Icon warnIcon = new ImageIcon(image);
+               Icon warnIcon = new ImageIcon(image.getScaledInstance(imagenRestaurante.getWidth(), imagenRestaurante.getHeight(), image.SCALE_DEFAULT));
                imagenRestaurante.setIcon(warnIcon);
                imagenRestaurante.validate();
             }

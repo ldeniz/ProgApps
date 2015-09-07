@@ -270,7 +270,7 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
             } else {
 
                 Image image = Toolkit.getDefaultToolkit().createImage(img);
-                Icon warnIcon = new ImageIcon(image);
+                Icon warnIcon = new ImageIcon(image.getScaledInstance(imagenCliente.getWidth(), imagenCliente.getHeight(), image.SCALE_DEFAULT));
                 imagenCliente.setIcon(warnIcon);
                 imagenCliente.validate();
 
