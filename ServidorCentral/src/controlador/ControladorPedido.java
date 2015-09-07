@@ -72,6 +72,8 @@ public class ControladorPedido implements IControladorPedido {
         pedido.setEstado(EnumEstado.PREPARACION);
         pedido.setPedidoProducos(productos);
         pedido.setFechaPedido(Calendar.getInstance(new Locale("es", "uy")));
+        pedido.setNickNameCliente(nickNameCliente);
+        pedido.setNickNameRestaurante(nickNameRestaurante);
 
         ManejadorPedido mp = ManejadorPedido.getInstance();
         mp.ingresarPedido(pedido);
