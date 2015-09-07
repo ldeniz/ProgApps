@@ -256,7 +256,7 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
 
             nicknameCliente.setText(c.getNickname());
             apellidoCliente.setText(c.getApellido());
-            //direccionCliente.setText(c.getDireccion());
+            direccionCliente.setText(c.getDireccion().getCalle()+" "+c.getDireccion().getNumero_puerta());
             mailCliente.setText(c.getMail());
             nombreCliente.setText(c.getNombre());
 
