@@ -92,11 +92,13 @@ public class ServidorCentral {
         }
 
         System.out.println("Modifico promo");
-        
+
         p.seleccionarRestaurante(nickName);
-        p.CargarDatosModificarProducto("promo pizza", "bajo la pizza locooo", "c", 30, true);
+        p.CargarDatosModificarProducto("promo pizza", "pizza + faina", "bajo la pizza locooo", "c", 30, true);
         p.ModificarProducto();
-        
+        p.CargarDatosModificarProducto("musa", "muzza", "fsadfas", "a", 200);
+        p.ModificarProducto();
+
         ldp.clear();
 
         ldp = u.listarProductos(nickName);

@@ -197,7 +197,10 @@ public class ControladorProducto implements IControladorProducto {
                 }
                 break;
             case "individual":
-
+                Individual i = (Individual) p;
+                sp = i.getStock();
+                DataIndividual di = (DataIndividual) dataProductoModificado;
+                sp.setPrecio(di.getStock().getPrecio());
                 break;
         }
 
