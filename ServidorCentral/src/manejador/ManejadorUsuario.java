@@ -120,4 +120,11 @@ public class ManejadorUsuario {
         restaurantes.clear();
     }
 
+    public void borrarPedido(Pedido p) {
+        Cliente c = clientes.get(p.getNickNameCliente());
+        c.getPedidos().remove(p);
+        Restaurante r = restaurantes.get(p.getNickNameRestaurante());
+        r.getPedidos().remove(p);
+    }
+
 }

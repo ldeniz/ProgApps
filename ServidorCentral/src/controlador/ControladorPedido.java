@@ -29,6 +29,7 @@ public class ControladorPedido implements IControladorPedido {
     private String nickNameRestaurante;
     private Pedido pedido;
     private ArrayList<PedidoProduco> productos;
+    int numero;
 
     public ControladorPedido() {
         productos = new ArrayList<>();
@@ -105,6 +106,24 @@ public class ControladorPedido implements IControladorPedido {
             }
         }
         return ldp;
+    }
+
+    @Override
+    public void cancelarPedido() {
+        ManejadorPedido mp = ManejadorPedido.getInstance();
+        Pedido p = mp.obtenerPedido(numero);
+        if (p.getEstado() == EnumEstado.PREPARACION) {
+            mp.borrarPedido(p);
+            ManejadorProducto mpr = ManejadorProducto.getInstance();
+            mpr.borrarPedido(p);
+            ManejadorUsuario mu = ManejadorUsuario.getInstance();
+            mu.borrarPedido(p);
+        }
+    }
+
+    @Override
+    public void seleccionarPedido(int numero) {
+        this.numero = numero;
     }
 
 }

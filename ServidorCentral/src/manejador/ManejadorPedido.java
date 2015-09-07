@@ -46,4 +46,8 @@ public class ManejadorPedido {
         return lpedido;
     }
 
+    public void borrarPedido(Pedido p) {
+        pedidos.remove(p);
+    }
+
 }

@@ -148,6 +148,24 @@ public class ServidorCentral {
                 }
             }
         }
+
+        System.out.println("Elimino pedido");
+        pd.seleccionarPedido(1);
+        pd.cancelarPedido();
+
+        listarClientes = u.listarClientes();
+
+        for (DataCliente dc : listarClientes) {
+            ArrayList<DataPedido> lpc = dc.getPedidos();
+            if (!lpc.isEmpty()) {
+                for (DataPedido dped : lpc) {
+                    System.out.println(dped.getNumero());
+                    System.out.println(dped.getEstado());
+                    System.out.println(dped.getPrecioTotal());
+                }
+            }
+        }
+
     }
 
 }

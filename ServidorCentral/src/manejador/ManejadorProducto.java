@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import modelo.Individual;
 import modelo.Pedido;
+import modelo.PedidoProduco;
 import modelo.Producto;
 import modelo.Promocion;
 
@@ -120,6 +121,15 @@ public class ManejadorProducto {
         productos.clear();
         individuales.clear();
         promociones.clear();
+    }
+
+    public void borrarPedido(Pedido p) {
+        HashMap hm = productos.get(p.getNickNameRestaurante());
+        ArrayList<PedidoProduco> lpp = p.getPedidoProducos();
+        for (PedidoProduco pp : lpp) {
+            hm.remove(pp.getStockProduco().getNombreProducto());
+        }
+
     }
 
 }

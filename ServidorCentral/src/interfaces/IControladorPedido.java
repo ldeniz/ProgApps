@@ -42,6 +42,13 @@ public interface IControladorPedido {
     public void seleccionarProducto(String nickName, String nombreProducto, int cantidad) throws Exception;
 
     /**
+     * El sistema recuerda el número de pedido.
+     *
+     * @param numero
+     */
+    public void seleccionarPedido(int numero);
+
+    /**
      * El nuevo pedido es ingresado al sistema
      *
      * @return
@@ -50,7 +57,12 @@ public interface IControladorPedido {
 
     /**
      *
-     * @return 
+     */
+    public void cancelarPedido();
+
+    /**
+     *
+     * @return
      */
     public ArrayList<DataPedido> listarPedidos();
 
