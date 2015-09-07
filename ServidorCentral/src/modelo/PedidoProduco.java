@@ -14,9 +14,9 @@ import datatype.DataPedidoProduco;
 public class PedidoProduco {
 
     private int cantidad;
-    private StockProduco stockProduco;
+    private StockProducto stockProduco;
 
-    public PedidoProduco(int cantidad, StockProduco stockProduco) {
+    public PedidoProduco(int cantidad, StockProducto stockProduco) {
         this.cantidad = cantidad;
         this.stockProduco = stockProduco;
     }
@@ -29,11 +29,11 @@ public class PedidoProduco {
         this.cantidad = cantidad;
     }
 
-    public StockProduco getStockProduco() {
+    public StockProducto getStockProduco() {
         return stockProduco;
     }
 
-    public void setStockProduco(StockProduco stockProduco) {
+    public void setStockProduco(StockProducto stockProduco) {
         this.stockProduco = stockProduco;
     }
 

@@ -13,7 +13,7 @@ import java.util.Calendar;
  *
  * @author sestefan
  */
-public class StockProduco implements Serializable {
+public class StockProducto implements Serializable {
 
     private String nombreProducto;
     private String nickNameRestaurante;
@@ -21,7 +21,7 @@ public class StockProduco implements Serializable {
     private float precio;
     private Calendar fecha;
 
-    public StockProduco(String nickNameRestaurante, String nombreProducto,
+    public StockProducto(String nickNameRestaurante, String nombreProducto,
             int cantidad, float precio, Calendar fecha) {
         this.nickNameRestaurante = nickNameRestaurante;
         this.nombreProducto = nombreProducto;

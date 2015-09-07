@@ -21,7 +21,7 @@ public class Promocion extends Producto {
     private boolean activa;
     private ArrayList<IndividualPromocion> individualPromocion;
 
-    public Promocion(int descuento, boolean activa, ArrayList<IndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
+    public Promocion(int descuento, boolean activa, ArrayList<IndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, StockProducto stock, String nickName, String tipoProducto) {
         super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);
         this.descuento = descuento;
         this.activa = activa;

@@ -19,7 +19,7 @@ import modelo.Individual;
 import modelo.IndividualPromocion;
 import modelo.Producto;
 import modelo.Promocion;
-import modelo.StockProduco;
+import modelo.StockProducto;
 
 /**
  *
@@ -75,7 +75,7 @@ public class ControladorProducto implements IControladorProducto {
                 float precio = dataStockProducto.getPrecio();
                 Calendar fecha = dataStockProducto.getFecha();
 
-                StockProduco stockProduco = new StockProduco(nickName, nombre, cantidad, precio, fecha);
+                StockProducto stockProduco = new StockProducto(nickName, nombre, cantidad, precio, fecha);
 
                 p = new Individual(nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);
 
@@ -112,7 +112,7 @@ public class ControladorProducto implements IControladorProducto {
                 cantidad = dataStockProducto.getCantidad();
                 fecha = dataStockProducto.getFecha();
                 precio = precio - ((precio * descuento) / 100);
-                stockProduco = new StockProduco(nickName, nombre, cantidad, precio, fecha);
+                stockProduco = new StockProducto(nickName, nombre, cantidad, precio, fecha);
                 Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);
 
                 mp.ingresarProducto(promocion);
@@ -175,12 +175,23 @@ public class ControladorProducto implements IControladorProducto {
         p.setNombre(dataProductoModificado.getNombre());
         p.setDescripcion(dataProductoModificado.getDescripcion());
         p.setRutaImagen(dataProductoModificado.getRutaImagen());
+        float precio = 0;
         switch (p.getTipoProducto()) {
             case "promocion":
                 Promocion pr = (Promocion) p;
                 DataPromocion dataPromocion = (DataPromocion) dataProductoModificado;
                 pr.setActiva(dataPromocion.isActiva());
-                pr.setDescuento(dataPromocion.getDescuento());
+                if (pr.getDescuento() != dataPromocion.getDescuento()) {
+                    pr.setDescuento(dataPromocion.getDescuento());
+                    StockProducto sp;
+                    for (IndividualPromocion ip : pr.getIndividualPromocion()) {
+                        sp = ip.getIndividual().getStock();
+                        precio += sp.getPrecio();
+                    }
+                    precio = precio - ((precio * pr.getDescuento()) / 100);
+                    sp = pr.getStock();
+                    sp.setPrecio(precio);
+                }
                 break;
         }
 

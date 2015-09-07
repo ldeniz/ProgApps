@@ -96,6 +96,8 @@ public class ServidorCentral {
         p.seleccionarRestaurante(nickName);
         p.CargarDatosModificarProducto("promo pizza", "bajo la pizza locooo", "c", 30, true);
         p.ModificarProducto();
+        
+        ldp.clear();
 
         ldp = u.listarProductos(nickName);
         for (DataProducto dp : ldp) {

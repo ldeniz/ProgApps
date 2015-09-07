@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Individual extends Producto {
 
-    public Individual(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
+    public Individual(String nombre, String descripcion, String rutaImagen, StockProducto stock, String nickName, String tipoProducto) {
         super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);
     }
 

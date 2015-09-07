@@ -18,12 +18,12 @@ public abstract class Producto implements Serializable {
     private String nombre;
     private String descripcion;
     private String rutaImagen;
-    private StockProduco stock;
+    private StockProducto stock;
     private String nickName;
     private String tipoProducto;
     private ArrayList<Pedido> pedidos;
 
-    public Producto(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
+    public Producto(String nombre, String descripcion, String rutaImagen, StockProducto stock, String nickName, String tipoProducto) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.rutaImagen = rutaImagen;
@@ -57,11 +57,11 @@ public abstract class Producto implements Serializable {
         this.rutaImagen = rutaImagen;
     }
 
-    public StockProduco getStock() {
+    public StockProducto getStock() {
         return stock;
     }
 
-    public void setStock(StockProduco stock) {
+    public void setStock(StockProducto stock) {
         this.stock = stock;
     }
 

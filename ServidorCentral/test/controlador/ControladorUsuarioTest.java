@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import manejador.ManejadorUsuario;
 import modelo.Individual;
-import modelo.StockProduco;
+import modelo.StockProducto;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

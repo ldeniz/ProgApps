@@ -17,7 +17,7 @@ import manejador.ManejadorUsuario;
 import modelo.Pedido;
 import modelo.PedidoProduco;
 import modelo.Producto;
-import modelo.StockProduco;
+import modelo.StockProducto;
 
 /**
  *
@@ -56,7 +56,7 @@ public class ControladorPedido implements IControladorPedido {
     public void seleccionarProducto(String nickName, String nombreProducto, int cantidad) throws Exception {
         ManejadorProducto mp = ManejadorProducto.getInstance();
         Producto p = mp.obtenerProducto(nickName, nombreProducto);
-        StockProduco sp = p.getStock();
+        StockProducto sp = p.getStock();
         if (sp.getCantidad() < cantidad) {
             throw new Exception("La cantidad de productos '" + nickName
                     + "' es menor a la solicitada");
@@ -83,7 +83,7 @@ public class ControladorPedido implements IControladorPedido {
         mu.agregarPedidoUsuario(nickNameRestaurante, pedido);
 
         ManejadorProducto mpr = ManejadorProducto.getInstance();
-        StockProduco sp;
+        StockProducto sp;
         for (PedidoProduco pp : productos) {
             sp = pp.getStockProduco();
             mpr.agregarPedido(nickNameRestaurante, sp.getNombreProducto(),
