@@ -6,8 +6,11 @@
 package GUI;
 
 import datatype.DataDireccion;
+import datatype.DataPedido;
+import datatype.EnumEstado;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
+import interfaces.IControladorPedido;
 import interfaces.IControladorProducto;
 import interfaces.IControladorUsuario;
 import java.io.IOException;
@@ -292,6 +295,7 @@ public class Principal extends javax.swing.JFrame {
         IControladorCategoria c = Fabrica.getInstance().obtenerControladorCategoria();
         IControladorUsuario u = Fabrica.getInstance().obtenerControladorUsuario();
         IControladorProducto p = Fabrica.getInstance().obtenerControladorProducto();
+        IControladorPedido pd = Fabrica.getInstance().obtenerControladorPedido();
         
          //Carga Archivo de Propiedades ----------------------
         
@@ -398,26 +402,153 @@ public class Principal extends javax.swing.JFrame {
         u.altaUsuario();
         u.limpiarMemoria();
         
-
+        //INDIVIDUALES
         p.seleccionarRestaurante("mera");
         p.cargarDatosProducto("Asado", "Asado a la parrilla", (float) 225.0, null);
         p.altaProducto();
+        p.limpiarMemoria();
         p.cargarDatosProducto("Milanesa de Carne", "Con lechuga, tomate, mayonesa y fritas", (float) 180.0, propiedades.getProperty("rutaDeCarga")+"MCM.jpg");
         p.altaProducto();
+        p.limpiarMemoria();
         p.cargarDatosProducto("Chivito Canadiense", "Lomito, jamón, muzza, tomate, aceitunas, panceta, huevo, morrón y fritas", (float) 305.0, propiedades.getProperty("rutaDeCarga")+"CCM.jpg");
         p.altaProducto();
+        p.limpiarMemoria();
         p.cargarDatosProducto("Pizza 2 Gustos", "Pizza con dos gustos a elección", (float) 130.0, null);
         p.altaProducto();
+        p.limpiarMemoria();
 
+        p.seleccionarRestaurante("rossell"); 
+        p.cargarDatosProducto("Chivito al plato", "Ensalada rusa, mixta, huevo, jamón, muzza, panceta, aceitunas y fritas", (float) 324.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Milanesa a caballo", "Milanesa con dos huevos fritos acompañado de fritas", (float) 270.0, propiedades.getProperty("rutaDeCarga")+"MCR.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Pizza con 2 gustos", "Pizza con dos gustos a elección", (float) 103.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Agnolotis", "Agnolotis de jamón y queso", (float) 225.0, propiedades.getProperty("rutaDeCarga")+"PAR.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        
+        p.seleccionarRestaurante("bocatti"); 
+        p.cargarDatosProducto("Empanada de Carne", "Carne, aceitunas, huevo duro, condimentos", (float) 44.0, propiedades.getProperty("rutaDeCarga")+"ECB.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Empanada Americana", "Carne, panceta y huevo duro", (float) 44.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Empanada QyC", "Empanada de Queso y Cebolla", (float) 44.0, propiedades.getProperty("rutaDeCarga")+"EQB.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Empanada Capresse", "Queso, tomate y albahaca", (float) 44.0, propiedades.getProperty("rutaDeCarga")+"ECA.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        
+        p.seleccionarRestaurante("winb"); 
+        p.cargarDatosProducto("Thai wok", "Cerdo, calamares, sweet chili, salsa de ostras, maní y jugo de lima, acompañado de tallarines o arroz.", (float) 240.0, propiedades.getProperty("rutaDeCarga")+"TWW.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("China wok", "Tempura de cerdo, vegetales mixtos, almendras, salsa de soja y naranja, acompañado de tallarines o arroz.", (float) 240.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Classic wok de pollo", "Pollo, vegetales mixtos, salsa agridulce, salsa de soja y cebollita de verdeo, acompañado de tallarines o arroz.", (float) 230.0, propiedades.getProperty("rutaDeCarga")+"CPW.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Classic wok de cerdo", "Cerdo, vegetales mixtos, jengibre, salsa de ostras y ralladura de lima, acompañado de tallarines o arroz.", (float) 230.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        
+        //PROMOCIONES
+        p.seleccionarRestaurante("mera");
         p.cargarDatosProducto("ChiviPizza", "Chivito y Pizza", 20, null);
         p.seleccionarProducto("Chivito Canadiense", 1);
         p.seleccionarProducto("Pizza 2 Gustos", 1);
         p.altaProducto();
+        p.limpiarMemoria();
         
         p.cargarDatosProducto("MilaAsado", "3 Milanesas + 1 Asado para compartir", 30, null);
         p.seleccionarProducto("Milanesa de Carne", 3);
         p.seleccionarProducto("Asado", 1);
         p.altaProducto();
+        p.limpiarMemoria();
+        
+        p.seleccionarRestaurante("rossell");
+        p.cargarDatosProducto("MilaPizza", "2 Milanesas a caballo + 1 Pizzas 2 gustos", 10, null);
+        p.seleccionarProducto("Milanesa a caballo", 2);
+        p.seleccionarProducto("Pizza con 2 gustos", 1);
+        p.altaProducto();
+        p.limpiarMemoria();
+        
+       
+        //PEDIDOS
+        try {
+            pd.seleccionarCliente("costas");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("bocatti");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("bocatti", "Empanada de Carne", 1);
+            pd.seleccionarProducto("bocatti", "Empanada Americana", 2);
+            pd.seleccionarProducto("bocatti", "Empanada QyC", 2);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        
+        //--------
+        /*
+         try {
+            pd.seleccionarCliente("roro");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("mera");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("mera", "Asado", 3);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        
+        pd.seleccionarPedido(2);
+        pd.seleccionarEstado(EnumEstado.ENVIADO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //--------
+        
+         try {
+            pd.seleccionarCliente("roro");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("mera");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("mera", "Asado", 3);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();*/
     }//GEN-LAST:event_datosPruebaActionPerformed
 
     /**
