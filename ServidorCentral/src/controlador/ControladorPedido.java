@@ -72,7 +72,9 @@ public class ControladorPedido implements IControladorPedido {
         float precioTotal = 0;
         pedido = new Pedido();
         pedido.setEstado(EnumEstado.PREPARACION);
-        pedido.setPedidoProducos(productos);
+        for (PedidoProduco pp : productos){             
+            pedido.agregarProducto(pp);
+        }
         pedido.setFechaPedido(Calendar.getInstance(new Locale("es", "uy")));
         pedido.setNickNameCliente(nickNameCliente);
         pedido.setNickNameRestaurante(nickNameRestaurante);

@@ -26,6 +26,7 @@ public class Pedido {
     private ArrayList<PedidoProduco> pedidoProducos;
 
     public Pedido() {
+        pedidoProducos = new ArrayList<>();
     }
 
     public Pedido(int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList<PedidoProduco> pedidoProducos) {
@@ -90,6 +91,10 @@ public class Pedido {
 
     public void setNickNameRestaurante(String nickNameRestaurante) {
         this.nickNameRestaurante = nickNameRestaurante;
+    }
+
+    public void agregarProducto(PedidoProduco producto) {
+        pedidoProducos.add(producto);
     }
 
     public DataPedido obtenerDatosPedido() {

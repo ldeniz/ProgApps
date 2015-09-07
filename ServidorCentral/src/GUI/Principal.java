@@ -25,7 +25,7 @@ import servidorcentral.ServidorCentral;
  * @author Mathi
  */
 public class Principal extends javax.swing.JFrame {
-
+    
     Properties propiedades = new Properties();
 
     /**
@@ -33,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-
+        
     }
 
     /**
@@ -291,7 +291,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_verInfoPedidoActionPerformed
 
     private void datosPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datosPruebaActionPerformed
-
+        
+        datosPrueba.setVisible(false);
         // CARGAR DATOS DE PRUEBA
         IControladorCategoria c = Fabrica.getInstance().obtenerControladorCategoria();
         IControladorUsuario u = Fabrica.getInstance().obtenerControladorUsuario();
@@ -306,7 +307,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
+        
         System.out.println(VerInformacionDeRestaurante.VIDR);
         //---------------------------------------------------
 
@@ -330,7 +331,7 @@ public class Principal extends javax.swing.JFrame {
                 new DataDireccion("Monte Caseros ", "5615", null), "Weiss",
                 new Date(1978, 12, 23), propiedades.getProperty("rutaDeCarga") + "weiss.jpg");
         u.altaUsuario();
-
+        
         c.altaCategoria("Chivitos");
         c.altaCategoria("Minutas");
         c.altaCategoria("Parrilla");
@@ -346,7 +347,7 @@ public class Principal extends javax.swing.JFrame {
         c.altaCategoria("Entradas");
         c.altaCategoria("Bebidas");
         c.altaCategoria("Sushi");
-
+        
         String[] rutaImagen = null;
         u.seleccionarCategoria("Chivitos");
         u.seleccionarCategoria("Minutas");
@@ -360,7 +361,7 @@ public class Principal extends javax.swing.JFrame {
         }
         u.altaUsuario();
         u.limpiarMemoria();
-
+        
         String[] rutaImagen2 = {propiedades.getProperty("rutaDeCarga") + "BR1.png", "b"};
         u.seleccionarCategoria("Chivitos");
         u.seleccionarCategoria("Milanesas");
@@ -374,7 +375,7 @@ public class Principal extends javax.swing.JFrame {
         }
         u.altaUsuario();
         u.limpiarMemoria();
-
+        
         String[] rutaImagen3 = {propiedades.getProperty("rutaDeCarga") + "EB1.png", "b"};
         u.seleccionarCategoria("Empanadas");
         try {
@@ -385,7 +386,7 @@ public class Principal extends javax.swing.JFrame {
         }
         u.altaUsuario();
         u.limpiarMemoria();
-
+        
         String[] rutaImagen4 = {propiedades.getProperty("rutaDeCarga") + "WB1.jpg", "b"};
         u.seleccionarCategoria("Woks");
         u.seleccionarCategoria("Comida China");
@@ -413,7 +414,7 @@ public class Principal extends javax.swing.JFrame {
         p.cargarDatosProducto("Pizza 2 Gustos", "Pizza con dos gustos a elección", (float) 130.0, null);
         p.altaProducto();
         p.limpiarMemoria();
-
+        
         p.seleccionarRestaurante("rossell");
         p.cargarDatosProducto("Chivito al plato", "Ensalada rusa, mixta, huevo, jamón, muzza, panceta, aceitunas y fritas", (float) 324.0, null);
         p.altaProducto();
@@ -427,7 +428,7 @@ public class Principal extends javax.swing.JFrame {
         p.cargarDatosProducto("Agnolotis", "Agnolotis de jamón y queso", (float) 225.0, propiedades.getProperty("rutaDeCarga") + "PAR.jpg");
         p.altaProducto();
         p.limpiarMemoria();
-
+        
         p.seleccionarRestaurante("bocatti");
         p.cargarDatosProducto("Empanada de Carne", "Carne, aceitunas, huevo duro, condimentos", (float) 44.0, propiedades.getProperty("rutaDeCarga") + "ECB.jpg");
         p.altaProducto();
@@ -441,7 +442,7 @@ public class Principal extends javax.swing.JFrame {
         p.cargarDatosProducto("Empanada Capresse", "Queso, tomate y albahaca", (float) 44.0, propiedades.getProperty("rutaDeCarga") + "ECA.jpg");
         p.altaProducto();
         p.limpiarMemoria();
-
+        
         p.seleccionarRestaurante("winb");
         p.cargarDatosProducto("Thai wok", "Cerdo, calamares, sweet chili, salsa de ostras, maní y jugo de lima, acompañado de tallarines o arroz.", (float) 240.0, propiedades.getProperty("rutaDeCarga") + "TWW.jpg");
         p.altaProducto();
@@ -463,13 +464,13 @@ public class Principal extends javax.swing.JFrame {
         p.seleccionarProducto("Pizza 2 Gustos", 1);
         p.altaProducto();
         p.limpiarMemoria();
-
+        
         p.cargarDatosProducto("MilaAsado", "3 Milanesas + 1 Asado para compartir", 30, null);
         p.seleccionarProducto("Milanesa de Carne", 3);
         p.seleccionarProducto("Asado", 1);
         p.altaProducto();
         p.limpiarMemoria();
-
+        
         p.seleccionarRestaurante("rossell");
         p.cargarDatosProducto("MilaPizza", "2 Milanesas a caballo + 1 Pizzas 2 gustos", 10, null);
         p.seleccionarProducto("Milanesa a caballo", 2);
@@ -495,7 +496,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         pd.finalizarPedido();
         pd.limpiarMermoria();
         //--------
@@ -514,10 +515,10 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         pd.finalizarPedido();
         pd.limpiarMermoria();
-
+        
         pd.seleccionarPedido(2);
         pd.seleccionarEstado(EnumEstado.ENVIADO);
         try {
@@ -542,7 +543,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         pd.finalizarPedido();
     }//GEN-LAST:event_datosPruebaActionPerformed
 

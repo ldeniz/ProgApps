@@ -9,13 +9,11 @@ import datatype.DataPedido;
 import datatype.DataPedidoProduco;
 import datatype.DataProducto;
 import datatype.DataPromocion;
-import datatype.DataStockProducto;
 import fabrica.Fabrica;
 import interfaces.IControladorPedido;
 import interfaces.IControladorProducto;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
