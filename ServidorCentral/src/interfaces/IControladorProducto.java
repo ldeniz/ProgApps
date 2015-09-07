@@ -64,23 +64,25 @@ public interface IControladorProducto {
 
     /**
      *
+     * @param mombreViejo
      * @param nombre
      * @param descripcion
      * @param rutaImagen
      * @param precio
      */
-    public void CargarDatosModificarProducto(String nombre, String descripcion,
+    public void CargarDatosModificarProducto(String mombreViejo, String nombre, String descripcion,
             String rutaImagen, float precio);
 
     /**
      *
+     * @param mombreViejo
      * @param nombre
      * @param descripcion
      * @param rutaImagen
      * @param descuento
      * @param activa
      */
-    public void CargarDatosModificarProducto(String nombre, String descripcion,
+    public void CargarDatosModificarProducto(String mombreViejo, String nombre, String descripcion,
             String rutaImagen, int descuento, boolean activa);
 
     /**

@@ -33,6 +33,7 @@ public class ControladorProducto implements IControladorProducto {
     private ArrayList<DataIndividualPromocion> productosPromocion = new ArrayList<>();
 
     private DataProducto dataProductoModificado;
+    private String nombreViejo;
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, float precio, String rutaImagen) {
@@ -156,14 +157,16 @@ public class ControladorProducto implements IControladorProducto {
     }
 
     @Override
-    public void CargarDatosModificarProducto(String nombre, String descripcion,
+    public void CargarDatosModificarProducto(String mombreAnt, String nombre, String descripcion,
             String rutaImagen, float precio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.nombreViejo = mombreAnt;
+        dataProductoModificado = new DataIndividual(nombre, descripcion, rutaImagen, new DataStockProducto(0, precio));
     }
 
     @Override
-    public void CargarDatosModificarProducto(String nombre, String descripcion,
+    public void CargarDatosModificarProducto(String mombreAnt, String nombre, String descripcion,
             String rutaImagen, int descuento, boolean activa) {
+        this.nombreViejo = mombreAnt;
         dataProductoModificado = new DataPromocion(descuento, activa, nombre, descripcion,
                 rutaImagen, nickName);
     }
@@ -171,11 +174,12 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void ModificarProducto() {
         ManejadorProducto mp = ManejadorProducto.getInstance();
-        Producto p = mp.obtenerProducto(nickName, dataProductoModificado.getNombre());
+        Producto p = mp.obtenerProducto(nickName, nombreViejo);
         p.setNombre(dataProductoModificado.getNombre());
         p.setDescripcion(dataProductoModificado.getDescripcion());
         p.setRutaImagen(dataProductoModificado.getRutaImagen());
         float precio = 0;
+        StockProducto sp;
         switch (p.getTipoProducto()) {
             case "promocion":
                 Promocion pr = (Promocion) p;
@@ -183,7 +187,6 @@ public class ControladorProducto implements IControladorProducto {
                 pr.setActiva(dataPromocion.isActiva());
                 if (pr.getDescuento() != dataPromocion.getDescuento()) {
                     pr.setDescuento(dataPromocion.getDescuento());
-                    StockProducto sp;
                     for (IndividualPromocion ip : pr.getIndividualPromocion()) {
                         sp = ip.getIndividual().getStock();
                         precio += sp.getPrecio();
@@ -192,6 +195,9 @@ public class ControladorProducto implements IControladorProducto {
                     sp = pr.getStock();
                     sp.setPrecio(precio);
                 }
+                break;
+            case "individual":
+
                 break;
         }
 
