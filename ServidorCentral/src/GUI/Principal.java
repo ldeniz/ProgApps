@@ -529,7 +529,36 @@ public class Principal extends javax.swing.JFrame {
 
         //--------
         try {
-            pd.seleccionarCliente("roro");
+            pd.seleccionarCliente("chechi");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("winb");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("winb", "Thai wok", 2);
+            pd.seleccionarProducto("winb", "China wok", 3);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+        
+        pd.seleccionarPedido(3);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //--------
+        try {
+            pd.seleccionarCliente("andy");
         } catch (Exception ex) {
             Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -539,12 +568,50 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            pd.seleccionarProducto("mera", "Asado", 3);
+            pd.seleccionarProducto("mera", "Chivito Canadiense", 4);
         } catch (Exception ex) {
             Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         pd.finalizarPedido();
+        pd.limpiarMermoria();
+        
+        pd.seleccionarPedido(4);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //--------
+        try {
+            pd.seleccionarCliente("weiss");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("rossell");
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("rossell", "Agnolotis", 1);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+        
+        pd.seleccionarPedido(5);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_datosPruebaActionPerformed
 
     /**
