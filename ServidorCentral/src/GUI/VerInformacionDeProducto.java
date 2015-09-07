@@ -112,14 +112,14 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
             
             if (ProductoSeleccionadoResto.getRutaImagen() == null){
                Image image = Toolkit.getDefaultToolkit().createImage(propiedades.getProperty("productoPorDefecto"));
-               Icon warnIcon = new ImageIcon(image.getScaledInstance(imagenProducto.getWidth(), imagenProducto.getHeight(), image.SCALE_DEFAULT));
+               Icon warnIcon = new ImageIcon(image.getScaledInstance(145, 129, image.SCALE_DEFAULT));
                imagenProducto.setIcon(warnIcon);
                imagenProducto.validate();
                System.out.println("Carga la por defecto "+propiedades.getProperty("productoPorDefecto"));
             }
             else{
                Image image = Toolkit.getDefaultToolkit().createImage(ProductoSeleccionadoResto.getRutaImagen());
-               Icon warnIcon = new ImageIcon(image.getScaledInstance(imagenProducto.getWidth(), imagenProducto.getHeight(), image.SCALE_DEFAULT));
+               Icon warnIcon = new ImageIcon(image.getScaledInstance(145, 129, image.SCALE_DEFAULT));
                imagenProducto.setIcon(warnIcon);
                imagenProducto.validate();
                System.out.println("Carga la imagen "+ProductoSeleccionadoResto.getRutaImagen());
@@ -187,7 +187,7 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
         
         
         ArrayList<DataProducto> productos = cp.listarProductos();
-        
+        System.out.println("LISTA VIENE VACIA: "+cp.listarProductos().isEmpty());
         for (DataProducto p : productos) {
             String[] fila = new String[3];
             fila[0] = p.getNombre();

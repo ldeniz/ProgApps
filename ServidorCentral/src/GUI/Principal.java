@@ -10,7 +10,10 @@ import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorProducto;
 import interfaces.IControladorUsuario;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import servidorcentral.ServidorCentral;
@@ -20,12 +23,13 @@ import servidorcentral.ServidorCentral;
  * @author Mathi
  */
 public class Principal extends javax.swing.JFrame {
-
+    Properties propiedades = new Properties();
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+        
     }
 
     /**
@@ -288,14 +292,41 @@ public class Principal extends javax.swing.JFrame {
         IControladorCategoria c = Fabrica.getInstance().obtenerControladorCategoria();
         IControladorUsuario u = Fabrica.getInstance().obtenerControladorUsuario();
         IControladorProducto p = Fabrica.getInstance().obtenerControladorProducto();
+        
+         //Carga Archivo de Propiedades ----------------------
+        
+        InputStream entrada = null;
+        try {               
+            entrada = this.getClass().getResourceAsStream("/Resources/config.properties");
+            propiedades.load(entrada);
+            } 
+        catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+        
+        
+        System.out.println(VerInformacionDeRestaurante.VIDR);
+        //---------------------------------------------------
 
         u.CargarDatosUsuario("costas", "gcostas@gmail.com", "Gerardo", "1234",
                 new DataDireccion("Av. Italia", "2078", null), "Costas",
-                new Date(1983, 11, 15), "sda");
+                new Date(1983, 11, 15), propiedades.getProperty("rutaDeCarga")+"costas.jpg");
         u.altaUsuario();
         u.CargarDatosUsuario("roro", "rcotelo@yahoo.com", "Rodrigo", "  1234",
                 new DataDireccion("Pdte. Berro", "1548", null), "Cotelo",
-                new Date(1975, 8, 2), "sda");
+                new Date(1975, 8, 2), propiedades.getProperty("rutaDeCarga")+"roro.jpg");
+        u.altaUsuario();
+        u.CargarDatosUsuario("chechi", "cgarrido@hotmail.com", "Cecilia", "  1234",
+                new DataDireccion("Gral. Urquiza", "1548", null), "Garrido",
+                new Date(1987, 9, 12), propiedades.getProperty("rutaDeCarga")+"chechi.jpg");
+        u.altaUsuario();
+        u.CargarDatosUsuario("andy", "agarcia@gmail.com", "Andrea", "  1234",
+                new DataDireccion("Dr. Manuel Albo ", "4512", null), "García",
+                new Date(1951, 7, 28), propiedades.getProperty("rutaDeCarga")+"andy.jpg");
+        u.altaUsuario();
+        u.CargarDatosUsuario("weiss", "aweiss@hotmail.com", "Adrian", "  1234",
+                new DataDireccion("Monte Caseros ", "5615", null), "Weiss",
+                new Date(1978, 12, 23), propiedades.getProperty("rutaDeCarga")+"weiss.jpg");
         u.altaUsuario();
 
         c.altaCategoria("Chivitos");
@@ -314,10 +345,11 @@ public class Principal extends javax.swing.JFrame {
         c.altaCategoria("Bebidas");
         c.altaCategoria("Sushi");
 
-        String[] rutaImagen = {"a", "b"};
+        String[] rutaImagen = null;
         u.seleccionarCategoria("Chivitos");
         u.seleccionarCategoria("Minutas");
         u.seleccionarCategoria("Parrilla");
+        u.seleccionarCategoria("Pizzas");
         try {
             u.CargarDatosUsuario("mera", "mera@hotmail.com", "Pizzeria Mera", "123",
                     new DataDireccion("Av. 8 de Octubre", "2074", null), rutaImagen);
@@ -326,23 +358,65 @@ public class Principal extends javax.swing.JFrame {
         }
         u.altaUsuario();
         u.limpiarMemoria();
+        
+        
+        String[] rutaImagen2 = {propiedades.getProperty("rutaDeCarga")+"BR1.png", "b"};
+        u.seleccionarCategoria("Chivitos");
+        u.seleccionarCategoria("Milanesas");
+        u.seleccionarCategoria("Pastas");
+        u.seleccionarCategoria("Pizzas");
+        try {
+            u.CargarDatosUsuario("rossell", "bar.rossel@gmail.com", "Bar Rossell", "123",
+                    new DataDireccion("Bvar. Artigas ", "1601", null), rutaImagen2);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        u.limpiarMemoria();
+        
+        String[] rutaImagen3 = {propiedades.getProperty("rutaDeCarga")+"EB1.png", "b"};
+        u.seleccionarCategoria("Empanadas");
+        try {
+            u.CargarDatosUsuario("bocatti", "bocatti@gmail.com", "Empanadas Bocatti", "123",
+                    new DataDireccion("18 de julio ", "2138", null), rutaImagen3);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        u.limpiarMemoria();
+        
+        String[] rutaImagen4 = {propiedades.getProperty("rutaDeCarga")+"WB1.jpg", "b"};
+        u.seleccionarCategoria("Woks");
+        u.seleccionarCategoria("Comida China");
+        u.seleccionarCategoria("Pastas");
+        try {
+            u.CargarDatosUsuario("winb", "wok.in.box@hotmail.com", "Wok in Box", "123",
+                    new DataDireccion("Libertad ", "2535", null), rutaImagen4);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        u.limpiarMemoria();
+        
 
         p.seleccionarRestaurante("mera");
-        p.cargarDatosProducto("Roll de Pollo", "Rico roll con el mejor pollo", (float) 150.0, "1");
+        p.cargarDatosProducto("Asado", "Asado a la parrilla", (float) 225.0, null);
         p.altaProducto();
-        p.cargarDatosProducto("Roll de Algas", "Rico roll con la mejor Alga", (float) 350.0, "1");
+        p.cargarDatosProducto("Milanesa de Carne", "Con lechuga, tomate, mayonesa y fritas", (float) 180.0, propiedades.getProperty("rutaDeCarga")+"MCM.jpg");
         p.altaProducto();
-
-        p.seleccionarRestaurante("mera");
-        p.cargarDatosProducto("Muzzarella", "Rica Pizza de Muzarella", (float) 75.0, "2");
+        p.cargarDatosProducto("Chivito Canadiense", "Lomito, jamón, muzza, tomate, aceitunas, panceta, huevo, morrón y fritas", (float) 305.0, propiedades.getProperty("rutaDeCarga")+"CCM.jpg");
         p.altaProducto();
-        p.cargarDatosProducto("Faina", "De Orillo o de Borde", (float) 60.0, "2");
+        p.cargarDatosProducto("Pizza 2 Gustos", "Pizza con dos gustos a elección", (float) 130.0, null);
         p.altaProducto();
 
-        p.seleccionarRestaurante("mera");
-        p.cargarDatosProducto("Promo Juanito", "Pizza y faina", 25, "c");
-        p.seleccionarProducto("Muzzarella", 2);
-        p.seleccionarProducto("Faina", 1);
+        p.cargarDatosProducto("ChiviPizza", "Chivito y Pizza", 20, null);
+        p.seleccionarProducto("Chivito Canadiense", 1);
+        p.seleccionarProducto("Pizza 2 Gustos", 1);
+        p.altaProducto();
+        
+        p.cargarDatosProducto("MilaAsado", "3 Milanesas + 1 Asado para compartir", 30, null);
+        p.seleccionarProducto("Milanesa de Carne", 3);
+        p.seleccionarProducto("Asado", 1);
         p.altaProducto();
     }//GEN-LAST:event_datosPruebaActionPerformed
 
