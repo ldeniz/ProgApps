@@ -133,8 +133,10 @@ public class ControladorProducto implements IControladorProducto {
         ManejadorProducto mp = ManejadorProducto.getInstance();
         ArrayList<Producto> productos = mp.listarProductos();
         ArrayList<DataProducto> dataProductos = new ArrayList<>();
-        for (Producto p : productos) {
-            dataProductos.add(p.obtenerDatosProducto());
+        if(!dataProductos.isEmpty()){
+            for (Producto p : productos) {
+                dataProductos.add(p.obtenerDatosProducto());
+            }
         }
         return dataProductos;
     }
