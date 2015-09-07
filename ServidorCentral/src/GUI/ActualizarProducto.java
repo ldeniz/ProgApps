@@ -190,6 +190,11 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
 
         jButtonActualizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonActualizar.setText("Actualizar");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Imagen");
 
@@ -403,6 +408,10 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
             PanelGenerico1.revalidate();
         }
     }//GEN-LAST:event_productosMouseClicked
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

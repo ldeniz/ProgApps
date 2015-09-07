@@ -354,6 +354,7 @@ public class GenerarPedido extends javax.swing.JInternalFrame {
                     String aux = (String) modeloIn.getValueAt(p, 1);
                     int cant = Integer.parseInt(aux);
                     try {
+                        System.out.println("Seagrega Producto: "+prod+" con cantidad "+cant);
                         iPed.seleccionarProducto(restauranteSeleccionado, prod, cant);
                     } catch (Exception ex) {
                         Logger.getLogger(GenerarPedido.class.getName()).log(Level.SEVERE, null, ex);

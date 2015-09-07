@@ -483,7 +483,7 @@ public class RegistrarProducto extends javax.swing.JInternalFrame {
             }
         }
         
-        if (!camposVacios){
+        if (!camposVacios && !iProd.existeProducto(selectedRes.getNickname(),cNombre)){
             try{
                 iProd.altaProducto();
                 JOptionPane.showMessageDialog(this,"Producto registrado");

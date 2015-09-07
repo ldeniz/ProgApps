@@ -5,17 +5,44 @@
  */
 package GUI;
 
+import datatype.DataPedido;
+import datatype.DataPedidoProduco;
+import datatype.EnumEstado;
+import static datatype.EnumEstado.ENVIADO;
+import static datatype.EnumEstado.PREPARACION;
+import static datatype.EnumEstado.RECIBIDO;
+import fabrica.Fabrica;
+import interfaces.IControladorPedido;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mathi
  */
 public class ActualizarEstadoDelPedido extends javax.swing.JInternalFrame {
-
+    private IControladorPedido iPed = Fabrica.getInstance().obtenerControladorPedido();
+    HashMap<Integer, DataPedido> elPedido = new HashMap<>();
     /**
      * Creates new form ActualizarEstadoDelPedido
      */
     public ActualizarEstadoDelPedido() {
         initComponents();
+        
+        
+        ArrayList<DataPedido> lPedido = iPed.listarPedidos();
+        for (DataPedido pedido : lPedido) {
+           
+            elPedido.put(modeloTabla.getRowCount(), pedido);
+            String[] fila = new String[3];
+            fila[0] = Integer.toString(pedido.getNumero());
+            fila[1] = pedido.getNickNameCliente();
+            fila[2] = pedido.getNickNameRestaurante();
+            
+            modeloTabla.addRow(fila);          
+        }
     }
 
     /**
@@ -29,24 +56,24 @@ public class ActualizarEstadoDelPedido extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        pedidos = new javax.swing.JTable();
+        modeloTabla = new DefaultTableModel(); modeloTabla.addColumn("Id Pedido"); modeloTabla.addColumn("Cliente"); modeloTabla.addColumn("Restaurante");
+        pedidos = new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } };
         jButtonCancelar = new javax.swing.JButton();
         jButtonActualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        modeloCombo = new DefaultComboBoxModel<>();
         jComboBoxEstado = new javax.swing.JComboBox();
 
         setTitle("Actualizar estado del Pedido");
 
         jLabel1.setText("Pedidos Registrados:");
 
-        pedidos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
+        pedidos.setModel(modeloTabla);
+        pedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pedidosMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane1.setViewportView(pedidos);
 
         jButtonCancelar.setText("Cancelar");
@@ -61,7 +88,7 @@ public class ActualizarEstadoDelPedido extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Selecciona un estado para el pedido:");
 
-        jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxEstado.setModel(modeloCombo);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,14 +139,40 @@ public class ActualizarEstadoDelPedido extends javax.swing.JInternalFrame {
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void pedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pedidosMouseClicked
+        modeloCombo.removeAllElements();
+        boolean actualizar = false;
+        if (pedidos.getSelectedRow() != -1){
+            DataPedido pedidoACambiar = elPedido.get(pedidos.getSelectedRow());
+            
+            EnumEstado e = pedidoACambiar.getEstado();
+            if (e == PREPARACION){
+                modeloCombo.addElement("Recibido");
+                modeloCombo.addElement("Enviado");
+                actualizar = true;
+            }
+            else if (e == ENVIADO){
+                modeloCombo.addElement("Recibido");
+                actualizar = true;
+            }
+            else if (e== RECIBIDO){
+                actualizar = false;
+            }
+            if (actualizar){}
+            //ACTUALIZAR EL PEDIDO   
+        }
+    }//GEN-LAST:event_pedidosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JComboBox jComboBoxEstado;
+    private DefaultComboBoxModel modeloCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable pedidos;
+    private DefaultTableModel modeloTabla;
     // End of variables declaration//GEN-END:variables
 }

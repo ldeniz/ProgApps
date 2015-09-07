@@ -9,11 +9,13 @@ import static GUI.VerInformacionDeRestaurante.VIDR;
 import static GUI.VerInformacionDeRestaurante.restaurantes;
 import datatype.DataIndividual;
 import datatype.DataIndividualPromocion;
+import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataPromocion;
 import datatype.DataRestaurante;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
+import interfaces.IControladorPedido;
 import interfaces.IControladorProducto;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -37,6 +39,7 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
     private DataProducto ProductoSeleccionadoResto = null;
     private DataRestaurante RestauranteSeleccionadoResto;
     IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
+    IControladorPedido cPed = Fabrica.getInstance().obtenerControladorPedido();
     HashMap<Integer, DataProducto> elProducto = new HashMap<>();
     Properties propiedades = new Properties();
     /**
@@ -153,21 +156,23 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
                     modeloTablaProdPromo.addRow(fila);
                 }
                 
-                //CARGAR LISTA DE PEDIDOS 
-                /*Set<DataPedidosProd> pedidos = dp.getDataprod().getPedidos();
-                for (DataPedidosProd p : pedidos) {
+                
+                
+                break;
+            }    
+            //CARGAR LISTA DE PEDIDOS 
+                ArrayList<DataPedido> pedidos = ProductoSeleccionadoResto.getPedidos();
+                for (DataPedido p : pedidos) {
+ 
                     String[] fila = new String[3];
-                    fila[0] = p.getCliente();
-                    fila[1] = p.getPrecio().toString();
-                    fila[2] = p.getFecha().getDay() + "/" + p.getFecha().getMonth() + "/" + p.getFecha().getYear() ;
+                    fila[0] = p.getNickNameCliente();
+                    fila[1] = Float.toString(p.getPrecioTotal());
+                    fila[2] = p.getFechaPedido().toString();
                     
                     
                     modeloTablaPedidosDeProducto.addRow(fila);
 
-                }*/
-                
-                break;
-            }    
+                }
             general.repaint();
             general.revalidate();  
             ProductoSeleccionadoResto = null;
@@ -572,21 +577,20 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
                     modeloTablaProdPromo.addRow(fila);
                 }
                 
-                //CARGAR LISTA DE PEDIDOS 
-                /*Set<DataPedidosProd> pedidos = dp.getDataprod().getPedidos();
-                for (DataPedidosProd p : pedidos) {
-                    String[] fila = new String[3];
-                    fila[0] = p.getCliente();
-                    fila[1] = p.getPrecio().toString();
-                    fila[2] = p.getFecha().getDay() + "/" + p.getFecha().getMonth() + "/" + p.getFecha().getYear() ;
-                    
-                    
-                    modeloTablaPedidosDeProducto.addRow(fila);
-
-                }*/
+               
                 
                 break;
             }    
+             //CARGAR LISTA DE PEDIDOS 
+               ArrayList<DataPedido> pedidos = productoSeleccionado.getPedidos();
+                for (DataPedido p : pedidos) {
+ 
+                    String[] fila = new String[3];
+                    fila[0] = p.getNickNameCliente();
+                    fila[1] = Float.toString(p.getPrecioTotal());
+                    fila[2] = p.getFechaPedido().toString();
+                    modeloTablaPedidosDeProducto.addRow(fila);
+                }
             general.repaint();
             general.revalidate();    
         }                                               

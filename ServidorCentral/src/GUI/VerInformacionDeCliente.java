@@ -6,7 +6,10 @@
 package GUI;
 
 import datatype.DataCliente;
+import datatype.DataPedido;
+import datatype.DataPedidoProduco;
 import fabrica.Fabrica;
+import interfaces.IControladorPedido;
 import interfaces.IControladorUsuario;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -14,6 +17,12 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,6 +32,8 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
 
     private Object[][] dataClientes;
     private IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
+    private IControladorPedido iPed = Fabrica.getInstance().obtenerControladorPedido();
+    HashMap<Integer, DataPedido> elPedidoCliente = new HashMap<>();
     //private IUsuario iUsr=Sistema.getInstance().getIUsuario();
 
     /**
@@ -70,7 +81,8 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        pedidosClienteModel = new DefaultTableModel(); pedidosClienteModel.addColumn("ID Pedido"); pedidosClienteModel.addColumn("Restaurante"); pedidosClienteModel.addColumn("Fecha");
+        pedidos = new javax.swing.JTable(){    public boolean isCellEditable(int row, int column) {         return (column == 23 );     }};
         jButtonVerPedido = new javax.swing.JButton();
         jButtonCancelar3 = new javax.swing.JButton();
 
@@ -121,18 +133,8 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Pedidos del Cliente:");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        pedidos.setModel(pedidosClienteModel);
+        jScrollPane2.setViewportView(pedidos);
 
         jButtonVerPedido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonVerPedido.setText("Ver Pedido");
@@ -158,30 +160,32 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
                     .addComponent(scroll)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(imagenCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(direccionCliente)
-                            .addComponent(apellidoCliente)
-                            .addComponent(nombreCliente)
-                            .addComponent(mailCliente)
-                            .addComponent(nicknameCliente))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonVerPedido, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonCancelar3, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jButtonCancelar3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imagenCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(direccionCliente)
+                                    .addComponent(apellidoCliente)
+                                    .addComponent(nombreCliente)
+                                    .addComponent(mailCliente)
+                                    .addComponent(nicknameCliente)))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -229,7 +233,16 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerPedidoActionPerformed
-        // TODO add your handling code here:
+        int aux = pedidos.getSelectedRow();
+       if(aux != -1){
+            DataPedido pedidoACancelar = elPedidoCliente.get(pedidos.getSelectedRow());
+            VerInformacionDePedido ped = new VerInformacionDePedido(pedidoACancelar);
+            Principal.jDesktopPane1.add(ped);
+            ped.toFront();
+            ped.setVisible(true);
+            this.setVisible(false);
+        }else
+            JOptionPane.showMessageDialog(this,"Debe seleccionar un producto");
     }//GEN-LAST:event_jButtonVerPedidoActionPerformed
 
     private void jButtonCancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar3ActionPerformed
@@ -262,9 +275,36 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
                 imagenCliente.validate();
 
             }
+            
+            //PEDIDOS
+            
+            int k = pedidosClienteModel.getRowCount();
+             for (int j = k-1; j >=0 ; j--) {
+                    pedidosClienteModel.removeRow(j);    
+             }
+             
+            
+            ArrayList<DataPedido> elPedido = iUsr.listarPedidosCliente(c.getNickname());
+
+            
+            for (DataPedido pedido : elPedido) {
+            {
+                elPedidoCliente.put(pedidosClienteModel.getRowCount(), pedido);
+                String[] fila1 = new String[4];
+                fila1[0] = (Integer.toString(pedido.getNumero()));
+                Calendar FechaPedido = pedido.getFechaPedido();
+                int diaHoy = FechaPedido.get(Calendar.DAY_OF_MONTH);
+                int mes=FechaPedido.get(Calendar.MONTH);
+                int año =FechaPedido.get(Calendar.YEAR);
+                fila1[2] = (diaHoy)+"/"+(mes)+"/"+(año);
+                fila1[1] = pedido.getNickNameRestaurante();
+                pedidosClienteModel.addRow(fila1);
+
+
+            }
         }        // TODO add your handling code here:
     }//GEN-LAST:event_tablaDeClientesMouseClicked
-
+  } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellidoCliente;
@@ -280,15 +320,13 @@ public class VerInformacionDeCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel mailCliente;
     private javax.swing.JLabel nicknameCliente;
     private javax.swing.JLabel nombreCliente;
+    private javax.swing.JTable pedidos;
+    private DefaultTableModel pedidosClienteModel;
     private javax.swing.JScrollPane scroll;
     private javax.swing.JTable tablaDeClientes;
     // End of variables declaration//GEN-END:variables
 
-    private IControladorUsuario obtenerControladorUsuario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

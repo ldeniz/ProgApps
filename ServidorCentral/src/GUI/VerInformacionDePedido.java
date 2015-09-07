@@ -5,17 +5,103 @@
  */
 package GUI;
 
+import datatype.DataPedido;
+import datatype.DataPedidoProduco;
+import datatype.DataProducto;
+import datatype.DataPromocion;
+import datatype.DataStockProducto;
+import fabrica.Fabrica;
+import interfaces.IControladorPedido;
+import interfaces.IControladorProducto;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mathi
  */
 public class VerInformacionDePedido extends javax.swing.JInternalFrame {
-
+    private IControladorPedido iPed = Fabrica.getInstance().obtenerControladorPedido();
+    private IControladorProducto iPro = Fabrica.getInstance().obtenerControladorProducto();
+    HashMap<Integer, DataPedido> elPedido = new HashMap<>();
+    private DataPedido pedidoSeleccionado;
     /**
      * Creates new form VerInformacionDePedido
+     * @param PedidoACancelar
      */
-    public VerInformacionDePedido() {
+    public VerInformacionDePedido(DataPedido PedidoACancelar) {
+        System.out.println("ENTRO AL PARAMETRO");
         initComponents();
+        jScrollPane1.hide();
+        jLabel1.hide();
+        
+       
+        
+            int k = individuales.getRowCount();
+            for (int i = k-1; i >= 0; i--) {
+                productosIndividuales.removeRow(i);    
+            }
+            k = productosIndividuales.getRowCount();
+            for (int i = k-1; i >= 0; i--) {
+                productosIndividuales.removeRow(i);    
+            }
+
+            
+            
+            ArrayList<DataPedidoProduco> data = PedidoACancelar.getDataPedidoProducos();
+
+            for (DataPedidoProduco entry : data) {
+                
+                    String[] fila1 = new String[6];
+                    fila1[0] = (String) entry.getStockProduco().getNombreProducto();
+                    fila1[1] = "" +(Integer) entry.getCantidad();
+                    fila1[2] = "" + (Float) entry.getStockProduco().getPrecio();
+                    fila1[3] = "" + (Float) entry.getStockProduco().getPrecio()*(Integer) entry.getCantidad();
+                    DataProducto MiProducto = iPro.obtenerDatosRestauranteNombre(entry.getStockProduco().getNickNameRestaurante(), entry.getStockProduco().getNombreProducto());
+                    fila1[4] =  (String) MiProducto.getTipoProducto();
+                    switch (MiProducto.getTipoProducto()) {
+                    case "individual":
+                        fila1[5] = "N/A";
+
+                    break;
+                    case "promocion":                
+                   
+                    DataPromocion prodPromocion = (DataPromocion) MiProducto;
+                    if(prodPromocion.isActiva())
+                        fila1[5] = "PROMOCION ACTIVA";
+                    else
+                        fila1[5] = "PROMOCION INACTIVA";
+                        
+                    }
+                    
+                    
+                    productosIndividuales.addRow(fila1);          
+
+            }
+            
+            clienteSeleccionado.setText(PedidoACancelar.getNickNameCliente());
+            restauranteSeleccionado.setText(PedidoACancelar.getNickNameRestaurante());
+            total.setText("" + PedidoACancelar.getPrecioTotal());
+        
+         
+    }
+    public VerInformacionDePedido() {
+        System.out.println("ENTRO AL GENERICO");
+        
+        initComponents();
+        cancelarPedido.hide();
+        ArrayList<DataPedido> lPedido = iPed.listarPedidos();
+        for (DataPedido pedido : lPedido) {
+            elPedido.put(idPedidos.getRowCount(), pedido);
+            String[] fila = new String[3];
+            fila[0] = pedido.getNickNameCliente();
+            fila[1] = pedido.getNickNameRestaurante();
+            fila[2] = Integer.toString(pedido.getNumero()) ;
+            System.out.println("Precio TOTAL: "+pedido.getPrecioTotal());
+            idPedidos.addRow(fila);          
+        }
     }
 
     /**
@@ -29,14 +115,18 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        pedidos = new javax.swing.JTable();
-        seleccionarPedido = new javax.swing.JButton();
+        idPedidos = new DefaultTableModel(); idPedidos.addColumn("Cliente"); idPedidos.addColumn("Restaurante"); idPedidos.addColumn("idPedido");
+        pedidos = new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } };
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        individuales = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        promociones = new javax.swing.JTable();
+        productosIndividuales = new DefaultTableModel(); 
+        productosIndividuales.addColumn("Producto"); 
+        productosIndividuales.addColumn("Cantidad"); 
+        productosIndividuales.addColumn("Precio Unitario"); 
+        productosIndividuales.addColumn("Subtotal");
+        productosIndividuales.addColumn("Tipo");
+        productosIndividuales.addColumn("Estado");
+        individuales = new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } };
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -44,58 +134,32 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
         restauranteSeleccionado = new javax.swing.JLabel();
         total = new javax.swing.JLabel();
         jButtonCancelar = new javax.swing.JButton();
+        cancelarPedido = new javax.swing.JButton();
 
         setTitle("Ver Información del Pedido");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Pedidos:");
 
-        pedidos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
             }
-        ));
+        });
+
+        pedidos.setModel(idPedidos);
+        pedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pedidosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(pedidos);
 
-        seleccionarPedido.setText("Seleccionar");
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Individuales:");
+        jLabel2.setText("Productos del Pedido:");
 
-        individuales.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        individuales.setModel(productosIndividuales);
         jScrollPane2.setViewportView(individuales);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Promociones:");
-
-        promociones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(promociones);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("CLIENTE:");
@@ -123,6 +187,14 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
             }
         });
 
+        cancelarPedido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cancelarPedido.setText("Cancelar Pedido");
+        cancelarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarPedidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,54 +202,41 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(0, 255, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(total)
-                            .addComponent(restauranteSeleccionado)
-                            .addComponent(clienteSeleccionado))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(total)
+                                    .addComponent(restauranteSeleccionado)
+                                    .addComponent(clienteSeleccionado)))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(seleccionarPedido, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(0, 0, 0)
+                        .addComponent(jButtonCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelarPedido)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(seleccionarPedido)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(clienteSeleccionado)
@@ -191,7 +250,9 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
                     .addComponent(total)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonCancelar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonCancelar)
+                    .addComponent(cancelarPedido))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -202,24 +263,84 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void cancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarPedidoActionPerformed
+        //ELIMINAR EL PEDIDO   pedidoSeleccionado.
+        this.setVisible(false);
+    }//GEN-LAST:event_cancelarPedidoActionPerformed
+
+    private void pedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pedidosMouseClicked
+        pedidoSeleccionado = elPedido.get(pedidos.getSelectedRow());
+        int index = pedidos.getSelectedRow();
+        if (index != -1){
+            int k = individuales.getRowCount();
+            for (int i = k-1; i >= 0; i--) {
+                productosIndividuales.removeRow(i);    
+            }
+            k = productosIndividuales.getRowCount();
+            for (int i = k-1; i >= 0; i--) {
+                productosIndividuales.removeRow(i);    
+            }
+
+            
+            
+            ArrayList<DataPedidoProduco> data = pedidoSeleccionado.getDataPedidoProducos();
+ 
+            
+
+            for (DataPedidoProduco entry : data) {
+                String[] fila1 = new String[6];
+                    fila1[0] = (String) entry.getStockProduco().getNombreProducto();
+                    fila1[1] = "" +(Integer) entry.getCantidad();
+                    fila1[2] = "" + (Float) entry.getStockProduco().getPrecio();
+                    fila1[3] = "" + (Float) entry.getStockProduco().getPrecio()*(Integer) entry.getCantidad();
+                    DataProducto MiProducto = iPro.obtenerDatosRestauranteNombre(entry.getStockProduco().getNickNameRestaurante(), entry.getStockProduco().getNombreProducto());
+                    fila1[4] =  (String) MiProducto.getTipoProducto();
+                    switch (MiProducto.getTipoProducto()) {
+                    case "individual":
+                        fila1[5] = "N/A";
+
+                    break;
+                    case "promocion":                
+                   
+                    DataPromocion prodPromocion = (DataPromocion) MiProducto;
+                    if(prodPromocion.isActiva())
+                        fila1[5] = "PROMOCION ACTIVA";
+                    else
+                        fila1[5] = "PROMOCION INACTIVA";
+                        
+                    }
+                    
+                    
+                    productosIndividuales.addRow(fila1); 
+            }
+            
+            clienteSeleccionado.setText(pedidoSeleccionado.getNickNameCliente());
+            restauranteSeleccionado.setText(pedidoSeleccionado.getNickNameRestaurante());
+            total.setText("" + pedidoSeleccionado.getPrecioTotal());
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_pedidosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelarPedido;
     private javax.swing.JLabel clienteSeleccionado;
     private javax.swing.JTable individuales;
+    private DefaultTableModel productosIndividuales;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable pedidos;
-    private javax.swing.JTable promociones;
+    private DefaultTableModel idPedidos;
     private javax.swing.JLabel restauranteSeleccionado;
-    private javax.swing.JButton seleccionarPedido;
     private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }

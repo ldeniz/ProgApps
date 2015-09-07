@@ -5,17 +5,39 @@
  */
 package GUI;
 
+import datatype.DataPedido;
+import datatype.DataPedidoProduco;
+import fabrica.Fabrica;
+import interfaces.IControladorPedido;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mathi
  */
 public class CancelarPedido extends javax.swing.JInternalFrame {
-
+    private IControladorPedido iPed = Fabrica.getInstance().obtenerControladorPedido();
+    
+    HashMap<Integer, DataPedido> elPedido = new HashMap<>();
     /**
      * Creates new form CancelarPedido
      */
     public CancelarPedido() {
+        
         initComponents();
+        ArrayList<DataPedido> lPedido = iPed.listarPedidos();
+        for (DataPedido pedido : lPedido) {
+            
+            elPedido.put(pedidosClienteModel.getRowCount(), pedido);
+            String[] fila = new String[3];
+            fila[0] = Integer.toString(pedido.getNumero());
+            fila[1] = pedido.getNickNameRestaurante();
+            fila[2] = pedido.getNickNameCliente();
+            pedidosClienteModel.addRow(fila);          
+        }
     }
 
     /**
@@ -29,7 +51,8 @@ public class CancelarPedido extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        pedidos = new javax.swing.JTable();
+        pedidosClienteModel = new DefaultTableModel(); pedidosClienteModel.addColumn("ID Pedido"); pedidosClienteModel.addColumn("Restaurante"); pedidosClienteModel.addColumn("Cliente");
+        pedidos = new javax.swing.JTable(){     public boolean isCellEditable(int row, int column) {         return (column == 23 );     } };
         jButtonCancelar = new javax.swing.JButton();
         jButtonRegistrar = new javax.swing.JButton();
 
@@ -37,14 +60,7 @@ public class CancelarPedido extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Pedidos Registrados:");
 
-        pedidos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        pedidos.setModel(pedidosClienteModel);
         jScrollPane1.setViewportView(pedidos);
 
         jButtonCancelar.setText("Cancelar");
@@ -55,7 +71,12 @@ public class CancelarPedido extends javax.swing.JInternalFrame {
         });
 
         jButtonRegistrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonRegistrar.setText("Seleccionar");
+        jButtonRegistrar.setText("Cancelar Pedido");
+        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,6 +119,19 @@ public class CancelarPedido extends javax.swing.JInternalFrame {
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
+       int aux = pedidos.getSelectedRow();
+       if(aux != -1){
+            DataPedido pedidoACancelar = elPedido.get(pedidos.getSelectedRow());
+            VerInformacionDePedido ped = new VerInformacionDePedido(pedidoACancelar);
+            Principal.jDesktopPane1.add(ped);
+            ped.toFront();
+            ped.setVisible(true);
+            this.setVisible(false);
+        }else
+            JOptionPane.showMessageDialog(this,"Debe seleccionar un producto");
+    }//GEN-LAST:event_jButtonRegistrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
@@ -105,5 +139,6 @@ public class CancelarPedido extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable pedidos;
+    private DefaultTableModel pedidosClienteModel;
     // End of variables declaration//GEN-END:variables
 }

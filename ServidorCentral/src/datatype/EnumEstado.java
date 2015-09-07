@@ -11,5 +11,6 @@ package datatype;
  */
 public enum EnumEstado {
 
-    PREPARACION;
+    PREPARACION,ENVIADO,RECIBIDO;
+
 }
