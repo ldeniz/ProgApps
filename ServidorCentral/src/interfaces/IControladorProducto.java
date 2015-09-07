@@ -1,6 +1,5 @@
 package interfaces;
 
-import datatype.DataPedido;
 import datatype.DataProducto;
 import java.util.ArrayList;
 
@@ -55,15 +54,7 @@ public interface IControladorProducto {
      */
     public void seleccionarProducto(String nombre, int cantidad);
 
-    /**
-     * Regresa el stock existente del producto individual 'nombre' del
-     * restaurante 'nickname'
-     *
-     * @param nickName
-     * @param nombre
-     * @return
-     */
-    public int obtenerCantidadProductoIndividual(String nickName, String nombre);
+    public DataProducto obtenerDatosRestauranteNombre(String nickName, String nombre);
 
     /**
      * El sistema persiste una nueva instancia de producto.

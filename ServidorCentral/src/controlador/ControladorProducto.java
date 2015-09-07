@@ -7,7 +7,6 @@ package controlador;
 
 import datatype.DataIndividual;
 import datatype.DataIndividualPromocion;
-import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataPromocion;
 import datatype.DataStockProducto;
@@ -51,11 +50,6 @@ public class ControladorProducto implements IControladorProducto {
         DataIndividual di = (DataIndividual) mp.obtenerProducto(nickName, nombre).obtenerDatosProducto();
         DataIndividualPromocion dip = new DataIndividualPromocion(cantidad, di);
         productosPromocion.add(dip);
-    }
-
-    @Override
-    public int obtenerCantidadProductoIndividual(String nickName, String nombre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -150,6 +144,13 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void seleccionarRestaurante(String nickName) {
         this.nickName = nickName;
+    }
+
+    @Override
+    public DataProducto obtenerDatosRestauranteNombre(String nickName, String nombre) {
+        ManejadorProducto mp = ManejadorProducto.getInstance();
+        Producto p = mp.obtenerProducto(nickName, nombre);
+        return p.obtenerDatosProducto();
     }
 
 }
