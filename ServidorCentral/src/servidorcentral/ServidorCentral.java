@@ -11,6 +11,7 @@ import datatype.DataDireccion;
 import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataRestaurante;
+import datatype.EnumEstado;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorPedido;
@@ -137,6 +138,29 @@ public class ServidorCentral {
         System.out.println("Precio total: " + dp.getPrecioTotal());
 
         ArrayList<DataCliente> listarClientes = u.listarClientes();
+
+        for (DataCliente dc : listarClientes) {
+            ArrayList<DataPedido> lpc = dc.getPedidos();
+            if (!lpc.isEmpty()) {
+                for (DataPedido dped : lpc) {
+                    System.out.println(dped.getNumero());
+                    System.out.println(dped.getEstado());
+                    System.out.println(dped.getPrecioTotal());
+                }
+            }
+        }
+
+        System.out.println("Actualizo pedido");
+
+        pd.seleccionarPedido(1);
+        pd.seleccionarEstado(EnumEstado.ENVIADO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        listarClientes = u.listarClientes();
 
         for (DataCliente dc : listarClientes) {
             ArrayList<DataPedido> lpc = dc.getPedidos();

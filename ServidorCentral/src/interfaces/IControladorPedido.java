@@ -6,6 +6,7 @@
 package interfaces;
 
 import datatype.DataPedido;
+import datatype.EnumEstado;
 import java.util.ArrayList;
 
 /**
@@ -49,11 +50,23 @@ public interface IControladorPedido {
     public void seleccionarPedido(int numero);
 
     /**
+     *
+     * @param estado
+     */
+    public void seleccionarEstado(EnumEstado estado);
+
+    /**
      * El nuevo pedido es ingresado al sistema
      *
      * @return
      */
     public DataPedido finalizarPedido();
+
+    /**
+     *
+     * @throws java.lang.Exception
+     */
+    public void actualizarPedido() throws Exception;
 
     /**
      *

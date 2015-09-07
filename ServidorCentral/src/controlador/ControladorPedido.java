@@ -30,6 +30,7 @@ public class ControladorPedido implements IControladorPedido {
     private Pedido pedido;
     private ArrayList<PedidoProduco> productos;
     int numero;
+    private EnumEstado estado;
 
     public ControladorPedido() {
         productos = new ArrayList<>();
@@ -124,6 +125,36 @@ public class ControladorPedido implements IControladorPedido {
     @Override
     public void seleccionarPedido(int numero) {
         this.numero = numero;
+    }
+
+    @Override
+    public void seleccionarEstado(EnumEstado estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public void actualizarPedido() throws Exception {
+        ManejadorPedido mp = ManejadorPedido.getInstance();
+        Pedido p = mp.obtenerPedido(numero);
+        switch (p.getEstado()) {
+            case PREPARACION:
+                if (estado == EnumEstado.ENVIADO || estado == EnumEstado.RECIBIDO) {
+                    p.setEstado(estado);
+                } else {
+                    throw new Exception("No se puede pasar de estado PREPARACION a " + p.getEstado());
+                }
+                break;
+            case ENVIADO:
+                if (estado == EnumEstado.RECIBIDO) {
+                    p.setEstado(estado);
+                } else {
+                    throw new Exception("No se puede pasar de estado ENVIADO a " + p.getEstado());
+                }
+                break;
+            default:
+                throw new Exception("No se puede actualizar el pedido. El estado "
+                        + p.getEstado() + "No tiene workflow asignado.");
+        }
     }
 
 }
