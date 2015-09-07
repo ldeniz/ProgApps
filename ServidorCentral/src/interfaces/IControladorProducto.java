@@ -54,12 +54,44 @@ public interface IControladorProducto {
      */
     public void seleccionarProducto(String nombre, int cantidad);
 
+    /**
+     *
+     * @param nickName
+     * @param nombre
+     * @return
+     */
     public DataProducto obtenerDatosRestauranteNombre(String nickName, String nombre);
+
+    /**
+     *
+     * @param nombre
+     * @param descripcion
+     * @param rutaImagen
+     * @param precio
+     */
+    public void CargarDatosModificarProducto(String nombre, String descripcion,
+            String rutaImagen, float precio);
+
+    /**
+     *
+     * @param nombre
+     * @param descripcion
+     * @param rutaImagen
+     * @param descuento
+     * @param activa
+     */
+    public void CargarDatosModificarProducto(String nombre, String descripcion,
+            String rutaImagen, int descuento, boolean activa);
 
     /**
      * El sistema persiste una nueva instancia de producto.
      */
     public void altaProducto();
+
+    /**
+     *
+     */
+    public void ModificarProducto();
 
     /**
      * Regresa una colección de productos

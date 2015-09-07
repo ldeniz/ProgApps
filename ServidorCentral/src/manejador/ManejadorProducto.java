@@ -121,4 +121,5 @@ public class ManejadorProducto {
         individuales.clear();
         promociones.clear();
     }
+
 }

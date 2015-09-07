@@ -38,6 +38,12 @@ public class DataPromocion extends DataProducto {
         this.individualPromocion = individualPromocion;
     }
 
+    public DataPromocion(int descuento, boolean activa, String nombre, String descripcion, String rutaImagen, String nickName) {
+        super(nombre, descripcion, rutaImagen, nickName);
+        this.descuento = descuento;
+        this.activa = activa;
+    }
+
     public int getDescuento() {
         return descuento;
     }

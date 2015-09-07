@@ -32,6 +32,8 @@ public class ControladorProducto implements IControladorProducto {
     private DataStockProducto dataStockProducto;
     private ArrayList<DataIndividualPromocion> productosPromocion = new ArrayList<>();
 
+    private DataProducto dataProductoModificado;
+
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, float precio, String rutaImagen) {
         dataStockProducto = new DataStockProducto(1, precio);
@@ -151,6 +153,37 @@ public class ControladorProducto implements IControladorProducto {
         ManejadorProducto mp = ManejadorProducto.getInstance();
         Producto p = mp.obtenerProducto(nickName, nombre);
         return p.obtenerDatosProducto();
+    }
+
+    @Override
+    public void CargarDatosModificarProducto(String nombre, String descripcion,
+            String rutaImagen, float precio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void CargarDatosModificarProducto(String nombre, String descripcion,
+            String rutaImagen, int descuento, boolean activa) {
+        dataProductoModificado = new DataPromocion(descuento, activa, nombre, descripcion,
+                rutaImagen, nickName);
+    }
+
+    @Override
+    public void ModificarProducto() {
+        ManejadorProducto mp = ManejadorProducto.getInstance();
+        Producto p = mp.obtenerProducto(nickName, dataProductoModificado.getNombre());
+        p.setNombre(dataProductoModificado.getNombre());
+        p.setDescripcion(dataProductoModificado.getDescripcion());
+        p.setRutaImagen(dataProductoModificado.getRutaImagen());
+        switch (p.getTipoProducto()) {
+            case "promocion":
+                Promocion pr = (Promocion) p;
+                DataPromocion dataPromocion = (DataPromocion) dataProductoModificado;
+                pr.setActiva(dataPromocion.isActiva());
+                pr.setDescuento(dataPromocion.getDescuento());
+                break;
+        }
+
     }
 
 }

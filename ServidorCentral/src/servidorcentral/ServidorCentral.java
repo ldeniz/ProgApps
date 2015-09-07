@@ -91,6 +91,17 @@ public class ServidorCentral {
             System.out.println("Bar: " + dp.getNickName() + ", Producto: " + dp.getNombre() + ", Tipo: " + dp.getTipoProducto() + ", Precio: " + dp.getStock().getPrecio());
         }
 
+        System.out.println("Modifico promo");
+        
+        p.seleccionarRestaurante(nickName);
+        p.CargarDatosModificarProducto("promo pizza", "bajo la pizza locooo", "c", 30, true);
+        p.ModificarProducto();
+
+        ldp = u.listarProductos(nickName);
+        for (DataProducto dp : ldp) {
+            System.out.println("Bar: " + dp.getNickName() + ", Producto: " + dp.getNombre() + ", Tipo: " + dp.getTipoProducto() + ", Precio: " + dp.getStock().getPrecio());
+        }
+
 //        Armar un pedido
         u.CargarDatosUsuario("costas", "gcostas@gmail.com", "Gerardo", "1234",
                 new DataDireccion("Av. Italia", "2078", null), "Costas",

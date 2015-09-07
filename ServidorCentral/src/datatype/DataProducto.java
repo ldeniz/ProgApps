@@ -54,6 +54,13 @@ public abstract class DataProducto {
         this.pedidos = pedidos;
     }
 
+    public DataProducto(String nombre, String descripcion, String rutaImagen, String nickName) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.rutaImagen = rutaImagen;
+        this.nickName = nickName;
+    }
+
     public String getTipoProducto() {
         return tipoProducto;
     }
