@@ -78,5 +78,10 @@ public interface IControladorPedido {
      * @return
      */
     public ArrayList<DataPedido> listarPedidos();
+    
+    /**
+     * Libera la memoria del sistema
+     */
+    public void limpiarMermoria();
 
 }

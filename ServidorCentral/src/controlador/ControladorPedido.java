@@ -157,4 +157,10 @@ public class ControladorPedido implements IControladorPedido {
         }
     }
 
+    @Override
+    public void limpiarMermoria() {
+        this.pedido = null;
+        this.productos.clear();
+    }
+
 }
