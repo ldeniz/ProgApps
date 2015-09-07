@@ -59,10 +59,10 @@ public class ControladorPedido implements IControladorPedido {
         ManejadorProducto mp = ManejadorProducto.getInstance();
         Producto p = mp.obtenerProducto(nickName, nombreProducto);
         StockProducto sp = p.getStock();
-        if (sp.getCantidad() < cantidad) {
-            throw new Exception("La cantidad de productos '" + nickName
-                    + "' es menor a la solicitada");
-        }
+//        if (sp.getCantidad() < cantidad) {
+//            throw new Exception("La cantidad de productos '" + nickName
+//                    + "' es menor a la solicitada");
+//        }
         PedidoProduco pp = new PedidoProduco(cantidad, sp);
         productos.add(pp);
     }
