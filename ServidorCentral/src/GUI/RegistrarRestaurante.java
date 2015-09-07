@@ -67,7 +67,8 @@ public class RegistrarRestaurante extends javax.swing.JInternalFrame {
             }
 
             initComponents();
-            
+            jLabelNick.hide();
+            jLabelMail.hide();
         }else JOptionPane.showMessageDialog(this, "No hay categorías cargadas para dar de alta un Restaurante", this.getTitle(), JOptionPane.WARNING_MESSAGE);
     }
 
