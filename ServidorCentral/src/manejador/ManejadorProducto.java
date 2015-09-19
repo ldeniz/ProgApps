@@ -127,7 +127,8 @@ public class ManejadorProducto {
         HashMap hm = productos.get(p.getNickNameRestaurante());
         ArrayList<PedidoProduco> lpp = p.getPedidoProducos();
         for (PedidoProduco pp : lpp) {
-            hm.remove(pp.getStockProduco().getNombreProducto());
+            Producto pr = (Producto) hm.get(pp.getStockProduco().getNombreProducto());
+            pr.getPedidos().remove(p);
         }
 
     }
