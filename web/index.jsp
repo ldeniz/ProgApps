@@ -12,6 +12,6 @@
         <title>Inicio</title>
     </head>
     <body>
-        <h1>Bienvenidos al QuickOrder WEB Grupo 6</h1>
+        <h1>HOLA SEBA ESTO ES UNA PRUEBA</h1>
     </body>
 </html>
