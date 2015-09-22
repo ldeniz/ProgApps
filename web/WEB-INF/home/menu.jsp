@@ -26,25 +26,31 @@
 			 <option>4</option>
 			 <option>5</option>
 			</select>
-			<a id="agregarPedido" href="#" class="btn btn-primary derecha" role="button">Agregar a mi Pedido</a>
+                  <a id="agregarPedido" href="#" class="btn btn-primary derecha" role="button">Agregar a mi Pedido</a>
 		</div>
 	  </div>
 	</div>
 	
 	
-<script type="text/javascript">	
-	$(document).on("click", ".producto", function () {
-		
+<script type="text/javascript">
+      
+        $(".producto").click(function () {	
 		$(".modal-content #nickname").html( $(this).data('nickname') );
 		$(".modal-content #precio").html( $(this).data('precio') );
 		$('#cantidad option').eq(0).prop('selected', true);
-		});
+	});
 	
-	$(document).on("click", "#agregarPedido", function () {
-		$('#miModal').modal('hide')
+	/*$(document).on("click", "#agregarPedido", function () {
+		$('#miModal').modal('hide');
 		$("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge">x'+$("#cantidad option:selected").html()+'</span>'+$("#nickname").text()+'<span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');	
-	});	
-	
+	});*/
+    
+        $("#agregarPedido").click(function () {
+		$('#miModal').modal('hide');
+		$("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge">x'+$("#cantidad option:selected").html()+'</span>'+$("#nickname").text()+'<span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');	
+	});
+    
+        	
 	
 		
 </script>

@@ -21,7 +21,7 @@
 				<li id="comentarios" role="presentation"><a href="#">Comentarios</a></li>
 			</ul>
 			<div id="contenedorMenu" class="contenedorMenu" style="background-color:white; height:400px;width:100%;">
-                            
+                            <div id="contenido"></div>    
 			</div>
 			
 
@@ -46,10 +46,11 @@ $(document).ready(function() {
 	
 	// Sucesos al hacer click en una pestaña
 	$("ul.nav-tabs li").click(function() {
+        
 	$("ul.nav-tabs li").removeClass("active"); //Borrar todas las clases "active"
 	$(this).addClass("active"); //Añadir clase "active" a la pestaña seleccionada
 	//$(".contenedorMenu").hide(); //Ocultar todo el contenido de la pestaña
-	
+	$(contenedorMenu).empty();
 	var activatab = "/"+$(this).attr('id'); //Leer el valor de href para identificar la pestaña active 
 	$(contenedorMenu).load(activatab);
 	$(contenedorMenu).fadeIn(); //Visibilidad con efecto fade del contenido activo
