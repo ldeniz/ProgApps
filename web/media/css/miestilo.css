@@ -1,0 +1,105 @@
+.ulhorizontal li {
+    background: #FFFFFF;
+    padding: 3px;
+    overflow: auto;
+    clear: both;
+    margin: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.imagenResto{
+	width:150px;
+	height:150px;
+	margin:5px;
+	position:relative;
+	float:left;
+	
+}
+
+.infoResto{
+	padding:10px;
+}
+
+.nombreResto{
+    color: #2ba6cb;
+    text-decoration: none;
+    line-height: inherit;}
+	
+.buscarRestaurante{
+	width: 100%;
+    heigth: 200px;
+    position: relative;
+	float: left;
+    margin: 10px;
+	}
+
+.inputRestaurante{
+	width: 350px !important;
+}
+
+.footer{
+	background-color: #6a96b0;
+	color: white;
+	height: 150px;
+	padding: 20px;
+	text-align:right;
+}
+
+.contenedorMenu{
+	background-color: white;
+    height: auto;
+    border-top: 0px !important;
+    width: 100%;
+    border: solid 1px #ddd;
+}
+
+#categorias {
+    overflow: hidden;
+    margin: 0 0 2em;
+	padding: 5px;
+}
+#categorias a{	
+	list-style-type: none;	
+	padding:5px;
+	text-decoration:none;
+	color:black;
+}
+#categorias a.producto:nth-child(odd) {
+    margin: 0px 5px 0px 5px;
+}
+
+#categorias a.producto {
+    cursor: pointer;
+}
+#categorias a.producto:hover {
+    background-color: #e7f0f6;
+}
+
+#categorias a.producto {
+    width: 49%;
+	min-height:50px;
+    float: left;
+    padding: .8em;
+    margin: 0px;
+    position: relative;
+	background-color: #f6f6f6;
+    border: 1px solid #fff;
+    box-shadow: 0 2px 0 -1px rgba(230, 230, 230, 0.6);
+    -webkit-box-shadow: 0 2px 0 -1px rgba(230, 230, 230, 0.6);
+    -moz-box-shadow: 0 2px 0 -1px rgba(230, 230, 230, 0.6);
+    border-radius: 4px;
+    padding: 5px;
+	}
+
+.cantidad{
+	margin-top: 10px;
+    float: left;
+    width: 65px;
+	}
+	
+.derecha{
+float:right;
+margin-top: 10px;
+}

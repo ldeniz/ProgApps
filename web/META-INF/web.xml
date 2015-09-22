@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+   
+    
+    <servlet>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>controllers.Home</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Restaurantes</servlet-name>
+        <servlet-class>controllers.Restaurantes</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>Restaurantes</servlet-name>
+        <url-pattern>/restaurantes</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Menu</servlet-name>
+        <servlet-class>controllers.Menu</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>Menu</servlet-name>
+        <url-pattern>/menu</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Informacion</servlet-name>
+        <servlet-class>controllers.Informacion</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>Informacion</servlet-name>
+        <url-pattern>/informacion</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Comentarios</servlet-name>
+        <servlet-class>controllers.Comentarios</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>Comentarios</servlet-name>
+        <url-pattern>/comentarios</url-pattern>
+    </servlet-mapping>
+    
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
