@@ -20,7 +20,7 @@
 				<li id="informacion" role="presentation"><a href="#">Informacion</a></li>
 				<li id="comentarios" role="presentation"><a href="#">Comentarios</a></li>
 			</ul>
-			<div id="contenedorMenu" class="contenedorMenu" style="background-color:white; height:400px;width:100%;">
+			<div id="contenedorMenu" class="contenedorMenu" style="background-color:white;width:100%;">
                             <div id="contenido"></div>    
 			</div>
 			
