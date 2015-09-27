@@ -47,6 +47,23 @@
         <url-pattern>/comentarios</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>Servlet Iniciar Sesion</servlet-name>
+        <servlet-class>controllers.Login</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet Iniciar Sesion</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Servlet Logout</servlet-name>
+        <servlet-class>controllers.logout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
     
     <session-config>
         <session-timeout>

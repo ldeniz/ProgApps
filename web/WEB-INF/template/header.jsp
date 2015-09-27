@@ -1,3 +1,6 @@
+<%@page import="datatype.DataUsuario"%>
+<%@page import="controllers.Login"%>
+<%@page import="datatype.DataCliente"%>
 <!DOCTYPE html PUBLIC "-//W3C//Dtd XHTML 1.1 Strict//EN" "http://www.w3.org/TR/xhtml1/Dtd/xhtml1-strict.dtd">
 <html xml:lang="es" xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -45,8 +48,30 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav" style="float:right">
-            <li class="active"><a><span style="margin-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span>Nickname :)</a></li>
-            <li><a href="#about">Cerrar Sesion</a></li>
+              <%
+		DataUsuario usr;
+		try {
+			usr = Login.getUsuarioLogueado(request);
+		} catch(Exception ex){
+			usr = null;
+		}
+		
+		if(usr != null) {
+               %>
+            <li class="active"><a><span style="margin-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname() %></a></li>
+            <li><a href="logout">Cerrar Sesion</a></li>
+            
+            <% }else{ %>
+            <form class="form-signin" action="Login" method="POST">
+                <h2 class="form-signin-heading reliceInicio">Realice inicio de Sesión</h2>
+                <label for="inputEmail" class="sr-only">Nickname</label>
+                <input name="login" type="user" id="inputUser" class="form-control" placeholder="Tu Nickname" required="" autofocus="">
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">A pedir!</button>
+              </form>
+            
+            <% } %>
           </ul>
 		  
         </div><!--/.nav-collapse -->

@@ -143,3 +143,9 @@ address {
 .ec-stars-wrapper > a:hover ~ a {
 	color: orange;
 }
+
+.reliceInicio{
+    color: white;
+    font-size: 12px;
+    text-align: right;
+}
