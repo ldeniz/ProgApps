@@ -109,5 +109,12 @@ public interface IControladorUsuario {
     public ArrayList<DataProducto> listarProductos(String nickName);
 
     public ArrayList<DataPedido> listarPedidosCliente(String nickName);
+    
+    /**
+     * Retorna un data usuario identificado por nickname. Si no existe, lanza excepcion.
+     * @param nickName
+     * @return 
+     */
+    public DataUsuario obtenerUsuario(String nickName) throws Exception;
 
 }

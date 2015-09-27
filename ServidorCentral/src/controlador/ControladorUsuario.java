@@ -155,4 +155,14 @@ public class ControladorUsuario implements IControladorUsuario {
         return dc.getPedidos();
     }
 
+    @Override
+    public DataUsuario obtenerUsuario(String nickName) throws Exception {
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Usuario u = mu.obtenerUsuario(nickName);
+        if (u == null) {
+            throw new Exception("No existe usuario " + nickName);
+        }
+        return u.obtenerDatosUsuario();
+    }
+
 }
