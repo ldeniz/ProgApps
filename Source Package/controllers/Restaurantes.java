@@ -17,6 +17,8 @@ import interfaces.IControladorUsuario;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,9 +31,18 @@ import javax.servlet.http.HttpServletResponse;
 public class Restaurantes extends HttpServlet {
     
     private void processRequest(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+			throws ServletException, IOException, Exception {
 		initSession(req);
 		
+                String restaurante = req.getParameter("restaurante");
+                if(restaurante == null) {
+                    
+                }else{
+                    IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
+                    DataRestaurante resto = (DataRestaurante) iUsr.obtenerUsuario(restaurante);
+                    req.setAttribute("datosRes", resto);
+                }
+                
 		req.getRequestDispatcher("/WEB-INF/home/restaurantes.jsp").
 						forward(req, resp);
 	}
@@ -51,18 +62,26 @@ public class Restaurantes extends HttpServlet {
             ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes();
             return restaurantes;
 	}
-    
-    
-	@Override
+    @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 				throws ServletException, IOException {
-		processRequest(req, resp);
+        try {
+            processRequest(req, resp);
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		processRequest(req, resp);
+        try {
+            processRequest(req, resp);
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
 	}
+    
+	
     
 }
