@@ -1,22 +1,18 @@
-<%@page import="datatype.DataProducto"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="datatype.DataRestaurante"%>
 <div id="categorias">
-    
-    
-    <% 	DataRestaurante datosRes = (DataRestaurante) request.getAttribute("datosRes"); %>	
-			
-    
-    
-	<h5 style="padding-top:15px;padding-left:10px;" class="media-heading"><b>Categor�a De Ejemplo</b></h3>
-	
-        <% ArrayList<DataProducto> productos = datosRes.getDataProductos(); 
-        for(DataProducto producto: productos){
-        %>
-        
-        <a class="producto" data-nickname="<%= producto.getNombre()%>"  data-precio="<%= producto.getStock().getPrecio()%>" type="button" data-toggle="modal" data-target=".bs-example-modal-sm"><%= producto.getNombre()%><spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right"><%= producto.getStock().getPrecio()%></spam></a>
-	<%}%>
+	<h5 style="padding-top:15px;padding-left:10px;" class="media-heading"><b>Categoría De Ejemplo</b></h3>
+	<a class="producto" data-nickname="Este es un producto 1"  data-precio="111.50" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Este es un producto 1<spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right">$111.50</spam></a>
+	<a class="producto" data-nickname="Otro producto distindo"  data-precio="222.50" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Otro producto distindo<spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right">$222.50</spam></a>
+	<a class="producto" data-nickname="Caramba que rica"  data-precio="333.50" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Caramba que rica<spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right">$333.50</spam></a>
+	<a class="producto" data-nickname="Señores la pizza"  data-precio="444.50" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Señores la pizza<spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right">$444.50</spam></a>
 </div>
+<div id="categorias">
+	<h5 style="padding-top:15px;padding-left:10px;" class="media-heading"><b>Categoría De Ejemplo</b></h3>
+	<a class="producto" data-nickname="Este es un producto 1"  data-precio="111.50" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Este es un producto 1<spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right">$111.50</spam></a>
+	<a class="producto" data-nickname="Otro producto distindo"  data-precio="222.50" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Otro producto distindo<spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right">$222.50</spam></a>
+	<a class="producto" data-nickname="Caramba que rica"  data-precio="333.50" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Caramba que rica<spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right">$333.50</spam></a>
+	<a class="producto" data-nickname="Señores la pizza"  data-precio="444.50" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Señores la pizza<spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right">$444.50</spam></a>
+</div>
+
 	
 	<div id="miModal" style="padding:100px;" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 	  <div class="modal-dialog modal-sm">

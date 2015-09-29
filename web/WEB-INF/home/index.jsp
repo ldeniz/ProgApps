@@ -39,16 +39,14 @@
                                         <li>
 				  <img src="<%= res.getRutaImagen()%>" alt="..." class="imagenResto">
 				  <div class="infoResto">
-                                    <form action="restaurantes" method="POST">
 					<div class="nombreResto"><%= res.getNombre()%></div>
 					<div class="descripcionResto"><%= res.getNickname()%></p>
 					<div class="direccionResto"><%= res.getDireccion()%></div>
 					<div class="categoriasResto">Categorias</div>
-					<input style="visibility:hidden;" name="restaurante" value="<%= res.getNickname()%>">
 					
-					<p style="float:right;"><button type="submit" class="btn btn-primary" role="button">Ver Menú</button></p>
-                                        </form>    
-                                    </div>
+					
+					<p style="float:right;"><a href="#" class="btn btn-primary" role="button">Ver Menú</a></p>
+				  </div>
 				</li>
                                 <% } %>
 
