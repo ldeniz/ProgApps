@@ -20,11 +20,15 @@ public class Restaurante extends Usuario implements Serializable {
 
     private String[] rutaImagen;
     private ArrayList<Producto> productos;
+    private int puntajePromedio;
+    private int cantidadPuntuaciones;
 
     public Restaurante(String[] rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         super(nickname, mail, nombre, pass, direccion);
         this.rutaImagen = rutaImagen;
         productos = new ArrayList<>();
+        puntajePromedio = 0;
+        cantidadPuntuaciones = 0;
     }
 
     public String[] getRutaImagen() {
@@ -43,6 +47,27 @@ public class Restaurante extends Usuario implements Serializable {
         return productos;
     }
 
+    public int getPuntajePromedio() {
+        return puntajePromedio;
+    }
+
+    public void setPuntajePromedio(int puntajePromedio) {
+        this.puntajePromedio = puntajePromedio;
+    }
+
+    public int getCantidadPuntuaciones() {
+        return cantidadPuntuaciones;
+    }
+
+    public void setCantidadPuntuaciones(int cantidadPuntuaciones) {
+        this.cantidadPuntuaciones = cantidadPuntuaciones;
+    }
+    
+    public void calcularPromedioPuntaje(int puntaje){
+        cantidadPuntuaciones = cantidadPuntuaciones + 1;
+        puntajePromedio = (puntajePromedio + puntaje) / cantidadPuntuaciones;
+    }
+
     @Override
     public DataUsuario obtenerDatosUsuario() {
         ArrayList<DataProducto> dataProductos = new ArrayList<>();
@@ -52,7 +77,7 @@ public class Restaurante extends Usuario implements Serializable {
                 dataProductos.add(p.obtenerDatosProducto());
             }
         }
-        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
+        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, puntajePromedio, cantidadPuntuaciones, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
         return dataUsuario;
     }
 

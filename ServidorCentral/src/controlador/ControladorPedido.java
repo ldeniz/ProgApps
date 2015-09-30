@@ -14,6 +14,7 @@ import java.util.Locale;
 import manejador.ManejadorPedido;
 import manejador.ManejadorProducto;
 import manejador.ManejadorUsuario;
+import modelo.Comentario;
 import modelo.Pedido;
 import modelo.PedidoProduco;
 import modelo.Producto;
@@ -72,7 +73,7 @@ public class ControladorPedido implements IControladorPedido {
         float precioTotal = 0;
         pedido = new Pedido();
         pedido.setEstado(EnumEstado.PREPARACION);
-        for (PedidoProduco pp : productos){             
+        for (PedidoProduco pp : productos) {
             pedido.agregarProducto(pp);
         }
         pedido.setFechaPedido(Calendar.getInstance(new Locale("es", "uy")));
@@ -163,6 +164,20 @@ public class ControladorPedido implements IControladorPedido {
     public void limpiarMermoria() {
         this.pedido = null;
         this.productos.clear();
+    }
+
+    @Override
+    public void agregarComentario(int numPedido, String comentario, int puntaje) throws Exception {
+        if (puntaje > 0 && puntaje <= 5) {
+            ManejadorPedido mp = ManejadorPedido.getInstance();
+            Pedido p = mp.obtenerPedido(numero);
+            Comentario c = new Comentario(comentario, puntaje);
+            p.setComentario(c);
+            ManejadorUsuario mu = ManejadorUsuario.getInstance();
+            mu.agregarPuntajeRestaurante(p.getNickNameRestaurante(), puntaje);
+        } else {
+            throw new Exception("El puntaje debe ser un valor entero entre 1 y 5.");
+        }
     }
 
 }

@@ -79,6 +79,18 @@ public interface IControladorPedido {
      */
     public ArrayList<DataPedido> listarPedidos();
     
+    
+    /**
+     * Agrega un comentario al pedido, y recalcula el puntaje del restaurante.
+     * El puntaje puede ser entre 1 y 5. Cualquier valor diferente genera una excepción.
+     * Si el pedido está en un estado distinto a RECIBIDO el sistema lanza una excepción.
+     * @param numPedido
+     * @param comentario
+     * @param puntaje 
+     * @throws java.lang.Exception 
+     */
+    public void agregarComentario(int numPedido, String comentario, int puntaje) throws Exception;
+    
     /**
      * Libera la memoria del sistema
      */

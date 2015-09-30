@@ -24,6 +24,7 @@ public class Pedido {
     private float precioTotal;
     private EnumEstado estado;
     private ArrayList<PedidoProduco> pedidoProducos;
+    private Comentario comentario;
 
     public Pedido() {
         pedidoProducos = new ArrayList<>();
@@ -91,6 +92,14 @@ public class Pedido {
 
     public void setNickNameRestaurante(String nickNameRestaurante) {
         this.nickNameRestaurante = nickNameRestaurante;
+    }
+
+    public Comentario getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(Comentario comentario) {
+        this.comentario = comentario;
     }
 
     public void agregarProducto(PedidoProduco producto) {

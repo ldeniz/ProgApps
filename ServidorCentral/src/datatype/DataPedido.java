@@ -21,6 +21,7 @@ public class DataPedido {
     private float precioTotal;
     private EnumEstado estado;
     private ArrayList<DataPedidoProduco> dataPedidoProducos;
+    private DataComentario dataComentario;
 
     public DataPedido(String nickNameCliente, String nickNameRestaurante, int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList<DataPedidoProduco> dataPedidoProducos) {
         this.nickNameCliente = nickNameCliente;
@@ -30,6 +31,17 @@ public class DataPedido {
         this.precioTotal = precioTotal;
         this.estado = estado;
         this.dataPedidoProducos = dataPedidoProducos;
+    }
+
+    public DataPedido(String nickNameCliente, String nickNameRestaurante, int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList<DataPedidoProduco> dataPedidoProducos, DataComentario dataComentario) {
+        this.nickNameCliente = nickNameCliente;
+        this.nickNameRestaurante = nickNameRestaurante;
+        this.numero = numero;
+        this.fechaPedido = fechaPedido;
+        this.precioTotal = precioTotal;
+        this.estado = estado;
+        this.dataPedidoProducos = dataPedidoProducos;
+        this.dataComentario = dataComentario;
     }
 
     public String getNickNameCliente() {
@@ -58,6 +70,10 @@ public class DataPedido {
 
     public ArrayList<DataPedidoProduco> getDataPedidoProducos() {
         return dataPedidoProducos;
+    }
+
+    public DataComentario getDataComentario() {
+        return dataComentario;
     }
 
 }

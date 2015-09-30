@@ -7,6 +7,7 @@ package manejador;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import modelo.Comentario;
 import modelo.Pedido;
 
 /**
