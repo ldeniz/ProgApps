@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-   
-    
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>controllers.Home</servlet-class>
@@ -10,43 +8,38 @@
         <servlet-name>Home</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Restaurantes</servlet-name>
         <servlet-class>controllers.Restaurantes</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Restaurantes</servlet-name>
         <url-pattern>/restaurantes</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Menu</servlet-name>
         <servlet-class>controllers.Menu</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Menu</servlet-name>
         <url-pattern>/menu</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Informacion</servlet-name>
         <servlet-class>controllers.Informacion</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Informacion</servlet-name>
         <url-pattern>/informacion</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Comentarios</servlet-name>
-        <servlet-class>controllers.Comentarios</servlet-class>
+        <servlet-class>controllers.realizarPedido</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Comentarios</servlet-name>
         <url-pattern>/comentarios</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Servlet Iniciar Sesion</servlet-name>
         <servlet-class>controllers.Login</servlet-class>
@@ -55,7 +48,6 @@
         <servlet-name>Servlet Iniciar Sesion</servlet-name>
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Servlet Logout</servlet-name>
         <servlet-class>controllers.logout</servlet-class>
@@ -63,6 +55,15 @@
     <servlet-mapping>
         <servlet-name>Servlet Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Realizar Pedido</servlet-name>
+        <servlet-class>controllers.realizarPedido</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Realizar Pedido</servlet-name>
+        <url-pattern>/realizarPedido</url-pattern>
     </servlet-mapping>
     
     <session-config>

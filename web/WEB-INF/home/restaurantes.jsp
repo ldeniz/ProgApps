@@ -1,3 +1,6 @@
+<%@page import="datatype.DataUsuario"%>
+<%@page import="controllers.Login"%>
+<%@page import="datatype.DataCliente"%>
 <%@page import="datatype.DataProducto"%>
 <%@page import="datatype.DataDireccion"%>
 <%@page import="java.util.ArrayList"%>
@@ -16,7 +19,7 @@
                           <% 	DataRestaurante datosRes = (DataRestaurante) request.getAttribute("datosRes"); %>
 			  <div class="media-body">
 				<h4 class="media-heading"><%=datosRes.getNombre()%></h4>
-				Las estrellitas de los puntos
+				Puntos:<%=datosRes.getPuntajePromedio()%>
 			  </div>
 			</div>
 			
@@ -44,14 +47,28 @@
                                         <div class="modal-content" style="padding:25px;height:135px;">
                                           <div id="nickname"></div> 
                                           <div id="precio"></div> 
-                                          <select id="cantidad" class="form-control cantidad">
+                                          
+                                        <%
+                                        DataUsuario usr2;
+                                        try {
+                                                usr2 = Login.getUsuarioLogueado(request);
+                                        } catch(Exception ex){
+                                                usr2 = null;
+                                        }
+
+                                        if(usr2 != null) {
+                                       %>  
+                                            <select id="cantidad" class="form-control cantidad">
                                                  <option>1</option>
                                                  <option>2</option>
                                                  <option>3</option>
                                                  <option>4</option>
                                                  <option>5</option>
                                                 </select>
-                                          <a id="agregarPedido" href="#" class="btn btn-primary derecha" role="button">Agregar a mi Pedido</a>
+                                            <a id="agregarPedido" href="#" class="btn btn-primary derecha" role="button">Agregar a mi Pedido</a>
+                                        <% }else{ %>
+                                            Inicie Sesión para añadir Producto
+                                        <% } %>  
                                         </div>
                                   </div>
                                 </div>
@@ -70,7 +87,7 @@
                             <div id="ccomentarios" class="soyContenedor">
                                 <div id="categorias">
                                 <h1>Comentarios</h1>
-
+                                    
                                 <div class="ec-stars-wrapper">
                                         <a href="#" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
                                         <a href="#" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
@@ -80,35 +97,7 @@
                                 </div>
                                 <p> Espectacular, muy recomendable</p>
 
-                                <div class="ec-stars-wrapper">
-                                        <a href="#" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
-                                        <a href="#" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
-                                        <a href="#" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
-                                        <a href="#" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
-                                        <a href="#" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
-                                </div>
-                                <p> Espectacular, muy recomendable<div class="ec-stars-wrapper"></p>
-                                        <a href="#" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
-                                        <a href="#" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
-                                        <a href="#" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
-                                        <a href="#" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
-                                        <a href="#" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
-                                </div>
-                                <p> Espectacular, muy recomendable<div class="ec-stars-wrapper"></p>
-                                        <a href="#" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
-                                        <a href="#" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
-                                        <a href="#" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
-                                        <a href="#" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
-                                        <a href="#" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
-                                </div>
-                                <p> Espectacular, muy recomendable<div class="ec-stars-wrapper"></p>
-                                        <a href="#" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
-                                        <a href="#" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
-                                        <a href="#" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
-                                        <a href="#" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
-                                        <a href="#" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
-                                </div>
-                                <p> Espectacular, muy recomendable</p>
+                                
                             </div>
                             </div> 
 			</div>
@@ -117,7 +106,6 @@
 			
 			</div>
 			<div class="col-lg-4" >
-                            ACA EL PEDIDO
 				<jsp:include page="pedido.jsp"/>
 			</div>
 	</div>
@@ -126,7 +114,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	
+	$("#realizarPedido").hide();
 	$("ul.nav-tabs li:first").addClass("active").show(); //Activar primera pestaÃ±a
 	$(".contenedorMenu:first").show(); //Mostrar contenido primera pestaÃ±a
 
@@ -155,8 +143,18 @@ $(document).ready(function() {
 	
         $("#agregarPedido").click(function () {
 		$('#miModal').modal('hide');
-		$("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge">x'+$("#cantidad option:selected").html()+'</span>'+$("#nickname").text()+'<span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');	
-	});
+                var cantidad = parseInt($("#cantidad option:selected").html());
+                var precio = parseInt($(".modal-content #precio").html());
+                var total = parseInt($("#total .fullprice").html());
+
+                if(total==0) $("#realizarPedido").fadeIn();
+                
+		
+                $("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge"><span id="precio">'+precio+'</span> x <span id="cantidad">'+cantidad+'</span></span>'+$("#nickname").text()+'<span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');	
+                
+                $("#total .fullprice").html(total + (cantidad*precio));
+                
+        });
     
         	
 	

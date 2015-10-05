@@ -59,6 +59,7 @@ public class Restaurantes extends HttpServlet {
 			
 	{
             IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
+            
             ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes();
             return restaurantes;
 	}

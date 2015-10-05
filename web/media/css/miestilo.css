@@ -149,3 +149,13 @@ address {
     font-size: 12px;
     text-align: right;
 }
+
+#total{
+    border-top: 1px dotted !important;
+    padding: 10px;
+    font-size: large;
+    text-align: right;
+}
+.fullprice{
+    font-weight:bold;
+}
