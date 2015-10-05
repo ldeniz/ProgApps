@@ -59,7 +59,7 @@
           $.ajax({
             url: 'realizarPedido',
             dataType: 'json',
-            data: {cliente: $nickname, restaurante: $restaurante, productos:JSON.stringify($productos) },
+            data: {cliente: $nickname, restaurante: $restaurante, productos:$productos },
             type: 'get',
             cache: false,
             

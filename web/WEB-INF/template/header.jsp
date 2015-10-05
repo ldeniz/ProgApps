@@ -20,12 +20,13 @@
 
     <!-- Custom styles for this template -->
     <link href="media/css/miestilo.css" rel="stylesheet">
+    <link href="media/css/star-rating.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="media/js/ie-emulation-modes-warning.js"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="media/js/star-rating.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -85,6 +86,15 @@
 			</form>
 		</div>
 		
-      </div style="clear:both">
-    </div>
+      </div style="clear:both"></div>
 	</div>
+<script type="text/javascript">        
+$(document).ready(function() {
+	 $(".active").click(function(){
+            $.post("/usuario",
+                {
+                 nickname:"mathi"
+             });
+         });
+});
+</script>

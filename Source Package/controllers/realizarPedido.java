@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+
 
 
 /**
@@ -39,8 +39,16 @@ public class realizarPedido extends HttpServlet {
             
             
             
+            String report = "";
+            
             
             try {
+                JSONArray jsonArray = new JSONArray(productos);
+                for (int i=0; i<jsonArray.length(); i++) {
+                    JSONObject producto = jsonArray.getJSONObject(i);
+                    report += producto.getString("Precio")+" - ";
+                }
+                
                 pd.seleccionarCliente(cliente);
             } catch (Exception ex) {
                 Logger.getLogger(realizarPedido.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +74,7 @@ public class realizarPedido extends HttpServlet {
            // }
             
             
-            String report = "";
+            
            
             
 

@@ -66,6 +66,15 @@
         <url-pattern>/realizarPedido</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>Usuario</servlet-name>
+        <servlet-class>controllers.usuario</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Usuario</servlet-name>
+        <url-pattern>/usuario</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30
