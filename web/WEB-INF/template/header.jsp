@@ -59,7 +59,7 @@
 		
 		if(usr != null) {
                %>
-            <li class="active"><a><span style="margin-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname() %></a></li>
+            <li class="active"><a href="/usuario" style="cursor:pointer;"><span style="margin-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname() %></a></li>
             <li><a href="logout">Cerrar Sesion</a></li>
             
             <% }else{ %>
@@ -88,13 +88,3 @@
 		
       </div style="clear:both"></div>
 	</div>
-<script type="text/javascript">        
-$(document).ready(function() {
-	 $(".active").click(function(){
-            $.post("/usuario",
-                {
-                 nickname:"mathi"
-             });
-         });
-});
-</script>

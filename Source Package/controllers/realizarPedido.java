@@ -44,34 +44,28 @@ public class realizarPedido extends HttpServlet {
             
             try {
                 JSONArray jsonArray = new JSONArray(productos);
-                for (int i=0; i<jsonArray.length(); i++) {
+               /* for (int i=0; i<jsonArray.length(); i++) {
                     JSONObject producto = jsonArray.getJSONObject(i);
                     report += producto.getString("Precio")+" - ";
-                }
+                }*/
                 
-                pd.seleccionarCliente(cliente);
+                pd.seleccionarCliente(cliente); 
+                pd.seleccionarRestaurante("bocatti");
+                pd.seleccionarProducto("bocatti", "Empanada de Carne", 1);
+                pd.finalizarPedido();
+                
             } catch (Exception ex) {
                 Logger.getLogger(realizarPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            try {
-                pd.seleccionarRestaurante("bocatti");
-            } catch (Exception ex) {
-                Logger.getLogger(realizarPedido.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                pd.seleccionarProducto("bocatti", "Empanada de Carne", 1);
-            } catch (Exception ex) {
-                Logger.getLogger(realizarPedido.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                pd.finalizarPedido();
+                
             
             ArrayList<DataPedido> lPedido = pd.listarPedidos();
-            //String report = "";
-           // for (DataPedido pedido : lPedido) {
-           //      report = report+'/'+pedido.getNickNameCliente()+'-'+pedido.getNickNameRestaurante()+'-'+Integer.toString(pedido.getNumero());
+           
+           for (DataPedido pedido : lPedido) {
+                 report = report+'/'+pedido.getNickNameCliente()+'-'+pedido.getNickNameRestaurante()+'-'+Integer.toString(pedido.getNumero());
                         
-           // }
+            }
             
             
             

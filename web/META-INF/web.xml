@@ -67,11 +67,11 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>Usuario</servlet-name>
+        <servlet-name>usuario</servlet-name>
         <servlet-class>controllers.usuario</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Usuario</servlet-name>
+        <servlet-name>usuario</servlet-name>
         <url-pattern>/usuario</url-pattern>
     </servlet-mapping>
     
