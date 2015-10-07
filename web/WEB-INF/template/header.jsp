@@ -59,7 +59,7 @@
 		
 		if(usr != null) {
                %>
-            <li class="active"><a href="/usuario" style="cursor:pointer;"><span style="margin-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname() %></a></li>
+            <li class="active"><a data-toggle="tooltip" data-placement="bottom" title="Ver Información" href="/usuario" style="cursor:pointer;"><span style="margin-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname() %></a></li>
             <li><a href="logout">Cerrar Sesion</a></li>
             
             <% }else{ %>
@@ -88,3 +88,9 @@
 		
       </div style="clear:both"></div>
 	</div>
+
+<script type="text/javascript">      
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

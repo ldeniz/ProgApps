@@ -37,7 +37,8 @@
                                     for(DataRestaurante res : restaurantes){
                                         %>        
                                         <li>
-				  <img src="<%= res.getRutaImagen()%>" alt="..." class="imagenResto">
+                                            <!--<%= res.getRutaImagen()%>-->
+				  <img src="http://www.reservarestaurantes.com/media/cache/th_680_420/bundles/rrweb/images/restaurant-default-image.jpg" alt="..." class="imagenResto">
 				  <div class="infoResto">
                                     <form action="restaurantes" method="POST">
 					<div class="nombreResto"><%= res.getNombre()%></div>

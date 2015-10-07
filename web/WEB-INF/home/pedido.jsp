@@ -12,6 +12,9 @@
 		if(usr != null) {
                %>
     <h4>Mi Pedido</h4>
+    
+    
+
 	<ul class="list-group" >
 
 	</ul>
@@ -23,6 +26,7 @@
     Usuario no logueado
     <% } %>
 </div>
+
 
 <script type="text/javascript">
 
@@ -48,18 +52,19 @@
         $productos = "[";
         $( "li.list-group-item" ).each(function() {
             if ($productos !== "[") {$productos += ",";}
-            $productos += '{"Precio":"'  + parseInt($(this).find("#precio").text()) + '"}';
+            $productos += '{"prod":"' + $(this).find("#nickname").text()+'","cantidad":"'  + parseInt($(this).find("#cantidad").text()) + '"}';
         });
         $productos +="]";
-        alert($productos);
         
-         $nickname = "mathi";
-         $restaurante = "Mathi";
+        
+   
+         $restaurante = $(document).find("#idRestaurante").html();
+         
          
           $.ajax({
             url: 'realizarPedido',
             dataType: 'json',
-            data: {cliente: $nickname, restaurante: $restaurante, productos:$productos },
+            data: {restaurante: $restaurante, productos:$productos },
             type: 'get',
             cache: false,
             
@@ -67,8 +72,8 @@
             complete: function(request, textStatus)
             {
               //PEDIDO AGREGADO CORECTAMENTE.
-              alert("PEDIDO REGISTRADO CON ID: " + request.responseText);
-             
+              alert("Bien hecho!, tu pedido se está preparando");
+              window.location = "/usuario";
             }
           });
     });

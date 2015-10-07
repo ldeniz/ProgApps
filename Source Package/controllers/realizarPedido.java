@@ -34,48 +34,48 @@ public class realizarPedido extends HttpServlet {
         {
             IControladorPedido pd = Fabrica.getInstance().obtenerControladorPedido();
             
-            String cliente = request.getParameter("cliente");
+            String cliente = (String)request.getSession().getAttribute("usuario_logueado");
+            String restaurante = request.getParameter("restaurante");
             String productos = request.getParameter("productos");
             
             
             
-            String report = "";
+            
             
             
             try {
-                JSONArray jsonArray = new JSONArray(productos);
-               /* for (int i=0; i<jsonArray.length(); i++) {
-                    JSONObject producto = jsonArray.getJSONObject(i);
-                    report += producto.getString("Precio")+" - ";
-                }*/
+                pd.seleccionarCliente(cliente);
+                pd.seleccionarRestaurante(restaurante);
                 
-                pd.seleccionarCliente(cliente); 
-                pd.seleccionarRestaurante("bocatti");
-                pd.seleccionarProducto("bocatti", "Empanada de Carne", 1);
+                JSONArray jsonArray = new JSONArray(productos);
+                for (int i=0; i<jsonArray.length(); i++) {
+                    JSONObject producto = jsonArray.getJSONObject(i);
+                    Integer cant = Integer.parseInt(producto.getString("cantidad"));
+                    String prod = producto.getString("prod");
+                    pd.seleccionarProducto(restaurante,prod , cant);
+                    
+                }
                 pd.finalizarPedido();
+                 
+                /*
+                
+                    
+                */
                 
             } catch (Exception ex) {
                 Logger.getLogger(realizarPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-                
-            
-            ArrayList<DataPedido> lPedido = pd.listarPedidos();
-           
-           for (DataPedido pedido : lPedido) {
-                 report = report+'/'+pedido.getNickNameCliente()+'-'+pedido.getNickNameRestaurante()+'-'+Integer.toString(pedido.getNumero());
-                        
-            }
-            
+              
             
             
            
             
 
-            System.out.println(report);
+            //System.out.println(report);
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            out.write(report);
+            //out.write(report);
             out.flush();
             out.close();
         }

@@ -81,7 +81,7 @@
                                     <h1>Informacion de  Restaurantes</h1>
 
                                     <p>Nombre : <%=datosRes.getNombre()%></p>
-                                    <p>Nickname: <%=datosRes.getNickname()%></p>
+                                    <p>Nickname: <span id="idRestaurante"><%=datosRes.getNickname()%></span></p>
                                     <p>Direccion: <%=datosRes.getDireccion()%></p>
                                     <p> Email: <%=datosRes.getMail()%></p>
                                 </div>
@@ -137,13 +137,16 @@ $(document).ready(function() {
 });
 
       
-        $(".producto").click(function () {	
+        $(".producto").click(function () {
+            
+                
 		$(".modal-content #nickname").html( $(this).data('nickname') );
 		$(".modal-content #precio").html( $(this).data('precio') );
 		$('#cantidad option').eq(0).prop('selected', true);
 	});
 	
         $("#agregarPedido").click(function () {
+            
 		$('#miModal').modal('hide');
                 var cantidad = parseInt($("#cantidad option:selected").html());
                 var precio = parseInt($(".modal-content #precio").html());
@@ -152,7 +155,7 @@ $(document).ready(function() {
                 if(total==0) $("#realizarPedido").fadeIn();
                 
 		
-                $("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge"><span id="precio">'+precio+'</span> x <span id="cantidad">'+cantidad+'</span></span>'+$("#nickname").text()+'<span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');	
+                $("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge"><span id="precio">'+precio+'</span> x <span id="cantidad">'+cantidad+'</span></span><span id="nickname">'+$("#nickname").text()+'</span><span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');	
                 
                 $("#total .fullprice").html(total + (cantidad*precio));
                 
