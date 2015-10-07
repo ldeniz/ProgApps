@@ -75,6 +75,15 @@
         <url-pattern>/usuario</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>comentarPedido</servlet-name>
+        <servlet-class>controllers.comentarPedido</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>comentarPedido</servlet-name>
+        <url-pattern>/comentarPedido</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

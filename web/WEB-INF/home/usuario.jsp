@@ -75,6 +75,7 @@
                                 <!--Precio Total:</b><%= pedido.getPrecioTotal() %></b>-->
                               </div>
                               <div class="panel-footer">
+                                   <%= pedido.getDataComentario() %>
                                   <% if(pedido.getDataComentario() != null ){
                                       String comentario = pedido.getDataComentario().getComentario();
                                   
@@ -83,9 +84,12 @@
 
                                   
                                     <%}else{ %>
-                                    <button type="button" class="btn btn-default btn-sh">
-                                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comentar
-                                  </button>
+                               
+                                    <button type="button" class="realizarComentario btn btn-primary btn-sh" data-toggle="modal" data-target="#myModal">
+                                     <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comentar
+                                     <span id="idPedido" style="visibility:hidden;"><%= pedido.getNumero() %></span>
+                                    </button>
+
                                   <% 
                                   } %>  
                                   <span style="float:right;" class="label label-success <%= " "+pedido.getEstado()%>"><%= pedido.getEstado()%></span>
@@ -99,10 +103,65 @@
 			
 	</div>
 
+                         
+                         
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Comentar Pedido</h4>
+      </div>
+      <div class="modal-body">
+        <input id="miPuntuacion" value="" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-readonly="false">
+    
+        <label for="inputdefault">Ingrese el comentario:</label>
+        <input class="form-control" id="miComentario" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button id="confirmarComentario" type="button" class="btn btn-primary">Comentar</button>
+      </div>
+    </div>
+  </div>
+</div>                         
+                         
+                         
+                         
+                         
 <jsp:include page="/WEB-INF/template/footer.jsp"/>
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+        $(".realizarComentario").click(function() {
+           $("#miComentario").val("");
+           $idPedido = ($(this).find("#idPedido").text());
+           
+	});
+        
+        $("#confirmarComentario").click(function() {
+           $comentario = $("#miComentario").val();
+           $puntuacion = $("#miPuntuacion").val();
+  
+           $.ajax({
+                url: 'comentarPedido',
+                dataType: 'json',
+                data: {comentario: $comentario, puntuacion: $puntuacion, idPedido: $idPedido },
+                type: 'get',
+                cache: false,
+            
+            
+            complete: function(request, textStatus)
+            {
+              //PEDIDO AGREGADO CORECTAMENTE.
+              alert("Gracias, hemos registrado tu comentario");
+              window.location = "/usuario";
+            }
+          });
+	});
 
 });
 

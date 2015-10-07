@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import datatype.DataPedido;
 import fabrica.Fabrica;
 import interfaces.IControladorPedido;
@@ -27,43 +28,26 @@ import org.json.JSONObject;
  *
  * @author Mathi
  */
-public class realizarPedido extends HttpServlet {
+public class comentarPedido extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException
         {
             IControladorPedido pd = Fabrica.getInstance().obtenerControladorPedido();
             
-            String cliente = (String)request.getSession().getAttribute("usuario_logueado");
-            String restaurante = request.getParameter("restaurante");
-            String productos = request.getParameter("productos");
             
-            
-            
-            
-            
+            String comentario = request.getParameter("comentario");
+            int puntuacion = Integer.parseInt(request.getParameter("puntuacion"));
+            int idPedido = Integer.parseInt(request.getParameter("idPedido"));
             
             try {
-                pd.seleccionarCliente(cliente);
-                pd.seleccionarRestaurante(restaurante);
                 
-                JSONArray jsonArray = new JSONArray(productos);
-                for (int i=0; i<jsonArray.length(); i++) {
-                    JSONObject producto = jsonArray.getJSONObject(i);
-                    Integer cant = Integer.parseInt(producto.getString("cantidad"));
-                    String prod = producto.getString("prod");
-                    pd.seleccionarProducto(restaurante,prod , cant);
-                    
-                }
-                pd.finalizarPedido();
-                //pd.agregarComentario(1,"comentario lindo", 5);
-                /*
+                pd.agregarComentario(idPedido, comentario, puntuacion);
                 
-                    
-                */
+                
                 
             } catch (Exception ex) {
-                Logger.getLogger(realizarPedido.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(comentarPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
             
               
