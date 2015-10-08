@@ -111,7 +111,12 @@ public class Pedido {
         for (PedidoProduco pp : pedidoProducos) {
             ldpp.add(pp.obtenerDatosPedidoProducto());
         }
-        DataPedido dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp);
+        DataPedido dp;
+        if (comentario == null){
+            dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp);
+        }else{
+            dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp, comentario.obtenerDatosComentario());
+        }
         return dp;
     }
 
