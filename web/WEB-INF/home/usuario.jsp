@@ -75,13 +75,18 @@
                                 <!--Precio Total:</b><%= pedido.getPrecioTotal() %></b>-->
                               </div>
                               <div class="panel-footer">
-                                   <%= pedido.getDataComentario() %>
+                                   
                                   <% if(pedido.getDataComentario() != null ){
                                       String comentario = pedido.getDataComentario().getComentario();
                                   
                                   %>
-                                  <input id="input-21e" value=" <%= pedido.getDataComentario().getPuntaje()%>" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-readonly="true">
-
+                                  <input id="input-21e" value="<%= pedido.getDataComentario().getPuntaje()%>" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-readonly="true">
+                                  <div class="media">
+                                    <div class="media-body">
+                                      <h4 class="media-heading">Tu Comentario:</h4>
+                                      <%= pedido.getDataComentario().getComentario()%>
+                                    </div>
+                                  </div>      
                                   
                                     <%}else{ %>
                                
