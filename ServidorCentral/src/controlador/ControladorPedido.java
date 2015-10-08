@@ -170,7 +170,7 @@ public class ControladorPedido implements IControladorPedido {
     public void agregarComentario(int numPedido, String comentario, int puntaje) throws Exception {
         if (puntaje > 0 && puntaje <= 5) {
             ManejadorPedido mp = ManejadorPedido.getInstance();
-            Pedido p = mp.obtenerPedido(numero);
+            Pedido p = mp.obtenerPedido(numPedido);
             Comentario c = new Comentario(comentario, puntaje);
             p.setComentario(c);
             ManejadorUsuario mu = ManejadorUsuario.getInstance();
