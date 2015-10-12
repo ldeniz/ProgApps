@@ -7,6 +7,7 @@ package controlador;
 
 import datatype.DataCategoria;
 import datatype.DataCliente;
+import datatype.DataComentario;
 import datatype.DataDireccion;
 import datatype.DataPedido;
 import datatype.DataProducto;
@@ -163,6 +164,11 @@ public class ControladorUsuario implements IControladorUsuario {
             throw new Exception("No existe usuario " + nickName);
         }
         return u.obtenerDatosUsuario();
+    }
+
+    @Override
+    public ArrayList<DataComentario> listarComentariosRestaurante(String nickNameRestaurante) throws Exception {
+        return null;
     }
 
 }

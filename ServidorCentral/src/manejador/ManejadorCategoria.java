@@ -4,6 +4,7 @@
  */
 package manejador;
 
+import datatype.DataRestaurante;
 import java.util.ArrayList;
 import java.util.HashMap;
 import modelo.Categoria;
@@ -66,6 +67,11 @@ public class ManejadorCategoria {
 
     public void limpiarMemoria() {
         categorias.clear();
+    }
+
+    public ArrayList<Restaurante> obtenerRestaurantes(String categoria) {
+        Categoria c = categorias.get(categoria);
+        return c.getRestaurantes();
     }
 
 }

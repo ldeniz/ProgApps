@@ -1,6 +1,7 @@
 package interfaces;
 
 import datatype.DataCategoria;
+import datatype.DataRestaurante;
 import java.util.ArrayList;
 
 /**
@@ -30,5 +31,14 @@ public interface IControladorCategoria {
      * @return
      */
     public ArrayList<DataCategoria> listarCategorias();
+    
+    
+    /**
+     * Regresa una lista de restaurantes dada la categoria 'categoria'
+     * @param categoria
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    public ArrayList<DataRestaurante> listarRestaurantes(String categoria) throws Exception;
 
 }

@@ -16,10 +16,10 @@ import java.util.Calendar;
 public class Comentario implements Serializable {
 
     String comentario;
-    int puntaje;
+    float puntaje;
     Calendar fecha;
 
-    public Comentario(String comentario, int puntaje) {
+    public Comentario(String comentario, float puntaje) {
         this.comentario = comentario;
         this.puntaje = puntaje;
     }
@@ -32,11 +32,11 @@ public class Comentario implements Serializable {
         this.comentario = comentario;
     }
 
-    public int getPuntaje() {
+    public float getPuntaje() {
         return puntaje;
     }
 
-    public void setPuntaje(int puntaje) {
+    public void setPuntaje(float puntaje) {
         this.puntaje = puntaje;
     }
 

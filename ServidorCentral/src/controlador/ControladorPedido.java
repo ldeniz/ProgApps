@@ -167,7 +167,7 @@ public class ControladorPedido implements IControladorPedido {
     }
 
     @Override
-    public void agregarComentario(int numPedido, String comentario, int puntaje) throws Exception {
+    public void agregarComentario(int numPedido, String comentario, float puntaje) throws Exception {
         if (puntaje > 0 && puntaje <= 5) {
             ManejadorPedido mp = ManejadorPedido.getInstance();
             Pedido p = mp.obtenerPedido(numPedido);
@@ -178,6 +178,25 @@ public class ControladorPedido implements IControladorPedido {
         } else {
             throw new Exception("El puntaje debe ser un valor entero entre 1 y 5.");
         }
+    }
+
+    @Override
+    public ArrayList<DataPedido> listarPedidos(String nickNameRestaurante) throws Exception {
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ArrayList<DataPedido> ldp = null;
+        if (mu.existeUsuarioNickName(nickNameRestaurante)) {
+            ManejadorPedido mp = ManejadorPedido.getInstance();
+            ArrayList<Pedido> lp = mp.listarPedidos();
+            ldp = new ArrayList<>();
+            for (Pedido p : lp) {
+                if (p.getNickNameRestaurante().equals(nickNameRestaurante)) {
+                    ldp.add(p.obtenerDatosPedido());
+                }
+            }
+        } else {
+            throw new Exception("No existe el restaurante " + nickNameRestaurante);
+        }
+        return ldp;
     }
 
 }

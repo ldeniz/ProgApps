@@ -10,7 +10,7 @@ public class DataRestaurante extends DataUsuario {
 
     private String[] rutaImagen;
     private ArrayList<DataProducto> dataProductos;
-    private int puntajePromedio;
+    private float puntajePromedio;
     private int cantidadPuntuaciones;
 
     public DataRestaurante(String[] rutaImagen, ArrayList<DataProducto> dataProductos, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
@@ -24,7 +24,7 @@ public class DataRestaurante extends DataUsuario {
         this.rutaImagen = rutaImagen;
     }
 
-    public DataRestaurante(String[] rutaImagen, ArrayList<DataProducto> dataProductos, int puntajePromedio, int cantidadPuntaje, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
+    public DataRestaurante(String[] rutaImagen, ArrayList<DataProducto> dataProductos, float puntajePromedio, int cantidadPuntaje, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         super(nickname, mail, nombre, pass, direccion);
         this.rutaImagen = rutaImagen;
         this.dataProductos = dataProductos;
@@ -32,7 +32,7 @@ public class DataRestaurante extends DataUsuario {
         this.cantidadPuntuaciones = cantidadPuntaje;
     }
 
-    public int getPuntajePromedio() {
+    public float getPuntajePromedio() {
         return puntajePromedio;
     }
 

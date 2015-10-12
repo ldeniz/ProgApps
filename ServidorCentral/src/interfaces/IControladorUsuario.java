@@ -1,6 +1,7 @@
 package interfaces;
 
 import datatype.DataCliente;
+import datatype.DataComentario;
 import datatype.DataDireccion;
 import datatype.DataPedido;
 import datatype.DataProducto;
@@ -116,5 +117,13 @@ public interface IControladorUsuario {
      * @return 
      */
     public DataUsuario obtenerUsuario(String nickName) throws Exception;
+    
+    /**
+     * 
+     * @param nickNameRestaurante
+     * @return
+     * @throws Exception 
+     */
+    public ArrayList<DataComentario> listarComentariosRestaurante(String nickNameRestaurante) throws Exception;
 
 }

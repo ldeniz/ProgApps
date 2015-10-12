@@ -127,7 +127,7 @@ public class ManejadorUsuario {
         r.getPedidos().remove(p);
     }
 
-    public void agregarPuntajeRestaurante(String nickNameRestaurante, int puntaje) {
+    public void agregarPuntajeRestaurante(String nickNameRestaurante, float puntaje) {
         Restaurante r = restaurantes.get(nickNameRestaurante);
         r.calcularPromedioPuntaje(puntaje);
     }

@@ -14,10 +14,10 @@ import java.util.Calendar;
 public class DataComentario {
 
     String comentario;
-    int puntaje;
+    float puntaje;
     Calendar fecha;
 
-    public DataComentario(String comentario, int puntaje, Calendar fecha) {
+    public DataComentario(String comentario, float puntaje, Calendar fecha) {
         this.comentario = comentario;
         this.puntaje = puntaje;
         this.fecha = fecha;
@@ -27,7 +27,7 @@ public class DataComentario {
         return comentario;
     }
 
-    public int getPuntaje() {
+    public float getPuntaje() {
         return puntaje;
     }
 

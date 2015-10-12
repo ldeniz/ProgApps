@@ -20,7 +20,7 @@ public class Restaurante extends Usuario implements Serializable {
 
     private String[] rutaImagen;
     private ArrayList<Producto> productos;
-    private int puntajePromedio;
+    private float puntajePromedio;
     private int cantidadPuntuaciones;
 
     public Restaurante(String[] rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
@@ -47,11 +47,11 @@ public class Restaurante extends Usuario implements Serializable {
         return productos;
     }
 
-    public int getPuntajePromedio() {
+    public float getPuntajePromedio() {
         return puntajePromedio;
     }
 
-    public void setPuntajePromedio(int puntajePromedio) {
+    public void setPuntajePromedio(float puntajePromedio) {
         this.puntajePromedio = puntajePromedio;
     }
 
@@ -63,7 +63,7 @@ public class Restaurante extends Usuario implements Serializable {
         this.cantidadPuntuaciones = cantidadPuntuaciones;
     }
     
-    public void calcularPromedioPuntaje(int puntaje){
+    public void calcularPromedioPuntaje(float puntaje){
         cantidadPuntuaciones = cantidadPuntuaciones + 1;
         puntajePromedio = (puntajePromedio + puntaje) / cantidadPuntuaciones;
     }
