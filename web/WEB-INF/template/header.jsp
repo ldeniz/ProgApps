@@ -63,17 +63,16 @@
             <li><a href="logout">Cerrar Sesion</a></li>
             
             <% }else{ %>
-            <form class="form-signin" action="Login" method="POST">
-                <h2 class="form-signin-heading reliceInicio">Realice inicio de Sesión</h2>
-                <label for="inputEmail" class="sr-only">Nickname</label>
-                <input name="login" type="user" id="inputUser" class="form-control" placeholder="Tu Nickname" required="" autofocus="">
-                <label for="inputPassword" class="sr-only">Password</label>
-                <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">A pedir!</button>
-              </form>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".login">Login</button>
+            <span style="color:white" type="button" class="btn" data-toggle="modal" data-target=".registro">Registrarme</span>
+            </ul>
+            
+            
+            
+            
             
             <% } %>
-          </ul>
+          
 		  
         </div><!--/.nav-collapse -->
 		
@@ -88,7 +87,65 @@
 		
       </div style="clear:both"></div>
 	</div>
-
+            <div class="modal fade login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content" style="padding:10px">
+                  <h4 class="modal-title" id="gridSystemModalLabel">Inicio de Sesión</h4>    
+                  <form class="form-signin" action="Login" method="POST">
+                    <h2 class="form-signin-heading reliceInicio">Realice inicio de Sesión</h2>
+                    <label for="inputEmail" class="sr-only">Nickname</label>
+                    <input name="login" type="user" id="inputUser" class="form-control" placeholder="Tu Nickname" required="" autofocus="">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">A pedir!</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+        
+            <div class="modal fade registro" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="padding:10px">
+                  <h4 class="modal-title" id="gridSystemModalLabel">Registro de Cliente</h4>    
+                  <form class="form-signin" action="Login" method="POST">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="nombre" id="first_name" class="form-control input-lg" placeholder="Nombre" tabindex="1">
+                                    </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                            <input type="text" name="apellido" id="last_name" class="form-control input-lg" placeholder="Apellido" tabindex="2">
+                                    </div>
+                            </div>
+			</div>
+			<div class="form-group">
+				<input type="text" name="nickname" id="display_name" class="form-control input-lg" placeholder="Nickname" tabindex="3">
+			</div>
+			<div class="form-group">
+				<input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email" tabindex="4">
+			</div>
+			<div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Re-Password" tabindex="6">
+                                    </div>
+                            </div>
+			</div>
+			<hr class="colorgraph">
+			<div class="row">
+                            <div class="col-xs-12 col-md-6"  style="float:right;"><input type="submit" value="Registrarme" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>	
+			</div>
+                  </form>
+                </div>
+              </div>
+            </div>
 <script type="text/javascript">      
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
