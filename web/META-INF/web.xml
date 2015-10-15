@@ -8,6 +8,16 @@
         <servlet-name>Home</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>cargarDatos</servlet-name>
+        <servlet-class>controllers.cargarDatos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cargarDatos</servlet-name>
+        <url-pattern>/cargarDatos</url-pattern>
+    </servlet-mapping>
+    
     <servlet>
         <servlet-name>Restaurantes</servlet-name>
         <servlet-class>controllers.Restaurantes</servlet-class>

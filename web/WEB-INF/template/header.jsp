@@ -46,8 +46,10 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/home">QuickOrder</a>
+          <a class="navbar-brand" href="/cargarDatos">Cargar</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
+            
           <ul class="nav navbar-nav" style="float:right">
               <%
 		DataUsuario usr;
