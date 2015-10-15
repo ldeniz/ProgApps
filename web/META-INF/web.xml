@@ -94,6 +94,15 @@
         <url-pattern>/comentarPedido</url-pattern>
     </servlet-mapping>
     
+     <servlet>
+        <servlet-name>registrarCliente</servlet-name>
+        <servlet-class>controllers.registrarCliente</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>registrarCliente</servlet-name>
+        <url-pattern>/registrarCliente</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

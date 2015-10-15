@@ -17,6 +17,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="media/css/bootstrap.css" rel="stylesheet">
+    <link href="media/css/bootstrap-datepicker.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="media/css/miestilo.css" rel="stylesheet">
@@ -25,6 +26,7 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="media/js/ie-emulation-modes-warning.js"></script>
+    
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="media/js/star-rating.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -32,6 +34,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="media/js/bootstrap-datepicker.js"></script>
+    <script src="media/js/bootstrap-datepicker.es.min.js"></script>
   </head>
 
   <body style="background-color:#f6f6f6;">
@@ -68,11 +72,7 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".login">Login</button>
             <span style="color:white" type="button" class="btn" data-toggle="modal" data-target=".registro">Registrarme</span>
             </ul>
-            
-            
-            
-            
-            
+
             <% } %>
           
 		  
@@ -87,7 +87,7 @@
 			</form>
 		</div>
 		
-      </div style="clear:both"></div>
+      </div> style="clear:both"></div>
 	</div>
             <div class="modal fade login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
               <div class="modal-dialog modal-sm">
@@ -109,29 +109,48 @@
               <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="padding:10px">
                   <h4 class="modal-title" id="gridSystemModalLabel">Registro de Cliente</h4>    
-                  <form class="form-signin" action="Login" method="POST">
+                  <form class="form-signin" action="registrarCliente" method="POST">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="col-xs-12 col-sm-4 col-md-4">
                                     <div class="form-group">
-                                        <input type="text" name="nombre" id="first_name" class="form-control input-lg" placeholder="Nombre" tabindex="1">
+                                        <input type="text" name="nombre" id="nombre" class="form-control input-lg" placeholder="Nombre" tabindex="1">
                                     </div>
                             </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                            <input type="text" name="apellido" id="last_name" class="form-control input-lg" placeholder="Apellido" tabindex="2">
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <input type="text" name="apellido" id="apellido" class="form-control input-lg" placeholder="Apellido" tabindex="3">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <input type="text" name="nickname" id="nickname" class="form-control input-lg" placeholder="Nickname" tabindex="3">
+                                </div>
+                            </div>
+                            
+			</div>
+                      <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <input type="email" name="mail" id="mail" class="form-control input-lg" placeholder="Email" tabindex="4">
+                                </div>
+                            </div>
+                                    
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <div class="form-group" id="fechanac">
+                                            <input name="nacimiento" id="nacimiento" type="text" class="form-control input-lg" placeholder="Fecha Nacimiento">    
                                     </div>
                             </div>
-			</div>
-			<div class="form-group">
-				<input type="text" name="nickname" id="display_name" class="form-control input-lg" placeholder="Nickname" tabindex="3">
-			</div>
-			<div class="form-group">
-				<input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email" tabindex="4">
-			</div>
+                            
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <input type="direccion" name="direccion" id="direccion" class="form-control input-lg" placeholder="Dirección" tabindex="4">
+                                </div>
+                            </div>
+                        </div>
 			<div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+                                    <input type="password" name="pass" id="pass" class="form-control input-lg" placeholder="Password" tabindex="5">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -142,14 +161,31 @@
 			</div>
 			<hr class="colorgraph">
 			<div class="row">
-                            <div class="col-xs-12 col-md-6"  style="float:right;"><input type="submit" value="Registrarme" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>	
+                            <div id="registrar" class="col-xs-12 col-md-6"  style="float:right;"><input  type="submit" value="Registrarme" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>	
 			</div>
                   </form>
-                </div>
               </div>
             </div>
-<script type="text/javascript">      
+        </div>   
+<script type="text/javascript"> 
+ 
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
+    
+    $(document).ready(function() {
+        $('#fechanac input').datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            autoclose: true,
+            beforeShowMonth: function (date){
+                            switch (date.getMonth()){
+                              case 8:
+                                return false;
+                            }
+                        }
+        });
+    });
+    
+   
 </script>

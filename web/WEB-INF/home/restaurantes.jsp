@@ -18,7 +18,6 @@
             </div>
 
             <% 	DataRestaurante datosRes = (DataRestaurante) request.getAttribute("datosRes");%>
-            <%=datosRes%>
             <div class="media-body">
                 
                 <input id="input-22e" value="<%=datosRes.getPuntajePromedio()%>" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-readonly="true">
