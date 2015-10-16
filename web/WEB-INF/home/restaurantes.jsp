@@ -19,7 +19,7 @@
 
             <% 	DataRestaurante datosRes = (DataRestaurante) request.getAttribute("datosRes");%>
             <div class="media-body">
-                
+
                 <input id="input-22e" value="<%=datosRes.getPuntajePromedio()%>" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-readonly="true">
                 <h4 class="media-heading"><%=datosRes.getNombre()%></h4>
             </div>
@@ -93,10 +93,12 @@
                     <%  ArrayList<DataPedido> datosPedido = (ArrayList<DataPedido>) request.getAttribute("datosPedidoRes");
                         if (datosPedido != null && !datosPedido.isEmpty()) {
                             for (DataPedido dp : datosPedido) {
+                                if(dp.getDataComentario() != null){
                     %>             
-                    <input id="input-21e" value="<%= dp.getDataComentario().getPuntaje()%>" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-readonly="true">
-                    <p><%=dp.getDataComentario().getComentario()%></p>
-                    <%      }
+                    <input id="input-21e" value="<%=dp.getDataComentario().getPuntaje()%>" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-readonly="true">
+                        <p><%=dp.getDataComentario().getComentario()%></p>                        
+                    <%          }
+                            }
                         }%>
 
 
