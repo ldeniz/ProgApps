@@ -43,7 +43,7 @@
                 
                 if(total<=0) $("#realizarPedido").hide();
                 
-                
+                localStorage.removeItem($(this).closest("li").find("#nickname").text());
     });
     
     $(document).on("click", "#realizarPedido", function () {
@@ -72,6 +72,7 @@
             complete: function(request, textStatus)
             {
               //PEDIDO AGREGADO CORECTAMENTE.
+              localStorage.clear();
               alert("Bien hecho!, tu pedido se está preparando");
               window.location = "/usuario";
             }

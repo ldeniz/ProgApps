@@ -116,56 +116,85 @@
 
 <jsp:include page="/WEB-INF/template/footer.jsp"/>
 <script type="text/javascript">
+$(document).ready(function() {
+    
 
-    $(document).ready(function () {
-        $("#realizarPedido").hide();
-        $("ul.nav-tabs li:first").addClass("active").show(); //Activar primera pestaña
-        $(".contenedorMenu:first").show(); //Mostrar contenido primera pestaña
+    for (x=0; x<=localStorage.length-1; x++)  { 
+        var total = parseInt($("#total .fullprice").html());
+        clave = localStorage.key(x); 
+        var object2 = JSON.parse(localStorage.getItem(clave));
+        var cantidad = object2.cantidad;
+        var precio = object2.precio;
+        $("#total .fullprice").html(total + (cantidad*precio));
+        $("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge"><span id="precio">'+precio+'</span> x <span id="cantidad">'+cantidad+'</span></span><span id="nickname">'+clave+'</span><span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');	
+
+    }
+     $("#realizarPedido").hide();   
+     if(parseInt($("#total .fullprice").html()) > 0 ) $("#realizarPedido").fadeIn();
+               
+    
+	
+	$("ul.nav-tabs li:first").addClass("active").show(); //Activar primera pestaña
+	$(".contenedorMenu:first").show(); //Mostrar contenido primera pestaña
 
         $(cinformacion).hide();
         $(ccomentarios).hide();
-
-        // Sucesos al hacer click en una pestaña
-        $("ul.nav-tabs li").click(function () {
+	
+	// Sucesos al hacer click en una pestaña
+	$("ul.nav-tabs li").click(function() {
             $("ul.nav-tabs li").removeClass("active"); //Borrar todas las clases "active"
             $(this).addClass("active"); //Añadir clase "active" a la pestaña seleccionada
 
             $(".soyContenedor").hide();
-            var activatab = "c" + $(this).attr('id'); //Leer el valor de href para identificar la pestaña active 
-            // $("#"+activatab).show();
-            $("#" + activatab).fadeIn(); //Visibilidad con efecto fade del contenido activo
+            var activatab = "c"+$(this).attr('id'); //Leer el valor de href para identificar la pestaña active 
+           // $("#"+activatab).show();
+            $("#"+activatab).fadeIn(); //Visibilidad con efecto fade del contenido activo
             return false;
+	});
+});
+
+      
+        $(".producto").click(function () {
+            
+                
+		$(".modal-content #nickname").html( $(this).data('nickname') );
+		$(".modal-content #precio").html( $(this).data('precio') );
+		$('#cantidad option').eq(0).prop('selected', true);
+                
+	});
+	
+        $("#agregarPedido").click(function () {
+            
+		$('#miModal').modal('hide');
+                var cantidad = parseInt($("#cantidad option:selected").html());
+                var precio = parseInt($(".modal-content #precio").html());
+                var total = parseInt($("#total .fullprice").html());
+
+                
+                // Creamos un objeto
+                var object = { 'precio' : precio, 'cantidad' : cantidad };
+                // Lo guardamos en localStorage pasandolo a cadena con JSON
+                localStorage.setItem($("#nickname").text(), JSON.stringify(object));
+                $("#pedidos ul").empty();
+		for (x=0; x<=localStorage.length-1; x++)  { 
+                    var total = parseInt($("#total .fullprice").html());
+                    clave = localStorage.key(x); 
+                    var object2 = JSON.parse(localStorage.getItem(clave));
+                    var cantidad = object2.cantidad;
+                    var precio = object2.precio;
+                    $("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge"><span id="precio">'+precio+'</span> x <span id="cantidad">'+cantidad+'</span></span><span id="nickname">'+clave+'</span><span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');	
+
+                }
+               
+                $("#total .fullprice").html(total + (cantidad*precio));
+                if(total==0) $("#realizarPedido").fadeIn();
+                
+
         });
-    });
-
-
-    $(".producto").click(function () {
-
-
-        $(".modal-content #nickname").html($(this).data('nickname'));
-        $(".modal-content #precio").html($(this).data('precio'));
-        $('#cantidad option').eq(0).prop('selected', true);
-    });
-
-    $("#agregarPedido").click(function () {
-
-        $('#miModal').modal('hide');
-        var cantidad = parseInt($("#cantidad option:selected").html());
-        var precio = parseInt($(".modal-content #precio").html());
-        var total = parseInt($("#total .fullprice").html());
-
-        if (total == 0)
-            $("#realizarPedido").fadeIn();
-
-
-        $("#pedidos ul").append('<li id="1" class="list-group-item"><span class="badge"><span id="precio">' + precio + '</span> x <span id="cantidad">' + cantidad + '</span></span><span id="nickname">' + $("#nickname").text() + '</span><span id="1" class="glyphicon glyphicon-trash" style="margin-right:5px;cursor:pointer;float:left;" ></span></li>');
-
-        $("#total .fullprice").html(total + (cantidad * precio));
-
-    });
-
-
-
-
+    
+        	
+	
+		
 </script>
 
+	
