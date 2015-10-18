@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="datatype.DataRestaurante"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -39,10 +40,13 @@
                                     <%
                                     ArrayList<DataRestaurante> restaurantes = Restaurantes.getRestaurantes(request,todos);
                                     for(DataRestaurante res : restaurantes){
+                                        String aca = Arrays.toString(res.getRutaImagen());
+                                        aca = aca.substring(1, aca.length()-3);
+                                        aca = aca.replace(",", "");
                                         %>        
                                         <li>
-                                            <!--<%= res.getRutaImagen()%>-->
-				  <img src="http://www.reservarestaurantes.com/media/cache/th_680_420/bundles/rrweb/images/restaurant-default-image.jpg" alt="..." class="imagenResto">
+                                  <img src=<%out.println(""+aca+"");%>
+                                   alt="..." class="imagenResto">
 				  <div class="infoResto">
                                     <form action="restaurantes" method="POST">
 					<div class="nombreResto"><%= res.getNombre()%></div>

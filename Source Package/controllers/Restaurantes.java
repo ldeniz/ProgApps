@@ -65,7 +65,7 @@ public class Restaurantes extends HttpServlet {
         ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes();
         return restaurantes;
         }else{
-        ArrayList<DataRestaurante> restaurantes = iCat.listarRestaurantes(resto);
+        ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes(resto);
         return restaurantes;
         }
        

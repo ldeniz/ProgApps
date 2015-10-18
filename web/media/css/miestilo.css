@@ -276,3 +276,10 @@ address {
 .verPedidos:hover{
     
 }
+
+.promocion{
+    background-color: #FEF1C0 !important;
+}
+.promocion:hover{
+    background-color: #FCE89D !important;
+}

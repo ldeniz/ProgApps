@@ -76,23 +76,23 @@ public class cargarDatos extends HttpServlet {
 
         u.CargarDatosUsuario("mathi", "gcostas@gmail.com", "Gerardo", "1234",
                 new DataDireccion("Av. Italia", "2078", null), "gcostas@gmail.com",
-                new Date(1983, 11, 15), propiedades.getProperty("rutaDeCarga") + "costas.jpg");
+                new Date(1983, 11, 15), propiedades.getProperty("rutaDeCargaWeb") + "costas.jpg");
         u.altaUsuario();
         u.CargarDatosUsuario("roro", "rcotelo@yahoo.com", "Rodrigo", "  1234",
                 new DataDireccion("Pdte. Berro", "1548", null), "Cotelo",
-                new Date(1975, 8, 2), propiedades.getProperty("rutaDeCarga") + "roro.jpg");
+                new Date(1975, 8, 2), propiedades.getProperty("rutaDeCargaWeb") + "roro.jpg");
         u.altaUsuario();
         u.CargarDatosUsuario("chechi", "cgarrido@hotmail.com", "Cecilia", "  1234",
                 new DataDireccion("Gral. Urquiza", "1548", null), "Garrido",
-                new Date(1987, 9, 12), propiedades.getProperty("rutaDeCarga") + "chechi.jpg");
+                new Date(1987, 9, 12), propiedades.getProperty("rutaDeCargaWeb") + "chechi.jpg");
         u.altaUsuario();
         u.CargarDatosUsuario("andy", "agarcia@gmail.com", "Andrea", "  1234",
                 new DataDireccion("Dr. Manuel Albo ", "4512", null), "García",
-                new Date(1951, 7, 28), propiedades.getProperty("rutaDeCarga") + "andy.jpg");
+                new Date(1951, 7, 28), propiedades.getProperty("rutaDeCargaWeb") + "andy.jpg");
         u.altaUsuario();
         u.CargarDatosUsuario("weiss", "aweiss@hotmail.com", "Adrian", "  1234",
                 new DataDireccion("Monte Caseros ", "5615", null), "Weiss",
-                new Date(1978, 12, 23), propiedades.getProperty("rutaDeCarga") + "weiss.jpg");
+                new Date(1978, 12, 23), propiedades.getProperty("rutaDeCargaWeb") + "weiss.jpg");
         u.altaUsuario();
 
         c.altaCategoria("Chivitos");
@@ -125,7 +125,7 @@ public class cargarDatos extends HttpServlet {
         u.altaUsuario();
         u.limpiarMemoria();
 
-        String[] rutaImagen2 = {propiedades.getProperty("rutaDeCarga") + "BR1.png", "b"};
+        String[] rutaImagen2 = {propiedades.getProperty("rutaDeCargaWeb") + "BR1.png", "b"};
         u.seleccionarCategoria("Chivitos");
         u.seleccionarCategoria("Milanesas");
         u.seleccionarCategoria("Pastas");
@@ -139,7 +139,7 @@ public class cargarDatos extends HttpServlet {
         u.altaUsuario();
         u.limpiarMemoria();
 
-        String[] rutaImagen3 = {propiedades.getProperty("rutaDeCarga") + "EB1.png", "b"};
+        String[] rutaImagen3 = {propiedades.getProperty("rutaDeCargaWeb") + "EB1.png", "b"};
         u.seleccionarCategoria("Empanadas");
         try {
             u.CargarDatosUsuario("bocatti", "bocatti@gmail.com", "Empanadas Bocatti", "123",
@@ -150,7 +150,7 @@ public class cargarDatos extends HttpServlet {
         u.altaUsuario();
         u.limpiarMemoria();
 
-        String[] rutaImagen4 = {propiedades.getProperty("rutaDeCarga") + "WB1.jpg", "b"};
+        String[] rutaImagen4 = {propiedades.getProperty("rutaDeCargaWeb") + "WB1.jpg", "b"};
         u.seleccionarCategoria("Woks");
         u.seleccionarCategoria("Comida China");
         u.seleccionarCategoria("Pastas");
@@ -168,10 +168,10 @@ public class cargarDatos extends HttpServlet {
         p.cargarDatosProducto("Asado", "Asado a la parrilla", (float) 225.0, null);
         p.altaProducto();
         p.limpiarMemoria();
-        p.cargarDatosProducto("Milanesa de Carne", "Con lechuga, tomate, mayonesa y fritas", (float) 180.0, propiedades.getProperty("rutaDeCarga") + "MCM.jpg");
+        p.cargarDatosProducto("Milanesa de Carne", "Con lechuga, tomate, mayonesa y fritas", (float) 180.0, propiedades.getProperty("rutaDeCargaWeb") + "MCM.jpg");
         p.altaProducto();
         p.limpiarMemoria();
-        p.cargarDatosProducto("Chivito Canadiense", "Lomito, jamón, muzza, tomate, aceitunas, panceta, huevo, morrón y fritas", (float) 305.0, propiedades.getProperty("rutaDeCarga") + "CCM.jpg");
+        p.cargarDatosProducto("Chivito Canadiense", "Lomito, jamón, muzza, tomate, aceitunas, panceta, huevo, morrón y fritas", (float) 305.0, propiedades.getProperty("rutaDeCargaWeb") + "CCM.jpg");
         p.altaProducto();
         p.limpiarMemoria();
         p.cargarDatosProducto("Pizza 2 Gustos", "Pizza con dos gustos a elección", (float) 130.0, null);
@@ -182,38 +182,38 @@ public class cargarDatos extends HttpServlet {
         p.cargarDatosProducto("Chivito al plato", "Ensalada rusa, mixta, huevo, jamón, muzza, panceta, aceitunas y fritas", (float) 324.0, null);
         p.altaProducto();
         p.limpiarMemoria();
-        p.cargarDatosProducto("Milanesa a caballo", "Milanesa con dos huevos fritos acompañado de fritas", (float) 270.0, propiedades.getProperty("rutaDeCarga") + "MCR.jpg");
+        p.cargarDatosProducto("Milanesa a caballo", "Milanesa con dos huevos fritos acompañado de fritas", (float) 270.0, propiedades.getProperty("rutaDeCargaWeb") + "MCR.jpg");
         p.altaProducto();
         p.limpiarMemoria();
         p.cargarDatosProducto("Pizza con 2 gustos", "Pizza con dos gustos a elección", (float) 103.0, null);
         p.altaProducto();
         p.limpiarMemoria();
-        p.cargarDatosProducto("Agnolotis", "Agnolotis de jamón y queso", (float) 225.0, propiedades.getProperty("rutaDeCarga") + "PAR.jpg");
+        p.cargarDatosProducto("Agnolotis", "Agnolotis de jamón y queso", (float) 225.0, propiedades.getProperty("rutaDeCargaWeb") + "PAR.jpg");
         p.altaProducto();
         p.limpiarMemoria();
 
         p.seleccionarRestaurante("bocatti");
-        p.cargarDatosProducto("Empanada de Carne", "Carne, aceitunas, huevo duro, condimentos", (float) 44.0, propiedades.getProperty("rutaDeCarga") + "ECB.jpg");
+        p.cargarDatosProducto("Empanada de Carne", "Carne, aceitunas, huevo duro, condimentos", (float) 44.0, propiedades.getProperty("rutaDeCargaWeb") + "ECB.jpg");
         p.altaProducto();
         p.limpiarMemoria();
         p.cargarDatosProducto("Empanada Americana", "Carne, panceta y huevo duro", (float) 44.0, null);
         p.altaProducto();
         p.limpiarMemoria();
-        p.cargarDatosProducto("Empanada QyC", "Empanada de Queso y Cebolla", (float) 44.0, propiedades.getProperty("rutaDeCarga") + "EQB.jpg");
+        p.cargarDatosProducto("Empanada QyC", "Empanada de Queso y Cebolla", (float) 44.0, propiedades.getProperty("rutaDeCargaWeb") + "EQB.jpg");
         p.altaProducto();
         p.limpiarMemoria();
-        p.cargarDatosProducto("Empanada Capresse", "Queso, tomate y albahaca", (float) 44.0, propiedades.getProperty("rutaDeCarga") + "ECA.jpg");
+        p.cargarDatosProducto("Empanada Capresse", "Queso, tomate y albahaca", (float) 44.0, propiedades.getProperty("rutaDeCargaWeb") + "ECA.jpg");
         p.altaProducto();
         p.limpiarMemoria();
 
         p.seleccionarRestaurante("winb");
-        p.cargarDatosProducto("Thai wok", "Cerdo, calamares, sweet chili, salsa de ostras, maní y jugo de lima, acompañado de tallarines o arroz.", (float) 240.0, propiedades.getProperty("rutaDeCarga") + "TWW.jpg");
+        p.cargarDatosProducto("Thai wok", "Cerdo, calamares, sweet chili, salsa de ostras, maní y jugo de lima, acompañado de tallarines o arroz.", (float) 240.0, propiedades.getProperty("rutaDeCargaWeb") + "TWW.jpg");
         p.altaProducto();
         p.limpiarMemoria();
         p.cargarDatosProducto("China wok", "Tempura de cerdo, vegetales mixtos, almendras, salsa de soja y naranja, acompañado de tallarines o arroz.", (float) 240.0, null);
         p.altaProducto();
         p.limpiarMemoria();
-        p.cargarDatosProducto("Classic wok de pollo", "Pollo, vegetales mixtos, salsa agridulce, salsa de soja y cebollita de verdeo, acompañado de tallarines o arroz.", (float) 230.0, propiedades.getProperty("rutaDeCarga") + "CPW.jpg");
+        p.cargarDatosProducto("Classic wok de pollo", "Pollo, vegetales mixtos, salsa agridulce, salsa de soja y cebollita de verdeo, acompañado de tallarines o arroz.", (float) 230.0, propiedades.getProperty("rutaDeCargaWeb") + "CPW.jpg");
         p.altaProducto();
         p.limpiarMemoria();
         p.cargarDatosProducto("Classic wok de cerdo", "Cerdo, vegetales mixtos, jengibre, salsa de ostras y ralladura de lima, acompañado de tallarines o arroz.", (float) 230.0, null);

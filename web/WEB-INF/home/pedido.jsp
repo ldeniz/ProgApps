@@ -49,7 +49,7 @@
 	
         
         $productos = "[";
-        $( "li.list-group-item" ).each(function() {
+        $( "li.enCarrito" ).each(function() {
             if ($productos !== "[") {$productos += ",";}
             $productos += '{"prod":"' + $(this).find("#nickname").text()+'","cantidad":"'  + parseInt($(this).find("#cantidad").text()) + '"}';
         });
@@ -58,7 +58,6 @@
         
    
          $restaurante = $(document).find("#idRestaurante").html();
-         
          
           $.ajax({
             url: 'realizarPedido',

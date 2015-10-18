@@ -1,3 +1,4 @@
+<%@page import="datatype.DataCliente"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="controllers.Login"%>
@@ -20,7 +21,7 @@
         usr = null;
     }
 
-
+    DataCliente cliente = (DataCliente) usr;
 %>
 <div style="clear:both"></div>
 <div class="container bs-docs-container" sytle="margin-top: 60px; ">			
@@ -30,7 +31,7 @@
             <div class="card">
                 <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
                 <div class="avatar">
-                    <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" alt="" />
+                    <img src="<%= cliente.getRutaImagen()%>" alt="" />
                 </div>
                 <div class="content">
                     <p><span  style="padding-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname()%><br>
