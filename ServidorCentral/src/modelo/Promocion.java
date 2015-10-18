@@ -9,13 +9,14 @@ import datatype.DataIndividualPromocion;
 import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataPromocion;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author sestefan
  */
-public class Promocion extends Producto {
+public class Promocion extends Producto implements Serializable {
 
     private int descuento;
     private boolean activa;

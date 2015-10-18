@@ -8,6 +8,7 @@ package modelo;
 import datatype.DataPedido;
 import datatype.DataPedidoProduco;
 import datatype.EnumEstado;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -15,7 +16,7 @@ import java.util.Calendar;
  *
  * @author sestefan
  */
-public class Pedido {
+public class Pedido implements Serializable {
 
     private String nickNameCliente;
     private String nickNameRestaurante;
@@ -112,9 +113,9 @@ public class Pedido {
             ldpp.add(pp.obtenerDatosPedidoProducto());
         }
         DataPedido dp;
-        if (comentario == null){
+        if (comentario == null) {
             dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp);
-        }else{
+        } else {
             dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp, comentario.obtenerDatosComentario());
         }
         return dp;

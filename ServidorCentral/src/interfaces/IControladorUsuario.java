@@ -1,5 +1,6 @@
 package interfaces;
 
+import datatype.DataCategoria;
 import datatype.DataCliente;
 import datatype.DataComentario;
 import datatype.DataDireccion;
@@ -109,21 +110,47 @@ public interface IControladorUsuario {
      */
     public ArrayList<DataProducto> listarProductos(String nickName);
 
-    public ArrayList<DataPedido> listarPedidosCliente(String nickName);
-    
     /**
-     * Retorna un data usuario identificado por nickname. Si no existe, lanza excepcion.
+     *
      * @param nickName
-     * @return 
+     * @return
+     */
+    public ArrayList<DataPedido> listarPedidosCliente(String nickName);
+
+    /**
+     * Retorna un data usuario identificado por nickname. Si no existe, lanza
+     * excepcion.
+     *
+     * @param nickName
+     * @return
+     * @throws java.lang.Exception
      */
     public DataUsuario obtenerUsuario(String nickName) throws Exception;
+
+    /**
+     *
+     * @param nickNameRestaurante
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<DataComentario> listarComentariosRestaurante(String nickNameRestaurante) throws Exception;
+
+    /**
+     * Retorna las categorias asociadas al restaurante 'nickNameRestaurante'
+     *
+     * @param nickNameRestaurante
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<DataCategoria> listarCategorias(String nickNameRestaurante) throws Exception;
+    
     
     /**
-     * 
-     * @param nickNameRestaurante
+     * Regresa los restaurantes donde su nombre, categoria o algun producto contengan el texto 'patron'
+     * @param patron
      * @return
      * @throws Exception 
      */
-    public ArrayList<DataComentario> listarComentariosRestaurante(String nickNameRestaurante) throws Exception;
+    public ArrayList<DataRestaurante> listarRestaurantes(String patron) throws Exception;
 
 }

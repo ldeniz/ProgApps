@@ -6,12 +6,13 @@
 package modelo;
 
 import datatype.DataPedidoProduco;
+import java.io.Serializable;
 
 /**
  *
  * @author sestefan
  */
-public class PedidoProduco {
+public class PedidoProduco implements Serializable {
 
     private int cantidad;
     private StockProducto stockProduco;

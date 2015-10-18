@@ -8,13 +8,14 @@ package modelo;
 import datatype.DataIndividual;
 import datatype.DataPedido;
 import datatype.DataProducto;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author sestefan
  */
-public class Individual extends Producto {
+public class Individual extends Producto implements Serializable {
 
     public Individual(String nombre, String descripcion, String rutaImagen, StockProducto stock, String nickName, String tipoProducto) {
         super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);

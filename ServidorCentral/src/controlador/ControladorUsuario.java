@@ -16,9 +16,12 @@ import datatype.DataUsuario;
 import interfaces.IControladorUsuario;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import manejador.ManejadorCategoria;
 import manejador.ManejadorUsuario;
+import modelo.Categoria;
 import modelo.Cliente;
+import modelo.Producto;
 import modelo.Restaurante;
 import modelo.Usuario;
 
@@ -169,6 +172,62 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public ArrayList<DataComentario> listarComentariosRestaurante(String nickNameRestaurante) throws Exception {
         return null;
+    }
+
+    @Override
+    public ArrayList<DataCategoria> listarCategorias(String nickNameRestaurante) throws Exception {
+        ManejadorCategoria mc = ManejadorCategoria.getInstance();
+        ArrayList<Categoria> lc = mc.listarCategorias();
+        ArrayList<DataCategoria> ldc = null;
+        if (lc.size() > 0) {
+            ldc = new ArrayList<>();
+        }
+        for (Categoria c : lc) {
+            ArrayList<Restaurante> lr = c.getRestaurantes();
+            for (Restaurante r : lr) {
+                if (r.getNickname().equals(nickNameRestaurante)) {
+                    ldc.add(c.obtenerDatosCategoria());
+                }
+            }
+        }
+        return ldc;
+    }
+
+    @Override
+    public ArrayList<DataRestaurante> listarRestaurantes(String patron) throws Exception {
+        HashMap<String, DataRestaurante> ldr = new HashMap<>();
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        /**
+         * 1) Busco por nombre de restaurante 2) Busco por sus categoria 3)
+         * Busco por sus producto Nota: En caso de que el restoran exista en el
+         * conjunto, ingnoro agregarlo
+         */
+        ArrayList<Restaurante> lr = mu.listarRestaurantes();
+        for (Restaurante r : lr) {
+            if (r.getNombre().toUpperCase().contains(patron.toUpperCase())) {
+                if (!ldr.containsKey(r.getNickname())) {
+                    ldr.put(r.getNickname(), (DataRestaurante) r.obtenerDatosUsuario());
+                }
+            }
+            ArrayList<DataCategoria> ldc = listarCategorias(r.getNickname());
+            for (DataCategoria dc : ldc) {
+                if (dc.getNombre().toUpperCase().contains(patron.toUpperCase())) {
+                    if (!ldr.containsKey(r.getNickname())) {
+                        ldr.put(r.getNickname(), (DataRestaurante) r.obtenerDatosUsuario());
+                    }
+                }
+            }
+            ArrayList<Producto> ldp = r.getProductos();
+            for (Producto p : ldp) {
+                if (p.getNombre().toUpperCase().contains(patron.toUpperCase())) {
+                    if (!ldr.containsKey(r.getNickname())) {
+                        ldr.put(r.getNickname(), (DataRestaurante) r.obtenerDatosUsuario());
+                    }
+                }
+            }
+
+        }
+        return new ArrayList<>(ldr.values());
     }
 
 }
