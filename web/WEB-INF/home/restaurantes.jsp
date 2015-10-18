@@ -37,11 +37,42 @@
                     <h5 style="padding-top:15px;padding-left:10px;" class="media-heading"><b>Categoría De Ejemplo</b></h3>
 
                         <% ArrayList<DataProducto> productos = datosRes.getDataProductos();
-                            for (DataProducto producto : productos) {
+                        Integer contador = 1;    
+                        for (DataProducto producto : productos) {
                         %>
-
+                        <a class="verPedidos" data-toggle="modal" data-target=".<%= contador%>"></a>        
                         <a class="producto <%= producto.getTipoProducto()%>" data-nickname="<%= producto.getNombre()%>"  data-precio="<%= producto.getStock().getPrecio()%>" type="button" data-toggle="modal" data-target=".bs-example-modal-sm"><%= producto.getNombre()%><spam style="color:#a8ccdf;float:right" class="glyphicon glyphicon-plus-sign"></spam><spam style="padding-right:10px;float:right"><%= producto.getStock().getPrecio()%></spam></a>
-                                <%}%>
+                        
+                        
+                        
+                        <div class="modal fade <%= contador%>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content" style="padding:15px;">
+                                <% ArrayList<DataPedido> pedidos = producto.getPedidos();
+                                    
+                                    if(pedidos != null){
+                                        
+                                        %><b>Pedidos del Producto:</b></br>
+                                        <ul class="list-group"><%
+                                        for (DataPedido pedido : pedidos) { %>
+                                        
+                                        
+                                        <li class="list-group-item">
+                                            <% out.println("#"+pedido.getNumero()); %>
+                                            <% out.println("</br><b>Fecha: </b>"+pedido.getFechaPedido().getTime().toString()); %>
+                                            <% out.println("</br><b>Cliente: </b>"+pedido.getNickNameCliente()); %>
+                                            <% out.println("</br><b>Precio Total: </b>"+pedido.getPrecioTotal()); %>
+                                        </li>
+                                        <% } %></ul><%
+                                    }
+                                    
+                                %>
+                              </div>
+                            </div>
+                          </div>
+                        
+                        <% contador++;
+                                }%>
                 </div>
 
                 <div id="miModal" style="padding:100px;" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -187,9 +218,9 @@ $(document).ready(function() {
                 total = total + (cantidad*precio);
             
             }
-             $("#total .fullprice").html(total);  
-            
-            if(total==0) $("#realizarPedido").fadeIn();
+            $("#total .fullprice").html(total);    
+            if(parseInt($("#total .fullprice").html()) > 0 ) $("#realizarPedido").fadeIn();  
+
                 
 
         });

@@ -113,7 +113,7 @@
 	color:black;
 }
 #categorias a.producto:nth-child(odd) {
-    margin: 0px 5px 0px 5px;
+    margin: 0px 5px 0px -1px;
 }
 
 #categorias a.producto {
@@ -124,8 +124,8 @@
 }
 
 #categorias a.producto {
-    width: 49%;
-	min-height:50px;
+    width: 48%;
+    min-height:50px;
     float: left;
     padding: .8em;
     margin: 0px;
@@ -254,4 +254,25 @@ address {
   -moz-border-radius: 50%;
   border-radius: 50%;
   border: 5px solid rgba(0,0,30,0.8);
+}
+
+.verPedidos{
+    width: 1%;
+	min-height:50px;
+    float: left;
+    padding: .8em;
+    margin: 0px;
+    position: relative;
+	background-color: #e7f0f6;
+    border: 1px solid #fff;
+    box-shadow: 0 2px 0 -1px rgba(230, 230, 230, 0.6);
+    -webkit-box-shadow: 0 2px 0 -1px rgba(230, 230, 230, 0.6);
+    -moz-box-shadow: 0 2px 0 -1px rgba(230, 230, 230, 0.6);
+    border-radius: 4px;
+    padding: 5px;
+    cursor:pointer;
+}
+
+.verPedidos:hover{
+    
 }
