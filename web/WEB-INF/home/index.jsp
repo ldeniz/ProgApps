@@ -8,19 +8,22 @@
 	<!-- ACA TERMINA EL HEADER -->
 	
 	
-	
+
 	<div style="clear:both"></div>
 	<div class="container bs-docs-container" sytle="margin-top: 60px; ">
 		<div class="row">
 			
 			<div class="col-lg-4" >
 				<div class="list-group" style="padding:5px;">
-                                    <a href="#" class="list-group-item active">Todas las Categorías</a>
+                                <a id="all" href="/home" class="list-group-item">Todas las Categorías</a>            
                                   <%
+                                    String todos = request.getParameter("cat");
+                                    
+                                    //if(todos==null) todos="all";
                                     List<DataCategoria> categorias = Restaurantes.getCategorias(request);
                                     for(DataCategoria cat : categorias){
                                         %>        
-                                        <a href="#" class="list-group-item"><%=cat.getNombre() %></a>
+                                        <a id="<%=cat.getNombre() %>" href="?cat=<%=cat.getNombre() %>" class="list-group-item"><%=cat.getNombre() %></a>
                                         <%
                                     }  
                                     %>
@@ -32,8 +35,9 @@
 			<div class="col-lg-8">
 			<ul class="ulhorizontal">
                             
-                            <%
-                                    ArrayList<DataRestaurante> restaurantes = Restaurantes.getRestaurantes(request);
+                                       
+                                    <%
+                                    ArrayList<DataRestaurante> restaurantes = Restaurantes.getRestaurantes(request,todos);
                                     for(DataRestaurante res : restaurantes){
                                         %>        
                                         <li>
@@ -57,5 +61,24 @@
 			</div>
 		</div>
 	</div>
+<script type="text/javascript">
+    function getVarUrl( name ){
+	var regexS = "[\\?&]"+name+"=([^&#]*)";
+	var regex = new RegExp ( regexS );
+	var tmpURL = window.location.href;
+	var results = regex.exec( tmpURL );
+	if( results == null )
+		return"";
+	else
+		return results[1];
+}
+
+$(document).ready(function() {                        // When the HTML DOM is ready loading, then execute the following function...
+    //
+    var cat = getVarUrl( 'cat' );
+    if(cat=="")$("#all").addClass("active");
+    $("#"+cat).addClass("active");
+    });    
+</script>
 <jsp:include page="/WEB-INF/template/footer.jsp"/>
 	

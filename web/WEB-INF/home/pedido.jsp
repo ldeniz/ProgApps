@@ -32,18 +32,17 @@
 
  $(document).on("click", ".list-group-item span", function () {
 		
-                
-                var cantidad = parseInt($(this).closest("li").find("#cantidad").text());
-                var precio = parseInt($(this).closest("li").find("#precio").text());
-                var total = parseInt($("#total .fullprice").html());
+        var total = parseInt($("#total .fullprice").html());    
 
-                $(this).closest("li").remove();
-                total = total - (cantidad*precio);
-                $("#total .fullprice").html(total);
-                
-                if(total<=0) $("#realizarPedido").hide();
-                
-                localStorage.removeItem($(this).closest("li").find("#nickname").text());
+        var object2 = JSON.parse(localStorage.getItem($(this).closest("li").find("#nickname").text()));
+        var cantidad = object2.cantidad;
+        var precio = object2.precio;
+        $(this).closest("li").remove();
+        total = total - (cantidad*precio);
+        $("#total .fullprice").html(total);
+
+        if(total<=0) $("#realizarPedido").hide();
+        localStorage.removeItem($(this).closest("li").find("#nickname").text());
     });
     
     $(document).on("click", "#realizarPedido", function () {
