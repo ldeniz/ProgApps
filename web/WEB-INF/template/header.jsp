@@ -78,14 +78,7 @@
 		  
         </div><!--/.nav-collapse -->
 		
-		<div class="buscarRestaurante">
-			<form class="navbar-form navbar-left" role="search">
-			  <div class="form-group">
-				<input name="cat" type="text" class="form-control inputRestaurante" placeholder="Ingrese Restaurante o Comida">
-			  </div>
-			  <button id="busqueda" type="submit" class="btn btn-default">Buscar</button>
-			</form>
-		</div>
+		
 		
       </div> style="clear:both"></div>
 	</div>
@@ -190,9 +183,6 @@
         localStorage.clear();
     });
     
-    $(document).on("click", "#busqueda", function () {
-        $(location).attr("href",$("#aBuscar").val());
-    });
     
    
 </script>

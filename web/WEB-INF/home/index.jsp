@@ -7,11 +7,18 @@
 <jsp:include page="/WEB-INF/template/header.jsp"/>
 	
 	<!-- ACA TERMINA EL HEADER -->
-	
-	
-
-	<div style="clear:both"></div>
+	<div style="clear:both;"></div>
 	<div class="container bs-docs-container" sytle="margin-top: 60px; ">
+	<div class="buscarRestaurante">
+			<form class="navbar-form navbar-left" role="search">
+			  <div class="form-group">
+				<input name="cat" type="text" class="form-control inputRestaurante" placeholder="Ingrese Restaurante o Comida">
+			  </div>
+			  <button id="busqueda" type="submit" class="btn btn-default">Buscar</button>
+			</form>
+		</div>
+
+	
 		<div class="row">
 			
 			<div class="col-lg-4" >
@@ -83,6 +90,10 @@ $(document).ready(function() {                        // When the HTML DOM is re
     if(cat=="")$("#all").addClass("active");
     $("#"+cat).addClass("active");
     });    
+    $(document).on("click", "#busqueda", function () {
+        $(location).attr("href",$("#aBuscar").val());
+    });
+    
 </script>
 <jsp:include page="/WEB-INF/template/footer.jsp"/>
 	
