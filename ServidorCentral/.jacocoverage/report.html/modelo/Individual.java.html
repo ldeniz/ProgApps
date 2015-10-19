@@ -6,7 +6,9 @@
 package modelo;
 
 import datatype.DataIndividual;
+import datatype.DataPedido;
 import datatype.DataProducto;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,14 +16,20 @@ import datatype.DataProducto;
  */
 public class Individual extends Producto {
 
-    public Individual(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
-<span class="fc" id="L18">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
-<span class="fc" id="L19">    }</span>
+    public Individual(String nombre, String descripcion, String rutaImagen, StockProducto stock, String nickName, String tipoProducto) {
+<span class="nc" id="L20">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
+<span class="nc" id="L21">    }</span>
 
     @Override
     public DataProducto obtenerDatosProducto() {
-<span class="fc" id="L23">        DataProducto dataIndividual = new DataIndividual(getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());</span>
-<span class="fc" id="L24">        return dataIndividual;</span>
+<span class="nc" id="L25">        ArrayList&lt;DataPedido&gt; ldp = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        for (Pedido p : this.getPedidos()) {</span>
+<span class="nc" id="L27">            ldp.add(p.obtenerDatosPedido());</span>
+<span class="nc" id="L28">        }</span>
+<span class="nc" id="L29">        DataProducto dataIndividual = new DataIndividual(getNombre(), getDescripcion(),</span>
+<span class="nc" id="L30">                getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(),</span>
+<span class="nc" id="L31">                getTipoProducto(), ldp);</span>
+<span class="nc" id="L32">        return dataIndividual;</span>
     }
 
 }

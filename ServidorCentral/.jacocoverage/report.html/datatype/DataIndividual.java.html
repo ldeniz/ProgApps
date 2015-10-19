@@ -5,6 +5,8 @@
  */
 package datatype;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sestefan
@@ -12,16 +14,24 @@ package datatype;
 public class DataIndividual extends DataProducto {
 
     public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName) {
-<span class="fc" id="L15">        super(nombre, descripcion, rutaImagen, stock, nickName);</span>
-<span class="fc" id="L16">    }</span>
+<span class="nc" id="L17">        super(nombre, descripcion, rutaImagen, stock, nickName);</span>
+<span class="nc" id="L18">    }</span>
 
     public DataIndividual(String nombre, String descripcion, String rutaImagen) {
-<span class="fc" id="L19">        super(nombre, descripcion, rutaImagen);</span>
-<span class="fc" id="L20">    }</span>
+<span class="nc" id="L21">        super(nombre, descripcion, rutaImagen);</span>
+<span class="nc" id="L22">    }</span>
 
     public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto) {
-<span class="fc" id="L23">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
-<span class="fc" id="L24">    }</span>
+<span class="nc" id="L25">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
+<span class="nc" id="L26">    }</span>
+
+    public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto, ArrayList&lt;DataPedido&gt; pedidos) {
+<span class="nc" id="L29">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto, pedidos);</span>
+<span class="nc" id="L30">    }</span>
+
+    public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto dataStockProducto) {
+<span class="nc" id="L33">        super(nombre, descripcion, rutaImagen, dataStockProducto);</span>
+<span class="nc" id="L34">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

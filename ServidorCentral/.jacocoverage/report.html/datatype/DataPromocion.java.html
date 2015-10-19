@@ -18,29 +18,42 @@ public class DataPromocion extends DataProducto {
     private ArrayList&lt;DataIndividualPromocion&gt; individualPromocion;
 
     public DataPromocion(int descuento, boolean activa, ArrayList&lt;DataIndividualPromocion&gt; individualPromocion, String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName) {
-<span class="fc" id="L21">        super(nombre, descripcion, rutaImagen, stock, nickName);</span>
-<span class="fc" id="L22">        this.descuento = descuento;</span>
-<span class="fc" id="L23">        this.activa = activa;</span>
-<span class="fc" id="L24">        this.individualPromocion = individualPromocion;</span>
-<span class="fc" id="L25">    }</span>
+<span class="nc" id="L21">        super(nombre, descripcion, rutaImagen, stock, nickName);</span>
+<span class="nc" id="L22">        this.descuento = descuento;</span>
+<span class="nc" id="L23">        this.activa = activa;</span>
+<span class="nc" id="L24">        this.individualPromocion = individualPromocion;</span>
+<span class="nc" id="L25">    }</span>
 
     public DataPromocion(int descuento, boolean activa, ArrayList&lt;DataIndividualPromocion&gt; individualPromocion, String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto) {
-<span class="fc" id="L28">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
-<span class="fc" id="L29">        this.descuento = descuento;</span>
-<span class="fc" id="L30">        this.activa = activa;</span>
-<span class="fc" id="L31">        this.individualPromocion = individualPromocion;</span>
-<span class="fc" id="L32">    }</span>
+<span class="nc" id="L28">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
+<span class="nc" id="L29">        this.descuento = descuento;</span>
+<span class="nc" id="L30">        this.activa = activa;</span>
+<span class="nc" id="L31">        this.individualPromocion = individualPromocion;</span>
+<span class="nc" id="L32">    }</span>
+
+    public DataPromocion(int descuento, boolean activa, ArrayList&lt;DataIndividualPromocion&gt; individualPromocion, String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName, String tipoProducto, ArrayList&lt;DataPedido&gt; pedidos) {
+<span class="nc" id="L35">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto, pedidos);</span>
+<span class="nc" id="L36">        this.descuento = descuento;</span>
+<span class="nc" id="L37">        this.activa = activa;</span>
+<span class="nc" id="L38">        this.individualPromocion = individualPromocion;</span>
+<span class="nc" id="L39">    }</span>
+
+    public DataPromocion(int descuento, boolean activa, String nombre, String descripcion, String rutaImagen, String nickName) {
+<span class="nc" id="L42">        super(nombre, descripcion, rutaImagen, nickName);</span>
+<span class="nc" id="L43">        this.descuento = descuento;</span>
+<span class="nc" id="L44">        this.activa = activa;</span>
+<span class="nc" id="L45">    }</span>
 
     public int getDescuento() {
-<span class="fc" id="L35">        return descuento;</span>
+<span class="nc" id="L48">        return descuento;</span>
     }
 
     public boolean isActiva() {
-<span class="fc" id="L39">        return activa;</span>
+<span class="nc" id="L52">        return activa;</span>
     }
 
     public ArrayList&lt;DataIndividualPromocion&gt; getIndividualPromocion() {
-<span class="fc" id="L43">        return individualPromocion;</span>
+<span class="nc" id="L56">        return individualPromocion;</span>
     }
 
 }

@@ -33,13 +33,11 @@ public class realizarPedido extends HttpServlet {
         throws IOException, ServletException
         {
             IControladorPedido pd = Fabrica.getInstance().obtenerControladorPedido();
-            
+            System.out.println("requestaaaa" + request);
+            System.out.println("response"+ response);
             String cliente = (String)request.getSession().getAttribute("usuario_logueado");
             String restaurante = request.getParameter("restaurante");
-            String productos = request.getParameter("productos");
-            
-            
-            
+            String productos = request.getParameter("productos");            
             
             
             

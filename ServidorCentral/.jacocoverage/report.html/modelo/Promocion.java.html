@@ -6,6 +6,7 @@
 package modelo;
 
 import datatype.DataIndividualPromocion;
+import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataPromocion;
 import java.util.ArrayList;
@@ -20,45 +21,51 @@ public class Promocion extends Producto {
     private boolean activa;
     private ArrayList&lt;IndividualPromocion&gt; individualPromocion;
 
-    public Promocion(int descuento, boolean activa, ArrayList&lt;IndividualPromocion&gt; individualPromocion, String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {
-<span class="fc" id="L24">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
-<span class="fc" id="L25">        this.descuento = descuento;</span>
-<span class="fc" id="L26">        this.activa = activa;</span>
-<span class="fc" id="L27">        this.individualPromocion = individualPromocion;</span>
-<span class="fc" id="L28">    }</span>
+    public Promocion(int descuento, boolean activa, ArrayList&lt;IndividualPromocion&gt; individualPromocion, String nombre, String descripcion, String rutaImagen, StockProducto stock, String nickName, String tipoProducto) {
+<span class="nc" id="L25">        super(nombre, descripcion, rutaImagen, stock, nickName, tipoProducto);</span>
+<span class="nc" id="L26">        this.descuento = descuento;</span>
+<span class="nc" id="L27">        this.activa = activa;</span>
+<span class="nc" id="L28">        this.individualPromocion = individualPromocion;</span>
+<span class="nc" id="L29">    }</span>
 
     public int getDescuento() {
-<span class="nc" id="L31">        return descuento;</span>
+<span class="nc" id="L32">        return descuento;</span>
     }
 
     public void setDescuento(int descuento) {
-<span class="nc" id="L35">        this.descuento = descuento;</span>
-<span class="nc" id="L36">    }</span>
+<span class="nc" id="L36">        this.descuento = descuento;</span>
+<span class="nc" id="L37">    }</span>
 
     public boolean isActiva() {
-<span class="nc" id="L39">        return activa;</span>
+<span class="nc" id="L40">        return activa;</span>
     }
 
     public void setActiva(boolean activa) {
-<span class="nc" id="L43">        this.activa = activa;</span>
-<span class="nc" id="L44">    }</span>
+<span class="nc" id="L44">        this.activa = activa;</span>
+<span class="nc" id="L45">    }</span>
 
     public ArrayList&lt;IndividualPromocion&gt; getIndividualPromocion() {
-<span class="nc" id="L47">        return individualPromocion;</span>
+<span class="nc" id="L48">        return individualPromocion;</span>
     }
 
     public void setIndividualPromocion(ArrayList&lt;IndividualPromocion&gt; individualPromocion) {
-<span class="nc" id="L51">        this.individualPromocion = individualPromocion;</span>
-<span class="nc" id="L52">    }</span>
+<span class="nc" id="L52">        this.individualPromocion = individualPromocion;</span>
+<span class="nc" id="L53">    }</span>
 
     @Override
     public DataProducto obtenerDatosProducto() {
-<span class="fc" id="L56">        ArrayList&lt;DataIndividualPromocion&gt; dataIndividualPromocion = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (IndividualPromocion ip : individualPromocion) {</span>
-<span class="fc" id="L58">            dataIndividualPromocion.add(ip.obtenerDatosIndividualPromocion());</span>
-<span class="fc" id="L59">        }</span>
-<span class="fc" id="L60">        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto());</span>
-<span class="fc" id="L61">        return dataPromocion;</span>
+<span class="nc" id="L57">        ArrayList&lt;DataIndividualPromocion&gt; dataIndividualPromocion = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        for (IndividualPromocion ip : individualPromocion) {</span>
+<span class="nc" id="L59">            dataIndividualPromocion.add(ip.obtenerDatosIndividualPromocion());</span>
+<span class="nc" id="L60">        }</span>
+<span class="nc" id="L61">        ArrayList&lt;DataPedido&gt; ldp = new ArrayList&lt;DataPedido&gt;();</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (!this.getPedidos().isEmpty()) {</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">            for (Pedido p : this.getPedidos()) {</span>
+<span class="nc" id="L64">                ldp.add(p.obtenerDatosPedido());</span>
+<span class="nc" id="L65">            }</span>
+        }
+<span class="nc" id="L67">        DataProducto dataPromocion = new DataPromocion(descuento, activa, dataIndividualPromocion, getNombre(), getDescripcion(), getRutaImagen(), getStock().obtenerDatosStockProducto(), getNickName(), getTipoProducto(), ldp);</span>
+<span class="nc" id="L68">        return dataPromocion;</span>
     }
 
 }

@@ -5,21 +5,18 @@
  */
 package controlador;
 
-import com.sun.crypto.provider.ARCFOURCipher;
 import datatype.DataCliente;
 import datatype.DataDireccion;
 import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
-import datatype.DataCategoria;
 import datatype.DataIndividual;
 import datatype.DataStockProducto;
+import fabrica.Fabrica;
+import interfaces.IControladorUsuario;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import manejador.ManejadorUsuario;
-import modelo.Individual;
-import modelo.StockProducto;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -76,6 +73,8 @@ public class ControladorUsuarioTest {
     
     @After
     public void tearDown() {
+        IControladorUsuario cu = Fabrica.getInstance().obtenerControladorUsuario();
+        cu.limpiarMemoria();
         
     }
 
@@ -85,42 +84,48 @@ public class ControladorUsuarioTest {
     @Test
     public void testCargarDatosUsuario_8args() {
         System.out.println("CargarDatosUsuario");
-        String nickname = "";
-        String mail = "";
-        String nombre = "";
-        String pass = "";
-        DataDireccion direccion = null;
-        String apellido = "";
-        Date fechaNacimiento = null;
-        String rutaImagen = "";
+        String nickname = "pepe88";
+        String mail = "jose@hotmail.com";
+        String nombre = "Jose";
+        String pass = "pepe123";
+        DataDireccion direccion = new DataDireccion("Isidro Revert","1234","233");
+        String apellido = "Villalba";
+        Date fechaNacimiento = new Date(1988,10,12) ;
+        String rutaImagen = "/home/jose/a.png";
         ControladorUsuario instance = new ControladorUsuario();
         instance.CargarDatosUsuario(nickname, mail, nombre, pass, direccion, apellido, fechaNacimiento, rutaImagen);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        instance.altaUsuario();
+        assertTrue(instance.existeUsuario(nickname));
     }
 
     /**
      * Test of CargarDatosUsuario method, of class ControladorUsuario.
      */
     @Test
-    public void testCargarDatosUsuario_6args() throws Exception {
+    public void testCargarDatosUsuario_6args() throws Exception
+    {
         System.out.println("CargarDatosUsuario");
-        String nickname = "";
-        String mail = "";
-        String nombre = "";
-        String pass = "";
-        DataDireccion direccion = null;
-        String[] rutaImagen = null;
+        String nickname = "chinchu";
+        String mail = "china@hotmail.com";
+        String nombre = "comida china";
+        String pass = "china1234";
+        DataDireccion direccion = new DataDireccion("Chanchin", "1233", "001");
+        String[] rutaImagen = {"/home/jose/a.png", "/hpme/jose/b.png"};
         ControladorUsuario instance = new ControladorUsuario();
-        instance.CargarDatosUsuario(nickname, mail, nombre, pass, direccion, rutaImagen);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        //Verificamos si verfica la expeciones que se produce al no seleccionar la categoria.
+        try{
+            instance.CargarDatosUsuario(nickname, mail, nombre, pass, direccion, rutaImagen);
+            assertTrue(false);
+        }
+        catch(Exception ex)
+        {
+            assertTrue(true);
+        }
     }
 
-    /**
-     * Test of seleccionarCategoria method, of class ControladorUsuario.
-     */
-    @Test
+    
+    @Test    
     public void testSeleccionarCategoria() {
         System.out.println("seleccionarCategoria");
         ControladorUsuario instance = new ControladorUsuario();
@@ -130,22 +135,21 @@ public class ControladorUsuarioTest {
         for(int x=0; x<dr.size(); x++)
         {
               assertTrue(restaurante.equals(dr.get(x).getNombre()));
+              
         }    
     }
 
-    /**
-     * Test of existeUsuario method, of class ControladorUsuario.
-     */
+    
     @Test
     public void testExisteUsuario_String() {
         System.out.println("existeUsuario");
-        String nickname = "";
+        String nickname = "pepe";
         ControladorUsuario instance = new ControladorUsuario();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.existeUsuario(nickname);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       // fail("The test case is a prototype.");
     }
 
     /**
@@ -154,72 +158,29 @@ public class ControladorUsuarioTest {
     @Test
     public void testExisteUsuario_String_String() {
         System.out.println("existeUsuario");
-        String nickname = "";
-        String mail = "";
+        String nickname = "pepe";
+        String mail = "pepe@homail.com";
         ControladorUsuario instance = new ControladorUsuario();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.existeUsuario(nickname, mail);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      
     }
+   
+ 
+   
 
-    /**
-     * Test of altaUsuario method, of class ControladorUsuario.
-     */
-    @Test
-    public void testAltaUsuario() {
-        System.out.println("altaUsuario");
-        ControladorUsuario instance = new ControladorUsuario();
-        instance.altaUsuario();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of limpiarMemoria method, of class ControladorUsuario.
-     */
+   
     @Test
     @Ignore
-    public void testLimpiarMemoria() {
-        System.out.println("limpiarMemoria");
-        ControladorUsuario instance = new ControladorUsuario();
-        instance.limpiarMemoria();        
-        instance.seleccionarCategoria("Minutas");
-        ArrayList<DataRestaurante> listarRestaurantes = instance.listarRestaurantes();
-    }
-
-    /**
-     * Test of listarClientes method, of class ControladorUsuario.
-     */
-    @Test
     public void testListarClientes() {
         System.out.println("listarClientes");
         ControladorUsuario instance = new ControladorUsuario();
         ArrayList<DataCliente> expResult = null;
         ArrayList<DataCliente> result = instance.listarClientes();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result);       
     }
 
-    /**
-     * Test of listarRestaurantes method, of class ControladorUsuario.
-     */
-    @Test
-    public void testListarRestaurantes() {
-        System.out.println("listarRestaurantes");
-        ControladorUsuario instance = new ControladorUsuario();
-        ArrayList<DataRestaurante> expResult = null;
-        ArrayList<DataRestaurante> result = instance.listarRestaurantes();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of listarUsaurios method, of class ControladorUsuario.
-     */
     @Test
     public void testListarUsaurios() {
         System.out.println("listarUsaurios");
@@ -229,11 +190,13 @@ public class ControladorUsuarioTest {
         
         
         DataDireccion direccion = new DataDireccion("Rivera","1000","22");
-      
-        DataCliente dc2 = new DataCliente(null, null,null,"pepe", "pepe@homail.com", "Avenida Bar", "pepe123",direccion);
-
-        DataCliente dc1 = new DataCliente(null, null,null,"Pablo","pablo@hotmail.com", "Pablo","123", direccion);
+        Date fc =new Date(1988, 12, 10);
         
+   
+        DataCliente dc2 = new DataCliente("Villa", fc,"ruta","pepe", "pepe@homail.com", "Avenida Bar", "pepe123",direccion);
+
+        DataCliente dc1 = new DataCliente("Villa", fc,"ruta","Pablo","pablo@hotmail.com", "Pablo","123", direccion);
+       
         expResult.add(dc1);
         expResult.add(dc2);
         for(int x=0; x<result.size(); x++)
@@ -242,11 +205,10 @@ public class ControladorUsuarioTest {
             assertTrue(expResult.get(x).getNombre().equals(result.get(x).getNombre()));
             assertTrue(expResult.get(x).getMail().equals(result.get(x).getMail()));
             assertTrue(expResult.get(x).getPass().equals(result.get(x).getPass()));
+           
         }
     }
-    /**
-     * Test of listarProductos method, of class ControladorUsuario.
-     */
+    
     @Test
     public void testListarProductos() {
         System.out.println("listarProductos");
@@ -267,18 +229,106 @@ public class ControladorUsuarioTest {
             assertTrue(expResult.get(x).getDescripcion().equals(result.get(x).getDescripcion()));
             assertTrue(expResult.get(x).getRutaImagen().equals(result.get(x).getRutaImagen()));
             
-        }
-        
-        
-                
-                
-        
-        
-       // assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        }       
     }
 
-   
+    @Test
+    public void testListarRestaurante()throws Exception {       
+        System.out.println("listarRestaurante");
+        ControladorUsuario instance = new ControladorUsuario();
+        String padron;
+        int x;
+
+        padron = "Minutas";
+        ArrayList<DataRestaurante> ldr = instance.listarRestaurantes(padron);
+
+        for( x=0; x<ldr.size(); x++)
+        {
+            assertTrue(ldr.get(x).toString().equals("Avenida Bar"));
+        }
+
+        padron = "Avenida Bar";
+        ldr = instance.listarRestaurantes(padron);
+
+        for(x=0; x<ldr.size(); x++)
+        {
+            assertTrue(ldr.get(x).toString().equals("Avenida Bar"));
+        }
+
+        padron = "pepe";
+        ldr = instance.listarRestaurantes(padron);
+
+        for(x=0; x<ldr.size(); x++)
+        {
+            assertTrue(ldr.get(x).toString().equals("Avenida Bar"));
+        }
+
+
+        padron = "Pizza";
+        ldr = instance.listarRestaurantes(padron);
+
+        for(x=0; x<ldr.size(); x++)
+        {
+            assertTrue(ldr.get(x).toString().equals("Avenida Bar"));
+        }
+    }
+    
+    @Test
+    public void obtenerUsuarioTest() throws Exception
+    {
+       ControladorUsuario instance = new ControladorUsuario();
+       String nickName = "pepe";
+       DataDireccion direccion = new DataDireccion("Rivera","1000","22");
+       DataUsuario du = instance.obtenerUsuario(nickName);
+     
+       
+        assertEquals(du.getDireccion().getCalle(),direccion.getCalle());
+        assertEquals(du.getDireccion().getNumero_puerta(), direccion.getNumero_puerta());
+        assertEquals(du.getDireccion().getApto(),direccion.getApto());
+        assertEquals(du.getNickname(),nickName);
+        assertEquals(du.getMail(),"pepe@homail.com");
+        assertEquals(du.getNombre(), "Avenida Bar");
+        assertEquals(du.getPass(), "pepe123");
+        
+        try
+        {   
+            nickName = "prueba";
+            du = instance.obtenerUsuario(nickName) ;
+            assertTrue(false);
+        }
+        catch (Exception ex)
+        {
+            assertTrue(true);
+        }
+    }
+ 
+    @Test
+    public void limpiearMemoriaTest() throws Exception
+    {
+        ControladorCategoria cc = new ControladorCategoria();
+        ControladorUsuario instance = new ControladorUsuario();
+        IControladorUsuario cu = Fabrica.getInstance().obtenerControladorUsuario();
+      
+        cc.altaCategoria("Minutas");
+        instance.seleccionarCategoria("Minutas"); 
+        
+        
+        DataDireccion direccion = new DataDireccion("Rivera","1000","22");
+        String[] rutaImagen = {"/home/jose/a.png", "/hpme/jose/b.png"};
+       
+        instance.CargarDatosUsuario("pepe", "pepe@homail.com","Avenida Bar","pepe123", direccion,rutaImagen);       
+        
+        instance.limpiarMemoria(); //Borra los datos cargados por lo cuañ no se podra de dar de alta el nuevo usuario
+
+        try{
+            instance.altaUsuario();
+            assertTrue(false);
+        }
+        catch(Exception ex)
+        {
+            assertTrue(true);
+        }
+
+    }
     
 }

@@ -7,6 +7,7 @@ package modelo;
 
 import datatype.DataProducto;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,66 +18,83 @@ public abstract class Producto implements Serializable {
     private String nombre;
     private String descripcion;
     private String rutaImagen;
-    private StockProduco stock;
+    private StockProducto stock;
     private String nickName;
     private String tipoProducto;
+    private ArrayList&lt;Pedido&gt; pedidos;
 
-<span class="fc" id="L24">    public Producto(String nombre, String descripcion, String rutaImagen, StockProduco stock, String nickName, String tipoProducto) {</span>
-<span class="fc" id="L25">        this.nombre = nombre;</span>
-<span class="fc" id="L26">        this.descripcion = descripcion;</span>
-<span class="fc" id="L27">        this.rutaImagen = rutaImagen;</span>
-<span class="fc" id="L28">        this.stock = stock;</span>
-<span class="fc" id="L29">        this.nickName = nickName;</span>
-<span class="fc" id="L30">        this.tipoProducto = tipoProducto;</span>
-<span class="fc" id="L31">    }</span>
+<span class="nc" id="L26">    public Producto(String nombre, String descripcion, String rutaImagen, StockProducto stock, String nickName, String tipoProducto) {</span>
+<span class="nc" id="L27">        this.nombre = nombre;</span>
+<span class="nc" id="L28">        this.descripcion = descripcion;</span>
+<span class="nc" id="L29">        this.rutaImagen = rutaImagen;</span>
+<span class="nc" id="L30">        this.stock = stock;</span>
+<span class="nc" id="L31">        this.nickName = nickName;</span>
+<span class="nc" id="L32">        this.tipoProducto = tipoProducto;</span>
+<span class="nc" id="L33">        pedidos = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L34">    }</span>
 
     public String getNombre() {
-<span class="fc" id="L34">        return nombre;</span>
+<span class="nc" id="L37">        return nombre;</span>
     }
 
     public void setNombre(String nombre) {
-<span class="nc" id="L38">        this.nombre = nombre;</span>
-<span class="nc" id="L39">    }</span>
+<span class="nc" id="L41">        this.nombre = nombre;</span>
+<span class="nc" id="L42">    }</span>
 
     public String getDescripcion() {
-<span class="fc" id="L42">        return descripcion;</span>
+<span class="nc" id="L45">        return descripcion;</span>
     }
 
     public void setDescripcion(String descripcion) {
-<span class="nc" id="L46">        this.descripcion = descripcion;</span>
-<span class="nc" id="L47">    }</span>
+<span class="nc" id="L49">        this.descripcion = descripcion;</span>
+<span class="nc" id="L50">    }</span>
 
     public String getRutaImagen() {
-<span class="fc" id="L50">        return rutaImagen;</span>
+<span class="nc" id="L53">        return rutaImagen;</span>
     }
 
     public void setRutaImagen(String rutaImagen) {
-<span class="nc" id="L54">        this.rutaImagen = rutaImagen;</span>
-<span class="nc" id="L55">    }</span>
+<span class="nc" id="L57">        this.rutaImagen = rutaImagen;</span>
+<span class="nc" id="L58">    }</span>
 
-    public StockProduco getStock() {
-<span class="fc" id="L58">        return stock;</span>
+    public StockProducto getStock() {
+<span class="nc" id="L61">        return stock;</span>
     }
 
-    public void setStock(StockProduco stock) {
-<span class="nc" id="L62">        this.stock = stock;</span>
-<span class="nc" id="L63">    }</span>
+    public void setStock(StockProducto stock) {
+<span class="nc" id="L65">        this.stock = stock;</span>
+<span class="nc" id="L66">    }</span>
 
     public String getNickName() {
-<span class="fc" id="L66">        return nickName;</span>
+<span class="nc" id="L69">        return nickName;</span>
     }
 
     public void setNickName(String nickName) {
-<span class="nc" id="L70">        this.nickName = nickName;</span>
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L73">        this.nickName = nickName;</span>
+<span class="nc" id="L74">    }</span>
 
     public String getTipoProducto() {
-<span class="fc" id="L74">        return tipoProducto;</span>
+<span class="nc" id="L77">        return tipoProducto;</span>
     }
 
     public void setTipoProducto(String tipoProducto) {
-<span class="nc" id="L78">        this.tipoProducto = tipoProducto;</span>
-<span class="nc" id="L79">    }</span>
+<span class="nc" id="L81">        this.tipoProducto = tipoProducto;</span>
+<span class="nc" id="L82">    }</span>
+
+    public ArrayList&lt;Pedido&gt; getPedidos() {
+<span class="nc" id="L85">        return pedidos;</span>
+    }
+
+    public void setPedidos(ArrayList&lt;Pedido&gt; pedidos) {
+<span class="nc" id="L89">        this.pedidos = pedidos;</span>
+<span class="nc" id="L90">    }</span>
+
+    public void agregarPedido(Pedido p, int cantidad) {
+<span class="nc" id="L93">        this.pedidos.add(p);</span>
+<span class="nc" id="L94">        int cantidadAnterior = stock.getCantidad();</span>
+<span class="nc" id="L95">        stock.setCantidad(cantidadAnterior - cantidad);</span>
+
+<span class="nc" id="L97">    }</span>
 
     public abstract DataProducto obtenerDatosProducto();
 

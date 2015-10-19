@@ -1,0 +1,12 @@
+{
+  "pkgclss.excludelist" : [ "GUI.src.gui", "ServidorCentral.src.datatype", "ServidorCentral.src.fabrica", "ServidorCentral.src.interfaces", "ServidorCentral.src.manejador", "ServidorCentral.src.modelo", "ServidorCentral.test.controlador", "ServidorCentral.test.fabrica", "ServidorCentral.test.manejador", "ServidorCentral.test.modelo", "Source Package.controllers", "Source Package.exceptions", "Source Package.model", "Source Packages.Controllers", "Source Packages.Exceptions", "Source Packages.Model", "test.CasoDeUso", "test.controlador", "test.controllers", "test.fabrica", "test.manejador", "test.modelo" ],
+  "preferences" : {
+    "JaCoCoverage.Editor.EnableCodeHighlighting" : "true",
+    "JaCoCoverage.Editor.EnableCodeHighlightingExtended" : "true",
+    "JaCoCoverage.Html.AutoOpenReport" : "true",
+    "JaCoCoverage.Html.EnableReport" : "true",
+    "JaCoCoverage.JaCoCoWorkfiles.Rule" : "0",
+    "JaCoCoverage.NbConsole.EnableReport" : "true",
+    "JaCoCoverage.Prj.OverrideGlobals" : "true"
+  }
+}

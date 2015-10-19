@@ -12,78 +12,201 @@ import datatype.DataPromocion;
 import datatype.DataStockProducto;
 import interfaces.IControladorProducto;
 import java.util.ArrayList;
+import java.util.Calendar;
 import manejador.ManejadorProducto;
+import manejador.ManejadorUsuario;
+import modelo.Individual;
+import modelo.IndividualPromocion;
+import modelo.Producto;
+import modelo.Promocion;
+import modelo.StockProducto;
 
 /**
  *
  * @author sestefan
  */
-<span class="fc" id="L21">public class ControladorProducto implements IControladorProducto {</span>
+<span class="nc" id="L28">public class ControladorProducto implements IControladorProducto {</span>
 
     private String nickName;
     private DataProducto dataProducto;
     private DataStockProducto dataStockProducto;
-<span class="fc" id="L26">    private ArrayList&lt;DataIndividualPromocion&gt; productosPromocion = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L33">    private ArrayList&lt;DataIndividualPromocion&gt; productosPromocion = new ArrayList&lt;&gt;();</span>
+
+    private DataProducto dataProductoModificado;
+    private String nombreViejo;
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, float precio, String rutaImagen) {
-<span class="fc" id="L30">        dataStockProducto = new DataStockProducto(1, precio);</span>
-<span class="fc" id="L31">        dataProducto = new DataIndividual(nombre, descripcion, rutaImagen, dataStockProducto, nickName, &quot;individual&quot;);</span>
-<span class="fc" id="L32">    }</span>
+<span class="nc" id="L40">        dataStockProducto = new DataStockProducto(1, precio);</span>
+<span class="nc" id="L41">        dataProducto = new DataIndividual(nombre, descripcion, rutaImagen, dataStockProducto, nickName, &quot;individual&quot;);</span>
+<span class="nc" id="L42">    }</span>
 
     @Override
     public void cargarDatosProducto(String nombre, String descripcion, int descuento, String rutaImagen) {
-<span class="fc" id="L36">        dataStockProducto = new DataStockProducto(1, 0);</span>
-<span class="fc" id="L37">        dataProducto = new DataPromocion(descuento, true, productosPromocion, nombre, descripcion, rutaImagen, dataStockProducto, nickName, &quot;promocion&quot;);</span>
-<span class="fc" id="L38">    }</span>
+<span class="nc" id="L46">        dataStockProducto = new DataStockProducto(1, 0);</span>
+<span class="nc" id="L47">        dataProducto = new DataPromocion(descuento, true, productosPromocion, nombre, descripcion, rutaImagen, dataStockProducto, nickName, &quot;promocion&quot;);</span>
+<span class="nc" id="L48">    }</span>
 
     @Override
     public void seleccionarProducto(String nombre, int cantidad) {
-<span class="fc" id="L42">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
-<span class="nc" id="L43">        DataIndividual di = (DataIndividual) mp.obtenerDatosProducto(nickName, nombre);</span>
-<span class="nc" id="L44">        DataIndividualPromocion dip = new DataIndividualPromocion(cantidad, di);</span>
-<span class="nc" id="L45">        productosPromocion.add(dip);</span>
-<span class="nc" id="L46">    }</span>
-
-    @Override
-    public int obtenerCantidadProductoIndividual(String nickName, String nombre) {
-<span class="fc" id="L50">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
-    }
+<span class="nc" id="L52">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="nc" id="L53">        DataIndividual di = (DataIndividual) mp.obtenerProducto(nickName, nombre).obtenerDatosProducto();</span>
+<span class="nc" id="L54">        DataIndividualPromocion dip = new DataIndividualPromocion(cantidad, di);</span>
+<span class="nc" id="L55">        productosPromocion.add(dip);</span>
+<span class="nc" id="L56">    }</span>
 
     @Override
     public void altaProducto() {
-<span class="fc" id="L55">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
-<span class="pc bpc" id="L56" title="4 of 10 branches missed.">        switch (dataProducto.getTipoProducto()) {</span>
+<span class="nc" id="L60">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="nc" id="L61">        ManejadorUsuario mu = ManejadorUsuario.getInstance();</span>
+        Producto p;
+        String nombre;
+        String descripcion;
+        String tipoProducto;
+        String rutaImagen;
+<span class="nc bnc" id="L67" title="All 10 branches missed.">        switch (dataProducto.getTipoProducto()) {</span>
             case &quot;individual&quot;:
-<span class="fc" id="L58">                mp.ingresarProducto((DataIndividual) dataProducto);</span>
-<span class="fc" id="L59">                break;</span>
+<span class="nc" id="L69">                DataIndividual dataIndividual = (DataIndividual) dataProducto;</span>
+<span class="nc" id="L70">                nombre = dataIndividual.getNombre();</span>
+<span class="nc" id="L71">                descripcion = dataIndividual.getDescripcion();</span>
+<span class="nc" id="L72">                tipoProducto = dataIndividual.getTipoProducto();</span>
+<span class="nc" id="L73">                rutaImagen = dataIndividual.getRutaImagen();</span>
+
+<span class="nc" id="L75">                int cantidad = dataStockProducto.getCantidad();</span>
+<span class="nc" id="L76">                float precio = dataStockProducto.getPrecio();</span>
+<span class="nc" id="L77">                Calendar fecha = dataStockProducto.getFecha();</span>
+
+<span class="nc" id="L79">                StockProducto stockProduco = new StockProducto(nickName, nombre, cantidad, precio, fecha);</span>
+
+<span class="nc" id="L81">                p = new Individual(nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);</span>
+
+<span class="nc" id="L83">                mu.agregarProductoRestaurante(p);</span>
+<span class="nc" id="L84">                mp.ingresarProducto((Individual) p);</span>
+<span class="nc" id="L85">                break;</span>
             case &quot;promocion&quot;:
-<span class="fc" id="L61">                mp.ingresarProducto((DataPromocion) dataProducto);</span>
+<span class="nc" id="L87">                precio = 0;</span>
+<span class="nc" id="L88">                DataPromocion dataPromocion = (DataPromocion) dataProducto;</span>
+<span class="nc" id="L89">                nombre = dataPromocion.getNombre();</span>
+<span class="nc" id="L90">                tipoProducto = dataPromocion.getTipoProducto();</span>
+<span class="nc" id="L91">                descripcion = dataPromocion.getDescripcion();</span>
+<span class="nc" id="L92">                rutaImagen = dataPromocion.getRutaImagen();</span>
+<span class="nc" id="L93">                int descuento = dataPromocion.getDescuento();</span>
+<span class="nc" id="L94">                boolean activa = dataPromocion.isActiva();</span>
+<span class="nc" id="L95">                String nickName = dataPromocion.getNickName();</span>
+<span class="nc" id="L96">                DataStockProducto dataStockProducto = dataPromocion.getStock();</span>
+<span class="nc" id="L97">                ArrayList&lt;DataIndividualPromocion&gt; dataIndividualPromociones = dataPromocion.getIndividualPromocion();</span>
+
+                DataIndividual di;
+                IndividualPromocion ip;
+<span class="nc" id="L101">                ArrayList&lt;IndividualPromocion&gt; individualPromociones = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                for (DataIndividualPromocion d : dataIndividualPromociones) {</span>
+<span class="nc" id="L104">                    di = d.getIndividual();</span>
+<span class="nc" id="L105">                    Individual i = (Individual) mp.obtenerProducto(nickName,</span>
+<span class="nc" id="L106">                            di.getNombre());</span>
+<span class="nc" id="L107">                    ip = new IndividualPromocion(d.getCantidad(), i);</span>
+<span class="nc" id="L108">                    individualPromociones.add(ip);</span>
+<span class="nc" id="L109">                    stockProduco = i.getStock();</span>
+<span class="nc" id="L110">                    precio += stockProduco.getPrecio();</span>
+<span class="nc" id="L111">                }</span>
+
+<span class="nc" id="L113">                cantidad = dataStockProducto.getCantidad();</span>
+<span class="nc" id="L114">                fecha = dataStockProducto.getFecha();</span>
+<span class="nc" id="L115">                precio = precio - ((precio * descuento) / 100);</span>
+<span class="nc" id="L116">                stockProduco = new StockProducto(nickName, nombre, cantidad, precio, fecha);</span>
+<span class="nc" id="L117">                Promocion promocion = new Promocion(descuento, activa, individualPromociones, nombre, descripcion, rutaImagen, stockProduco, nickName, tipoProducto);</span>
+
+<span class="nc" id="L119">                mp.ingresarProducto(promocion);</span>
+<span class="nc" id="L120">                mu.agregarProductoRestaurante(promocion);</span>
                 break;
         }
-<span class="fc" id="L64">    }</span>
+<span class="nc" id="L123">    }</span>
 
     @Override
     public boolean existeProducto(String nickName, String nombre) {
-<span class="fc" id="L68">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
-<span class="fc" id="L69">        return mp.existeProducto(nickName, nombre);</span>
+<span class="nc" id="L127">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="nc" id="L128">        return mp.existeProducto(nickName, nombre);</span>
     }
 
     @Override
     public ArrayList&lt;DataProducto&gt; listarProductos() {
-<span class="fc" id="L74">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
-<span class="fc" id="L75">        return mp.listarProductos();</span>
+<span class="nc" id="L133">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="nc" id="L134">        ArrayList&lt;Producto&gt; productos = mp.listarProductos();</span>
+<span class="nc" id="L135">        ArrayList&lt;DataProducto&gt; dataProductos = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        if (!productos.isEmpty()) {</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">            for (Producto p : productos) {</span>
+<span class="nc" id="L138">                dataProductos.add(p.obtenerDatosProducto());</span>
+<span class="nc" id="L139">            }</span>
+        }
+<span class="nc" id="L141">        return dataProductos;</span>
     }
 
     @Override
     public void limpiarMemoria() {
-<span class="fc" id="L80">        productosPromocion.clear();</span>
-<span class="fc" id="L81">    }</span>
+<span class="nc" id="L146">        productosPromocion.clear();</span>
+<span class="nc" id="L147">    }</span>
 
     @Override
     public void seleccionarRestaurante(String nickName) {
-<span class="fc" id="L85">        this.nickName = nickName;</span>
-<span class="fc" id="L86">    }</span>
+<span class="nc" id="L151">        this.nickName = nickName;</span>
+<span class="nc" id="L152">    }</span>
+
+    @Override
+    public DataProducto obtenerDatosRestauranteNombre(String nickName, String nombre) {
+<span class="nc" id="L156">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="nc" id="L157">        Producto p = mp.obtenerProducto(nickName, nombre);</span>
+<span class="nc" id="L158">        return p.obtenerDatosProducto();</span>
+    }
+
+    @Override
+    public void CargarDatosModificarProducto(String mombreAnt, String nombre, String descripcion,
+            String rutaImagen, float precio) {
+<span class="nc" id="L164">        this.nombreViejo = mombreAnt;</span>
+<span class="nc" id="L165">        dataProductoModificado = new DataIndividual(nombre, descripcion, rutaImagen, new DataStockProducto(0, precio));</span>
+<span class="nc" id="L166">    }</span>
+
+    @Override
+    public void CargarDatosModificarProducto(String mombreAnt, String nombre, String descripcion,
+            String rutaImagen, int descuento, boolean activa) {
+<span class="nc" id="L171">        this.nombreViejo = mombreAnt;</span>
+<span class="nc" id="L172">        dataProductoModificado = new DataPromocion(descuento, activa, nombre, descripcion,</span>
+                rutaImagen, nickName);
+<span class="nc" id="L174">    }</span>
+
+    @Override
+    public void ModificarProducto() {
+<span class="nc" id="L178">        ManejadorProducto mp = ManejadorProducto.getInstance();</span>
+<span class="nc" id="L179">        Producto p = mp.obtenerProducto(nickName, nombreViejo);</span>
+<span class="nc" id="L180">        p.setNombre(dataProductoModificado.getNombre());</span>
+<span class="nc" id="L181">        p.setDescripcion(dataProductoModificado.getDescripcion());</span>
+<span class="nc" id="L182">        p.setRutaImagen(dataProductoModificado.getRutaImagen());</span>
+<span class="nc" id="L183">        float precio = 0;</span>
+        StockProducto sp;
+<span class="nc bnc" id="L185" title="All 10 branches missed.">        switch (p.getTipoProducto()) {</span>
+            case &quot;promocion&quot;:
+<span class="nc" id="L187">                Promocion pr = (Promocion) p;</span>
+<span class="nc" id="L188">                DataPromocion dataPromocion = (DataPromocion) dataProductoModificado;</span>
+<span class="nc" id="L189">                pr.setActiva(dataPromocion.isActiva());</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">                if (pr.getDescuento() != dataPromocion.getDescuento()) {</span>
+<span class="nc" id="L191">                    pr.setDescuento(dataPromocion.getDescuento());</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">                    for (IndividualPromocion ip : pr.getIndividualPromocion()) {</span>
+<span class="nc" id="L193">                        sp = ip.getIndividual().getStock();</span>
+<span class="nc" id="L194">                        precio += sp.getPrecio();</span>
+<span class="nc" id="L195">                    }</span>
+<span class="nc" id="L196">                    precio = precio - ((precio * pr.getDescuento()) / 100);</span>
+<span class="nc" id="L197">                    sp = pr.getStock();</span>
+<span class="nc" id="L198">                    sp.setPrecio(precio);</span>
+                }
+                break;
+            case &quot;individual&quot;:
+<span class="nc" id="L202">                Individual i = (Individual) p;</span>
+<span class="nc" id="L203">                sp = i.getStock();</span>
+<span class="nc" id="L204">                DataIndividual di = (DataIndividual) dataProductoModificado;</span>
+<span class="nc" id="L205">                sp.setPrecio(di.getStock().getPrecio());</span>
+                break;
+        }
+
+<span class="nc" id="L209">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

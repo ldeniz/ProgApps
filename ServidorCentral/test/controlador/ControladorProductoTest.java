@@ -5,7 +5,9 @@
  */
 package controlador;
 
+import datatype.DataDireccion;
 import datatype.DataProducto;
+import fabrica.Fabrica;
 import java.util.ArrayList;
 import manejador.ManejadorProducto;
 import org.junit.After;
@@ -14,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -33,7 +36,20 @@ public class ControladorProductoTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        ControladorCategoria cc = new ControladorCategoria();
+        ControladorUsuario cu = new ControladorUsuario();
+      
+        cc.altaCategoria("Minutas");  
+        
+                   
+        String [] rutaImagen = {"/home/jose/a.png"}; 
+        cu.seleccionarCategoria("Minutas");
+        
+        DataDireccion direccion = new DataDireccion("Buenos Aires","222","1");
+        cu.CargarDatosUsuario("Bar17", "bar17@gmail.com", "Bar 17", "bar123",direccion,rutaImagen);
+        cu.altaUsuario();
+        
     }
     
     @After
@@ -46,14 +62,17 @@ public class ControladorProductoTest {
     @Test
     public void testCargarDatosProducto_4args_1() {
         System.out.println("cargarDatosProducto");
-        String nombre = "";
-        String descripcion = "";
-        float precio = 0.0F;
-        String rutaImagen = "";
+        String nombre = "Faina";
+        String descripcion = "Queso";
+        float precio = 30.1F;
+        String rutaImagen = "/home/jose/f.png";
+        
+        //Verificamos que el producto fue dado de alta correctamente,
         ControladorProducto instance = new ControladorProducto();
+        instance.seleccionarRestaurante("Bar17");
         instance.cargarDatosProducto(nombre, descripcion, precio, rutaImagen);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.altaProducto();
+        assertTrue(instance.existeProducto("Bar17", nombre));
     }
 
     /**
@@ -69,13 +88,14 @@ public class ControladorProductoTest {
         ControladorProducto instance = new ControladorProducto();
         instance.cargarDatosProducto(nombre, descripcion, descuento, rutaImagen);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      //  fail("The test case is a prototype.");
     }
 
     /**
      * Test of seleccionarProducto method, of class ControladorProducto.
      */
     @Test
+      @Ignore
     public void testSeleccionarProducto() {
         System.out.println("seleccionarProducto");
         String nombre = "";
@@ -89,24 +109,13 @@ public class ControladorProductoTest {
     /**
      * Test of obtenerCantidadProductoIndividual method, of class ControladorProducto.
      */
-    @Test
-    public void testObtenerCantidadProductoIndividual() {
-        System.out.println("obtenerCantidadProductoIndividual");
-        String nickName = "";
-        String nombre = "";
-        ControladorProducto instance = new ControladorProducto();
-        int expResult = 0;
-//        int result = instance.obtenerCantidadProductoIndividual(nickName, nombre);
-        int result = 0;
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    
 
     /**
      * Test of altaProducto method, of class ControladorProducto.
      */
     @Test
+      @Ignore
     public void testAltaProducto() {
         System.out.println("altaProducto");
         ControladorProducto instance = new ControladorProducto();
@@ -127,56 +136,8 @@ public class ControladorProductoTest {
         boolean expResult = false;
         boolean result = instance.existeProducto(nickName, nombre);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of listarProductos method, of class ControladorProducto.
-     */
-    @Test
-    public void testListarProductos() {
-            System.out.println("listarProductos");
-
-
-            ManejadorProducto mp = ManejadorProducto.getInstance();
-            ArrayList<DataProducto> lista = new ArrayList<>(); 
-//            lista = mp.listarProductos();
-//
-//            ControladorProducto instance = new ControladorProducto();
-//            ArrayList<DataProducto> expResult = mp.listarProductos();
-//            ArrayList<DataProducto> result = instance.listarProductos();
-//            assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of limpiarMemoria method, of class ControladorProducto.
-     */
-    @Test
-    public void testLimpiarMemoria() {
-        /*
-            System.out.println("limpiarMemoria");
        
-        ArrayList<DataIndividualPromocion> productosPromocion = new ArrayList<>();
-       ManejadorProducto mp = ManejadorProducto.getInstance();
-      ArrayList<DataProducto> lista = new ArrayList<>(); 
-      lista = mp.listarProductos();
-       productosPromocion.clear();
-       
-       ControladorProducto instance = new ControladorProducto();
-       instance.limpiarMemoria();*/
-    }
+    }    
 
-    /**
-     * Test of seleccionarRestaurante method, of class ControladorProducto.
-     */
-    @Test
-    public void testSeleccionarRestaurante() {
-        System.out.println("seleccionarRestaurante");
-        String nickName = "";
-        ControladorProducto instance = new ControladorProducto();
-        instance.seleccionarRestaurante(nickName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+   
 }

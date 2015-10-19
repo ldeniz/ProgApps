@@ -16,10 +16,10 @@ public class IndividualPromocion {
     private int cantidad;
     private Individual individual;
 
-<span class="fc" id="L19">    public IndividualPromocion(int cantidad, Individual individual) {</span>
-<span class="fc" id="L20">        this.cantidad = cantidad;</span>
-<span class="fc" id="L21">        this.individual = individual;</span>
-<span class="fc" id="L22">    }</span>
+<span class="nc" id="L19">    public IndividualPromocion(int cantidad, Individual individual) {</span>
+<span class="nc" id="L20">        this.cantidad = cantidad;</span>
+<span class="nc" id="L21">        this.individual = individual;</span>
+<span class="nc" id="L22">    }</span>
 
     public int getCantidad() {
 <span class="nc" id="L25">        return cantidad;</span>
@@ -38,7 +38,7 @@ public class IndividualPromocion {
 <span class="nc" id="L38">    }</span>
 
     public DataIndividualPromocion obtenerDatosIndividualPromocion() {
-<span class="fc" id="L41">        return new DataIndividualPromocion(cantidad, individual.obtenerDatosProducto());</span>
+<span class="nc" id="L41">        return new DataIndividualPromocion(cantidad, individual.obtenerDatosProducto());</span>
     }
 
 }

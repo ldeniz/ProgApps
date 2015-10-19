@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DataPedido.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ServidorCentral&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">datatype</a> &gt; <span class="el_source">DataPedido.java</span></div><h1>DataPedido.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package datatype;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+
+/**
+ *
+ * @author sestefan
+ */
+public class DataPedido {
+
+    private String nickNameCliente;
+    private String nickNameRestaurante;
+    private int numero;
+    private Calendar fechaPedido;
+    private float precioTotal;
+    private EnumEstado estado;
+    private ArrayList&lt;DataPedidoProduco&gt; dataPedidoProducos;
+    private DataComentario dataComentario;
+
+<span class="nc" id="L26">    public DataPedido(String nickNameCliente, String nickNameRestaurante, int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList&lt;DataPedidoProduco&gt; dataPedidoProducos) {</span>
+<span class="nc" id="L27">        this.nickNameCliente = nickNameCliente;</span>
+<span class="nc" id="L28">        this.nickNameRestaurante = nickNameRestaurante;</span>
+<span class="nc" id="L29">        this.numero = numero;</span>
+<span class="nc" id="L30">        this.fechaPedido = fechaPedido;</span>
+<span class="nc" id="L31">        this.precioTotal = precioTotal;</span>
+<span class="nc" id="L32">        this.estado = estado;</span>
+<span class="nc" id="L33">        this.dataPedidoProducos = dataPedidoProducos;</span>
+<span class="nc" id="L34">    }</span>
+
+<span class="nc" id="L36">    public DataPedido(String nickNameCliente, String nickNameRestaurante, int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList&lt;DataPedidoProduco&gt; dataPedidoProducos, DataComentario dataComentario) {</span>
+<span class="nc" id="L37">        this.nickNameCliente = nickNameCliente;</span>
+<span class="nc" id="L38">        this.nickNameRestaurante = nickNameRestaurante;</span>
+<span class="nc" id="L39">        this.numero = numero;</span>
+<span class="nc" id="L40">        this.fechaPedido = fechaPedido;</span>
+<span class="nc" id="L41">        this.precioTotal = precioTotal;</span>
+<span class="nc" id="L42">        this.estado = estado;</span>
+<span class="nc" id="L43">        this.dataPedidoProducos = dataPedidoProducos;</span>
+<span class="nc" id="L44">        this.dataComentario = dataComentario;</span>
+<span class="nc" id="L45">    }</span>
+
+    public String getNickNameCliente() {
+<span class="nc" id="L48">        return nickNameCliente;</span>
+    }
+
+    public String getNickNameRestaurante() {
+<span class="nc" id="L52">        return nickNameRestaurante;</span>
+    }
+
+    public int getNumero() {
+<span class="nc" id="L56">        return numero;</span>
+    }
+
+    public Calendar getFechaPedido() {
+<span class="nc" id="L60">        return fechaPedido;</span>
+    }
+
+    public float getPrecioTotal() {
+<span class="nc" id="L64">        return precioTotal;</span>
+    }
+
+    public EnumEstado getEstado() {
+<span class="nc" id="L68">        return estado;</span>
+    }
+
+    public ArrayList&lt;DataPedidoProduco&gt; getDataPedidoProducos() {
+<span class="nc" id="L72">        return dataPedidoProducos;</span>
+    }
+
+    public DataComentario getDataComentario() {
+<span class="nc" id="L76">        return dataComentario;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
