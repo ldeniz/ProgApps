@@ -170,11 +170,6 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public ArrayList<DataComentario> listarComentariosRestaurante(String nickNameRestaurante) throws Exception {
-        return null;
-    }
-
-    @Override
     public ArrayList<DataCategoria> listarCategorias(String nickNameRestaurante) throws Exception {
         ManejadorCategoria mc = ManejadorCategoria.getInstance();
         ArrayList<Categoria> lc = mc.listarCategorias();
@@ -209,6 +204,7 @@ public class ControladorUsuario implements IControladorUsuario {
                     ldr.put(r.getNickname(), (DataRestaurante) r.obtenerDatosUsuario());
                 }
             }
+            //TODO: Mejorar la búsqueda para que cuando encuentre el restaurante pase al siguiente
             ArrayList<DataCategoria> ldc = listarCategorias(r.getNickname());
             for (DataCategoria dc : ldc) {
                 if (dc.getNombre().toUpperCase().contains(patron.toUpperCase())) {

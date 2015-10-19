@@ -128,14 +128,6 @@ public interface IControladorUsuario {
     public DataUsuario obtenerUsuario(String nickName) throws Exception;
 
     /**
-     *
-     * @param nickNameRestaurante
-     * @return
-     * @throws Exception
-     */
-    public ArrayList<DataComentario> listarComentariosRestaurante(String nickNameRestaurante) throws Exception;
-
-    /**
      * Retorna las categorias asociadas al restaurante 'nickNameRestaurante'
      *
      * @param nickNameRestaurante
