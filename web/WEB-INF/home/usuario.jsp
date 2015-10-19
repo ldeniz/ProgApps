@@ -1,3 +1,4 @@
+<%@page import="datatype.EnumEstado"%>
 <%@page import="datatype.DataCliente"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
@@ -89,7 +90,7 @@
                     </div>
                 </div>      
 
-                <%} else {%>
+                <%} else if(pedido.getEstado() == EnumEstado.RECIBIDO){%>
 
                 <button type="button" class="realizarComentario btn btn-primary btn-sh" data-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comentar

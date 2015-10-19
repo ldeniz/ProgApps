@@ -77,7 +77,7 @@ public class registrarCliente extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(registrarCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+            request.getRequestDispatcher("/home").forward(request, response);
         }
 	
 	

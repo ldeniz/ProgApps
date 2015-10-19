@@ -102,7 +102,7 @@
               <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="padding:10px">
                   <h4 class="modal-title" id="gridSystemModalLabel">Registro de Cliente</h4>    
-                  <form class="form-signin" action="registrarCliente" method="POST">
+                  <form class="form-signin" action="registrarCliente" method="POST" onsubmit="return Validar(this)">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                     <div class="form-group">
@@ -165,7 +165,28 @@
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
+    function Validar(formulario){
+
+    if (formulario.nombre.value == "")
+    { alert("Por favor proporcione su nombre."); formulario.nombre.focus(); return false; }
+     if (formulario.apellido.value == "")
+    { alert("Por favor proporcione su apellido."); formulario.apellido.focus(); return false; }
+     if (formulario.mail.value == "")
+    { alert("Por favor proporcione su mail."); formulario.mail.focus(); return false; }
+     if (formulario.nickname.value == "")
+    { alert("Por favor proporcione su nickname."); formulario.nickname.focus(); return false; }
+     if (formulario.nacimiento.value == "")
+    { alert("Por favor proporcione su nacimiento."); formulario.nacimiento.focus(); return false; }
+     if (formulario.direccion.value == "")
+    { alert("Por favor proporcione su dirección."); formulario.direccion.focus(); return false; }
+     if (formulario.pass.value == "")
+    { alert("Por favor proporcione una contraseña."); formulario.pass.focus(); return false; }
+    if (formulario.password_confirmation.value == "")
+    { alert("Por favor escriba nuevamente su contraseña."); formulario.password_confirmation.focus(); return false; }
+    if(formulario.pass.value != formulario.password_confirmation.value)
+        { alert("Contraseñas no coinciden."); formulario.password_confirmation.focus(); return false; }
     
+    }
     $(document).ready(function() {
         $('#fechanac input').datepicker({
             format: "dd/mm/yyyy",
