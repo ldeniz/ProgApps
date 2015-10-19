@@ -59,16 +59,15 @@ public class Restaurantes extends HttpServlet {
 
     static public ArrayList<DataRestaurante> getRestaurantes(HttpServletRequest request, String resto) throws Exception {
         IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
-        IControladorCategoria iCat = Fabrica.getInstance().obtenerControladorCategoria();
-        
-        if(resto == null){
-        ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes();
-        return restaurantes;
-        }else{
-        ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes(resto);
-        return restaurantes;
+
+        if (resto == null) {
+            ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes();
+            return restaurantes;
+        } else {
+            ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes(resto);
+            return restaurantes;
         }
-       
+
     }
 
     @Override

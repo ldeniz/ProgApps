@@ -7,7 +7,6 @@ package controlador;
 
 import datatype.DataCategoria;
 import datatype.DataCliente;
-import datatype.DataComentario;
 import datatype.DataDireccion;
 import datatype.DataPedido;
 import datatype.DataProducto;

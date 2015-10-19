@@ -5,7 +5,6 @@
  */
 package controllers;
 
-import static controllers.Home.getEstado;
 import static controllers.Home.initSession;
 import java.io.IOException;
 import javax.servlet.ServletException;

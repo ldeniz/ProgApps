@@ -4,16 +4,8 @@
  */
 package controllers;
 
-import datatype.DataDireccion;
-import fabrica.Fabrica;
-import interfaces.IControladorCategoria;
-import interfaces.IControladorPedido;
-import interfaces.IControladorProducto;
-import interfaces.IControladorUsuario;
 import model.EstadoSesion;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
 import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -5,6 +5,7 @@
 package controllers;
 
 import datatype.DataDireccion;
+import datatype.EnumEstado;
 import fabrica.Fabrica;
 import interfaces.IControladorCategoria;
 import interfaces.IControladorPedido;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,37 +29,40 @@ import javax.servlet.http.HttpSession;
  * @author Mathi
  */
 public class cargarDatos extends HttpServlet {
-    Properties propiedades = new Properties();
-	/**
-	 * inicializa la sesión si no estaba creada 
-	 * @param request 
-	 */
-	public static void initSession(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		if (session.getAttribute("paginas_navegadas") == null) {
-			session.setAttribute("paginas_navegadas", 0);
-		}
-		if (session.getAttribute("estado_sesion") == null) {
-			session.setAttribute("estado_sesion", EstadoSesion.NO_LOGIN);
-		}
-	}
-	
-	/**
-	 * Devuelve el estado de la sesión
-	 * @param request
-	 * @return 
-	 */
-	public static EstadoSesion getEstado(HttpServletRequest request)
-	{
-		return (EstadoSesion) request.getSession().getAttribute("estado_sesion");
-	}
 
-	private void processRequest(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		initSession(req);
-		
-                //------------------
-                  // CARGAR DATOS DE PRUEBA
+    Properties propiedades = new Properties();
+
+    /**
+     * inicializa la sesión si no estaba creada
+     *
+     * @param request
+     */
+    public static void initSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("paginas_navegadas") == null) {
+            session.setAttribute("paginas_navegadas", 0);
+        }
+        if (session.getAttribute("estado_sesion") == null) {
+            session.setAttribute("estado_sesion", EstadoSesion.NO_LOGIN);
+        }
+    }
+
+    /**
+     * Devuelve el estado de la sesión
+     *
+     * @param request
+     * @return
+     */
+    public static EstadoSesion getEstado(HttpServletRequest request) {
+        return (EstadoSesion) request.getSession().getAttribute("estado_sesion");
+    }
+
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        initSession(req);
+
+        //------------------
+        // CARGAR DATOS DE PRUEBA
         IControladorCategoria c = Fabrica.getInstance().obtenerControladorCategoria();
         IControladorUsuario u = Fabrica.getInstance().obtenerControladorUsuario();
         IControladorProducto p = Fabrica.getInstance().obtenerControladorProducto();
@@ -71,27 +77,25 @@ public class cargarDatos extends HttpServlet {
             ex.printStackTrace();
         }
 
-       
         //---------------------------------------------------
-
-        u.CargarDatosUsuario("mathi", "gcostas@gmail.com", "Gerardo", "1234",
-                new DataDireccion("Av. Italia", "2078", null), "gcostas@gmail.com",
+        u.CargarDatosUsuario("costas", "gcostas@gmail.com", "Gerardo", "costas123",
+                new DataDireccion("Av. Italia", "2078", "n/a"), "Costas",
                 new Date(1983, 11, 15), propiedades.getProperty("rutaDeCargaWeb") + "costas.jpg");
         u.altaUsuario();
-        u.CargarDatosUsuario("roro", "rcotelo@yahoo.com", "Rodrigo", "  1234",
-                new DataDireccion("Pdte. Berro", "1548", null), "Cotelo",
+        u.CargarDatosUsuario("roro", "rcotelo@yahoo.com", "Rodrigo", "12elroro",
+                new DataDireccion("Pdte. Berro", "1548", "n/a"), "Cotelo",
                 new Date(1975, 8, 2), propiedades.getProperty("rutaDeCargaWeb") + "roro.jpg");
         u.altaUsuario();
-        u.CargarDatosUsuario("chechi", "cgarrido@hotmail.com", "Cecilia", "  1234",
-                new DataDireccion("Gral. Urquiza", "1548", null), "Garrido",
+        u.CargarDatosUsuario("chechi", "cgarrido@hotmail.com", "Cecilia", "ch4321",
+                new DataDireccion("Gral. Urquiza", "1548", "n/a"), "Garrido",
                 new Date(1987, 9, 12), propiedades.getProperty("rutaDeCargaWeb") + "chechi.jpg");
         u.altaUsuario();
-        u.CargarDatosUsuario("andy", "agarcia@gmail.com", "Andrea", "  1234",
-                new DataDireccion("Dr. Manuel Albo ", "4512", null), "García",
+        u.CargarDatosUsuario("andy", "agarcia@gmail.com", "Andrea", "andy_la1",
+                new DataDireccion("Dr. Manuel Albo ", "4512", "n/a"), "García",
                 new Date(1951, 7, 28), propiedades.getProperty("rutaDeCargaWeb") + "andy.jpg");
         u.altaUsuario();
-        u.CargarDatosUsuario("weiss", "aweiss@hotmail.com", "Adrian", "  1234",
-                new DataDireccion("Monte Caseros ", "5615", null), "Weiss",
+        u.CargarDatosUsuario("weiss", "aweiss@hotmail.com", "Adrian", "223_aweis",
+                new DataDireccion("Monte Caseros ", "5615", "n/a"), "Weiss",
                 new Date(1978, 12, 23), propiedades.getProperty("rutaDeCargaWeb") + "weiss.jpg");
         u.altaUsuario();
 
@@ -241,44 +245,195 @@ public class cargarDatos extends HttpServlet {
         p.altaProducto();
         p.limpiarMemoria();
 
-        
-                    
-               //-------------
-                
-                
-                
-		switch(getEstado(req)){
-                    
-                    
-                    
-			case NO_LOGIN:
-				// hace que se ejecute el jsp sin cambiar la url
-				req.getRequestDispatcher("/WEB-INF/home/index.jsp").
-						forward(req, resp);
-				break;
-			case LOGIN_INCORRECTO:
-				// hace que se ejecute el jsp sin cambiar la url
-				req.getRequestDispatcher("/WEB-INF/home/index.jsp").
-						forward(req, resp);
-				break;
-			case LOGIN_CORRECTO:
-				// manda una redirección a otra URL (cambia la URL)
-				//resp.sendRedirect("/perfil");
-                                req.getRequestDispatcher("/WEB-INF/home/index.jsp").
-						forward(req, resp);
-				break;
-		}
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-				throws ServletException, IOException {
-		processRequest(req, resp);
-	}
+        //PEDIDOS
+        //PEDIDOS
+        try {
+            pd.seleccionarCliente("costas");
+        } catch (Exception ex) {
+            //Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("bocatti");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("bocatti", "Empanada de Carne", 1);
+            pd.seleccionarProducto("bocatti", "Empanada Americana", 2);
+            pd.seleccionarProducto("bocatti", "Empanada QyC", 2);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		processRequest(req, resp);
-	}
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+        //--------
+        try {
+            pd.seleccionarCliente("roro");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("mera");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("mera", "Asado", 3);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+
+        pd.seleccionarPedido(2);
+        pd.seleccionarEstado(EnumEstado.ENVIADO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //--------
+        try {
+            pd.seleccionarCliente("chechi");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("winb");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("winb", "Thai wok", 2);
+            pd.seleccionarProducto("winb", "China wok", 3);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+
+        pd.seleccionarPedido(3);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //--------
+        try {
+            pd.seleccionarCliente("andy");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("mera");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("mera", "Chivito Canadiense", 4);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+
+        pd.seleccionarPedido(4);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //--------
+        try {
+            pd.seleccionarCliente("weiss");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("rossell");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("rossell", "Agnolotis", 1);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+
+        pd.seleccionarPedido(5);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            pd.agregarComentario(3, "Si bien el thai wok y el china wok están ricos, me cobraron 60$ de envío y eso no estaba aclarado y no pueden hacerlo. Me dejó muy molesto.", 2);
+        } catch (Exception ex) {
+//            Logger.getLogger(cargarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            pd.agregarComentario(5, "Los Agnolotis llegaron un poco fríos y demoraron más de la cuenta. Espero mejoren. De todas formas, muy ricos.", 3);
+        } catch (Exception ex) {
+            Logger.getLogger(cargarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            pd.agregarComentario(6, "Tanto la milanesa como el chivito llegaron 3 horas tarde!, obviamente helados!!, un desastre, nunca más pido ahí.", 1);
+        } catch (Exception ex) {
+            Logger.getLogger(cargarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            pd.agregarComentario(7, "Todo llegó en hora. El chivito y la milanesa a caballo estaban un poco aceitosos, pero más allá de eso se comió rico y en abundancia.", 4);
+        } catch (Exception ex) {
+            Logger.getLogger(cargarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //-------------
+        switch (getEstado(req)) {
+
+            case NO_LOGIN:
+                // hace que se ejecute el jsp sin cambiar la url
+                req.getRequestDispatcher("/WEB-INF/home/index.jsp").
+                        forward(req, resp);
+                break;
+            case LOGIN_INCORRECTO:
+                // hace que se ejecute el jsp sin cambiar la url
+                req.getRequestDispatcher("/WEB-INF/home/index.jsp").
+                        forward(req, resp);
+                break;
+            case LOGIN_CORRECTO:
+                // manda una redirección a otra URL (cambia la URL)
+                //resp.sendRedirect("/perfil");
+                req.getRequestDispatcher("/WEB-INF/home/index.jsp").
+                        forward(req, resp);
+                break;
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        processRequest(req, resp);
+    }
 }

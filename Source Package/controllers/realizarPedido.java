@@ -5,12 +5,10 @@
  */
 package controllers;
 
-import datatype.DataPedido;
 import fabrica.Fabrica;
 import interfaces.IControladorPedido;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
