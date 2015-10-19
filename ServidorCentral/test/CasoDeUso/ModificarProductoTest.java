@@ -40,37 +40,37 @@ public class ModificarProductoTest {
     
     @Before
     public void setUp() throws Exception {
-         IControladorCategoria cc = Fabrica.getInstance().obtenerControladorCategoria();
+        IControladorCategoria cc = Fabrica.getInstance().obtenerControladorCategoria();
         cc.altaCategoria("Minutas");  
-        
+
         IControladorUsuario cu = new ControladorUsuario();           
         String [] rutaImagen = {"/home/jose/a.png"}; 
         cu.seleccionarCategoria("Minutas");
-        
+
         DataDireccion direccion = new DataDireccion("Buenos Aires","222","1");
         cu.CargarDatosUsuario("Bar17", "bar17@gmail.com", "Bar 17", "bar123",direccion,rutaImagen);
         cu.altaUsuario();
-        
+
         DataDireccion dire = new DataDireccion("Lafinur","222","1");
         Date date = new Date(1988, 12, 05);
         cu.CargarDatosUsuario("pepe","pepe88@hotmail.com","Jose","pepe1233",dire,"Villa",date,"/home/jose/pepe.png");
         cu.altaUsuario();      
-        
+
         //Alta de producto individual
         IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
         cp.seleccionarRestaurante("Bar17");
         float precio = (float)70.0;
+       
         cp.cargarDatosProducto("Mila Jacobo","Jamon y Queso",precio,  "/home/jose/milajacobo.png");
         cp.altaProducto();
+
         
-        
-       int descuento = 50;
-       cp.seleccionarRestaurante("Bar17");      
-       cp.cargarDatosProducto("Jacobo 3x2","Milanesa Jacobo por tres", descuento, "dd");
-       ArrayList<DataProducto> productos;
-       productos = cp.listarProductos();
-       // cp.seleccionarProducto("Mila Jacobo", 1);
-       cp.altaProducto();
+        int descuento = 50;
+        cp.seleccionarRestaurante("Bar17");  
+        cp.seleccionarProducto("Mila Jacobo", 2);
+        cp.cargarDatosProducto("Jacobo 3x2","Milanesa Jacobo por tres", descuento, "/home/a.png");
+       
+        cp.altaProducto();
     }
     
     @After
@@ -94,5 +94,9 @@ public class ModificarProductoTest {
         cp.CargarDatosModificarProducto("Jacobo 3x2","Mila 3x2" ,"De carne", "/home/jose/a.png",30,true);
         cp.ModificarProducto();
         assertFalse(cp.existeProducto("Bar17","Milanesa")); //Devuelve false;
+        
+        cp.seleccionarRestaurante("Bar17");      
+        cp.CargarDatosModificarProducto("Jacobo 3x2","Mila 3x2" ,"De carne", "/home/jose/a.png",30,false);
+        cp.ModificarProducto();
     }
 }

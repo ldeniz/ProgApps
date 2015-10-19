@@ -122,20 +122,7 @@ public class ManejadorCategoriaTest {
         //fail("fallo.");
     }
 
-    /**
-     * Test of obtenerCategoria method, of class ManejadorCategoria.
-     */
-    /*@Test
-     @Ignore
-     public void testObtenerCategoria() {
-     System.out.println("obtenerCategoria");
-     ManejadorCategoria instance = ManejadorCategoria.getInstance();
-     assertSame(instance.obtenerCategoria("pizas"), instance.obtenerCategoria("pizas"));
-
-     }*/
-    /**
-     * Test of agregarRestaurante method, of class ManejadorCategoria.
-     */
+   
     @Test
     public void testAgregarRestaurante() {
         System.out.println("agregarRestaurante");
@@ -174,5 +161,6 @@ public class ManejadorCategoriaTest {
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
-
+    
+   
 }

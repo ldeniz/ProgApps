@@ -8,6 +8,8 @@ package controlador;
 import datatype.DataDireccion;
 import datatype.DataProducto;
 import fabrica.Fabrica;
+import interfaces.IControladorProducto;
+import interfaces.IControladorUsuario;
 import java.util.ArrayList;
 import manejador.ManejadorProducto;
 import org.junit.After;
@@ -54,6 +56,9 @@ public class ControladorProductoTest {
     
     @After
     public void tearDown() {
+        
+        IControladorProducto cp = Fabrica.getInstance().obtenerControladorProducto();
+        cp.limpiarMemoria();
     }
 
     /**
@@ -81,29 +86,56 @@ public class ControladorProductoTest {
     @Test
     public void testCargarDatosProducto_4args_2() {
         System.out.println("cargarDatosProducto");
-        String nombre = "";
-        String descripcion = "";
-        int descuento = 0;
-        String rutaImagen = "";
+        String nombre = "Promo1";
+        String descripcion = "Hasta las 20hs";
+        int descuento = 30;
+        String rutaImagen = "/home/jose/a.png";
         ControladorProducto instance = new ControladorProducto();
-        instance.cargarDatosProducto(nombre, descripcion, descuento, rutaImagen);
-        // TODO review the generated test code and remove the default call to fail.
-      //  fail("The test case is a prototype.");
+        instance.seleccionarRestaurante("Bar17");
+        instance.cargarDatosProducto(nombre, descripcion, descuento, rutaImagen);       
+        instance.altaProducto();
+
+        assertTrue(instance.existeProducto("Bar17", nombre));
+       
     }
 
     /**
      * Test of seleccionarProducto method, of class ControladorProducto.
      */
     @Test
-      @Ignore
     public void testSeleccionarProducto() {
         System.out.println("seleccionarProducto");
-        String nombre = "";
-        int cantidad = 0;
+        String nombre = "Faina";
+        String descripcion = "Queso";
+        float precio = 30.1F;
+        String rutaImagen = "/home/jose/f.png";
+        
+        //Verificamos que el producto fue dado de alta correctamente,
         ControladorProducto instance = new ControladorProducto();
-        instance.seleccionarProducto(nombre, cantidad);
+        instance.seleccionarRestaurante("Bar17");
+        instance.cargarDatosProducto(nombre, descripcion, precio, rutaImagen);
+        instance.altaProducto();
+        
+        //Verficamos que deje seleccionar un producto que si existe.
+        try{
+            instance.seleccionarProducto(nombre, 1);
+            assertTrue(true);
+        }
+        catch (Exception ex)
+        {
+          assertTrue(false); 
+        }
+        
+        //Verficamos que no deje seleccionar un producto que no existe.
+        try{
+            instance.seleccionarProducto("prueba", 1);
+            assertTrue(false);
+        }
+        catch (Exception ex)
+        {
+          assertTrue(true); 
+        }
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -115,13 +147,34 @@ public class ControladorProductoTest {
      * Test of altaProducto method, of class ControladorProducto.
      */
     @Test
-      @Ignore
     public void testAltaProducto() {
         System.out.println("altaProducto");
+        String nombre = "Faina";
+        String descripcion = "Queso";
+        float precio = 30.1F;
+        String rutaImagen = "/home/jose/f.png";
+        
+        //Verificamos que el producto fue dado de alta correctamente,
         ControladorProducto instance = new ControladorProducto();
+        
+        instance.seleccionarRestaurante("Bar17");
+        
+        //Verificamos que si deja de dar alta un producto sin cargar datos.
+        try{
+            instance.altaProducto();
+            assertTrue(false);
+        }
+        catch (Exception ex)
+        {
+            assertTrue(true);
+        }
+        //Deveria dejar de alta el productos con los datos cargados.
+        instance.cargarDatosProducto(nombre, descripcion, precio, rutaImagen);
         instance.altaProducto();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.existeProducto("Bar17", nombre));
+        
+        
+
     }
 
     /**
@@ -130,14 +183,73 @@ public class ControladorProductoTest {
     @Test
     public void testExisteProducto() {
         System.out.println("existeProducto");
-        String nickName = "";
-        String nombre = "";
+        String nombre = "Faina";
+        String descripcion = "Queso";
+        float precio = 30.1F;
+        String rutaImagen = "/home/jose/f.png";
+        
+        //Verificamos que el producto fue dado de alta correctamente,
         ControladorProducto instance = new ControladorProducto();
-        boolean expResult = false;
-        boolean result = instance.existeProducto(nickName, nombre);
-        assertEquals(expResult, result);
-       
+        instance.seleccionarRestaurante("Bar17");
+        instance.cargarDatosProducto(nombre, descripcion, precio, rutaImagen);
+        instance.altaProducto();
+        assertTrue(instance.existeProducto("Bar17", nombre));
+        assertFalse(instance.existeProducto("Bar", nombre));     
     }    
 
-   
+    
+
+    /**
+     * Test of limpiarMemoria method, of class ControladorProducto.
+     */
+    @Test
+    public void testLimpiarMemoria() {
+        System.out.println("limpiarMemoria");
+        ControladorProducto instance = new ControladorProducto();
+
+        String nombre = "Faina";
+        String descripcion = "Queso";
+        float precio = 30.1F;
+        String rutaImagen = "/home/jose/f.png";
+        
+        //Verificamos que el producto fue dado de alta correctamente,
+        instance.seleccionarRestaurante("Bar17");
+       
+        
+        instance.cargarDatosProducto(nombre, descripcion, precio, rutaImagen);
+        instance.altaProducto();       
+       
+        
+        int descuento = 50;
+        instance.seleccionarRestaurante("Bar17");  
+        instance.seleccionarProducto("Faina", 2);
+        instance.cargarDatosProducto("FainaPromo","FainaPromo", descuento, "/home/a.png");
+        instance.limpiarMemoria();
+        instance.altaProducto(); //Deberia producir una expetion.
+    }
+
+    
+    /**
+     * Test of obtenerDatosRestauranteNombre method, of class ControladorProducto.
+     */
+    @Test
+    public void testObtenerDatosRestauranteNombre() {
+        System.out.println("obtenerDatosRestauranteNombre");
+        String nombre = "Faina";
+        String nickName = "Bar17";
+        String descripcion = "Queso";
+        float precio = 30.1F;
+        String rutaImagen = "/home/jose/f.png";
+        
+        //Verificamos que el producto fue dado de alta correctamente,
+        ControladorProducto instance = new ControladorProducto();
+        instance.seleccionarRestaurante(nickName);
+        instance.cargarDatosProducto(nombre, descripcion, precio, rutaImagen);
+        instance.altaProducto();
+        datatype.DataProducto result = instance.obtenerDatosRestauranteNombre(nickName, nombre);
+        
+        assertEquals(nombre, result.getNombre());
+    
+    
+    }  
 }

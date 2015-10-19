@@ -171,15 +171,7 @@ public class ControladorUsuarioTest {
    
 
    
-    @Test
-    @Ignore
-    public void testListarClientes() {
-        System.out.println("listarClientes");
-        ControladorUsuario instance = new ControladorUsuario();
-        ArrayList<DataCliente> expResult = null;
-        ArrayList<DataCliente> result = instance.listarClientes();
-        assertEquals(expResult, result);       
-    }
+
 
     @Test
     public void testListarUsaurios() {

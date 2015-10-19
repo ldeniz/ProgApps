@@ -118,9 +118,24 @@ public class CancelarPedidoTest {
         {
             assertTrue(true);
         }
-                
-        
-        
-
     }
+    
+    @Test
+    public void limpiarMemoriaTest() {
+        IControladorPedido cp = Fabrica.getInstance().obtenerControladorPedido(); 
+        
+        
+        cp.listarPedidos();
+        cp.seleccionarPedido(1);
+        cp.limpiarMermoria();
+        try{
+           cp.finalizarPedido();    
+            assertTrue(false);
+        }
+        catch (Exception ex)
+        {
+            assertTrue(true);
+        }
+        }   
 }
+
