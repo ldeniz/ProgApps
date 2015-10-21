@@ -1,3 +1,5 @@
+<%@page import="datatype.DataIndividualPromocion"%>
+<%@page import="datatype.DataPromocion"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="datatype.DataPedido"%>
 <%@page import="datatype.DataUsuario"%>
@@ -52,6 +54,25 @@
                             <spam style="color:<% if(producto.getTipoProducto() == "promocion") out.println("#FCD857"); else out.println("#a8ccdf");%>;float:right" class="glyphicon glyphicon-plus-sign"></spam>
                             <spam style="padding-right:10px;float:right"><%= producto.getStock().getPrecio()%></spam>
                             <spam style="padding-right:10px;float:left;font-size: 9px;clear: both;"><%= producto.getDescripcion()%></spam>
+                           
+                            <% switch (producto.getTipoProducto()) {
+                            case "individual":
+                                break;
+                            case "promocion":  
+                                DataPromocion prodPromocion = (DataPromocion) producto;
+                                ArrayList<DataIndividualPromocion> productosIndividuales = prodPromocion.getIndividualPromocion(); // productos incluidos en la promo
+
+                                        
+                                %>
+                                <spam style="padding-right:10px;float:left;font-size: 9px;clear: both;"><%= "<br>"+prodPromocion.getDescuento()+"% de descuento</br>" %></spam>
+                                        
+                                <%for (DataIndividualPromocion p : productosIndividuales) {%>
+                                <spam style="padding-right:10px;float:left;font-size: 8px;clear: both;"><%= p.getCantidad()+": "+p.getIndividual().getNombre() %></span></br>
+                                <%}%>
+                                        
+                                       
+                               <% break;
+                            }  %>  
                            
                         </a>
                         
