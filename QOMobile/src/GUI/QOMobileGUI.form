@@ -57,8 +57,8 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="pass" max="32767" attributes="0"/>
-                          <Component id="user" max="32767" attributes="0"/>
+                          <Component id="passTxt" max="32767" attributes="0"/>
+                          <Component id="userTXT" max="32767" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                               <Component id="jLabel2" min="-2" pref="119" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" pref="119" max="-2" attributes="0"/>
@@ -75,11 +75,11 @@
                       <EmptySpace pref="149" max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="user" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="userTXT" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pass" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="passTxt" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="login" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
@@ -112,12 +112,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="user">
+            <Component class="javax.swing.JTextField" name="userTXT">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userTXTActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="pass">
+            <Component class="javax.swing.JTextField" name="passTxt">
             </Component>
           </SubComponents>
         </Container>

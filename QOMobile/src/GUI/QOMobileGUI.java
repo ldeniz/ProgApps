@@ -5,14 +5,40 @@
  */
 package GUI;
 
+import datatype.DataDireccion;
+import datatype.DataPedido;
+import datatype.DataPedidoProduco;
+import datatype.DataProducto;
+import datatype.DataRestaurante;
+import datatype.DataUsuario;
+import datatype.EnumEstado;
+import fabrica.Fabrica;
+import interfaces.IControladorCategoria;
+import interfaces.IControladorPedido;
+import interfaces.IControladorProducto;
+import interfaces.IControladorUsuario;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import qomobile.THistorial;
+import qomobile.TPedido;
+import qomobile.TProducto;
 
 /**
  *
  * @author Mathi
  */
 public class QOMobileGUI extends javax.swing.JFrame {
-
+ Properties propiedades = new Properties();
     /**
      * Creates new form QOMobileGUI2
      */
@@ -34,8 +60,8 @@ public class QOMobileGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         login = new javax.swing.JButton();
-        user = new javax.swing.JTextField();
-        pass = new javax.swing.JTextField();
+        userTXT = new javax.swing.JTextField();
+        passTxt = new javax.swing.JTextField();
         verPedido = new javax.swing.JPanel();
         labelInfoPedido = new javax.swing.JLabel();
         labelUsuario = new javax.swing.JLabel();
@@ -85,9 +111,9 @@ public class QOMobileGUI extends javax.swing.JFrame {
             }
         });
 
-        user.addActionListener(new java.awt.event.ActionListener() {
+        userTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userActionPerformed(evt);
+                userTXTActionPerformed(evt);
             }
         });
 
@@ -98,8 +124,8 @@ public class QOMobileGUI extends javax.swing.JFrame {
             .addGroup(sesionCerradaLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(sesionCerradaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pass)
-                    .addComponent(user)
+                    .addComponent(passTxt)
+                    .addComponent(userTXT)
                     .addGroup(sesionCerradaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -112,11 +138,11 @@ public class QOMobileGUI extends javax.swing.JFrame {
                 .addContainerGap(149, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(userTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(passTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(107, 107, 107))
@@ -401,12 +427,469 @@ public class QOMobileGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+                    
+        try {
+            String usu = userTXT.getText();
+            String pass = passTxt.getText();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            
+            em.createQuery("DELETE FROM THistorial").executeUpdate();
+            
+            em.createQuery("DELETE FROM TPedido").executeUpdate();
+            
+            em.createQuery("DELETE FROM TProducto").executeUpdate();
+            
+            em.getTransaction().commit();
+            
+            
+            
+            if (existeNick(usu)) {
+                
+                DataUsuario u = dataUsuario(usu);   
+                
+                DataRestaurante res = (DataRestaurante) u;
+                String contrasenia = u.getPass();
+               
+                if (pass.equals(contrasenia)) {
+                    usuarioLogeado.setText(usu);
+                    
+                    ArrayList<DataPedido> losPedidos = res.getPedidos();
+                    if(losPedidos != null){
+                        JOptionPane.showMessageDialog(this,"Hay Pedido");
+                    for (DataPedido entry : losPedidos) {
+                        String[] fila1 = new String[4];
+                        fila1[0] = "" + (Integer) entry.getNumero();
+                        fila1[1] = entry.getNickNameCliente();
+                        fila1[2] = "" + entry.getEstado();
+                        fila1[3] = "" + entry.getFechaPedido();
+                        modeloPedidos.addRow(fila1);
+                        
+                    }
+                    //almacenarPedidos(res);
+                    }
+                    estadoConexion.setText("Conectado");
                     general.removeAll();
                     general.add(sesionIniciada);
                     general.repaint();
-                    general.revalidate();        // TODO add your handling code here:
+                    general.revalidate();
+                }else JOptionPane.showMessageDialog(this,"Usuario o contraseña incorrectos");
+            }else JOptionPane.showMessageDialog(this,"Usuario o contraseña incorrectos");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,"No hay conexion!");
+            estadoConexion.setText("Desconectado");
+        }     
+        
+
     }//GEN-LAST:event_loginActionPerformed
 
+    
+    private static boolean existeNick(java.lang.String nick) throws FileNotFoundException {
+       // publicadores.PUsuario port = Propiedades.getInstance().obtenerService("PUsuario").getPort(publicadores.PUsuario.class);
+      //  return port.existeNick(nick);
+         // CARGAR DATOS DE PRUEBA
+        IControladorCategoria c = Fabrica.getInstance().obtenerControladorCategoria();
+        IControladorUsuario u = Fabrica.getInstance().obtenerControladorUsuario();
+        IControladorProducto p = Fabrica.getInstance().obtenerControladorProducto();
+        IControladorPedido pd = Fabrica.getInstance().obtenerControladorPedido();
+
+        //Carga Archivo de Propiedades ----------------------
+        
+
+        System.out.println(gui.VerInformacionDeRestaurante.VIDR);
+        //---------------------------------------------------
+
+        u.CargarDatosUsuario("costas", "gcostas@gmail.com", "Gerardo", "1234",
+                new DataDireccion("Av. Italia", "2078", null), "Costas",
+                new Date(1983, 11, 15),"costas.jpg");
+        u.altaUsuario();
+        u.CargarDatosUsuario("roro", "rcotelo@yahoo.com", "Rodrigo", "  1234",
+                new DataDireccion("Pdte. Berro", "1548", null), "Cotelo",
+                new Date(1975, 8, 2), ("rutaDeCarga") + "roro.jpg");
+        u.altaUsuario();
+        u.CargarDatosUsuario("chechi", "cgarrido@hotmail.com", "Cecilia", "  1234",
+                new DataDireccion("Gral. Urquiza", "1548", null), "Garrido",
+                new Date(1987, 9, 12), ("rutaDeCarga") + "chechi.jpg");
+        u.altaUsuario();
+        u.CargarDatosUsuario("andy", "agarcia@gmail.com", "Andrea", "  1234",
+                new DataDireccion("Dr. Manuel Albo ", "4512", null), "García",
+                new Date(1951, 7, 28), ("rutaDeCarga") + "andy.jpg");
+        u.altaUsuario();
+        u.CargarDatosUsuario("weiss", "aweiss@hotmail.com", "Adrian", "  1234",
+                new DataDireccion("Monte Caseros ", "5615", null), "Weiss",
+                new Date(1978, 12, 23), ("rutaDeCarga") + "weiss.jpg");
+        u.altaUsuario();
+
+        c.altaCategoria("Chivitos");
+        c.altaCategoria("Minutas");
+        c.altaCategoria("Parrilla");
+        c.altaCategoria("Pizzas");
+        c.altaCategoria("Empanadas");
+        c.altaCategoria("Milanesas");
+        c.altaCategoria("Ensaladas");
+        c.altaCategoria("Pastas");
+        c.altaCategoria("Comida China");
+        c.altaCategoria("Picadas");
+        c.altaCategoria("Woks");
+        c.altaCategoria("Comica Mexicana");
+        c.altaCategoria("Entradas");
+        c.altaCategoria("Bebidas");
+        c.altaCategoria("Sushi");
+
+        String[] rutaImagen = null;
+        u.seleccionarCategoria("Chivitos");
+        u.seleccionarCategoria("Minutas");
+        u.seleccionarCategoria("Parrilla");
+        u.seleccionarCategoria("Pizzas");
+        try {
+            u.CargarDatosUsuario("mera", "mera@hotmail.com", "Pizzeria Mera", "123",
+                    new DataDireccion("Av. 8 de Octubre", "2074", null), rutaImagen);
+        } catch (Exception ex) {
+            //Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        u.limpiarMemoria();
+
+        String[] rutaImagen2 = {("rutaDeCarga") + "BR1.png", "b"};
+        u.seleccionarCategoria("Chivitos");
+        u.seleccionarCategoria("Milanesas");
+        u.seleccionarCategoria("Pastas");
+        u.seleccionarCategoria("Pizzas");
+        try {
+            u.CargarDatosUsuario("rossell", "bar.rossel@gmail.com", "Bar Rossell", "123",
+                    new DataDireccion("Bvar. Artigas ", "1601", null), rutaImagen2);
+        } catch (Exception ex) {
+            //    Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        u.limpiarMemoria();
+
+        String[] rutaImagen3 = {("rutaDeCarga") + "EB1.png", "b"};
+        u.seleccionarCategoria("Empanadas");
+        try {
+            u.CargarDatosUsuario("bocatti", "bocatti@gmail.com", "Empanadas Bocatti", "123",
+                    new DataDireccion("18 de julio ", "2138", null), rutaImagen3);
+        } catch (Exception ex) {
+            //  Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        u.limpiarMemoria();
+
+        String[] rutaImagen4 = {("rutaDeCarga") + "WB1.jpg", "b"};
+        u.seleccionarCategoria("Woks");
+        u.seleccionarCategoria("Comida China");
+        u.seleccionarCategoria("Pastas");
+        try {
+            u.CargarDatosUsuario("winb", "wok.in.box@hotmail.com", "Wok in Box", "123",
+                    new DataDireccion("Libertad ", "2535", null), rutaImagen4);
+        } catch (Exception ex) {
+            //Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.altaUsuario();
+        u.limpiarMemoria();
+
+        //INDIVIDUALES
+        p.seleccionarRestaurante("mera");
+        p.cargarDatosProducto("Asado", "Asado a la parrilla", (float) 225.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Milanesa de Carne", "Con lechuga, tomate, mayonesa y fritas", (float) 180.0, ("rutaDeCarga") + "MCM.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Chivito Canadiense", "Lomito, jamón, muzza, tomate, aceitunas, panceta, huevo, morrón y fritas", (float) 305.0, ("rutaDeCarga") + "CCM.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Pizza 2 Gustos", "Pizza con dos gustos a elección", (float) 130.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+
+        p.seleccionarRestaurante("rossell");
+        p.cargarDatosProducto("Chivito al plato", "Ensalada rusa, mixta, huevo, jamón, muzza, panceta, aceitunas y fritas", (float) 324.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Milanesa a caballo", "Milanesa con dos huevos fritos acompañado de fritas", (float) 270.0, ("rutaDeCarga") + "MCR.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Pizza con 2 gustos", "Pizza con dos gustos a elección", (float) 103.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Agnolotis", "Agnolotis de jamón y queso", (float) 225.0, ("rutaDeCarga") + "PAR.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+
+        p.seleccionarRestaurante("bocatti");
+        p.cargarDatosProducto("Empanada de Carne", "Carne, aceitunas, huevo duro, condimentos", (float) 44.0, ("rutaDeCarga") + "ECB.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Empanada Americana", "Carne, panceta y huevo duro", (float) 44.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Empanada QyC", "Empanada de Queso y Cebolla", (float) 44.0, ("rutaDeCarga") +"EQB.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Empanada Capresse", "Queso, tomate y albahaca", (float) 44.0, ("rutaDeCarga") + "ECA.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+
+        p.seleccionarRestaurante("winb");
+        p.cargarDatosProducto("Thai wok", "Cerdo, calamares, sweet chili, salsa de ostras, maní y jugo de lima, acompañado de tallarines o arroz.", (float) 240.0, ("rutaDeCarga") + "TWW.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("China wok", "Tempura de cerdo, vegetales mixtos, almendras, salsa de soja y naranja, acompañado de tallarines o arroz.", (float) 240.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Classic wok de pollo", "Pollo, vegetales mixtos, salsa agridulce, salsa de soja y cebollita de verdeo, acompañado de tallarines o arroz.", (float) 230.0, ("rutaDeCarga") + "CPW.jpg");
+        p.altaProducto();
+        p.limpiarMemoria();
+        p.cargarDatosProducto("Classic wok de cerdo", "Cerdo, vegetales mixtos, jengibre, salsa de ostras y ralladura de lima, acompañado de tallarines o arroz.", (float) 230.0, null);
+        p.altaProducto();
+        p.limpiarMemoria();
+
+        //PROMOCIONES
+        p.seleccionarRestaurante("mera");
+        p.cargarDatosProducto("ChiviPizza", "Chivito y Pizza", 20, null);
+        p.seleccionarProducto("Chivito Canadiense", 1);
+        p.seleccionarProducto("Pizza 2 Gustos", 1);
+        p.altaProducto();
+        p.limpiarMemoria();
+
+        p.cargarDatosProducto("MilaAsado", "3 Milanesas + 1 Asado para compartir", 30, null);
+        p.seleccionarProducto("Milanesa de Carne", 3);
+        p.seleccionarProducto("Asado", 1);
+        p.altaProducto();
+        p.limpiarMemoria();
+
+        p.seleccionarRestaurante("rossell");
+        p.cargarDatosProducto("MilaPizza", "2 Milanesas a caballo + 1 Pizzas 2 gustos", 10, null);
+        p.seleccionarProducto("Milanesa a caballo", 2);
+        p.seleccionarProducto("Pizza con 2 gustos", 1);
+        p.altaProducto();
+        p.limpiarMemoria();
+
+        //PEDIDOS
+        try {
+            pd.seleccionarCliente("costas");
+        } catch (Exception ex) {
+            //Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("bocatti");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("bocatti", "Empanada de Carne", 1);
+            pd.seleccionarProducto("bocatti", "Empanada Americana", 2);
+            pd.seleccionarProducto("bocatti", "Empanada QyC", 2);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+        //--------
+        try {
+            pd.seleccionarCliente("roro");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("mera");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("mera", "Asado", 3);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+
+        pd.seleccionarPedido(2);
+        pd.seleccionarEstado(EnumEstado.ENVIADO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //--------
+        try {
+            pd.seleccionarCliente("chechi");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("winb");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("winb", "Thai wok", 2);
+            pd.seleccionarProducto("winb", "China wok", 3);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+
+        pd.seleccionarPedido(3);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //--------
+        try {
+            pd.seleccionarCliente("andy");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("mera");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("mera", "Chivito Canadiense", 4);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+
+        pd.seleccionarPedido(4);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //--------
+        try {
+            pd.seleccionarCliente("weiss");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("rossell");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("rossell", "Agnolotis", 1);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+
+        pd.seleccionarPedido(5);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return u.existeUsuario("mera");
+    }
+
+    private static DataUsuario dataUsuario(java.lang.String nick) throws FileNotFoundException, Exception {
+       // publicadores.PUsuario port = Propiedades.getInstance().obtenerService("PUsuario").getPort(publicadores.PUsuario.class);
+       // return port.dataUsuario(nick);
+        IControladorUsuario cU = Fabrica.getInstance().obtenerControladorUsuario();
+        return cU.obtenerUsuario(nick);
+    }
+
+private void almacenarPedidos(DataRestaurante res) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
+        EntityManager em = emf.createEntityManager();
+
+        ArrayList<DataPedido> losPedidos = res.getPedidos();
+        for (DataPedido entry : losPedidos) {
+            TPedido pedido = new TPedido();
+            pedido.setNumero(entry.getNumero());
+            pedido.setCliente(entry.getNickNameCliente());
+            pedido.setTotal(entry.getPrecioTotal());
+
+            THistorial h = new THistorial();
+            h.setNumero(entry.getNumero());
+            h.setEstado(EnumEstado.PREPARACION);
+            h.setFecha(entry.getFechaPedido());
+            try {
+                em.getTransaction().begin();
+                em.persist(pedido);
+                em.persist(h);
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+           /*
+            if(entry.getHistorial().get(0) != null){
+                THistorial h1 = new THistorial();
+                h1.setNumero(entry.getNumero());
+                h1.setEstado(EnumEstado.ENVIADO);
+                h1.setFecha(entry.getHistorial().get(0));
+                try {
+                    em.getTransaction().begin();
+                    em.persist(h1);
+                    em.getTransaction().commit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if(entry.getHistorial().get(1) != null){
+                THistorial h1 = new THistorial();
+                h1.setNumero(entry.getNumero());
+                h1.setEstado(EnumEstado.RECIBIDO);
+                h1.setFecha(entry.getHistorial().get(1));
+                try {
+                    em.getTransaction().begin();
+                    em.persist(h1);
+                    em.getTransaction().commit();
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            ArrayList<DataPedidoProduco> prod = entry.getDataPedidoProducos();
+            for (DataPedidoProduco productos : prod) {    
+                TProducto p = new TProducto();
+                p.setNumero(entry.getNumero());
+                p.setNombre(productos.toString());
+                p.setCantidad(productos.getCantidad());
+                p.setPrecio(productos.getStockProduco().getPrecio());
+                try {
+                    em.getTransaction().begin();
+                    em.persist(p);
+                    em.getTransaction().commit();
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }*/
+        }
+        em.close();
+    }
+    private static DataPedido obtenerPedido(int numero) throws FileNotFoundException{
+        return null;
+       // publicadores.PPedido port = Propiedades.getInstance().obtenerService("PPedido").getPort(publicadores.PPedido.class);
+       // return port.obtenerPedido(numero);
+    }
+
+    private static void actualizarEstado(int numero, EnumEstado estado) throws FileNotFoundException {
+        //publicadores.PPedido port = Propiedades.getInstance().obtenerService("PPedido").getPort(publicadores.PPedido.class);
+        //port.actualizarEstado(numero, estado);
+    }
+    
+    
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
 
         // RECARGAR PEDIOS
@@ -445,9 +928,9 @@ public class QOMobileGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cambioEstadosActionPerformed
 
-    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+    private void userTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTXTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userActionPerformed
+    }//GEN-LAST:event_userTXTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -484,6 +967,7 @@ public class QOMobileGUI extends javax.swing.JFrame {
             }
         });
     }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
@@ -505,7 +989,7 @@ public class QOMobileGUI extends javax.swing.JFrame {
     private javax.swing.JLabel labelProductos;
     private javax.swing.JLabel labelUsuario;
     private javax.swing.JButton login;
-    private javax.swing.JTextField pass;
+    private javax.swing.JTextField passTxt;
     private javax.swing.JLabel pedidos;
     private javax.swing.JLabel precio;
     private javax.swing.JScrollPane scrollTablaHistorial;
@@ -519,7 +1003,7 @@ public class QOMobileGUI extends javax.swing.JFrame {
     private DefaultTableModel modeloPedidos;
     private javax.swing.JTable tablaProductos;
     private DefaultTableModel medeloProductos;
-    private javax.swing.JTextField user;
+    private javax.swing.JTextField userTXT;
     private javax.swing.JLabel usuario;
     private javax.swing.JLabel usuarioLogeado;
     private javax.swing.JButton ver;
