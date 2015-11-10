@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -446,9 +447,25 @@ public class QOMobileGUI extends javax.swing.JFrame {
             
             
             if (existeNick(usu)) {
-                
+                IControladorPedido pd = Fabrica.getInstance().obtenerControladorPedido();
                 DataUsuario u = dataUsuario(usu);   
-                
+                try {
+            pd.seleccionarCliente("roro");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("mera");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("mera", "Asado", 3);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pd.finalizarPedido();
                 DataRestaurante res = (DataRestaurante) u;
                 String contrasenia = u.getPass();
                
@@ -765,13 +782,13 @@ public class QOMobileGUI extends javax.swing.JFrame {
         pd.finalizarPedido();
         pd.limpiarMermoria();
 
-        pd.seleccionarPedido(4);
-        pd.seleccionarEstado(EnumEstado.RECIBIDO);
-        try {
-            pd.actualizarPedido();
-        } catch (Exception ex) {
+//        pd.seleccionarPedido(4);
+ //       pd.seleccionarEstado(EnumEstado.RECIBIDO);
+//        try {
+ //           pd.actualizarPedido();
+ //       } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
-        }
+ //       }
 
         //--------
         try {
@@ -900,11 +917,75 @@ private void almacenarPedidos(DataRestaurante res) {
     }//GEN-LAST:event_volverActionPerformed
 
     private void actualizarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarEstadoActionPerformed
-       
+        try {
+            estadoConexion.setText("Conectado");
+            int index = cambioEstados.getSelectedIndex();
+            if (index != -1) {
+                int index2 = tablaPedidos.getSelectedRow();
+                String aux = (String) modeloPedidos.getValueAt(index2, 0);
+                Integer num = Integer.parseInt(aux);
+                if (index == 0) {
+                    //actualizarPedido(num, publicadores.EnumEstado.RECIBIDO);
+                    actualizarPedido(num, EnumEstado.RECIBIDO);
+                } else if (index == 1) {
+                    //actualizarPedido(num, publicadores.EnumEstado.ENVIADO);
+                    actualizarPedido(num, EnumEstado.ENVIADO);
+                }
+            }
+
+            int k = modeloPedidos.getRowCount();
+            for (int i = k - 1; i >= 0; i--) {
+                modeloPedidos.removeRow(i);
+            }
+
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+            EntityManager em = emf.createEntityManager();
+            List resultList = em.createQuery("SELECT a FROM TPedido a").getResultList();
+
+            for (Object obj : resultList){
+                String[] fila1 = new String[4];
+                List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + ((TPedido)obj).getNumero()+") ORDER BY a.estado DESC").getResultList();
+                fila1[0] = "" + (Integer) ((TPedido)obj).getNumero();
+                fila1[1] = ((TPedido)obj).getCliente();
+                Object estado = lista.get(0);
+                fila1[2] = "" + ((THistorial)estado).getEstado();
+                int cantidad = lista.size() - 1;
+                Object fecha = lista.get(cantidad);
+                fila1[3] = "" + ((THistorial)fecha).getFecha();
+                modeloPedidos.addRow(fila1);
+            }
+            
+            general.removeAll();
+            general.add(sesionIniciada);
+            general.repaint();
+            general.revalidate();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,"No hay conexion!");
+            estadoConexion.setText("Desconectado");
+        }        
     }//GEN-LAST:event_actualizarEstadoActionPerformed
-
+    private void actualizarPedido(int numero, EnumEstado estado) throws FileNotFoundException {      
+        actualizarEstado(numero,estado);  
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+        EntityManager em = emf.createEntityManager();
+        Calendar cal = Calendar.getInstance();    
+        THistorial h = new THistorial();
+        h.setNumero(numero);
+        h.setEstado(estado);
+        h.setFecha(cal);
+        try {
+            em.getTransaction().begin();
+            em.persist(h);
+            em.getTransaction().commit();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
-
+        int k = modeloPedidos.getRowCount();
+            for (int i = k - 1; i >= 0; i--) {
+                modeloPedidos.removeRow(i);
+            }
         // CERRAR LA SESION
         general.removeAll();
         general.add(sesionCerrada);
@@ -913,15 +994,132 @@ private void almacenarPedidos(DataRestaurante res) {
     }//GEN-LAST:event_cerrarSesionActionPerformed
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
-       
+        try {
+            String usu = usuarioLogeado.getText();  
+            int k = modeloPedidos.getRowCount();
+            for (int i = k - 1; i >= 0; i--) {
+                modeloPedidos.removeRow(i);
+            }
+            //DESCOMENTAR CUANDO ESTEN LOS PUBLICADORES
+            //publicadores.DataUsuario u = dataUsuario(usu);
+            IControladorUsuario uS = Fabrica.getInstance().obtenerControladorUsuario();
+            DataUsuario u = uS.obtenerUsuario(usu);
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM THistorial").executeUpdate();
+            em.createQuery("DELETE FROM TPedido").executeUpdate();
+            em.createQuery("DELETE FROM TProducto").executeUpdate();
+            em.getTransaction().commit();
+            DataRestaurante res = (DataRestaurante) u;
+            estadoConexion.setText("Conectado");
+            usuarioLogeado.setText(usu);
+            List<DataPedido> losPedidos = res.getPedidos();
+            for (DataPedido entry : losPedidos) {
+                String[] fila1 = new String[4];
+                fila1[0] = "" + (Integer) entry.getNumero();
+                fila1[1] = entry.getNickNameCliente();
+                fila1[2] = "" + entry.getEstado();
+                fila1[3] = "" + entry.getFechaPedido();
+                modeloPedidos.addRow(fila1);
+            }
+            almacenarPedidos(res);
+            
+            general.removeAll();
+            general.add(sesionIniciada);
+            general.repaint();
+            general.revalidate();
+        } catch (Exception ex) {
+            cargarBasePedidos();
+            JOptionPane.showMessageDialog(this,"No hay conexion!, imposible actualizar");
+            estadoConexion.setText("Desconectado");
+        }        
     }//GEN-LAST:event_ActualizarActionPerformed
 
-    private void verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verActionPerformed
+    private void cargarBasePedidos(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+        EntityManager em = emf.createEntityManager();
+        List losPedidos = em.createQuery("SELECT a FROM TPedido a").getResultList();
+
+        for (Object entry : losPedidos) {
+            String[] fila1 = new String[4];
+            int num = ((TPedido)entry).getNumero();
+            fila1[0] = "" + (Integer) num;
+            fila1[1] = ((TPedido)entry).getCliente();
+            List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + num +") ORDER BY a.estado DESC").getResultList();
+            Object estado = lista.get(0);
+            fila1[2] = ((THistorial)estado).getEstado().toString();
+            int cantidad = lista.size() - 1;
+            Object fecha = lista.get(cantidad);
+            fila1[3] = "" + ((THistorial)fecha).getFecha();
+            modeloPedidos.addRow(fila1);
+        }      
         
-        general.removeAll();
-        general.add(verPedido);
-        general.repaint();
-        general.revalidate();
+    }
+    
+    private void verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verActionPerformed
+        int index = tablaPedidos.getSelectedRow();
+        if (index != -1) {
+            int k = medeloProductos.getRowCount();
+            for (int i = k - 1; i >= 0; i--) {
+                medeloProductos.removeRow(i);
+            }
+            k = historial.getRowCount();
+            for (int i = k - 1; i >= 0; i--) {
+                historial.removeRow(i);
+            }
+            String aux = (String) modeloPedidos.getValueAt(index, 0);
+            Integer num = Integer.parseInt(aux);                    
+
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+            EntityManager em = emf.createEntityManager();
+            Object resultado = em.createQuery("SELECT a FROM TPedido a WHERE (a.numero = " + num +")").getSingleResult();
+
+            List lista1 = em.createQuery("SELECT a FROM TProducto a WHERE (a.numero = " + num +")").getResultList();
+            for (Object obj : lista1) {
+                String[] fila1 = new String[4];
+                fila1[0] = ((TProducto)obj).getNombre();
+                fila1[1] = "" + (Integer)((TProducto)obj).getCantidad();
+                fila1[2] = "" + (Float)((TProducto)obj).getPrecio();
+                fila1[3] = "" + (Float)((TProducto)obj).getPrecio() * (Integer) ((TProducto)obj).getCantidad();
+                medeloProductos.addRow(fila1);
+            }
+
+            List lista2 = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + num +")  ORDER BY a.estado DESC").getResultList();
+            for (Object obj : lista2) {
+                String[] fila2 = new String[3];
+                fila2[0] = ((THistorial)obj).getEstado().toString();
+                fila2[1] = "" + ((THistorial)obj).getFecha();
+                fila2[2] = "" + ((THistorial)obj).getNumero();
+                historial.addRow(fila2);
+            }
+            cambioEstados.removeAllItems();
+            EnumEstado e = ((THistorial)lista2.get(0)).getEstado();
+            //if (e == publicadores.EstadoPedido.EN_PREPARACION) {
+            if (e == EnumEstado.PREPARACION) {
+                cambioEstados.addItem("Enviado");
+                cambioEstados.addItem("Recibido");
+                actualizarEstado.setEnabled(true);
+            } else if (e == EnumEstado.ENVIADO) {
+                cambioEstados.addItem("Recibido");
+                actualizarEstado.setEnabled(true);
+            } else if (e == EnumEstado.RECIBIDO) {
+                actualizarEstado.setEnabled(false);
+            }
+
+            usuario.setText(((TPedido)resultado).getCliente());
+            int asd = lista2.size() - 1;
+            Calendar data = ((THistorial)lista2.get(asd)).getFecha();
+            fecha.setText("" + data);
+            precio.setText("" + ((TPedido)resultado).getTotal());
+
+
+            general.removeAll();
+            general.add(verPedido);
+            general.repaint();
+            general.revalidate();
+        }                   
+        
     }//GEN-LAST:event_verActionPerformed
 
     private void cambioEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioEstadosActionPerformed
