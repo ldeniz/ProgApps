@@ -6,16 +6,22 @@
 package datatype;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author sestefan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DataPromocion extends DataProducto {
 
     private int descuento;
     private boolean activa;
     private ArrayList<DataIndividualPromocion> individualPromocion;
+
+    public DataPromocion() {
+    }
 
     public DataPromocion(int descuento, boolean activa, ArrayList<DataIndividualPromocion> individualPromocion, String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName) {
         super(nombre, descripcion, rutaImagen, stock, nickName);
@@ -54,6 +60,18 @@ public class DataPromocion extends DataProducto {
 
     public ArrayList<DataIndividualPromocion> getIndividualPromocion() {
         return individualPromocion;
+    }
+
+    public void setDescuento(int descuento) {
+        this.descuento = descuento;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
+
+    public void setIndividualPromocion(ArrayList<DataIndividualPromocion> individualPromocion) {
+        this.individualPromocion = individualPromocion;
     }
 
 }

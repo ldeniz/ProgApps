@@ -6,12 +6,15 @@
 package datatype;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author sestefan
  */
-public abstract class DataProducto {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class DataProducto {
 
     private String nombre;
     private String descripcion;
@@ -20,6 +23,9 @@ public abstract class DataProducto {
     private String nickName;
     private String tipoProducto;
     private ArrayList<DataPedido> pedidos;
+
+    public DataProducto() {
+    }
 
     public DataProducto(String nombre, String descripcion, String rutaImagen) {
         this.nombre = nombre;
@@ -99,6 +105,34 @@ public abstract class DataProducto {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
+
+    public void setStock(DataStockProducto stock) {
+        this.stock = stock;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void setTipoProducto(String tipoProducto) {
+        this.tipoProducto = tipoProducto;
+    }
+
+    public void setPedidos(ArrayList<DataPedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
 }

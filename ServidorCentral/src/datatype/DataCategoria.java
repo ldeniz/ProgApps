@@ -4,16 +4,25 @@
  */
 package datatype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author Sebastián Estefan
  */
-public class DataCategoria {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class DataCategoria implements Serializable {
 
     private String nombre;
     private ArrayList<DataRestaurante> dataRestaurantes;
+
+    public DataCategoria() {
+    }
 
     public DataCategoria(String nombre) {
         this.nombre = nombre;
@@ -31,6 +40,14 @@ public class DataCategoria {
 
     public ArrayList<DataRestaurante> getDataRestaurantes() {
         return dataRestaurantes;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDataRestaurantes(ArrayList<DataRestaurante> dataRestaurantes) {
+        this.dataRestaurantes = dataRestaurantes;
     }
 
 }

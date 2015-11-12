@@ -8,6 +8,7 @@ import datatype.DataCategoria;
 import datatype.DataRestaurante;
 import interfaces.IControladorCategoria;
 import java.util.ArrayList;
+import java.util.List;
 import manejador.ManejadorCategoria;
 import modelo.Categoria;
 import modelo.Restaurante;

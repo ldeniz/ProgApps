@@ -5,12 +5,29 @@
  */
 package datatype;
 
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 /**
  *
  * @author sestefan
  */
-public enum EnumEstado {
+@XmlAccessorType(XmlAccessType.FIELD)
+public enum EnumEstado implements Serializable {
 
-    PREPARACION,ENVIADO,RECIBIDO;
+    PREPARACION, ENVIADO, RECIBIDO;
+
+    public static EnumEstado getPREPARACION() {
+        return PREPARACION;
+    }
+
+    public static EnumEstado getENVIADO() {
+        return ENVIADO;
+    }
+
+    public static EnumEstado getRECIBIDO() {
+        return RECIBIDO;
+    }
 
 }

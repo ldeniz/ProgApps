@@ -22,13 +22,9 @@ public class ManejadorProducto {
 
     private static ManejadorProducto instancia;
     private final HashMap<String, HashMap<String, Producto>> productos;
-    private final HashMap<String, HashMap<String, Individual>> individuales;
-    private final HashMap<String, HashMap<String, Promocion>> promociones;
 
     private ManejadorProducto() {
         productos = new HashMap<>();
-        individuales = new HashMap<>();
-        promociones = new HashMap<>();
     }
 
     public static ManejadorProducto getInstance() {
@@ -47,26 +43,24 @@ public class ManejadorProducto {
         String nickName = individual.getNickName();
         HashMap value;
         value = productos.get(nickName);
-        if (value == null) {
-            value = new HashMap();
+        if (null == value) {
+            value = new HashMap<>();
+        } else {
         }
         value.put(individual.getNombre(), individual);
         productos.put(nickName, value);
-        individuales.put(nickName, value);
     }
 
     public void ingresarProducto(Promocion promocion) {
 
         String nickName = promocion.getNickName();
-        HashMap<String, Individual> hi = individuales.get(nickName);
         HashMap value;
         value = productos.get(nickName);
-        if (value == null) {
-            value = new HashMap();
+        if (null == value) {
+            value = new HashMap<>();
         }
         value.put(promocion.getNombre(), promocion);
         productos.put(nickName, value);
-        promociones.put(nickName, value);
     }
 
     public boolean existeProducto(String nickName, String nombreProducto) {
@@ -119,8 +113,6 @@ public class ManejadorProducto {
 
     public void limpiarMemoria() {
         productos.clear();
-        individuales.clear();
-        promociones.clear();
     }
 
     public void borrarPedido(Pedido p) {
@@ -131,6 +123,44 @@ public class ManejadorProducto {
             pr.getPedidos().remove(p);
         }
 
+    }
+
+    public ArrayList<Individual> listarProductosIndividuales() {
+        ArrayList<Individual> lproductos = null;
+        Collection cp = productos.values();
+        if (!cp.isEmpty()) {
+            lproductos = new ArrayList<>();
+            for (Iterator it = cp.iterator(); it.hasNext();) {
+                HashMap mp = (HashMap) it.next();
+                ArrayList<Producto> lp = new ArrayList<>(mp.values());
+                for (Producto p : lp) {
+                    if (p.getTipoProducto().compareTo("individual") == 0){
+                        lproductos.add((Individual) p);
+                    }
+                }
+                lp.clear();
+            }
+        }
+        return lproductos;
+    }
+
+    public ArrayList<Promocion> listarProductosPromociones() {
+        ArrayList<Promocion> lproductos = null;
+        Collection cp = productos.values();
+        if (!cp.isEmpty()) {
+            lproductos = new ArrayList<>();
+            for (Iterator it = cp.iterator(); it.hasNext();) {
+                HashMap mp = (HashMap) it.next();
+                ArrayList<Promocion> lp = new ArrayList<>(mp.values());
+                for (Producto p : lp) {
+                    if (p.getTipoProducto().compareTo("promocion") == 0){
+                        lproductos.add((Promocion) p);
+                    }
+                }
+                lp.clear();
+            }
+        }
+        return lproductos;
     }
 
 }

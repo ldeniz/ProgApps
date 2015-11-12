@@ -5,16 +5,8 @@
 
 package controllers;
 
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import static controllers.Home.initSession;
-import datatype.DataPedido;
-import datatype.DataUsuario;
-import fabrica.Fabrica;
-import interfaces.IControladorPedido;
-import interfaces.IControladorUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;

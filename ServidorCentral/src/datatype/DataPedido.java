@@ -7,11 +7,14 @@ package datatype;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author sestefan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DataPedido {
 
     private String nickNameCliente;
@@ -22,6 +25,9 @@ public class DataPedido {
     private EnumEstado estado;
     private ArrayList<DataPedidoProduco> dataPedidoProducos;
     private DataComentario dataComentario;
+
+    public DataPedido() {
+    }
 
     public DataPedido(String nickNameCliente, String nickNameRestaurante, int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList<DataPedidoProduco> dataPedidoProducos) {
         this.nickNameCliente = nickNameCliente;
@@ -74,6 +80,38 @@ public class DataPedido {
 
     public DataComentario getDataComentario() {
         return dataComentario;
+    }
+
+    public void setNickNameCliente(String nickNameCliente) {
+        this.nickNameCliente = nickNameCliente;
+    }
+
+    public void setNickNameRestaurante(String nickNameRestaurante) {
+        this.nickNameRestaurante = nickNameRestaurante;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public void setFechaPedido(Calendar fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public void setPrecioTotal(float precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
+    public void setEstado(EnumEstado estado) {
+        this.estado = estado;
+    }
+
+    public void setDataPedidoProducos(ArrayList<DataPedidoProduco> dataPedidoProducos) {
+        this.dataPedidoProducos = dataPedidoProducos;
+    }
+
+    public void setDataComentario(DataComentario dataComentario) {
+        this.dataComentario = dataComentario;
     }
 
 }

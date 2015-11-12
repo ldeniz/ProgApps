@@ -6,12 +6,18 @@
 package datatype;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author sestefan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DataIndividual extends DataProducto {
+
+    public DataIndividual() {
+    }
 
     public DataIndividual(String nombre, String descripcion, String rutaImagen, DataStockProducto stock, String nickName) {
         super(nombre, descripcion, rutaImagen, stock, nickName);

@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
+import servidor.ControladorCategoriaPublicador;
+import servidor.ControladorProductoPublicador;
+import servidor.ControladorUsuarioPublicador;
 
 /**
  *
@@ -642,6 +645,12 @@ public class Principal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Principal().setVisible(true);
+                ControladorCategoriaPublicador ccp = new ControladorCategoriaPublicador();
+                ccp.publicar();
+                ControladorProductoPublicador cpp = new ControladorProductoPublicador();
+                cpp.publicar();
+                ControladorUsuarioPublicador cup = new ControladorUsuarioPublicador();
+                cup.publicar();                
             }
         });
     }

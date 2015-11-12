@@ -6,11 +6,14 @@
 package datatype;
 
 import java.util.Calendar;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author sestefan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DataStockProducto {
 
     private String nickNameRestaurante;
@@ -18,6 +21,9 @@ public class DataStockProducto {
     private int cantidad;
     private float precio;
     private Calendar fecha;
+
+    public DataStockProducto() {
+    }
 
     public DataStockProducto(String nickNameRestaurante, String nombreProducto, int cantidad, float precio, Calendar fecha) {
         this.nickNameRestaurante = nickNameRestaurante;
@@ -50,6 +56,26 @@ public class DataStockProducto {
 
     public String getNombreProducto() {
         return nombreProducto;
+    }
+
+    public void setNickNameRestaurante(String nickNameRestaurante) {
+        this.nickNameRestaurante = nickNameRestaurante;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+    public void setFecha(Calendar fecha) {
+        this.fecha = fecha;
     }
 
 }

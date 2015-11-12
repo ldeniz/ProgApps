@@ -5,17 +5,24 @@
  */
 package datatype;
 
+import java.io.Serializable;
 import java.util.Calendar;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author sestefan
  */
-public class DataComentario {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class DataComentario implements Serializable {
 
     String comentario;
     float puntaje;
     Calendar fecha;
+
+    public DataComentario() {
+    }
 
     public DataComentario(String comentario, float puntaje, Calendar fecha) {
         this.comentario = comentario;
@@ -33,6 +40,18 @@ public class DataComentario {
 
     public Calendar getFecha() {
         return fecha;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public void setPuntaje(float puntaje) {
+        this.puntaje = puntaje;
+    }
+
+    public void setFecha(Calendar fecha) {
+        this.fecha = fecha;
     }
 
 }

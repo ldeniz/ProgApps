@@ -50,7 +50,8 @@ public class ControladorProducto implements IControladorProducto {
     @Override
     public void seleccionarProducto(String nombre, int cantidad) {
         ManejadorProducto mp = ManejadorProducto.getInstance();
-        DataIndividual di = (DataIndividual) mp.obtenerProducto(nickName, nombre).obtenerDatosProducto();
+        Producto p = mp.obtenerProducto(nickName, nombre);
+        DataIndividual di = (DataIndividual) p.obtenerDatosProducto();
         DataIndividualPromocion dip = new DataIndividualPromocion(cantidad, di);
         productosPromocion.add(dip);
     }
@@ -206,6 +207,32 @@ public class ControladorProducto implements IControladorProducto {
                 break;
         }
 
+    }
+
+    @Override
+    public ArrayList<DataIndividual> listarProductosIndividuales() {
+        ManejadorProducto mp = ManejadorProducto.getInstance();
+        ArrayList<Individual> li = mp.listarProductosIndividuales();
+        ArrayList<DataIndividual> dataProductos = new ArrayList<>();
+        if (!li.isEmpty()) {
+            for (Individual i : li) {
+                dataProductos.add((DataIndividual) i.obtenerDatosProducto());
+            }
+        }
+        return dataProductos;
+    }
+
+    @Override
+    public ArrayList<DataPromocion> listarProductosPromociones() {
+        ManejadorProducto mp = ManejadorProducto.getInstance();
+        ArrayList<Promocion> li = mp.listarProductosPromociones();
+        ArrayList<DataPromocion> dataProductos = new ArrayList<>();
+        if (!li.isEmpty()) {
+            for (Promocion p : li) {
+                dataProductos.add((DataPromocion) p.obtenerDatosProducto());
+            }
+        }
+        return dataProductos;
     }
 
 }

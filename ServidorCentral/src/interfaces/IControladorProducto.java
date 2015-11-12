@@ -1,6 +1,8 @@
 package interfaces;
 
+import datatype.DataIndividual;
 import datatype.DataProducto;
+import datatype.DataPromocion;
 import java.util.ArrayList;
 
 /**
@@ -106,5 +108,17 @@ public interface IControladorProducto {
      * Limpia la memoria.
      */
     public void limpiarMemoria();
+    
+    /**
+     * Lista todos los productos individuales
+     * @return 
+     */
+    public ArrayList<DataIndividual> listarProductosIndividuales();
+    
+    /**
+     * Lista todos los productos promociones
+     * @return 
+     */
+    public ArrayList<DataPromocion> listarProductosPromociones();
 
 }

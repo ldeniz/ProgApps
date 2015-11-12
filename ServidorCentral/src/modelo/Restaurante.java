@@ -20,14 +20,14 @@ public class Restaurante extends Usuario implements Serializable {
 
     private String[] rutaImagen;
     private ArrayList<Producto> productos;
-    private float puntajePromedio;
+    private float puntajeTotal;
     private int cantidadPuntuaciones;
 
     public Restaurante(String[] rutaImagen, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
         super(nickname, mail, nombre, pass, direccion);
         this.rutaImagen = rutaImagen;
         productos = new ArrayList<>();
-        puntajePromedio = 0;
+        puntajeTotal = 0;
         cantidadPuntuaciones = 0;
     }
 
@@ -48,11 +48,11 @@ public class Restaurante extends Usuario implements Serializable {
     }
 
     public float getPuntajePromedio() {
-        return puntajePromedio;
-    }
-
-    public void setPuntajePromedio(float puntajePromedio) {
-        this.puntajePromedio = puntajePromedio;
+        if (cantidadPuntuaciones > 0) {
+            return puntajeTotal / cantidadPuntuaciones;
+        } else {
+            return 0;
+        }
     }
 
     public int getCantidadPuntuaciones() {
@@ -62,10 +62,10 @@ public class Restaurante extends Usuario implements Serializable {
     public void setCantidadPuntuaciones(int cantidadPuntuaciones) {
         this.cantidadPuntuaciones = cantidadPuntuaciones;
     }
-    
-    public void calcularPromedioPuntaje(float puntaje){
+
+    public void calcularPromedioPuntaje(float puntaje) {
         cantidadPuntuaciones = cantidadPuntuaciones + 1;
-        puntajePromedio = (puntajePromedio + puntaje) / cantidadPuntuaciones;
+        puntajeTotal += puntaje;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Restaurante extends Usuario implements Serializable {
                 dataProductos.add(p.obtenerDatosProducto());
             }
         }
-        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, puntajePromedio, cantidadPuntuaciones, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
+        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, getPuntajePromedio(), cantidadPuntuaciones, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
         return dataUsuario;
     }
 

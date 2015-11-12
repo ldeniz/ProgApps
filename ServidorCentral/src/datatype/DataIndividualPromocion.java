@@ -5,14 +5,21 @@
  */
 package datatype;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 /**
  *
  * @author sestefan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DataIndividualPromocion {
 
     private int cantidad;
     private DataIndividual individual;
+
+    public DataIndividualPromocion() {
+    }
 
     public DataIndividualPromocion(int cantidad, DataProducto individual) {
         this.cantidad = cantidad;
@@ -29,6 +36,14 @@ public class DataIndividualPromocion {
 
     public DataIndividual getIndividual() {
         return individual;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setIndividual(DataIndividual individual) {
+        this.individual = individual;
     }
 
 }
