@@ -5,7 +5,7 @@
  */
 package qomobile;
 
-import datatype.EnumEstado;
+import servidor.EnumEstado;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;

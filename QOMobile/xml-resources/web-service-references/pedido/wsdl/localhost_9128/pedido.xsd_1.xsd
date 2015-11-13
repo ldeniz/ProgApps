@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.4-b01. --><xs:schema xmlns:tns="http://servidor/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://servidor/">
+
+<xs:element name="Exception" type="tns:Exception"></xs:element>
+
+<xs:complexType name="Exception">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataPedido">
+<xs:sequence>
+<xs:element name="nickNameCliente" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="nickNameRestaurante" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="numero" type="xs:int"></xs:element>
+<xs:element name="fechaPedido" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="precioTotal" type="xs:float"></xs:element>
+<xs:element name="estado" type="tns:enumEstado" minOccurs="0"></xs:element>
+<xs:element name="dataPedidoProducos" type="tns:dataPedidoProduco" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+<xs:element name="dataComentario" type="tns:dataComentario" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataPedidoProduco">
+<xs:sequence>
+<xs:element name="cantidad" type="xs:int"></xs:element>
+<xs:element name="stockProduco" type="tns:dataStockProducto" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataStockProducto">
+<xs:sequence>
+<xs:element name="nickNameRestaurante" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="nombreProducto" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="cantidad" type="xs:int"></xs:element>
+<xs:element name="precio" type="xs:float"></xs:element>
+<xs:element name="fecha" type="xs:dateTime" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dataComentario">
+<xs:sequence>
+<xs:element name="comentario" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="puntaje" type="xs:float"></xs:element>
+<xs:element name="fecha" type="xs:dateTime" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="enumEstado">
+<xs:restriction base="xs:string">
+<xs:enumeration value="PREPARACION"></xs:enumeration>
+<xs:enumeration value="ENVIADO"></xs:enumeration>
+<xs:enumeration value="RECIBIDO"></xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="dataPedidoArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:dataPedido" minOccurs="0" maxOccurs="unbounded" nillable="true"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
