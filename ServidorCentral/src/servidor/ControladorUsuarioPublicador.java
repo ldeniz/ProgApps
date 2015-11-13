@@ -63,7 +63,7 @@ public class ControladorUsuarioPublicador {
     }
 
     @WebMethod
-    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) throws Exception {
+    public void CargarDatosUsuario2(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) throws Exception {
         ControladorUsuario cu = new ControladorUsuario();
         cu.CargarDatosUsuario(nickname, mail, nombre, pass, direccion, rutaImagen);
     }
@@ -81,7 +81,7 @@ public class ControladorUsuarioPublicador {
     }
 
     @WebMethod
-    public boolean existeUsuario(String nickname, String mail) {
+    public boolean existeUsuario2(String nickname, String mail) {
         ControladorUsuario cu = new ControladorUsuario();
         return cu.existeUsuario(nickname, mail);
     }
@@ -150,7 +150,7 @@ public class ControladorUsuarioPublicador {
     }
 
     @WebMethod
-    public DataRestaurante[] listarRestaurantes(String patron) throws Exception {
+    public DataRestaurante[] listarRestaurantes2(String patron) throws Exception {
         ControladorUsuario cu = new ControladorUsuario();
         ArrayList<DataRestaurante> ldr = cu.listarRestaurantes(patron);
         DataRestaurante[] var = new DataRestaurante[ldr.size()];

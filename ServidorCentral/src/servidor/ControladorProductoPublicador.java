@@ -67,7 +67,7 @@ public class ControladorProductoPublicador {
     }
 
     @WebMethod
-    public void cargarDatosProducto(String nombre, String descripcion, int descuento, String rutaImagen) {
+    public void cargarDatosProducto2(String nombre, String descripcion, int descuento, String rutaImagen) {
         ControladorProducto cp = new ControladorProducto();
         cp.CargarDatosModificarProducto(nombre, nombre, descripcion, rutaImagen, descuento, true);
     }
@@ -104,7 +104,7 @@ public class ControladorProductoPublicador {
     }
 
     @WebMethod
-    public void CargarDatosModificarProducto(String mombreViejo, String nombre, String descripcion,
+    public void CargarDatosModificarProducto2(String mombreViejo, String nombre, String descripcion,
             String rutaImagen, int descuento, boolean activa) {
         ControladorProducto cp = new ControladorProducto();
         cp.CargarDatosModificarProducto(nombre, nombre, descripcion, rutaImagen, descuento, activa);

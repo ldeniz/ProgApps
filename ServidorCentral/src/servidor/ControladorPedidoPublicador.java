@@ -99,7 +99,7 @@ public class ControladorPedidoPublicador {
     }
 
     @WebMethod
-    public DataPedido[] listarPedidos(String nickNameRestaurante) throws Exception{
+    public DataPedido[] listarPedidos2(String nickNameRestaurante) throws Exception{
         ControladorPedido cp = new ControladorPedido();
         ArrayList<DataPedido> ldp = cp.listarPedidos(nickNameRestaurante);
         DataPedido[] var = new DataPedido[ldp.size()];
