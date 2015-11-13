@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
 import servidor.ControladorCategoriaPublicador;
+import servidor.ControladorPedidoPublicador;
 import servidor.ControladorProductoPublicador;
 import servidor.ControladorUsuarioPublicador;
 
@@ -651,6 +652,8 @@ public class Principal extends javax.swing.JFrame {
                 cpp.publicar();
                 ControladorUsuarioPublicador cup = new ControladorUsuarioPublicador();
                 cup.publicar();                
+                ControladorPedidoPublicador cp = new ControladorPedidoPublicador();
+                cp.publicar();
             }
         });
     }

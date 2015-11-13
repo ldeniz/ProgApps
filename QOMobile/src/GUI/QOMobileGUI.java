@@ -377,7 +377,7 @@ public class QOMobileGUI extends javax.swing.JFrame {
                                 .addGroup(sesionIniciadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(usuarioLogeado, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(estadoConexion))))
-                        .addGap(0, 67, Short.MAX_VALUE))
+                        .addGap(0, 26, Short.MAX_VALUE))
                     .addComponent(scrollTablaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(sesionIniciadaLayout.createSequentialGroup()
                         .addComponent(Actualizar)

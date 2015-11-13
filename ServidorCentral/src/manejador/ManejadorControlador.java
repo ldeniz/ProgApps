@@ -4,9 +4,13 @@
  */
 package manejador;
 
-import datatype.DataRestaurante;
+import controlador.ControladorCategoria;
+import controlador.ControladorPedido;
+import controlador.ControladorProducto;
+import controlador.ControladorUsuario;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import modelo.Categoria;
 import modelo.Restaurante;
 
@@ -14,64 +18,71 @@ import modelo.Restaurante;
  *
  * @author Sebastián Estefan
  */
-public class ManejadorCategoria {
+public class ManejadorControlador {
 
-    private static ManejadorCategoria instancia;
-    private final HashMap<String, Categoria> categorias;
+    private static ManejadorControlador instancia;
+    private final LinkedList<ControladorCategoria> categorias;
+    private final LinkedList<ControladorPedido> pedidos;
+    private final LinkedList<ControladorProducto> productos;
+    private final LinkedList<ControladorUsuario> usuarios;
 
-    private ManejadorCategoria() {
-        categorias = new HashMap<>();
+    private ManejadorControlador() {
+        categorias = new LinkedList<>();
+        pedidos = new LinkedList<>();
+        productos = new LinkedList<>();
+        usuarios = new LinkedList<>();
     }
 
-    public static ManejadorCategoria getInstance() {
+    public static ManejadorControlador getInstance() {
         if (instancia == null) {
-            instancia = new ManejadorCategoria();
+            instancia = new ManejadorControlador();
         }
         return instancia;
     }
 
-    public boolean existeCategoriaNombre(String nombre) {
-        return categorias.containsKey(nombre);
-    }
-
     /**
-     *
-     * @param categoria
+     * 
      */
-    public void ingresarCategoria(Categoria categoria) {
-        String nombre = categoria.getNombre();
-        categorias.put(nombre, categoria);
+    public int getNewCategoriaControllerId(){
+        ControladorCategoria cc = new ControladorCategoria();
+        categorias.add(cc);
+        return categorias.size();
     }
-
+    
+    public int getNewPedidoControllerId(){
+        ControladorPedido cp = new ControladorPedido();
+        pedidos.add(cp);
+        return pedidos.size();
+    }
+    
+    public int getNewProductoControllerId(){
+        ControladorProducto cp = new ControladorProducto();
+        productos.add(cp);
+        return productos.size();
+    }
+    
+    public int getNewUsuarioControllerId(){
+//        ControladorUsuario cu 
+        return 0;
+    }
+    
     /**
-     *
-     * @return
+     * 
      */
-    public ArrayList<Categoria> listarCategorias() {
-        ArrayList<Categoria> lc = new ArrayList<>();
-        for (Categoria c : categorias.values()) {
-            lc.add(c);
-        }
-        return lc;
+    public void removeCategoriaControllerId(){
+        
     }
-
-    /**
-     *
-     * @param nombre
-     * @param r
-     */
-    public void agregarRestaurante(String nombre, Restaurante r) {
-        Categoria c = categorias.get(nombre);
-        c.agregarRestaurante(r);
+    
+    public void removePedidoControllerId(){
+        
     }
-
-    public void limpiarMemoria() {
-        categorias.clear();
+    
+    public void removeProductoControllerId(){
+        
     }
-
-    public ArrayList<Restaurante> obtenerRestaurantes(String categoria) {
-        Categoria c = categorias.get(categoria);
-        return c.getRestaurantes();
+    
+    public void removeUsuarioControllerId(){
+        
     }
 
 }
