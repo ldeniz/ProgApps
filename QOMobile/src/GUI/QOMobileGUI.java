@@ -26,6 +26,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import qomobile.Propiedades;
 import qomobile.THistorial;
 import qomobile.TPedido;
 import qomobile.TProducto;
@@ -868,15 +869,26 @@ private void almacenarPedidos(DataRestaurante res) {
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 
-    private static DataUsuario dataUsuario(java.lang.String arg0) throws Exception_Exception {
-        servidor.ControladorUsuarioPublicadorService service = new servidor.ControladorUsuarioPublicadorService();
+   
+    
+    
+    private static DataUsuario dataUsuario(java.lang.String arg0) throws Exception_Exception, FileNotFoundException {
+        //servidor.ControladorUsuarioPublicadorService service = new servidor.ControladorUsuarioPublicadorService();
+       // servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
+        
+         servidor.ControladorUsuarioPublicadorService service =  new servidor.ControladorUsuarioPublicadorService();
         servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
+        
         return port.obtenerUsuario(arg0);
     }
 
-    private static boolean existeNick(java.lang.String arg0) {
-        servidor.ControladorUsuarioPublicadorService service = new servidor.ControladorUsuarioPublicadorService();
+    private static boolean existeNick(java.lang.String arg0) throws FileNotFoundException {
+        //servidor.ControladorUsuarioPublicadorService service = new servidor.ControladorUsuarioPublicadorService();
+        //servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
+
+        servidor.ControladorUsuarioPublicadorService service =  new servidor.ControladorUsuarioPublicadorService();
         servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
+        
         return port.existeUsuario(arg0);
     }
 
