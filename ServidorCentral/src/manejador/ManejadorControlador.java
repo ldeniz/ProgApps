@@ -8,11 +8,7 @@ import controlador.ControladorCategoria;
 import controlador.ControladorPedido;
 import controlador.ControladorProducto;
 import controlador.ControladorUsuario;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import modelo.Categoria;
-import modelo.Restaurante;
 
 /**
  *

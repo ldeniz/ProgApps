@@ -5,20 +5,9 @@
  */
 package GUI;
 
-import servidor.DataDireccion;
-import servidor.DataPedido;
-import servidor.DataPedidoProduco;
-import servidor.DataProducto;
-import servidor.DataRestaurante;
-import servidor.DataUsuario;
-import servidor.EnumEstado;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import javax.persistence.EntityManager;
@@ -26,12 +15,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import qomobile.Propiedades;
+import proxy.ControladorUsuarioPublicador;
+import proxy.ControladorUsuarioPublicadorService;
+import proxy.DataPedido;
+import proxy.DataRestaurante;
+import proxy.DataUsuario;
+import proxy.EnumEstado;
+import proxy.Exception_Exception;
 import qomobile.THistorial;
 import qomobile.TPedido;
 import qomobile.TProducto;
-import servidor.DataRestauranteArray;
-import servidor.Exception_Exception;
 
 /**
  *
@@ -662,7 +655,7 @@ private void almacenarPedidos(DataRestaurante res) {
                 modeloPedidos.removeRow(i);
             }
             //DESCOMENTAR CUANDO ESTEN LOS PUBLICADORES
-            servidor.DataUsuario u = dataUsuario(usu);
+            DataUsuario u = dataUsuario(usu);
  
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
             EntityManager em = emf.createEntityManager();
@@ -876,8 +869,8 @@ private void almacenarPedidos(DataRestaurante res) {
         //servidor.ControladorUsuarioPublicadorService service = new servidor.ControladorUsuarioPublicadorService();
        // servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
         
-         servidor.ControladorUsuarioPublicadorService service =  new servidor.ControladorUsuarioPublicadorService();
-        servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
+         ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+        ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
         
         return port.obtenerUsuario(arg0);
     }
@@ -886,8 +879,8 @@ private void almacenarPedidos(DataRestaurante res) {
         //servidor.ControladorUsuarioPublicadorService service = new servidor.ControladorUsuarioPublicadorService();
         //servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
 
-        servidor.ControladorUsuarioPublicadorService service =  new servidor.ControladorUsuarioPublicadorService();
-        servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
+        ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+        ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
         
         return port.existeUsuario(arg0);
     }
