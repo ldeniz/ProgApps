@@ -6,6 +6,7 @@
 package modelo;
 
 import datatype.DataDireccion;
+import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
@@ -71,13 +72,20 @@ public class Restaurante extends Usuario implements Serializable {
     @Override
     public DataUsuario obtenerDatosUsuario() {
         ArrayList<DataProducto> dataProductos = new ArrayList<>();
+        ArrayList<DataPedido> dataPedidos = new ArrayList<>();
 
         if (!productos.isEmpty()) {
             for (Producto p : productos) {
                 dataProductos.add(p.obtenerDatosProducto());
             }
         }
-        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, getPuntajePromedio(), cantidadPuntuaciones, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion());
+        ArrayList<Pedido> lp = getPedidos();
+        if (!lp.isEmpty()){
+            for (Pedido pe : lp){
+                dataPedidos.add(pe.obtenerDatosPedido());
+            }
+        }
+        DataUsuario dataUsuario = new DataRestaurante(rutaImagen, dataProductos, getPuntajePromedio(), cantidadPuntuaciones, this.getNickname(), this.getMail(), this.getNombre(), this.getPass(), this.getDireccion(), dataPedidos);
         return dataUsuario;
     }
 

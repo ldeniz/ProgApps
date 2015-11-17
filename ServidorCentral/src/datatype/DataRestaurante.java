@@ -30,8 +30,8 @@ public class DataRestaurante extends DataUsuario {
         this.rutaImagen = rutaImagen;
     }
 
-    public DataRestaurante(String[] rutaImagen, ArrayList<DataProducto> dataProductos, float puntajePromedio, int cantidadPuntaje, String nickname, String mail, String nombre, String pass, DataDireccion direccion) {
-        super(nickname, mail, nombre, pass, direccion);
+    public DataRestaurante(String[] rutaImagen, ArrayList<DataProducto> dataProductos, float puntajePromedio, int cantidadPuntaje, String nickname, String mail, String nombre, String pass, DataDireccion direccion, ArrayList<DataPedido> dataPedidos) {
+        super(nickname, mail, nombre, pass, direccion, dataPedidos);
         this.rutaImagen = rutaImagen;
         this.dataProductos = dataProductos;
         this.puntajePromedio = puntajePromedio;
