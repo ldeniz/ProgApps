@@ -7,7 +7,9 @@ package GUI;
 
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 import javax.persistence.EntityManager;
@@ -15,9 +17,15 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import proxy.ControladorPedidoPublicador;
+import proxy.ControladorPedidoPublicadorService;
 import proxy.ControladorUsuarioPublicador;
 import proxy.ControladorUsuarioPublicadorService;
 import proxy.DataPedido;
+import proxy.DataPedidoProduco;
 import proxy.DataRestaurante;
 import proxy.DataUsuario;
 import proxy.EnumEstado;
@@ -455,11 +463,11 @@ public class QOMobileGUI extends javax.swing.JFrame {
                         fila1[0] = "" + (Integer) entry.getNumero();
                         fila1[1] = entry.getNickNameCliente();
                         fila1[2] = "" + entry.getEstado();
-                        //fila1[3] = "" + entry.getFechaPedido();
+                        fila1[3] = "" + entry.getFechaPedido();
                         modeloPedidos.addRow(fila1);
                         
                     }
-                    //almacenarPedidos(res);
+                    almacenarPedidos(res);
                     }
                     estadoConexion.setText("Conectado");
                     general.removeAll();
@@ -495,7 +503,8 @@ private void almacenarPedidos(DataRestaurante res) {
             THistorial h = new THistorial();
             h.setNumero(entry.getNumero());
             h.setEstado(EnumEstado.PREPARACION);
-            //h.setFecha(entry.getFechaPedido());
+            
+            h.setFecha(entry.getFechaPedido());
             try {
                 em.getTransaction().begin();
                 em.persist(pedido);
@@ -530,8 +539,8 @@ private void almacenarPedidos(DataRestaurante res) {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            ArrayList<DataPedidoProduco> prod = entry.getDataPedidoProducos();
+            }*/
+            List<DataPedidoProduco> prod = entry.getDataPedidoProducos();
             for (DataPedidoProduco productos : prod) {    
                 TProducto p = new TProducto();
                 p.setNumero(entry.getNumero());
@@ -545,19 +554,25 @@ private void almacenarPedidos(DataRestaurante res) {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-            }*/
+            }
         }
         em.close();
     }
     private static DataPedido obtenerPedido(int numero) throws FileNotFoundException{
-        return null;
-       // publicadores.PPedido port = Propiedades.getInstance().obtenerService("PPedido").getPort(publicadores.PPedido.class);
-       // return port.obtenerPedido(numero);
+        
+       ControladorPedidoPublicadorService service =  new ControladorPedidoPublicadorService();
+       ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
+       port.seleccionarPedido(numero);
+       return null;
     }
 
-    private static void actualizarEstado(int numero, EnumEstado estado) throws FileNotFoundException {
-        //publicadores.PPedido port = Propiedades.getInstance().obtenerService("PPedido").getPort(publicadores.PPedido.class);
-        //port.actualizarEstado(numero, estado);
+    private static void actualizarEstado(int numero, EnumEstado estado) throws FileNotFoundException, Exception_Exception {
+
+        ControladorPedidoPublicadorService service =  new ControladorPedidoPublicadorService();
+        ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
+        port.seleccionarPedido(numero);
+        port.seleccionarEstado(estado);
+        port.actualizarPedido();
     }
     
     
@@ -579,11 +594,11 @@ private void almacenarPedidos(DataRestaurante res) {
                 String aux = (String) modeloPedidos.getValueAt(index2, 0);
                 Integer num = Integer.parseInt(aux);
                 if (index == 0) {
-                    //actualizarPedido(num, publicadores.EnumEstado.RECIBIDO);
-                    actualizarPedido(num, EnumEstado.RECIBIDO);
+                    actualizarPedido(num, proxy.EnumEstado.RECIBIDO);
+                    
                 } else if (index == 1) {
-                    //actualizarPedido(num, publicadores.EnumEstado.ENVIADO);
-                    actualizarPedido(num, EnumEstado.ENVIADO);
+                    actualizarPedido(num, proxy.EnumEstado.ENVIADO);
+                    
                 }
             }
 
@@ -592,7 +607,7 @@ private void almacenarPedidos(DataRestaurante res) {
                 modeloPedidos.removeRow(i);
             }
 
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
             EntityManager em = emf.createEntityManager();
             List resultList = em.createQuery("SELECT a FROM TPedido a").getResultList();
 
@@ -618,15 +633,20 @@ private void almacenarPedidos(DataRestaurante res) {
             estadoConexion.setText("Desconectado");
         }        
     }//GEN-LAST:event_actualizarEstadoActionPerformed
-    private void actualizarPedido(int numero, EnumEstado estado) throws FileNotFoundException {      
+    private void actualizarPedido(int numero, EnumEstado estado) throws FileNotFoundException, Exception_Exception, DatatypeConfigurationException {      
         actualizarEstado(numero,estado);  
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
         EntityManager em = emf.createEntityManager();
-        Calendar cal = Calendar.getInstance();    
+        
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+        XMLGregorianCalendar now = datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
+        
+        
         THistorial h = new THistorial();
         h.setNumero(numero);
         h.setEstado(estado);
-        h.setFecha(cal);
+        h.setFecha(now);
         try {
             em.getTransaction().begin();
             em.persist(h);
@@ -657,7 +677,7 @@ private void almacenarPedidos(DataRestaurante res) {
             //DESCOMENTAR CUANDO ESTEN LOS PUBLICADORES
             DataUsuario u = dataUsuario(usu);
  
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
             em.createQuery("DELETE FROM THistorial").executeUpdate();
@@ -690,7 +710,7 @@ private void almacenarPedidos(DataRestaurante res) {
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void cargarBasePedidos(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
         EntityManager em = emf.createEntityManager();
         List losPedidos = em.createQuery("SELECT a FROM TPedido a").getResultList();
 
@@ -724,7 +744,7 @@ private void almacenarPedidos(DataRestaurante res) {
             String aux = (String) modeloPedidos.getValueAt(index, 0);
             Integer num = Integer.parseInt(aux);                    
 
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrderMobilePU");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
             EntityManager em = emf.createEntityManager();
             Object resultado = em.createQuery("SELECT a FROM TPedido a WHERE (a.numero = " + num +")").getSingleResult();
 
@@ -748,7 +768,7 @@ private void almacenarPedidos(DataRestaurante res) {
             }
             cambioEstados.removeAllItems();
             EnumEstado e = ((THistorial)lista2.get(0)).getEstado();
-            //if (e == publicadores.EstadoPedido.EN_PREPARACION) {
+            
             if (e == EnumEstado.PREPARACION) {
                 cambioEstados.addItem("Enviado");
                 cambioEstados.addItem("Recibido");
@@ -762,7 +782,7 @@ private void almacenarPedidos(DataRestaurante res) {
 
             usuario.setText(((TPedido)resultado).getCliente());
             int asd = lista2.size() - 1;
-            Calendar data = ((THistorial)lista2.get(asd)).getFecha();
+            XMLGregorianCalendar data = ((THistorial)lista2.get(asd)).getFecha();
             fecha.setText("" + data);
             precio.setText("" + ((TPedido)resultado).getTotal());
 
@@ -866,18 +886,14 @@ private void almacenarPedidos(DataRestaurante res) {
     
     
     private static DataUsuario dataUsuario(java.lang.String arg0) throws Exception_Exception, FileNotFoundException {
-        //servidor.ControladorUsuarioPublicadorService service = new servidor.ControladorUsuarioPublicadorService();
-       // servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
-        
-         ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+ 
+        ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
         ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
         
         return port.obtenerUsuario(arg0);
     }
 
     private static boolean existeNick(java.lang.String arg0) throws FileNotFoundException {
-        //servidor.ControladorUsuarioPublicadorService service = new servidor.ControladorUsuarioPublicadorService();
-        //servidor.ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
 
         ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
         ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
