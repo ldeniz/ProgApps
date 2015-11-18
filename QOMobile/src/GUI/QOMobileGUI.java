@@ -504,7 +504,7 @@ private void almacenarPedidos(DataRestaurante res) {
             h.setNumero(entry.getNumero());
             h.setEstado(EnumEstado.PREPARACION);
             
-            h.setFecha(entry.getFechaPedido());
+            h.setFecha(entry.getFechaPedido().toGregorianCalendar());
             try {
                 em.getTransaction().begin();
                 em.persist(pedido);
@@ -646,7 +646,7 @@ private void almacenarPedidos(DataRestaurante res) {
         THistorial h = new THistorial();
         h.setNumero(numero);
         h.setEstado(estado);
-        h.setFecha(now);
+        h.setFecha(now.toGregorianCalendar());
         try {
             em.getTransaction().begin();
             em.persist(h);
@@ -782,7 +782,7 @@ private void almacenarPedidos(DataRestaurante res) {
 
             usuario.setText(((TPedido)resultado).getCliente());
             int asd = lista2.size() - 1;
-            XMLGregorianCalendar data = ((THistorial)lista2.get(asd)).getFecha();
+            Calendar data = ((THistorial)lista2.get(asd)).getFecha();
             fecha.setText("" + data);
             precio.setText("" + ((TPedido)resultado).getTotal());
 

@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
-import javax.xml.datatype.XMLGregorianCalendar;
 import proxy.EnumEstado;
 
 /**
@@ -27,14 +26,14 @@ public class THistorial implements Serializable {
     private Long id;
     private int numero;
     private int estado;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private XMLGregorianCalendar fecha;
+     @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar fecha;
 
     public int getNumero() {
         return numero;
     }
 
-    public void setFecha(XMLGregorianCalendar fecha) {
+    public void setFecha(Calendar fecha) {
         this.fecha = fecha;
 
     }
@@ -47,7 +46,7 @@ public class THistorial implements Serializable {
         }else return EnumEstado.RECIBIDO;    
     }
     
-    public XMLGregorianCalendar getFecha() {
+    public Calendar getFecha() {
         return fecha;
     }
     
