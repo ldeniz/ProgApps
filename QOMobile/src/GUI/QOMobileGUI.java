@@ -724,7 +724,7 @@ private void almacenarPedidos(DataRestaurante res) {
             fila1[2] = ((THistorial)estado).getEstado().toString();
             int cantidad = lista.size() - 1;
             Object fecha = lista.get(cantidad);
-            fila1[3] = "" + ((THistorial)fecha).getFecha();
+            fila1[3] = "" + ((THistorial)fecha).getFecha().toString();
             modeloPedidos.addRow(fila1);
         }      
         
@@ -762,7 +762,7 @@ private void almacenarPedidos(DataRestaurante res) {
             for (Object obj : lista2) {
                 String[] fila2 = new String[3];
                 fila2[0] = ((THistorial)obj).getEstado().toString();
-                fila2[1] = "" + ((THistorial)obj).getFecha();
+                fila2[1] = "" + ((THistorial)obj).getFecha().getTime().toLocaleString();
                 fila2[2] = "" + ((THistorial)obj).getNumero();
                 historial.addRow(fila2);
             }
@@ -783,9 +783,9 @@ private void almacenarPedidos(DataRestaurante res) {
             usuario.setText(((TPedido)resultado).getCliente());
             int asd = lista2.size() - 1;
             Calendar data = ((THistorial)lista2.get(asd)).getFecha();
-            fecha.setText("" + data);
+            fecha.setText("" + data.getTime().toLocaleString());
             precio.setText("" + ((TPedido)resultado).getTotal());
-
+            estadoActual.setText("" + ((THistorial)lista2.get(asd)).getEstado());   
 
             general.removeAll();
             general.add(verPedido);
