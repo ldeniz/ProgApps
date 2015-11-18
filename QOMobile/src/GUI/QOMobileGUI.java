@@ -594,10 +594,10 @@ private void almacenarPedidos(DataRestaurante res) {
                 String aux = (String) modeloPedidos.getValueAt(index2, 0);
                 Integer num = Integer.parseInt(aux);
                 if (index == 0) {
-                    actualizarPedido(num, proxy.EnumEstado.RECIBIDO);
+                    actualizarPedido(num, EnumEstado.RECIBIDO);
                     
                 } else if (index == 1) {
-                    actualizarPedido(num, proxy.EnumEstado.ENVIADO);
+                    actualizarPedido(num, EnumEstado.ENVIADO);
                     
                 }
             }
@@ -620,7 +620,7 @@ private void almacenarPedidos(DataRestaurante res) {
                 fila1[2] = "" + ((THistorial)estado).getEstado();
                 int cantidad = lista.size() - 1;
                 Object fecha = lista.get(cantidad);
-                fila1[3] = "" + ((THistorial)fecha).getFecha();
+                fila1[3] = "" + ((THistorial)fecha).getFecha().toString();
                 modeloPedidos.addRow(fila1);
             }
             
