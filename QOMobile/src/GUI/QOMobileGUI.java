@@ -513,7 +513,7 @@ private void almacenarPedidos(DataRestaurante res) {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-           /*
+           
             if(entry.getHistorial().get(0) != null){
                 THistorial h1 = new THistorial();
                 h1.setNumero(entry.getNumero());
@@ -539,7 +539,7 @@ private void almacenarPedidos(DataRestaurante res) {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-            }*/
+            }
             List<DataPedidoProduco> prod = entry.getDataPedidoProducos();
             for (DataPedidoProduco productos : prod) {    
                 TProducto p = new TProducto();
