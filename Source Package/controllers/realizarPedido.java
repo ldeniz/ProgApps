@@ -5,8 +5,7 @@
  */
 package controllers;
 
-import fabrica.Fabrica;
-import interfaces.IControladorPedido;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -18,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import servidor.ControladorPedidoPublicador;
+import servidor.ControladorPedidoPublicadorService;
 
 
 
@@ -30,7 +31,9 @@ public class realizarPedido extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException
         {
-            IControladorPedido pd = Fabrica.getInstance().obtenerControladorPedido();
+        ControladorPedidoPublicadorService service =  new ControladorPedidoPublicadorService();
+        ControladorPedidoPublicador pd = service.getControladorPedidoPublicadorPort();
+            
             System.out.println("requestaaaa" + request);
             System.out.println("response"+ response);
             String cliente = (String)request.getSession().getAttribute("usuario_logueado");

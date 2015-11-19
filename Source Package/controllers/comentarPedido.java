@@ -5,8 +5,7 @@
  */
 package controllers;
 
-import fabrica.Fabrica;
-import interfaces.IControladorPedido;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -16,6 +15,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import servidor.ControladorPedidoPublicador;
+import servidor.ControladorPedidoPublicadorService;
+import servidor.ControladorUsuarioPublicador;
+import servidor.ControladorUsuarioPublicadorService;
 
 /**
  *
@@ -26,8 +29,10 @@ public class comentarPedido extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        IControladorPedido pd = Fabrica.getInstance().obtenerControladorPedido();
-
+        
+        ControladorPedidoPublicadorService service =  new ControladorPedidoPublicadorService();
+        ControladorPedidoPublicador pd = service.getControladorPedidoPublicadorPort();
+            
         String comentario = request.getParameter("comentario");
         float puntuacion = Float.parseFloat(request.getParameter("puntuacion"));
         int idPedido = Integer.parseInt(request.getParameter("idPedido"));

@@ -6,13 +6,10 @@
 package controllers;
 
 import static controllers.Home.initSession;
-import datatype.DataCategoria;
-import datatype.DataPedido;
-import datatype.DataRestaurante;
-import fabrica.Fabrica;
-import interfaces.IControladorCategoria;
-import interfaces.IControladorPedido;
-import interfaces.IControladorUsuario;
+import java.io.FileNotFoundException;
+import servidor.DataCategoria;
+import servidor.DataPedido;
+import servidor.DataRestaurante;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import servidor.ControladorCategoriaPublicador;
+import servidor.ControladorCategoriaPublicadorService;
+import servidor.ControladorPedidoPublicador;
+import servidor.ControladorPedidoPublicadorService;
+import servidor.ControladorUsuarioPublicador;
+import servidor.ControladorUsuarioPublicadorService;
+import servidor.DataCategoriaArray;
+import servidor.DataPedidoArray;
+import servidor.DataRestauranteArray;
 
 /**
  *
@@ -37,34 +43,38 @@ public class Restaurantes extends HttpServlet {
         if (restaurante == null) {
 
         } else {
-            IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
+            ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+            ControladorUsuarioPublicador iUsr = service.getControladorUsuarioPublicadorPort();
             DataRestaurante resto = (DataRestaurante) iUsr.obtenerUsuario(restaurante);
             req.setAttribute("datosRes", resto);
-            IControladorPedido icp = Fabrica.getInstance().obtenerControladorPedido();
-            ArrayList<DataPedido> ldp = icp.listarPedidos(restaurante);
+
+            ControladorPedidoPublicadorService service2 =  new ControladorPedidoPublicadorService();
+            ControladorPedidoPublicador ldp = service2.getControladorPedidoPublicadorPort();
+            /*DataPedidoArray ldp = icp.listarPedidos(restaurante);
             if (ldp != null && !ldp.isEmpty()) {
                 req.setAttribute("datosPedidoRes", ldp);
-            }
+            }*/
         }
 
         req.getRequestDispatcher("/WEB-INF/home/restaurantes.jsp").
                 forward(req, resp);
     }
 
-    static public List<DataCategoria> getCategorias(HttpServletRequest request) {
-        IControladorCategoria cCat = Fabrica.getInstance().obtenerControladorCategoria();
-        List<DataCategoria> categorias = cCat.listarCategorias();
+    static public DataCategoriaArray getCategorias(HttpServletRequest request) throws FileNotFoundException {
+        ControladorCategoriaPublicadorService service2 =  new ControladorCategoriaPublicadorService();
+        ControladorCategoriaPublicador cCat = service2.getControladorCategoriaPublicadorPort();
+        DataCategoriaArray categorias = cCat.listarCategorias();
         return categorias;
     }
 
-    static public ArrayList<DataRestaurante> getRestaurantes(HttpServletRequest request, String resto) throws Exception {
-        IControladorUsuario iUsr = Fabrica.getInstance().obtenerControladorUsuario();
-
+    static public DataRestauranteArray getRestaurantes(HttpServletRequest request, String resto) throws Exception {
+        ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+        ControladorUsuarioPublicador iUsr = service.getControladorUsuarioPublicadorPort();
         if (resto == null) {
-            ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes();
+            DataRestauranteArray restaurantes = iUsr.listarRestaurantes();
             return restaurantes;
         } else {
-            ArrayList<DataRestaurante> restaurantes = iUsr.listarRestaurantes(resto);
+            DataRestauranteArray restaurantes = iUsr.listarRestaurantes2(resto);
             return restaurantes;
         }
 

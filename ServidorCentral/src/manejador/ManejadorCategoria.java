@@ -19,7 +19,7 @@ public class ManejadorCategoria {
     private static ManejadorCategoria instancia;
     private final HashMap<String, Categoria> categorias;
 
-    private ManejadorCategoria() {
+    ManejadorCategoria() {
         categorias = new HashMap<>();
     }
 

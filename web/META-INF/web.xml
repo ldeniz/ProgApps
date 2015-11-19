@@ -8,16 +8,6 @@
         <servlet-name>Home</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>cargarDatos</servlet-name>
-        <servlet-class>controllers.cargarDatos</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>cargarDatos</servlet-name>
-        <url-pattern>/cargarDatos</url-pattern>
-    </servlet-mapping>
-    
     <servlet>
         <servlet-name>Restaurantes</servlet-name>
         <servlet-class>controllers.Restaurantes</servlet-class>
@@ -66,7 +56,6 @@
         <servlet-name>Servlet Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Realizar Pedido</servlet-name>
         <servlet-class>controllers.realizarPedido</servlet-class>
@@ -75,7 +64,6 @@
         <servlet-name>Realizar Pedido</servlet-name>
         <url-pattern>/realizarPedido</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>usuario</servlet-name>
         <servlet-class>controllers.usuario</servlet-class>
@@ -84,7 +72,6 @@
         <servlet-name>usuario</servlet-name>
         <url-pattern>/usuario</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>comentarPedido</servlet-name>
         <servlet-class>controllers.comentarPedido</servlet-class>
@@ -93,8 +80,7 @@
         <servlet-name>comentarPedido</servlet-name>
         <url-pattern>/comentarPedido</url-pattern>
     </servlet-mapping>
-    
-     <servlet>
+    <servlet>
         <servlet-name>registrarCliente</servlet-name>
         <servlet-class>controllers.registrarCliente</servlet-class>
     </servlet>
@@ -102,7 +88,6 @@
         <servlet-name>registrarCliente</servlet-name>
         <url-pattern>/registrarCliente</url-pattern>
     </servlet-mapping>
-    
     <session-config>
         <session-timeout>
             30
