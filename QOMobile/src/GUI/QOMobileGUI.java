@@ -456,8 +456,7 @@ public class QOMobileGUI extends javax.swing.JFrame {
                     usuarioLogeado.setText(usu);
                     
                     List<DataPedido> losPedidos = res.getPedidos();
-                    if(losPedidos != null){
-                        JOptionPane.showMessageDialog(this,"Hay Pedido");
+                    if(losPedidos != null){                        
                     for (DataPedido entry : losPedidos) {
                         String[] fila1 = new String[4];
                         fila1[0] = "" + (Integer) entry.getNumero();
@@ -513,12 +512,12 @@ private void almacenarPedidos(DataRestaurante res) {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-           /*
-            if(entry.getHistorial().get(0) != null){
+           
+            if(entry.getHistorial().size() == 1){
                 THistorial h1 = new THistorial();
                 h1.setNumero(entry.getNumero());
                 h1.setEstado(EnumEstado.ENVIADO);
-                h1.setFecha(entry.getHistorial().get(0));
+                h1.setFecha(entry.getHistorial().get(0).toGregorianCalendar());
                 try {
                     em.getTransaction().begin();
                     em.persist(h1);
@@ -527,11 +526,11 @@ private void almacenarPedidos(DataRestaurante res) {
                     e.printStackTrace();
                 }
             }
-            if(entry.getHistorial().get(1) != null){
+            if(entry.getHistorial().size() == 2){
                 THistorial h1 = new THistorial();
                 h1.setNumero(entry.getNumero());
                 h1.setEstado(EnumEstado.RECIBIDO);
-                h1.setFecha(entry.getHistorial().get(1));
+                h1.setFecha(entry.getHistorial().get(1).toGregorianCalendar());
                 try {
                     em.getTransaction().begin();
                     em.persist(h1);
@@ -539,7 +538,7 @@ private void almacenarPedidos(DataRestaurante res) {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-            }*/
+            }
             List<DataPedidoProduco> prod = entry.getDataPedidoProducos();
             for (DataPedidoProduco productos : prod) {    
                 TProducto p = new TProducto();

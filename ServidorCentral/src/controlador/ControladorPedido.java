@@ -143,6 +143,7 @@ public class ControladorPedido implements IControladorPedido {
             case PREPARACION:
                 if (estado == EnumEstado.ENVIADO || estado == EnumEstado.RECIBIDO) {
                     p.setEstado(estado);
+                    p.setFechaCambioEstado(Calendar.getInstance());
                 } else {
                     throw new Exception("No se puede pasar de estado PREPARACION a " + p.getEstado());
                 }
@@ -150,6 +151,7 @@ public class ControladorPedido implements IControladorPedido {
             case ENVIADO:
                 if (estado == EnumEstado.RECIBIDO) {
                     p.setEstado(estado);
+                    p.setFechaCambioEstado(Calendar.getInstance());
                 } else {
                     throw new Exception("No se puede pasar de estado ENVIADO a " + p.getEstado());
                 }

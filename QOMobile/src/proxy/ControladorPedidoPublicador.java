@@ -27,24 +27,6 @@ public interface ControladorPedidoPublicador {
 
     /**
      * 
-     * @param arg0
-     * @return
-     *     returns proxy.DataPedidoArray
-     * @throws Exception_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorPedidoPublicador/listarPedidos2Request", output = "http://servidor/ControladorPedidoPublicador/listarPedidos2Response", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/listarPedidos2/Fault/Exception")
-    })
-    public DataPedidoArray listarPedidos2(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0)
-        throws Exception_Exception
-    ;
-
-    /**
-     * 
      * @param arg2
      * @param arg1
      * @param arg0
@@ -61,6 +43,24 @@ public interface ControladorPedidoPublicador {
         String arg1,
         @WebParam(name = "arg2", partName = "arg2")
         float arg2)
+        throws Exception_Exception
+    ;
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns proxy.DataPedidoArray
+     * @throws Exception_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorPedidoPublicador/listarPedidos2Request", output = "http://servidor/ControladorPedidoPublicador/listarPedidos2Response", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/listarPedidos2/Fault/Exception")
+    })
+    public DataPedidoArray listarPedidos2(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0)
         throws Exception_Exception
     ;
 

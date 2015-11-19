@@ -24,11 +24,13 @@ public class Pedido implements Serializable {
     private Calendar fechaPedido;
     private float precioTotal;
     private EnumEstado estado;
+    private ArrayList<Calendar> historial;
     private ArrayList<PedidoProduco> pedidoProducos;
     private Comentario comentario;
 
     public Pedido() {
         pedidoProducos = new ArrayList<>();
+        historial = new ArrayList<>();
     }
 
     public Pedido(int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList<PedidoProduco> pedidoProducos) {
@@ -103,6 +105,18 @@ public class Pedido implements Serializable {
         this.comentario = comentario;
     }
 
+    public ArrayList<Calendar> getHistorial() {        
+        return historial;
+    }
+
+    public void setHistorial(ArrayList<Calendar> historial) {
+        this.historial = historial;
+    }
+    
+    public void setFechaCambioEstado(Calendar fecha){
+        historial.add(fecha);
+    }
+
     public void agregarProducto(PedidoProduco producto) {
         pedidoProducos.add(producto);
     }
@@ -116,7 +130,7 @@ public class Pedido implements Serializable {
         if (comentario == null) {
             dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp);
         } else {
-            dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp, comentario.obtenerDatosComentario());
+            dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, historial, ldpp, comentario.obtenerDatosComentario());
         }
         return dp;
     }

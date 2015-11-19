@@ -27,6 +27,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="fechaPedido" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="precioTotal" type="{http://www.w3.org/2001/XMLSchema}float"/>
  *         &lt;element name="estado" type="{http://servidor/}enumEstado" minOccurs="0"/>
+ *         &lt;element name="historial" type="{http://www.w3.org/2001/XMLSchema}dateTime" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="dataPedidoProducos" type="{http://servidor/}dataPedidoProduco" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="dataComentario" type="{http://servidor/}dataComentario" minOccurs="0"/>
  *       &lt;/sequence>
@@ -45,6 +46,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "fechaPedido",
     "precioTotal",
     "estado",
+    "historial",
     "dataPedidoProducos",
     "dataComentario"
 })
@@ -58,6 +60,9 @@ public class DataPedido {
     protected float precioTotal;
     @XmlSchemaType(name = "string")
     protected EnumEstado estado;
+    @XmlElement(nillable = true)
+    @XmlSchemaType(name = "dateTime")
+    protected List<XMLGregorianCalendar> historial;
     @XmlElement(nillable = true)
     protected List<DataPedidoProduco> dataPedidoProducos;
     protected DataComentario dataComentario;
@@ -188,6 +193,35 @@ public class DataPedido {
      */
     public void setEstado(EnumEstado value) {
         this.estado = value;
+    }
+
+    /**
+     * Gets the value of the historial property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the historial property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getHistorial().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link XMLGregorianCalendar }
+     * 
+     * 
+     */
+    public List<XMLGregorianCalendar> getHistorial() {
+        if (historial == null) {
+            historial = new ArrayList<XMLGregorianCalendar>();
+        }
+        return this.historial;
     }
 
     /**

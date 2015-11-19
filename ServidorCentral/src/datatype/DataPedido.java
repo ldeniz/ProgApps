@@ -23,6 +23,7 @@ public class DataPedido {
     private Calendar fechaPedido;
     private float precioTotal;
     private EnumEstado estado;
+    private ArrayList<Calendar> historial;
     private ArrayList<DataPedidoProduco> dataPedidoProducos;
     private DataComentario dataComentario;
 
@@ -46,6 +47,18 @@ public class DataPedido {
         this.fechaPedido = fechaPedido;
         this.precioTotal = precioTotal;
         this.estado = estado;
+        this.dataPedidoProducos = dataPedidoProducos;
+        this.dataComentario = dataComentario;
+    }
+
+    public DataPedido(String nickNameCliente, String nickNameRestaurante, int numero, Calendar fechaPedido, float precioTotal, EnumEstado estado, ArrayList<Calendar> historial, ArrayList<DataPedidoProduco> dataPedidoProducos, DataComentario dataComentario) {
+        this.nickNameCliente = nickNameCliente;
+        this.nickNameRestaurante = nickNameRestaurante;
+        this.numero = numero;
+        this.fechaPedido = fechaPedido;
+        this.precioTotal = precioTotal;
+        this.estado = estado;
+        this.historial = historial;
         this.dataPedidoProducos = dataPedidoProducos;
         this.dataComentario = dataComentario;
     }
@@ -112,6 +125,14 @@ public class DataPedido {
 
     public void setDataComentario(DataComentario dataComentario) {
         this.dataComentario = dataComentario;
+    }
+
+    public ArrayList<Calendar> getHistorial() {
+        return historial;
+    }
+
+    public void setHistorial(ArrayList<Calendar> historial) {
+        this.historial = historial;
     }
 
 }
