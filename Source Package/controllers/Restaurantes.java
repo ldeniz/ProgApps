@@ -7,11 +7,7 @@ package controllers;
 
 import static controllers.Home.initSession;
 import java.io.FileNotFoundException;
-import servidor.DataCategoria;
-import servidor.DataPedido;
-import servidor.DataRestaurante;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,15 +15,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import servidor.ControladorCategoriaPublicador;
-import servidor.ControladorCategoriaPublicadorService;
-import servidor.ControladorPedidoPublicador;
-import servidor.ControladorPedidoPublicadorService;
-import servidor.ControladorUsuarioPublicador;
-import servidor.ControladorUsuarioPublicadorService;
-import servidor.DataCategoriaArray;
-import servidor.DataPedidoArray;
-import servidor.DataRestauranteArray;
+import proxy.ControladorCategoriaPublicador;
+import proxy.ControladorCategoriaPublicadorService;
+import proxy.ControladorPedidoPublicador;
+import proxy.ControladorPedidoPublicadorService;
+import proxy.ControladorUsuarioPublicador;
+import proxy.ControladorUsuarioPublicadorService;
+import proxy.DataCategoriaArray;
+import proxy.DataPedido;
+import proxy.DataRestaurante;
+import proxy.DataRestauranteArray;
 
 /**
  *
@@ -49,11 +46,11 @@ public class Restaurantes extends HttpServlet {
             req.setAttribute("datosRes", resto);
 
             ControladorPedidoPublicadorService service2 =  new ControladorPedidoPublicadorService();
-            ControladorPedidoPublicador ldp = service2.getControladorPedidoPublicadorPort();
-            /*DataPedidoArray ldp = icp.listarPedidos(restaurante);
+            ControladorPedidoPublicador icp = service2.getControladorPedidoPublicadorPort();
+            List<DataPedido> ldp = icp.listarPedidos2(restaurante).getItem();
             if (ldp != null && !ldp.isEmpty()) {
                 req.setAttribute("datosPedidoRes", ldp);
-            }*/
+            }
         }
 
         req.getRequestDispatcher("/WEB-INF/home/restaurantes.jsp").

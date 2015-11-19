@@ -1,5 +1,5 @@
 <%@page import="controllers.Login"%>
-<%@page import="datatype.DataUsuario"%>
+<%@page import="proxy.DataUsuario"%>
 <div id="pedidos">
     <%
 		DataUsuario usr;

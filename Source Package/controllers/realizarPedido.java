@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import servidor.ControladorPedidoPublicador;
-import servidor.ControladorPedidoPublicadorService;
+import proxy.ControladorPedidoPublicador;
+import proxy.ControladorPedidoPublicadorService;
 
 
 

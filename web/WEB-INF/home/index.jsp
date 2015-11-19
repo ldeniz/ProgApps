@@ -1,8 +1,8 @@
 <%@page import="java.util.Arrays"%>
-<%@page import="datatype.DataRestaurante"%>
+<%@page import="proxy.DataRestaurante"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="datatype.DataCategoria"%>
+<%@page import="proxy.DataCategoria"%>
 <%@page import="controllers.Restaurantes"%>
 <jsp:include page="/WEB-INF/template/header.jsp"/>
 	
@@ -28,7 +28,7 @@
                                     String todos = request.getParameter("cat");
                                     
                                     //if(todos==null) todos="all";
-                                    List<DataCategoria> categorias = Restaurantes.getCategorias(request);
+                                    List<DataCategoria> categorias = Restaurantes.getCategorias(request).getItem();
                                     for(DataCategoria cat : categorias){
                                         %>        
                                         <a id="<%=cat.getNombre() %>" href="?cat=<%=cat.getNombre() %>" class="list-group-item"><%=cat.getNombre() %></a>
@@ -45,9 +45,9 @@
                             
                                        
                                     <%
-                                    ArrayList<DataRestaurante> restaurantes = Restaurantes.getRestaurantes(request,todos);
+                                    List<DataRestaurante> restaurantes = Restaurantes.getRestaurantes(request,todos).getItem();                                    
                                     for(DataRestaurante res : restaurantes){
-                                        String aca = Arrays.toString(res.getRutaImagen());
+                                        String aca = (res.getRutaImagen().toArray().toString());
                                         aca = aca.substring(1, aca.length()-3);
                                         aca = aca.replace(",", "");
                                         %>        

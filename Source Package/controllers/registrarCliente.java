@@ -5,13 +5,9 @@
  */
 package controllers;
 
-import servidor.DataDireccion;
-import servidor.DataPedido;
 import java.io.IOException;
-import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,8 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  *

@@ -15,10 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import servidor.ControladorPedidoPublicador;
-import servidor.ControladorPedidoPublicadorService;
-import servidor.ControladorUsuarioPublicador;
-import servidor.ControladorUsuarioPublicadorService;
+import proxy.ControladorPedidoPublicador;
+import proxy.ControladorPedidoPublicadorService;
 
 /**
  *

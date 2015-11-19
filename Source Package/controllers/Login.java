@@ -16,6 +16,9 @@ import javax.servlet.http.HttpSession;
 import model.EstadoSesion;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import proxy.ControladorUsuarioPublicador;
+import proxy.ControladorUsuarioPublicadorService;
+import proxy.DataUsuario;
 
 
 

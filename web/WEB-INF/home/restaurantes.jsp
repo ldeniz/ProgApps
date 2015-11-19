@@ -1,14 +1,15 @@
-<%@page import="datatype.DataIndividualPromocion"%>
-<%@page import="datatype.DataPromocion"%>
+<%@page import="java.util.List"%>
+<%@page import="proxy.DataIndividualPromocion"%>
+<%@page import="proxy.DataPromocion"%>
 <%@page import="java.util.Arrays"%>
-<%@page import="datatype.DataPedido"%>
-<%@page import="datatype.DataUsuario"%>
+<%@page import="proxy.DataPedido"%>
+<%@page import="proxy.DataUsuario"%>
 <%@page import="controllers.Login"%>
-<%@page import="datatype.DataCliente"%>
-<%@page import="datatype.DataProducto"%>
-<%@page import="datatype.DataDireccion"%>
+<%@page import="proxy.DataCliente"%>
+<%@page import="proxy.DataProducto"%>
+<%@page import="proxy.DataDireccion"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="datatype.DataRestaurante"%>
+<%@page import="proxy.DataRestaurante"%>
 <jsp:include page="/WEB-INF/template/header.jsp"/>
 <div style="clear:both"></div>
 <div class="container bs-docs-container" sytle="margin-top: 60px; ">			
@@ -17,7 +18,7 @@
             <div class="media-left media-middle">
                 <a href="#">
                     <% 	DataRestaurante datosRes = (DataRestaurante) request.getAttribute("datosRes");
-                    String aca = Arrays.toString(datosRes.getRutaImagen());
+                    String aca = datosRes.getRutaImagen().toArray().toString();
                                         aca = aca.substring(1, aca.length()-3);
                                         aca = aca.replace(",", "");
                     %>
@@ -44,7 +45,7 @@
                 <div id="categorias">
                     <h5 style="padding-top:15px;padding-left:10px;" class="media-heading"><b>Categoría De Ejemplo</b></h3>
 
-                        <% ArrayList<DataProducto> productos = datosRes.getDataProductos();
+                        <% List<DataProducto> productos = datosRes.getDataProductos();
                         Integer contador = 1;    
                         for (DataProducto producto : productos) {
                         %>
@@ -60,7 +61,7 @@
                                 break;
                             case "promocion":  
                                 DataPromocion prodPromocion = (DataPromocion) producto;
-                                ArrayList<DataIndividualPromocion> productosIndividuales = prodPromocion.getIndividualPromocion(); // productos incluidos en la promo
+                                List<DataIndividualPromocion> productosIndividuales = prodPromocion.getIndividualPromocion(); // productos incluidos en la promo
 
                                         
                                 %>
@@ -81,7 +82,7 @@
                         <div class="modal fade <%= contador%>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                             <div class="modal-dialog modal-lg">
                               <div class="modal-content" style="padding:15px;">
-                                <% ArrayList<DataPedido> pedidos = producto.getPedidos();
+                                <% List<DataPedido> pedidos = producto.getPedidos();
                                     
                                     if(pedidos != null){
                                         
@@ -92,7 +93,7 @@
                                         
                                         <li class="list-group-item">
                                             <% out.println("#"+pedido.getNumero()); %>
-                                            <% out.println("</br><b>Fecha: </b>"+pedido.getFechaPedido().getTime().toString()); %>
+                                            <% out.println("</br><b>Fecha: </b>"+pedido.getFechaPedido().toString()); %>
                                             <% out.println("</br><b>Cliente: </b>"+pedido.getNickNameCliente()); %>
                                             <% out.println("</br><b>Precio Total: </b>"+pedido.getPrecioTotal()); %>
                                         </li>

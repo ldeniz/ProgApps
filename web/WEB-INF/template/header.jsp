@@ -1,6 +1,6 @@
-<%@page import="datatype.DataUsuario"%>
+<%@page import="proxy.DataUsuario"%>
 <%@page import="controllers.Login"%>
-<%@page import="datatype.DataCliente"%>
+<%@page import="proxy.DataCliente"%>
 <!DOCTYPE html PUBLIC "-//W3C//Dtd XHTML 1.1 Strict//EN" "http://www.w3.org/TR/xhtml1/Dtd/xhtml1-strict.dtd">
 <html xml:lang="es" xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -50,7 +50,6 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/home">QuickOrder</a>
-          <a class="navbar-brand" href="/cargarDatos">Cargar</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             

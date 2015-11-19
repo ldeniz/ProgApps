@@ -1,20 +1,21 @@
-<%@page import="datatype.EnumEstado"%>
-<%@page import="datatype.DataCliente"%>
+<%@page import="java.util.List"%>
+<%@page import="proxy.EnumEstado"%>
+<%@page import="proxy.DataCliente"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="controllers.Login"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="datatype.DataPedido"%>
-<%@page import="datatype.DataUsuario"%>
-<%@page import="datatype.DataPedidoProduco"%>
-<%@page import="datatype.DataComentario"%>
+<%@page import="proxy.DataPedido"%>
+<%@page import="proxy.DataUsuario"%>
+<%@page import="proxy.DataPedidoProduco"%>
+<%@page import="proxy.DataComentario"%>
 
 
 <jsp:include page="/WEB-INF/template/header.jsp"/>
 <%
 
     DataUsuario usr;
-    ArrayList<DataPedido> pedidos = null;
+    List<DataPedido> pedidos = null;
     try {
         usr = Login.getUsuarioLogueado(request);
         pedidos = usr.getPedidos();
@@ -63,12 +64,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <span class="glyphicon glyphicon-cutlery" style="margin-right:5px;"></span><%= pedido.getNickNameRestaurante()%><span style="float:right;" class="badge"><%= pedido.getFechaPedido().getTime().toString()%></span>
+                    <span class="glyphicon glyphicon-cutlery" style="margin-right:5px;"></span><%= pedido.getNickNameRestaurante()%><span style="float:right;" class="badge"><%= pedido.getFechaPedido().toString() %></span>
                 </h3>
             </div>  
             <div class="panel-body">
                 <%
-                    ArrayList<DataPedidoProduco> productosP = pedido.getDataPedidoProducos();
+                    List<DataPedidoProduco> productosP = pedido.getDataPedidoProducos();
                     for (DataPedidoProduco prod : productosP) {%>                                
                 <%= prod.getCantidad() + " - "%>
                 <%= prod.getStockProduco().getNombreProducto()%></br>
