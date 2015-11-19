@@ -612,7 +612,7 @@ private void almacenarPedidos(DataRestaurante res) {
 
             for (Object obj : resultList){
                 String[] fila1 = new String[4];
-                List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + ((TPedido)obj).getNumero()+") ORDER BY a.estado DESC").getResultList();
+                List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + ((TPedido)obj).getNumero()+") ORDER BY a.fecha").getResultList();
                 fila1[0] = "" + (Integer) ((TPedido)obj).getNumero();
                 fila1[1] = ((TPedido)obj).getCliente();
                 Object estado = lista.get(0);
