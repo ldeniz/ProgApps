@@ -9,6 +9,7 @@ package GUI;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
@@ -485,7 +486,11 @@ public class QOMobileGUI extends javax.swing.JFrame {
 
     
 
-
+public static Calendar DateToCalendar(Date date){ 
+  Calendar cal = Calendar.getInstance();
+  cal.setTime(date);
+  return cal;
+}
 
 
 private void almacenarPedidos(DataRestaurante res) {
@@ -502,7 +507,7 @@ private void almacenarPedidos(DataRestaurante res) {
             THistorial h = new THistorial();
             h.setNumero(entry.getNumero());
             h.setEstado(EnumEstado.PREPARACION);
-            
+            Calendar fechita = DateToCalendar(entry.getFechaPedido().toGregorianCalendar().getTime());
             h.setFecha(entry.getFechaPedido().toGregorianCalendar());
             try {
                 em.getTransaction().begin();
@@ -543,7 +548,7 @@ private void almacenarPedidos(DataRestaurante res) {
             for (DataPedidoProduco productos : prod) {    
                 TProducto p = new TProducto();
                 p.setNumero(entry.getNumero());
-                p.setNombre(productos.toString());
+                p.setNombre(productos.getStockProduco().getNombreProducto());
                 p.setCantidad(productos.getCantidad());
                 p.setPrecio(productos.getStockProduco().getPrecio());
                 try {
@@ -723,7 +728,10 @@ private void almacenarPedidos(DataRestaurante res) {
             fila1[2] = ((THistorial)estado).getEstado().toString();
             int cantidad = lista.size() - 1;
             Object fecha = lista.get(cantidad);
-            fila1[3] = "" + ((THistorial)fecha).getFecha().toString();
+            fila1[3] = "" + ((THistorial)fecha).getFecha().getTime().toLocaleString();
+            //fila1[3] = "" + ((THistorial)fecha).getFecha().getDay()+ "-" + ((THistorial)fecha).getFecha().getMonth() + "-" +((THistorial)fecha).getFecha().getYear();
+
+            
             modeloPedidos.addRow(fila1);
         }      
         
