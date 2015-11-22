@@ -193,7 +193,6 @@ public class VerInformacionDeProducto extends javax.swing.JInternalFrame {
         
         
         ArrayList<DataProducto> productos = cp.listarProductos();
-        System.out.println("LISTA VIENE VACIA: "+cp.listarProductos().isEmpty());
         for (DataProducto p : productos) {
             String[] fila = new String[3];
             fila[0] = p.getNombre();

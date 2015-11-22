@@ -1,3 +1,5 @@
+/QOMobile/src/proxy/*.class
+/GUI/dist/
 /ServidorCentral/nbproject/private/
 /GUI/nbproject/private/
 /nbproject/private/
@@ -8,3 +10,11 @@
 /dist/
 /pruebas/nbproject/private/
 /pruebas/build/
+/QOMobile/dist/
+/nbproject/
+/GUI/catalog.xml
+/GUI/nbproject/jax-ws.xml
+/QOMobile/build/
+/QOMobile/c:\\Users\Mathi\bd\prueba
+/QOMobile/nbproject/private/
+/Source Package/proxy/*.class

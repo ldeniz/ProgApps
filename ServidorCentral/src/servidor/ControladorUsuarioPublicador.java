@@ -13,9 +13,12 @@ import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.ParameterStyle;
@@ -156,6 +159,20 @@ public class ControladorUsuarioPublicador {
         DataRestaurante[] var = new DataRestaurante[ldr.size()];
         var = ldr.toArray(var);
         return var;
+    }
+    
+    @WebMethod
+    public byte[] getImage(@WebParam(name = "fileName") String name) throws Exception{
+        byte[] byteArray = null;
+        try {
+            File f = new File(name);
+            FileInputStream streamer = new FileInputStream(f);
+            byteArray = new byte[streamer.available()];
+            streamer.read(byteArray);
+        } catch (Exception e) {
+            throw e;
+        }
+        return byteArray;
     }
 
 }

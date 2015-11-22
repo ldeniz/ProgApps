@@ -28,7 +28,7 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
     private DataPedido pedidoSeleccionado, PedidoACancelar;
     /**
      * Creates new form VerInformacionDePedido
-     * @param PedidoACancelar
+     * @param PedidoQueViene
      */
     public VerInformacionDePedido(DataPedido PedidoQueViene) {
         PedidoACancelar = PedidoQueViene;
@@ -88,8 +88,6 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
          
     }
     public VerInformacionDePedido() {
-        System.out.println("ENTRO AL GENERICO");
-        
         initComponents();
         cancelarPedido.hide();
         ArrayList<DataPedido> lPedido = iPed.listarPedidos();
@@ -99,7 +97,6 @@ public class VerInformacionDePedido extends javax.swing.JInternalFrame {
             fila[0] = pedido.getNickNameCliente();
             fila[1] = pedido.getNickNameRestaurante();
             fila[2] = Integer.toString(pedido.getNumero()) ;
-            System.out.println("Precio TOTAL: "+pedido.getPrecioTotal());
             idPedidos.addRow(fila);          
         }
     }

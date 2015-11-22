@@ -28,22 +28,6 @@ public interface ControladorUsuarioPublicador {
 
     /**
      * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/existeUsuario2Request", output = "http://servidor/ControladorUsuarioPublicador/existeUsuario2Response")
-    public boolean existeUsuario2(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
      * @return
      *     returns proxy.DataUsuarioArray
      */
@@ -84,6 +68,22 @@ public interface ControladorUsuarioPublicador {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/existeUsuario2Request", output = "http://servidor/ControladorUsuarioPublicador/existeUsuario2Response")
+    public boolean existeUsuario2(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns proxy.DataUsuario
@@ -115,6 +115,24 @@ public interface ControladorUsuarioPublicador {
     public DataRestauranteArray listarRestaurantes2(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0)
+        throws Exception_Exception
+    ;
+
+    /**
+     * 
+     * @param fileName
+     * @return
+     *     returns byte[]
+     * @throws Exception_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/getImageRequest", output = "http://servidor/ControladorUsuarioPublicador/getImageResponse", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorUsuarioPublicador/getImage/Fault/Exception")
+    })
+    public byte[] getImage(
+        @WebParam(name = "fileName", partName = "fileName")
+        String fileName)
         throws Exception_Exception
     ;
 
@@ -210,6 +228,19 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
+     *     returns proxy.DataPedidoArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarPedidosClienteRequest", output = "http://servidor/ControladorUsuarioPublicador/listarPedidosClienteResponse")
+    public DataPedidoArray listarPedidosCliente(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
      *     returns boolean
      */
     @WebMethod
@@ -236,18 +267,5 @@ public interface ControladorUsuarioPublicador {
         String arg0)
         throws Exception_Exception
     ;
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns proxy.DataPedidoArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarPedidosClienteRequest", output = "http://servidor/ControladorUsuarioPublicador/listarPedidosClienteResponse")
-    public DataPedidoArray listarPedidosCliente(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
 
 }

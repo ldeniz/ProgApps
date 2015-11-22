@@ -55,7 +55,6 @@ public class Principal extends javax.swing.JFrame {
         inicio = new javax.swing.JMenu();
         generarPedido = new javax.swing.JMenuItem();
         cancelarPedido = new javax.swing.JMenuItem();
-        actualizarEstadoPedido = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         actualizarProducto = new javax.swing.JMenuItem();
         registro = new javax.swing.JMenu();
@@ -104,14 +103,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         inicio.add(cancelarPedido);
-
-        actualizarEstadoPedido.setText("Actualizar Estado del Pedido");
-        actualizarEstadoPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                actualizarEstadoPedidoActionPerformed(evt);
-            }
-        });
-        inicio.add(actualizarEstadoPedido);
         inicio.add(jSeparator1);
 
         actualizarProducto.setText("Actualizar Producto");
@@ -258,12 +249,6 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane1.add(f);
         f.show();
     }//GEN-LAST:event_cancelarPedidoActionPerformed
-
-    private void actualizarEstadoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarEstadoPedidoActionPerformed
-        ActualizarEstadoDelPedido f = new ActualizarEstadoDelPedido();
-        jDesktopPane1.add(f);
-        f.show();
-    }//GEN-LAST:event_actualizarEstadoPedidoActionPerformed
 
     private void actualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarProductoActionPerformed
         ActualizarProducto f = new ActualizarProducto();
@@ -694,7 +679,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem actualizarEstadoPedido;
     private javax.swing.JMenuItem actualizarProducto;
     private javax.swing.JMenuItem altaCategoria;
     private javax.swing.JMenuItem cancelarPedido;
