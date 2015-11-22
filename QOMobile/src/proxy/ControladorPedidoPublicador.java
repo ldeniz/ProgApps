@@ -27,27 +27,6 @@ public interface ControladorPedidoPublicador {
 
     /**
      * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     * @throws Exception_Exception
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/agregarComentarioRequest", output = "http://servidor/ControladorPedidoPublicador/agregarComentarioResponse", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/agregarComentario/Fault/Exception")
-    })
-    public void agregarComentario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        float arg2)
-        throws Exception_Exception
-    ;
-
-    /**
-     * 
      * @param arg0
      * @return
      *     returns proxy.DataPedidoArray
@@ -66,6 +45,33 @@ public interface ControladorPedidoPublicador {
 
     /**
      * 
+     * @param cantidades
+     * @param nickNameCliente
+     * @param nickNameRestaurante
+     * @param productos
+     * @return
+     *     returns proxy.DataPedido
+     * @throws Exception_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorPedidoPublicador/realizarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/realizarPedidoResponse", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/realizarPedido/Fault/Exception")
+    })
+    public DataPedido realizarPedido(
+        @WebParam(name = "nickNameCliente", partName = "nickNameCliente")
+        String nickNameCliente,
+        @WebParam(name = "nickNameRestaurante", partName = "nickNameRestaurante")
+        String nickNameRestaurante,
+        @WebParam(name = "productos", partName = "productos")
+        StringArray productos,
+        @WebParam(name = "cantidades", partName = "cantidades")
+        IntArray cantidades)
+        throws Exception_Exception
+    ;
+
+    /**
+     * 
      */
     @WebMethod
     @Action(input = "http://servidor/ControladorPedidoPublicador/cancelarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/cancelarPedidoResponse")
@@ -73,16 +79,26 @@ public interface ControladorPedidoPublicador {
 
     /**
      * 
-     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://servidor/ControladorPedidoPublicador/limpiarMermoriaRequest", output = "http://servidor/ControladorPedidoPublicador/limpiarMermoriaResponse")
+    public void limpiarMermoria();
+
+    /**
+     * 
+     * @param nuevoEstadoPedido
+     * @param numeroPedido
      * @throws Exception_Exception
      */
     @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/seleccionarRestauranteRequest", output = "http://servidor/ControladorPedidoPublicador/seleccionarRestauranteResponse", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/seleccionarRestaurante/Fault/Exception")
+    @Action(input = "http://servidor/ControladorPedidoPublicador/actualizarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/actualizarPedidoResponse", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/actualizarPedido/Fault/Exception")
     })
-    public void seleccionarRestaurante(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0)
+    public void actualizarPedido(
+        @WebParam(name = "numeroPedido", partName = "numeroPedido")
+        int numeroPedido,
+        @WebParam(name = "nuevoEstadoPedido", partName = "nuevoEstadoPedido")
+        EnumEstado nuevoEstadoPedido)
         throws Exception_Exception
     ;
 
@@ -94,80 +110,16 @@ public interface ControladorPedidoPublicador {
      * @throws Exception_Exception
      */
     @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/seleccionarProductoRequest", output = "http://servidor/ControladorPedidoPublicador/seleccionarProductoResponse", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/seleccionarProducto/Fault/Exception")
+    @Action(input = "http://servidor/ControladorPedidoPublicador/agregarComentarioRequest", output = "http://servidor/ControladorPedidoPublicador/agregarComentarioResponse", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/agregarComentario/Fault/Exception")
     })
-    public void seleccionarProducto(
+    public void agregarComentario(
         @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
+        int arg0,
         @WebParam(name = "arg1", partName = "arg1")
         String arg1,
         @WebParam(name = "arg2", partName = "arg2")
-        int arg2)
-        throws Exception_Exception
-    ;
-
-    /**
-     * 
-     * @param arg0
-     * @throws Exception_Exception
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/seleccionarClienteRequest", output = "http://servidor/ControladorPedidoPublicador/seleccionarClienteResponse", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/seleccionarCliente/Fault/Exception")
-    })
-    public void seleccionarCliente(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0)
-        throws Exception_Exception
-    ;
-
-    /**
-     * 
-     * @return
-     *     returns proxy.DataPedido
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorPedidoPublicador/finalizarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/finalizarPedidoResponse")
-    public DataPedido finalizarPedido();
-
-    /**
-     * 
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/limpiarMermoriaRequest", output = "http://servidor/ControladorPedidoPublicador/limpiarMermoriaResponse")
-    public void limpiarMermoria();
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/seleccionarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/seleccionarPedidoResponse")
-    public void seleccionarPedido(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/seleccionarEstadoRequest", output = "http://servidor/ControladorPedidoPublicador/seleccionarEstadoResponse")
-    public void seleccionarEstado(
-        @WebParam(name = "arg0", partName = "arg0")
-        EnumEstado arg0);
-
-    /**
-     * 
-     * @throws Exception_Exception
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/actualizarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/actualizarPedidoResponse", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/actualizarPedido/Fault/Exception")
-    })
-    public void actualizarPedido()
+        float arg2)
         throws Exception_Exception
     ;
 

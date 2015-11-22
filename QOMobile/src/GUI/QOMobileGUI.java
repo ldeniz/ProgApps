@@ -5,7 +5,6 @@
  */
 package GUI;
 
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,7 +39,9 @@ import qomobile.TProducto;
  * @author Mathi
  */
 public class QOMobileGUI extends javax.swing.JFrame {
- Properties propiedades = new Properties();
+
+    Properties propiedades = new Properties();
+
     /**
      * Creates new form QOMobileGUI2
      */
@@ -429,71 +430,70 @@ public class QOMobileGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-                    
+
         try {
             String usu = userTXT.getText();
             String pass = passTxt.getText();
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
-            
+
             em.createQuery("DELETE FROM THistorial").executeUpdate();
-            
+
             em.createQuery("DELETE FROM TPedido").executeUpdate();
-            
+
             em.createQuery("DELETE FROM TProducto").executeUpdate();
-            
+
             em.getTransaction().commit();
-            
-            
-            
+
             if (existeNick(usu)) {
-                DataUsuario u = dataUsuario(usu);   
-                
+                DataUsuario u = dataUsuario(usu);
+
                 DataRestaurante res = (DataRestaurante) u;
                 String contrasenia = u.getPass();
-               
+
                 if (pass.equals(contrasenia)) {
                     usuarioLogeado.setText(usu);
-                    
+
                     List<DataPedido> losPedidos = res.getPedidos();
-                    if(losPedidos != null){                        
-                    for (DataPedido entry : losPedidos) {
-                        String[] fila1 = new String[4];
-                        fila1[0] = "" + (Integer) entry.getNumero();
-                        fila1[1] = entry.getNickNameCliente();
-                        fila1[2] = "" + entry.getEstado();
-                        fila1[3] = "" + entry.getFechaPedido();
-                        modeloPedidos.addRow(fila1);
-                        
-                    }
-                    almacenarPedidos(res);
+                    if (losPedidos != null) {
+                        for (DataPedido entry : losPedidos) {
+                            String[] fila1 = new String[4];
+                            fila1[0] = "" + (Integer) entry.getNumero();
+                            fila1[1] = entry.getNickNameCliente();
+                            fila1[2] = "" + entry.getEstado();
+                            fila1[3] = "" + entry.getFechaPedido();
+                            modeloPedidos.addRow(fila1);
+
+                        }
+                        almacenarPedidos(res);
                     }
                     estadoConexion.setText("Conectado");
                     general.removeAll();
                     general.add(sesionIniciada);
                     general.repaint();
                     general.revalidate();
-                }else JOptionPane.showMessageDialog(this,"Usuario o contraseña incorrectos");
-            }else JOptionPane.showMessageDialog(this,"Usuario o contraseña incorrectos");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+            }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"No hay conexion!");
+            JOptionPane.showMessageDialog(this, "No hay conexion!");
             estadoConexion.setText("Desconectado");
-        }     
-        
+        }
+
 
     }//GEN-LAST:event_loginActionPerformed
 
-    
+    public static Calendar DateToCalendar(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
 
-public static Calendar DateToCalendar(Date date){ 
-  Calendar cal = Calendar.getInstance();
-  cal.setTime(date);
-  return cal;
-}
-
-
-private void almacenarPedidos(DataRestaurante res) {
+    private void almacenarPedidos(DataRestaurante res) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
         EntityManager em = emf.createEntityManager();
 
@@ -507,7 +507,6 @@ private void almacenarPedidos(DataRestaurante res) {
             THistorial h = new THistorial();
             h.setNumero(entry.getNumero());
             h.setEstado(EnumEstado.PREPARACION);
-            Calendar fechita = DateToCalendar(entry.getFechaPedido().toGregorianCalendar().getTime());
             h.setFecha(entry.getFechaPedido().toGregorianCalendar());
             try {
                 em.getTransaction().begin();
@@ -517,8 +516,8 @@ private void almacenarPedidos(DataRestaurante res) {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-           
-            if(entry.getHistorial().size() == 1){
+
+            if (entry.getHistorial().size() == 1) {
                 THistorial h1 = new THistorial();
                 h1.setNumero(entry.getNumero());
                 h1.setEstado(EnumEstado.ENVIADO);
@@ -531,7 +530,7 @@ private void almacenarPedidos(DataRestaurante res) {
                     e.printStackTrace();
                 }
             }
-            if(entry.getHistorial().size() == 2){
+            if (entry.getHistorial().size() == 2) {
                 THistorial h1 = new THistorial();
                 h1.setNumero(entry.getNumero());
                 h1.setEstado(EnumEstado.RECIBIDO);
@@ -540,12 +539,12 @@ private void almacenarPedidos(DataRestaurante res) {
                     em.getTransaction().begin();
                     em.persist(h1);
                     em.getTransaction().commit();
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             List<DataPedidoProduco> prod = entry.getDataPedidoProducos();
-            for (DataPedidoProduco productos : prod) {    
+            for (DataPedidoProduco productos : prod) {
                 TProducto p = new TProducto();
                 p.setNumero(entry.getNumero());
                 p.setNombre(productos.getStockProduco().getNombreProducto());
@@ -555,31 +554,29 @@ private void almacenarPedidos(DataRestaurante res) {
                     em.getTransaction().begin();
                     em.persist(p);
                     em.getTransaction().commit();
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
         em.close();
     }
-    private static DataPedido obtenerPedido(int numero) throws FileNotFoundException{
-        
-       ControladorPedidoPublicadorService service =  new ControladorPedidoPublicadorService();
-       ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
-       port.seleccionarPedido(numero);
-       return null;
+
+    private static DataPedido obtenerPedido(int numero) throws FileNotFoundException {
+
+        ControladorPedidoPublicadorService service = new ControladorPedidoPublicadorService();
+        ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
+        //port.seleccionarPedido(numero);
+        return null;
     }
 
     private static void actualizarEstado(int numero, EnumEstado estado) throws FileNotFoundException, Exception_Exception {
-
-        ControladorPedidoPublicadorService service =  new ControladorPedidoPublicadorService();
+        ControladorPedidoPublicadorService service = new ControladorPedidoPublicadorService();
         ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
-        port.seleccionarPedido(numero);
-        port.seleccionarEstado(estado);
-        port.actualizarPedido();
+        port.actualizarPedido(numero, estado);
     }
-    
-    
+
+
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
 
         // RECARGAR PEDIOS
@@ -597,12 +594,12 @@ private void almacenarPedidos(DataRestaurante res) {
                 int index2 = tablaPedidos.getSelectedRow();
                 String aux = (String) modeloPedidos.getValueAt(index2, 0);
                 Integer num = Integer.parseInt(aux);
-                if (index == 0) {
+                if (index == 1) {
                     actualizarPedido(num, EnumEstado.RECIBIDO);
-                    
-                } else if (index == 1) {
+
+                } else if (index == 0) {
                     actualizarPedido(num, EnumEstado.ENVIADO);
-                    
+
                 }
             }
 
@@ -615,38 +612,37 @@ private void almacenarPedidos(DataRestaurante res) {
             EntityManager em = emf.createEntityManager();
             List resultList = em.createQuery("SELECT a FROM TPedido a").getResultList();
 
-            for (Object obj : resultList){
+            for (Object obj : resultList) {
                 String[] fila1 = new String[4];
-                List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + ((TPedido)obj).getNumero()+") ORDER BY a.fecha").getResultList();
-                fila1[0] = "" + (Integer) ((TPedido)obj).getNumero();
-                fila1[1] = ((TPedido)obj).getCliente();
+                List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + ((TPedido) obj).getNumero() + ") ORDER BY a.fecha").getResultList();
+                fila1[0] = "" + (Integer) ((TPedido) obj).getNumero();
+                fila1[1] = ((TPedido) obj).getCliente();
                 Object estado = lista.get(0);
-                fila1[2] = "" + ((THistorial)estado).getEstado();
+                fila1[2] = "" + ((THistorial) estado).getEstado();
                 int cantidad = lista.size() - 1;
                 Object fecha = lista.get(cantidad);
-                fila1[3] = "" + ((THistorial)fecha).getFecha().toString();
+                fila1[3] = "" + ((THistorial) fecha).getFecha().toString();
                 modeloPedidos.addRow(fila1);
             }
-            
+
             general.removeAll();
             general.add(sesionIniciada);
             general.repaint();
             general.revalidate();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"No hay conexion!");
+            JOptionPane.showMessageDialog(this, "No hay conexion!");
             estadoConexion.setText("Desconectado");
-        }        
+        }
     }//GEN-LAST:event_actualizarEstadoActionPerformed
-    private void actualizarPedido(int numero, EnumEstado estado) throws FileNotFoundException, Exception_Exception, DatatypeConfigurationException {      
-        actualizarEstado(numero,estado);  
+    private void actualizarPedido(int numero, EnumEstado estado) throws FileNotFoundException, Exception_Exception, DatatypeConfigurationException {
+        actualizarEstado(numero, estado);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
         EntityManager em = emf.createEntityManager();
-        
+
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
         XMLGregorianCalendar now = datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
-        
-        
+
         THistorial h = new THistorial();
         h.setNumero(numero);
         h.setEstado(estado);
@@ -655,15 +651,15 @@ private void almacenarPedidos(DataRestaurante res) {
             em.getTransaction().begin();
             em.persist(h);
             em.getTransaction().commit();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
     private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
         int k = modeloPedidos.getRowCount();
-            for (int i = k - 1; i >= 0; i--) {
-                modeloPedidos.removeRow(i);
-            }
+        for (int i = k - 1; i >= 0; i--) {
+            modeloPedidos.removeRow(i);
+        }
         // CERRAR LA SESION
         general.removeAll();
         general.add(sesionCerrada);
@@ -673,14 +669,14 @@ private void almacenarPedidos(DataRestaurante res) {
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         try {
-            String usu = usuarioLogeado.getText();  
+            String usu = usuarioLogeado.getText();
             int k = modeloPedidos.getRowCount();
             for (int i = k - 1; i >= 0; i--) {
                 modeloPedidos.removeRow(i);
             }
             //DESCOMENTAR CUANDO ESTEN LOS PUBLICADORES
             DataUsuario u = dataUsuario(usu);
- 
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
@@ -701,42 +697,41 @@ private void almacenarPedidos(DataRestaurante res) {
                 modeloPedidos.addRow(fila1);
             }
             almacenarPedidos(res);
-            
+
             general.removeAll();
             general.add(sesionIniciada);
             general.repaint();
             general.revalidate();
         } catch (Exception ex) {
             cargarBasePedidos();
-            JOptionPane.showMessageDialog(this,"No hay conexion!, imposible actualizar");
+            JOptionPane.showMessageDialog(this, "No hay conexion!, imposible actualizar");
             estadoConexion.setText("Desconectado");
-        }        
+        }
     }//GEN-LAST:event_ActualizarActionPerformed
 
-    private void cargarBasePedidos(){
+    private void cargarBasePedidos() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
         EntityManager em = emf.createEntityManager();
         List losPedidos = em.createQuery("SELECT a FROM TPedido a").getResultList();
 
         for (Object entry : losPedidos) {
             String[] fila1 = new String[4];
-            int num = ((TPedido)entry).getNumero();
+            int num = ((TPedido) entry).getNumero();
             fila1[0] = "" + (Integer) num;
-            fila1[1] = ((TPedido)entry).getCliente();
-            List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + num +") ORDER BY a.estado DESC").getResultList();
+            fila1[1] = ((TPedido) entry).getCliente();
+            List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + num + ") ORDER BY a.estado DESC").getResultList();
             Object estado = lista.get(0);
-            fila1[2] = ((THistorial)estado).getEstado().toString();
+            fila1[2] = ((THistorial) estado).getEstado().toString();
             int cantidad = lista.size() - 1;
             Object fecha = lista.get(cantidad);
-            fila1[3] = "" + ((THistorial)fecha).getFecha().getTime().toLocaleString();
+            fila1[3] = "" + ((THistorial) fecha).getFecha().getTime().toLocaleString();
             //fila1[3] = "" + ((THistorial)fecha).getFecha().getDay()+ "-" + ((THistorial)fecha).getFecha().getMonth() + "-" +((THistorial)fecha).getFecha().getYear();
 
-            
             modeloPedidos.addRow(fila1);
-        }      
-        
+        }
+
     }
-    
+
     private void verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verActionPerformed
         int index = tablaPedidos.getSelectedRow();
         if (index != -1) {
@@ -749,33 +744,33 @@ private void almacenarPedidos(DataRestaurante res) {
                 historial.removeRow(i);
             }
             String aux = (String) modeloPedidos.getValueAt(index, 0);
-            Integer num = Integer.parseInt(aux);                    
+            Integer num = Integer.parseInt(aux);
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
             EntityManager em = emf.createEntityManager();
-            Object resultado = em.createQuery("SELECT a FROM TPedido a WHERE (a.numero = " + num +")").getSingleResult();
+            Object resultado = em.createQuery("SELECT a FROM TPedido a WHERE (a.numero = " + num + ")").getSingleResult();
 
-            List lista1 = em.createQuery("SELECT a FROM TProducto a WHERE (a.numero = " + num +")").getResultList();
+            List lista1 = em.createQuery("SELECT a FROM TProducto a WHERE (a.numero = " + num + ")").getResultList();
             for (Object obj : lista1) {
                 String[] fila1 = new String[4];
-                fila1[0] = ((TProducto)obj).getNombre();
-                fila1[1] = "" + (Integer)((TProducto)obj).getCantidad();
-                fila1[2] = "" + (Float)((TProducto)obj).getPrecio();
-                fila1[3] = "" + (Float)((TProducto)obj).getPrecio() * (Integer) ((TProducto)obj).getCantidad();
+                fila1[0] = ((TProducto) obj).getNombre();
+                fila1[1] = "" + (Integer) ((TProducto) obj).getCantidad();
+                fila1[2] = "" + (Float) ((TProducto) obj).getPrecio();
+                fila1[3] = "" + (Float) ((TProducto) obj).getPrecio() * (Integer) ((TProducto) obj).getCantidad();
                 medeloProductos.addRow(fila1);
             }
 
-            List lista2 = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + num +")  ORDER BY a.estado DESC").getResultList();
+            List lista2 = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + num + ")  ORDER BY a.estado DESC").getResultList();
             for (Object obj : lista2) {
                 String[] fila2 = new String[3];
-                fila2[0] = ((THistorial)obj).getEstado().toString();
-                fila2[1] = "" + ((THistorial)obj).getFecha().getTime().toLocaleString();
-                fila2[2] = "" + ((THistorial)obj).getNumero();
+                fila2[0] = ((THistorial) obj).getEstado().toString();
+                fila2[1] = "" + ((THistorial) obj).getFecha().getTime().toLocaleString();
+                fila2[2] = "" + ((THistorial) obj).getNumero();
                 historial.addRow(fila2);
             }
             cambioEstados.removeAllItems();
-            EnumEstado e = ((THistorial)lista2.get(0)).getEstado();
-            
+            EnumEstado e = ((THistorial) lista2.get(0)).getEstado();
+
             if (e == EnumEstado.PREPARACION) {
                 cambioEstados.addItem("Enviado");
                 cambioEstados.addItem("Recibido");
@@ -787,19 +782,19 @@ private void almacenarPedidos(DataRestaurante res) {
                 actualizarEstado.setEnabled(false);
             }
 
-            usuario.setText(((TPedido)resultado).getCliente());
+            usuario.setText(((TPedido) resultado).getCliente());
             int asd = lista2.size() - 1;
-            Calendar data = ((THistorial)lista2.get(asd)).getFecha();
+            Calendar data = ((THistorial) lista2.get(asd)).getFecha();
             fecha.setText("" + data.getTime().toLocaleString());
-            precio.setText("" + ((TPedido)resultado).getTotal());
-            estadoActual.setText("" + ((THistorial)lista2.get(asd)).getEstado());   
+            precio.setText("" + ((TPedido) resultado).getTotal());
+            estadoActual.setText("" + ((THistorial) lista2.get(asd)).getEstado());
 
             general.removeAll();
             general.add(verPedido);
             general.repaint();
             general.revalidate();
-        }                   
-        
+        }
+
     }//GEN-LAST:event_verActionPerformed
 
     private void cambioEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioEstadosActionPerformed
@@ -845,7 +840,7 @@ private void almacenarPedidos(DataRestaurante res) {
             }
         });
     }
- 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
@@ -889,22 +884,19 @@ private void almacenarPedidos(DataRestaurante res) {
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 
-   
-    
-    
     private static DataUsuario dataUsuario(java.lang.String arg0) throws Exception_Exception, FileNotFoundException {
- 
-        ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+
+        ControladorUsuarioPublicadorService service = new ControladorUsuarioPublicadorService();
         ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
-        
+
         return port.obtenerUsuario(arg0);
     }
 
     private static boolean existeNick(java.lang.String arg0) throws FileNotFoundException {
 
-        ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+        ControladorUsuarioPublicadorService service = new ControladorUsuarioPublicadorService();
         ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
-        
+
         return port.existeUsuario(arg0);
     }
 

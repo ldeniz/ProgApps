@@ -53,7 +53,7 @@ public class ControladorCategoria implements IControladorCategoria {
         ArrayList<DataRestaurante> dataRestaurantes = null;
         if (mc.existeCategoriaNombre(categoria)) {
             ArrayList<Restaurante> lr = mc.obtenerRestaurantes(categoria);
-            dataRestaurantes = new ArrayList<>();;
+            dataRestaurantes = new ArrayList<>();
             if (!lr.isEmpty()) {
                 for (Restaurante r : lr) {
                     dataRestaurantes.add((DataRestaurante) r.obtenerDatosUsuario());

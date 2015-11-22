@@ -27,36 +27,9 @@ public interface ControladorPedidoPublicador {
 
     /**
      * 
-     * @param arg3
-     * @param arg2
-     * @param arg1
      * @param arg0
      * @return
-     *     returns client.DataPedido
-     * @throws Exception_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorPedidoPublicador/realizarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/realizarPedidoResponse", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/realizarPedido/Fault/Exception")
-    })
-    public DataPedido realizarPedido(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        StringArray arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        IntArray arg3)
-        throws Exception_Exception
-    ;
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns client.DataPedidoArray
+     *     returns proxy.DataPedidoArray
      * @throws Exception_Exception
      */
     @WebMethod
@@ -67,6 +40,33 @@ public interface ControladorPedidoPublicador {
     public DataPedidoArray listarPedidos2(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0)
+        throws Exception_Exception
+    ;
+
+    /**
+     * 
+     * @param cantidades
+     * @param nickNameCliente
+     * @param nickNameRestaurante
+     * @param productos
+     * @return
+     *     returns proxy.DataPedido
+     * @throws Exception_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorPedidoPublicador/realizarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/realizarPedidoResponse", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/realizarPedido/Fault/Exception")
+    })
+    public DataPedido realizarPedido(
+        @WebParam(name = "nickNameCliente", partName = "nickNameCliente")
+        String nickNameCliente,
+        @WebParam(name = "nickNameRestaurante", partName = "nickNameRestaurante")
+        String nickNameRestaurante,
+        @WebParam(name = "productos", partName = "productos")
+        StringArray productos,
+        @WebParam(name = "cantidades", partName = "cantidades")
+        IntArray cantidades)
         throws Exception_Exception
     ;
 
@@ -120,7 +120,7 @@ public interface ControladorPedidoPublicador {
     /**
      * 
      * @return
-     *     returns client.DataPedidoArray
+     *     returns proxy.DataPedidoArray
      */
     @WebMethod
     @WebResult(partName = "return")

@@ -1,7 +1,6 @@
 
 package proxy;
 
-import proxy.ControladorPedidoPublicador;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.xml.namespace.QName;
