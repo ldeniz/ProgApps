@@ -39,7 +39,7 @@ public interface ControladorCategoriaPublicador {
      * 
      * @param arg0
      * @return
-     *     returns proxy.DataRestauranteArray
+     *     returns client.DataRestauranteArray
      * @throws Exception_Exception
      */
     @WebMethod
@@ -69,7 +69,7 @@ public interface ControladorCategoriaPublicador {
     /**
      * 
      * @return
-     *     returns proxy.DataCategoriaArray
+     *     returns client.DataCategoriaArray
      */
     @WebMethod
     @WebResult(partName = "return")

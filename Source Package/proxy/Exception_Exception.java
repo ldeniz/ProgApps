@@ -45,7 +45,7 @@ public class Exception_Exception
     /**
      * 
      * @return
-     *     returns fault bean: proxy.Exception
+     *     returns fault bean: client.Exception
      */
     public proxy.Exception getFaultInfo() {
         return faultInfo;

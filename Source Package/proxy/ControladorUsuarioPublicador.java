@@ -28,6 +28,16 @@ public interface ControladorUsuarioPublicador {
 
     /**
      * 
+     * @return
+     *     returns client.DataUsuarioArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarUsuariosRequest", output = "http://servidor/ControladorUsuarioPublicador/listarUsuariosResponse")
+    public DataUsuarioArray listarUsuarios();
+
+    /**
+     * 
      * @param arg3
      * @param arg2
      * @param arg5
@@ -58,16 +68,6 @@ public interface ControladorUsuarioPublicador {
 
     /**
      * 
-     * @return
-     *     returns proxy.DataUsuarioArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarUsuariosRequest", output = "http://servidor/ControladorUsuarioPublicador/listarUsuariosResponse")
-    public DataUsuarioArray listarUsuarios();
-
-    /**
-     * 
      * @param arg1
      * @param arg0
      * @return
@@ -86,7 +86,7 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
-     *     returns proxy.DataUsuario
+     *     returns client.DataUsuario
      * @throws Exception_Exception
      */
     @WebMethod
@@ -104,7 +104,7 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
-     *     returns proxy.DataRestauranteArray
+     *     returns client.DataRestauranteArray
      * @throws Exception_Exception
      */
     @WebMethod
@@ -115,6 +115,24 @@ public interface ControladorUsuarioPublicador {
     public DataRestauranteArray listarRestaurantes2(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0)
+        throws Exception_Exception
+    ;
+
+    /**
+     * 
+     * @param fileName
+     * @return
+     *     returns byte[]
+     * @throws Exception_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/getImageRequest", output = "http://servidor/ControladorUsuarioPublicador/getImageResponse", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorUsuarioPublicador/getImage/Fault/Exception")
+    })
+    public byte[] getImage(
+        @WebParam(name = "fileName", partName = "fileName")
+        String fileName)
         throws Exception_Exception
     ;
 
@@ -176,7 +194,7 @@ public interface ControladorUsuarioPublicador {
     /**
      * 
      * @return
-     *     returns proxy.DataRestauranteArray
+     *     returns client.DataRestauranteArray
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -187,7 +205,7 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
-     *     returns proxy.DataProductoArray
+     *     returns client.DataProductoArray
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -199,12 +217,25 @@ public interface ControladorUsuarioPublicador {
     /**
      * 
      * @return
-     *     returns proxy.DataClienteArray
+     *     returns client.DataClienteArray
      */
     @WebMethod
     @WebResult(partName = "return")
     @Action(input = "http://servidor/ControladorUsuarioPublicador/listarClientesRequest", output = "http://servidor/ControladorUsuarioPublicador/listarClientesResponse")
     public DataClienteArray listarClientes();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns client.DataPedidoArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarPedidosClienteRequest", output = "http://servidor/ControladorUsuarioPublicador/listarPedidosClienteResponse")
+    public DataPedidoArray listarPedidosCliente(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 
@@ -223,7 +254,7 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
-     *     returns proxy.DataCategoriaArray
+     *     returns client.DataCategoriaArray
      * @throws Exception_Exception
      */
     @WebMethod
@@ -236,18 +267,5 @@ public interface ControladorUsuarioPublicador {
         String arg0)
         throws Exception_Exception
     ;
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns proxy.DataPedidoArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarPedidosClienteRequest", output = "http://servidor/ControladorUsuarioPublicador/listarPedidosClienteResponse")
-    public DataPedidoArray listarPedidosCliente(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
 
 }

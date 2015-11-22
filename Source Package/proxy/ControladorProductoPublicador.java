@@ -27,22 +27,22 @@ public interface ControladorProductoPublicador {
     /**
      * 
      * @return
-     *     returns proxy.DataIndividualArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorProductoPublicador/listarProductosIndividualesRequest", output = "http://servidor/ControladorProductoPublicador/listarProductosIndividualesResponse")
-    public DataIndividualArray listarProductosIndividuales();
-
-    /**
-     * 
-     * @return
-     *     returns proxy.DataPromocionArray
+     *     returns client.DataPromocionArray
      */
     @WebMethod
     @WebResult(partName = "return")
     @Action(input = "http://servidor/ControladorProductoPublicador/listarProductosPromocionRequest", output = "http://servidor/ControladorProductoPublicador/listarProductosPromocionResponse")
     public DataPromocionArray listarProductosPromocion();
+
+    /**
+     * 
+     * @return
+     *     returns client.DataIndividualArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorProductoPublicador/listarProductosIndividualesRequest", output = "http://servidor/ControladorProductoPublicador/listarProductosIndividualesResponse")
+    public DataIndividualArray listarProductosIndividuales();
 
     /**
      * 
@@ -147,7 +147,7 @@ public interface ControladorProductoPublicador {
     /**
      * 
      * @return
-     *     returns proxy.DataProductoArray
+     *     returns client.DataProductoArray
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -204,7 +204,7 @@ public interface ControladorProductoPublicador {
      * @param arg1
      * @param arg0
      * @return
-     *     returns proxy.DataProducto
+     *     returns client.DataProducto
      */
     @WebMethod
     @WebResult(partName = "return")

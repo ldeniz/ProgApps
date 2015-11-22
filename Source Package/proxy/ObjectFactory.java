@@ -1,13 +1,16 @@
 
 package proxy;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the proxy package. 
+ * generated in the client package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -21,36 +24,29 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _Exception_QNAME = new QName("http://servidor/", "Exception");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: proxy
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: client
      * 
      */
     public ObjectFactory() {
     }
 
     /**
-     * Create an instance of {@link DataPromocion }
+     * Create an instance of {@link Exception }
      * 
      */
-    public DataPromocion createDataPromocion() {
-        return new DataPromocion();
+    public Exception createException() {
+        return new Exception();
     }
 
     /**
-     * Create an instance of {@link DataProductoArray }
+     * Create an instance of {@link DataPedidoArray }
      * 
      */
-    public DataProductoArray createDataProductoArray() {
-        return new DataProductoArray();
-    }
-
-    /**
-     * Create an instance of {@link DataIndividualPromocion }
-     * 
-     */
-    public DataIndividualPromocion createDataIndividualPromocion() {
-        return new DataIndividualPromocion();
+    public DataPedidoArray createDataPedidoArray() {
+        return new DataPedidoArray();
     }
 
     /**
@@ -70,14 +66,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DataStockProducto }
-     * 
-     */
-    public DataStockProducto createDataStockProducto() {
-        return new DataStockProducto();
-    }
-
-    /**
      * Create an instance of {@link DataPedidoProduco }
      * 
      */
@@ -86,35 +74,36 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DataProducto }
+     * Create an instance of {@link DataStockProducto }
      * 
      */
-    public DataProducto createDataProducto() {
-        return new DataProducto();
+    public DataStockProducto createDataStockProducto() {
+        return new DataStockProducto();
     }
 
     /**
-     * Create an instance of {@link DataIndividual }
+     * Create an instance of {@link StringArray }
      * 
      */
-    public DataIndividual createDataIndividual() {
-        return new DataIndividual();
+    public StringArray createStringArray() {
+        return new StringArray();
     }
 
     /**
-     * Create an instance of {@link DataIndividualArray }
+     * Create an instance of {@link IntArray }
      * 
      */
-    public DataIndividualArray createDataIndividualArray() {
-        return new DataIndividualArray();
+    public IntArray createIntArray() {
+        return new IntArray();
     }
 
     /**
-     * Create an instance of {@link DataPromocionArray }
+     * Create an instance of {@link JAXBElement }{@code <}{@link Exception }{@code >}}
      * 
      */
-    public DataPromocionArray createDataPromocionArray() {
-        return new DataPromocionArray();
+    @XmlElementDecl(namespace = "http://servidor/", name = "Exception")
+    public JAXBElement<Exception> createException(Exception value) {
+        return new JAXBElement<Exception>(_Exception_QNAME, Exception.class, null, value);
     }
 
 }
