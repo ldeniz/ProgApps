@@ -96,7 +96,6 @@ public class QOMobileGUI extends javax.swing.JFrame {
         ver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(320, 480));
         setResizable(false);
 
         general.setLayout(new java.awt.CardLayout());
@@ -117,6 +116,12 @@ public class QOMobileGUI extends javax.swing.JFrame {
         userTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userTXTActionPerformed(evt);
+            }
+        });
+
+        passTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passTxtActionPerformed(evt);
             }
         });
 
@@ -517,7 +522,7 @@ public class QOMobileGUI extends javax.swing.JFrame {
                 e.printStackTrace();
             }
 
-            if (entry.getHistorial().size() == 1) {
+            if (entry.getHistorial().size() >= 1) {
                 THistorial h1 = new THistorial();
                 h1.setNumero(entry.getNumero());
                 h1.setEstado(EnumEstado.ENVIADO);
@@ -590,15 +595,17 @@ public class QOMobileGUI extends javax.swing.JFrame {
         try {
             estadoConexion.setText("Conectado");
             int index = cambioEstados.getSelectedIndex();
+            //ESTO
             if (index != -1) {
                 int index2 = tablaPedidos.getSelectedRow();
                 String aux = (String) modeloPedidos.getValueAt(index2, 0);
                 Integer num = Integer.parseInt(aux);
-                if (index == 1) {
-                    actualizarPedido(num, EnumEstado.RECIBIDO);
-                }else if (index == 0 && cambioEstados.getItemCount() > 1){
+                if ((index == 1) && (cambioEstados.getItemCount() > 1)) {
                     actualizarPedido(num, EnumEstado.ENVIADO);
-                } else if (index == 0) {
+                    actualizarPedido(num, EnumEstado.RECIBIDO);
+                }else if ((index == 0) && (cambioEstados.getItemCount() > 1)){
+                    actualizarPedido(num, EnumEstado.ENVIADO);
+                } else if ((index == 0) && (cambioEstados.getItemCount() == 1)) {
                     actualizarPedido(num, EnumEstado.RECIBIDO);
                 }
             }
@@ -614,28 +621,32 @@ public class QOMobileGUI extends javax.swing.JFrame {
 
             for (Object obj : resultList) {
                 String[] fila1 = new String[4];
-                List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + ((TPedido) obj).getNumero() + ") ORDER BY a.fecha").getResultList();
+                List lista = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + ((TPedido) obj).getNumero() + ") ORDER BY a.estado DESC").getResultList();
                 fila1[0] = "" + (Integer) ((TPedido) obj).getNumero();
                 fila1[1] = ((TPedido) obj).getCliente();
                 Object estado = lista.get(0);
                 fila1[2] = "" + ((THistorial) estado).getEstado();
                 int cantidad = lista.size() - 1;
                 Object fecha = lista.get(cantidad);
-                fila1[3] = "" + ((THistorial) fecha).getFecha().toString();
+                fila1[3] = "" + ((THistorial) fecha).getFecha().getTime().toLocaleString();
                 modeloPedidos.addRow(fila1);
             }
 
+            
+            
+            
             general.removeAll();
             general.add(sesionIniciada);
             general.repaint();
             general.revalidate();
+            
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "No hay conexion!");
+            JOptionPane.showMessageDialog(this, "Trabajando sin Conexión, debe Actualizar para ver cambios");
             estadoConexion.setText("Desconectado");
         }
     }//GEN-LAST:event_actualizarEstadoActionPerformed
     private void actualizarPedido(int numero, EnumEstado estado) throws FileNotFoundException, Exception_Exception, DatatypeConfigurationException {
-        actualizarEstado(numero, estado);
+        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
         EntityManager em = emf.createEntityManager();
 
@@ -654,6 +665,7 @@ public class QOMobileGUI extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        actualizarEstado(numero, estado);
     }
     private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
         int k = modeloPedidos.getRowCount();
@@ -674,28 +686,58 @@ public class QOMobileGUI extends javax.swing.JFrame {
             for (int i = k - 1; i >= 0; i--) {
                 modeloPedidos.removeRow(i);
             }
+            
+            
+            /* */
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
+            EntityManager em = emf.createEntityManager();
+            
+            
+            
+            
+            
             //DESCOMENTAR CUANDO ESTEN LOS PUBLICADORES
             DataUsuario u = dataUsuario(usu);
 
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
-            EntityManager em = emf.createEntityManager();
-            em.getTransaction().begin();
-            em.createQuery("DELETE FROM THistorial").executeUpdate();
-            em.createQuery("DELETE FROM TPedido").executeUpdate();
-            em.createQuery("DELETE FROM TProducto").executeUpdate();
-            em.getTransaction().commit();
+           // EntityManagerFactory emf = Persistence.createEntityManagerFactory("QOMobilePU");
+          //  EntityManager em = emf.createEntityManager();
+            
             DataRestaurante res = (DataRestaurante) u;
             estadoConexion.setText("Conectado");
             usuarioLogeado.setText(usu);
             List<DataPedido> losPedidos = res.getPedidos();
             for (DataPedido entry : losPedidos) {
+                
+                
+            List consulta = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + entry.getNumero() + ") ORDER BY a.estado DESC").getResultList();
+            Object est = consulta.get(0);
+            EnumEstado estadoLocal = ((THistorial) est).getEstado();
+            
+            
+                
+                
                 String[] fila1 = new String[4];
                 fila1[0] = "" + (Integer) entry.getNumero();
                 fila1[1] = entry.getNickNameCliente();
                 fila1[2] = "" + entry.getEstado();
                 fila1[3] = "" + entry.getFechaPedido();
+                
+                if(estadoLocal != entry.getEstado()){
+                    if ((estadoLocal == EnumEstado.RECIBIDO) && (entry.getEstado() == EnumEstado.PREPARACION)){
+                        actualizarPedido(entry.getNumero(), EnumEstado.ENVIADO);
+                    }  
+                    actualizarPedido(entry.getNumero(), estadoLocal);
+                    fila1[2] = "" + estadoLocal;
+                }
+                
+                
                 modeloPedidos.addRow(fila1);
             }
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM THistorial").executeUpdate();
+            em.createQuery("DELETE FROM TPedido").executeUpdate();
+            em.createQuery("DELETE FROM TProducto").executeUpdate();
+            em.getTransaction().commit();
             almacenarPedidos(res);
 
             general.removeAll();
@@ -787,7 +829,7 @@ public class QOMobileGUI extends javax.swing.JFrame {
             Calendar data = ((THistorial) lista2.get(asd)).getFecha();
             fecha.setText("" + data.getTime().toLocaleString());
             precio.setText("" + ((TPedido) resultado).getTotal());
-            estadoActual.setText("" + ((THistorial) lista2.get(asd)).getEstado());
+            estadoActual.setText("" + (e));
 
             general.removeAll();
             general.add(verPedido);
@@ -804,6 +846,10 @@ public class QOMobileGUI extends javax.swing.JFrame {
     private void userTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTXTActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userTXTActionPerformed
+
+    private void passTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passTxtActionPerformed
 
     /**
      * @param args the command line arguments

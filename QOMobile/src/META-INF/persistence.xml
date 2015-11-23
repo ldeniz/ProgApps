@@ -6,7 +6,7 @@
     <class>qomobile.THistorial</class>
     <class>qomobile.TPedido</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:c:\\Users\Mathi\bd\prueba"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:/tmp/bd.sqlite"/>
       <property name="javax.persistence.jdbc.user" value=""/>
       <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
       <property name="javax.persistence.jdbc.password" value=""/>
