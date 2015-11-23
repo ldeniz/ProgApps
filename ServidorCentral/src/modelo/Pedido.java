@@ -128,7 +128,7 @@ public class Pedido implements Serializable {
         }
         DataPedido dp;
         if (comentario == null) {
-            dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, ldpp);
+            dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, historial, ldpp, null);
         } else {
             dp = new DataPedido(nickNameCliente, nickNameRestaurante, numero, fechaPedido, precioTotal, estado, historial, ldpp, comentario.obtenerDatosComentario());
         }

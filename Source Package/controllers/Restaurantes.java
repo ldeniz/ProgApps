@@ -40,12 +40,12 @@ public class Restaurantes extends HttpServlet {
         if (restaurante == null) {
 
         } else {
-            ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+            ControladorUsuarioPublicadorService service = new ControladorUsuarioPublicadorService();
             ControladorUsuarioPublicador iUsr = service.getControladorUsuarioPublicadorPort();
             DataRestaurante resto = (DataRestaurante) iUsr.obtenerUsuario(restaurante);
             req.setAttribute("datosRes", resto);
 
-            ControladorPedidoPublicadorService service2 =  new ControladorPedidoPublicadorService();
+            ControladorPedidoPublicadorService service2 = new ControladorPedidoPublicadorService();
             ControladorPedidoPublicador icp = service2.getControladorPedidoPublicadorPort();
             List<DataPedido> ldp = icp.listarPedidos2(restaurante).getItem();
             if (ldp != null && !ldp.isEmpty()) {
@@ -58,14 +58,14 @@ public class Restaurantes extends HttpServlet {
     }
 
     static public DataCategoriaArray getCategorias(HttpServletRequest request) throws FileNotFoundException {
-        ControladorCategoriaPublicadorService service2 =  new ControladorCategoriaPublicadorService();
+        ControladorCategoriaPublicadorService service2 = new ControladorCategoriaPublicadorService();
         ControladorCategoriaPublicador cCat = service2.getControladorCategoriaPublicadorPort();
         DataCategoriaArray categorias = cCat.listarCategorias();
         return categorias;
     }
 
     static public DataRestauranteArray getRestaurantes(HttpServletRequest request, String resto) throws Exception {
-        ControladorUsuarioPublicadorService service =  new ControladorUsuarioPublicadorService();
+        ControladorUsuarioPublicadorService service = new ControladorUsuarioPublicadorService();
         ControladorUsuarioPublicador iUsr = service.getControladorUsuarioPublicadorPort();
         if (resto == null) {
             DataRestauranteArray restaurantes = iUsr.listarRestaurantes();
@@ -74,6 +74,14 @@ public class Restaurantes extends HttpServlet {
             DataRestauranteArray restaurantes = iUsr.listarRestaurantes2(resto);
             return restaurantes;
         }
+
+    }
+
+    static public byte[] getImagen(HttpServletRequest request, String rutaImagen) throws Exception {
+        ControladorUsuarioPublicadorService service = new ControladorUsuarioPublicadorService();
+        ControladorUsuarioPublicador iUsr = service.getControladorUsuarioPublicadorPort();
+
+        return iUsr.getImage(rutaImagen);
 
     }
 

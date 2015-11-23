@@ -7,7 +7,6 @@ package gui;
 
 import datatype.DataCliente;
 import datatype.DataPedido;
-import datatype.DataPedidoProduco;
 import fabrica.Fabrica;
 import interfaces.IControladorPedido;
 import interfaces.IControladorUsuario;
@@ -18,9 +17,7 @@ import javax.swing.ImageIcon;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

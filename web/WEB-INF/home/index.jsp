@@ -1,3 +1,4 @@
+<%@page import="org.apache.tomcat.util.codec.binary.Base64"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="proxy.DataRestaurante"%>
 <%@page import="java.util.ArrayList"%>
@@ -47,12 +48,12 @@
                                     <%
                                     List<DataRestaurante> restaurantes = Restaurantes.getRestaurantes(request,todos).getItem();                                    
                                     for(DataRestaurante res : restaurantes){
-                                        String aca = (res.getRutaImagen().toArray().toString());
-                                        aca = aca.substring(1, aca.length()-3);
-                                        aca = aca.replace(",", "");
+                                        if (res.getRutaImagen().size() > 0){
+                                            String aca = res.getRutaImagen().get(0);
+                                            byte[] imagen = Restaurantes.getImagen(request, aca);
                                         %>        
                                         <li>
-                                  <img src=<%out.println(""+aca+"");%>
+                                            <img src=data:image/png;base64,<%=Base64.encodeBase64String(imagen)%>
                                    alt="..." class="imagenResto">
 				  <div class="infoResto">
                                     <form action="restaurantes" method="POST">
@@ -66,7 +67,7 @@
                                         </form>    
                                     </div>
 				</li>
-                                <% } %>
+                                <% }} %>
 
 			</ul>
 			</div>
