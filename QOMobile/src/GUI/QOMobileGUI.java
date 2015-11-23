@@ -596,10 +596,10 @@ public class QOMobileGUI extends javax.swing.JFrame {
                 Integer num = Integer.parseInt(aux);
                 if (index == 1) {
                     actualizarPedido(num, EnumEstado.RECIBIDO);
-
-                } else if (index == 0) {
+                }else if (index == 0 && cambioEstados.getItemCount() > 1){
                     actualizarPedido(num, EnumEstado.ENVIADO);
-
+                } else if (index == 0) {
+                    actualizarPedido(num, EnumEstado.RECIBIDO);
                 }
             }
 
