@@ -487,6 +487,21 @@ public class Principal extends javax.swing.JFrame {
         
         pd.finalizarPedido();
         pd.limpiarMermoria();
+        pd.seleccionarPedido(1);
+        pd.seleccionarEstado(EnumEstado.PREPARACION);
+        try {
+            pd.actualizarPedido();
+            ManejadorPedido mp = ManejadorPedido.getInstance();
+            Pedido pedido = mp.obtenerPedido(1);
+            
+            Calendar fechaCambio = Calendar.getInstance();
+            
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 11, 24, 21, 00);
+            pedido.setFechaPedido(fechaCambio);
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //--------
         try {
             pd.seleccionarCliente("roro");
@@ -511,6 +526,17 @@ public class Principal extends javax.swing.JFrame {
         pd.seleccionarEstado(EnumEstado.ENVIADO);
         try {
             pd.actualizarPedido();
+            ManejadorPedido mp = ManejadorPedido.getInstance();
+            Pedido pedido = mp.obtenerPedido(2);
+            ArrayList<Calendar> historial = new ArrayList<>();
+            Calendar fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 11, 24, 21, 50);
+            historial.add(fechaCambio);
+            
+            pedido.setHistorial(historial);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 11, 24, 21, 05);
+            pedido.setFechaPedido(fechaCambio);
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -537,7 +563,8 @@ public class Principal extends javax.swing.JFrame {
         pd.limpiarMermoria();
         
         pd.seleccionarPedido(3);
-        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+         //pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        pd.seleccionarEstado(EnumEstado.ENVIADO);
         try {
             pd.actualizarPedido();
             ManejadorPedido mp = ManejadorPedido.getInstance();
@@ -581,6 +608,19 @@ public class Principal extends javax.swing.JFrame {
         pd.seleccionarEstado(EnumEstado.RECIBIDO);
         try {
             pd.actualizarPedido();
+            ManejadorPedido mp = ManejadorPedido.getInstance();
+            Pedido pedido = mp.obtenerPedido(4);
+            ArrayList<Calendar> historial = new ArrayList<>();
+            Calendar fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 11, 24, 21, 50);
+            historial.add(fechaCambio);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 11, 24, 22, 05);
+            historial.add(fechaCambio);
+            pedido.setHistorial(historial);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 11, 24, 21, 05);
+            pedido.setFechaPedido(fechaCambio);
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -609,8 +649,108 @@ public class Principal extends javax.swing.JFrame {
         pd.seleccionarEstado(EnumEstado.RECIBIDO);
         try {
             pd.actualizarPedido();
+            ManejadorPedido mp = ManejadorPedido.getInstance();
+            Pedido pedido = mp.obtenerPedido(5);
+            ArrayList<Calendar> historial = new ArrayList<>();
+            Calendar fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 22, 05);
+            historial.add(fechaCambio);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 22, 15);
+            historial.add(fechaCambio);
+            pedido.setHistorial(historial);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 21, 05);
+            pedido.setFechaPedido(fechaCambio);
         } catch (Exception ex) {
         }
+        
+        //----------------
+         //--------
+        try {
+            pd.seleccionarCliente("roro");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("mera");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("mera", "Milanesa de Carne", 1);
+            pd.seleccionarProducto("mera", "Chivito Canadiense", 1);
+            
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+        
+        pd.seleccionarPedido(6);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+            ManejadorPedido mp = ManejadorPedido.getInstance();
+            Pedido pedido = mp.obtenerPedido(6);
+            ArrayList<Calendar> historial = new ArrayList<>();
+            Calendar fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 19, 50);
+            historial.add(fechaCambio);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 20, 05);
+            historial.add(fechaCambio);
+            pedido.setHistorial(historial);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 19, 15);
+            pedido.setFechaPedido(fechaCambio);
+        } catch (Exception ex) {
+        }
+        
+        //----------------
+         //--------
+        try {
+            pd.seleccionarCliente("andy");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarRestaurante("rossell");
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pd.seleccionarProducto("rossell", "Milanesa a caballo", 1);
+            pd.seleccionarProducto("rossell", "Chivito al plato", 2);
+            
+        } catch (Exception ex) {
+//            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pd.finalizarPedido();
+        pd.limpiarMermoria();
+        
+        pd.seleccionarPedido(7);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
+        try {
+            pd.actualizarPedido();
+            ManejadorPedido mp = ManejadorPedido.getInstance();
+            Pedido pedido = mp.obtenerPedido(7);
+            ArrayList<Calendar> historial = new ArrayList<>();
+            Calendar fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 02, 57);
+            historial.add(fechaCambio);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 03, 25);
+            historial.add(fechaCambio);
+            pedido.setHistorial(historial);
+            fechaCambio = Calendar.getInstance();
+            fechaCambio.set(2014, 8, 25, 02, 05);
+            pedido.setFechaPedido(fechaCambio);
+        } catch (Exception ex) {
+        }
+        
         
         try {
             pd.agregarComentario(3, "Si bien el thai wok y el china wok están ricos, me cobraron 60$ de envío y eso no estaba aclarado y no pueden hacerlo. Me dejó muy molesto.", 2);
