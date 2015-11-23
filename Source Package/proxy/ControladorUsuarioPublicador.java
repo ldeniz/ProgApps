@@ -28,46 +28,6 @@ public interface ControladorUsuarioPublicador {
 
     /**
      * 
-     * @return
-     *     returns client.DataUsuarioArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarUsuariosRequest", output = "http://servidor/ControladorUsuarioPublicador/listarUsuariosResponse")
-    public DataUsuarioArray listarUsuarios();
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg5
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     * @throws Exception_Exception
-     */
-    @WebMethod(operationName = "CargarDatosUsuario2")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/CargarDatosUsuario2Request", output = "http://servidor/ControladorUsuarioPublicador/CargarDatosUsuario2Response", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorUsuarioPublicador/CargarDatosUsuario2/Fault/Exception")
-    })
-    public void cargarDatosUsuario2(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        DataDireccion arg4,
-        @WebParam(name = "arg5", partName = "arg5")
-        StringArray arg5)
-        throws Exception_Exception
-    ;
-
-    /**
-     * 
      * @param arg1
      * @param arg0
      * @return
@@ -84,9 +44,19 @@ public interface ControladorUsuarioPublicador {
 
     /**
      * 
+     * @return
+     *     returns proxy.DataUsuarioArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarUsuariosRequest", output = "http://servidor/ControladorUsuarioPublicador/listarUsuariosResponse")
+    public DataUsuarioArray listarUsuarios();
+
+    /**
+     * 
      * @param arg0
      * @return
-     *     returns client.DataUsuario
+     *     returns proxy.DataUsuario
      * @throws Exception_Exception
      */
     @WebMethod
@@ -104,7 +74,7 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
-     *     returns client.DataRestauranteArray
+     *     returns proxy.DataRestauranteArray
      * @throws Exception_Exception
      */
     @WebMethod
@@ -138,63 +108,44 @@ public interface ControladorUsuarioPublicador {
 
     /**
      * 
-     * @param arg3
-     * @param arg2
-     * @param arg5
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     * @param arg7
-     * @param arg6
-     */
-    @WebMethod(operationName = "CargarDatosUsuario")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/CargarDatosUsuarioRequest", output = "http://servidor/ControladorUsuarioPublicador/CargarDatosUsuarioResponse")
-    public void cargarDatosUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        DataDireccion arg4,
-        @WebParam(name = "arg5", partName = "arg5")
-        String arg5,
-        @WebParam(name = "arg6", partName = "arg6")
-        XMLGregorianCalendar arg6,
-        @WebParam(name = "arg7", partName = "arg7")
-        String arg7);
-
-    /**
-     * 
+     * @param password
+     * @param fechaNacimiento
+     * @param nickName
+     * @param apellido
+     * @param direccion
+     * @param nombre
+     * @param nombreImagen
+     * @param email
+     * @throws Exception_Exception
      */
     @WebMethod
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/altaUsuarioRequest", output = "http://servidor/ControladorUsuarioPublicador/altaUsuarioResponse")
-    public void altaUsuario();
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/seleccionarCategoriaRequest", output = "http://servidor/ControladorUsuarioPublicador/seleccionarCategoriaResponse")
-    public void seleccionarCategoria(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/limpiarMemoriaRequest", output = "http://servidor/ControladorUsuarioPublicador/limpiarMemoriaResponse")
-    public void limpiarMemoria();
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/registrarClienteRequest", output = "http://servidor/ControladorUsuarioPublicador/registrarClienteResponse", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorUsuarioPublicador/registrarCliente/Fault/Exception")
+    })
+    public void registrarCliente(
+        @WebParam(name = "email", partName = "email")
+        String email,
+        @WebParam(name = "nickName", partName = "nickName")
+        String nickName,
+        @WebParam(name = "password", partName = "password")
+        String password,
+        @WebParam(name = "direccion", partName = "direccion")
+        DataDireccion direccion,
+        @WebParam(name = "nombre", partName = "nombre")
+        String nombre,
+        @WebParam(name = "apellido", partName = "apellido")
+        String apellido,
+        @WebParam(name = "fechaNacimiento", partName = "fechaNacimiento")
+        XMLGregorianCalendar fechaNacimiento,
+        @WebParam(name = "nombreImagen", partName = "nombreImagen")
+        String nombreImagen)
+        throws Exception_Exception
+    ;
 
     /**
      * 
      * @return
-     *     returns client.DataRestauranteArray
+     *     returns proxy.DataRestauranteArray
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -205,7 +156,7 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
-     *     returns client.DataProductoArray
+     *     returns proxy.DataProductoArray
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -217,7 +168,7 @@ public interface ControladorUsuarioPublicador {
     /**
      * 
      * @return
-     *     returns client.DataClienteArray
+     *     returns proxy.DataClienteArray
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -228,7 +179,7 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
-     *     returns client.DataPedidoArray
+     *     returns proxy.DataPedidoArray
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -254,7 +205,7 @@ public interface ControladorUsuarioPublicador {
      * 
      * @param arg0
      * @return
-     *     returns client.DataCategoriaArray
+     *     returns proxy.DataCategoriaArray
      * @throws Exception_Exception
      */
     @WebMethod

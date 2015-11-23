@@ -42,14 +42,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DataPedidoArray }
-     * 
-     */
-    public DataPedidoArray createDataPedidoArray() {
-        return new DataPedidoArray();
-    }
-
-    /**
      * Create an instance of {@link DataComentario }
      * 
      */
@@ -82,19 +74,99 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link StringArray }
+     * Create an instance of {@link DataRestauranteArray }
      * 
      */
-    public StringArray createStringArray() {
-        return new StringArray();
+    public DataRestauranteArray createDataRestauranteArray() {
+        return new DataRestauranteArray();
     }
 
     /**
-     * Create an instance of {@link IntArray }
+     * Create an instance of {@link DataCategoriaArray }
      * 
      */
-    public IntArray createIntArray() {
-        return new IntArray();
+    public DataCategoriaArray createDataCategoriaArray() {
+        return new DataCategoriaArray();
+    }
+
+    /**
+     * Create an instance of {@link DataProducto }
+     * 
+     */
+    public DataProducto createDataProducto() {
+        return new DataProducto();
+    }
+
+    /**
+     * Create an instance of {@link DataUsuario }
+     * 
+     */
+    public DataUsuario createDataUsuario() {
+        return new DataUsuario();
+    }
+
+    /**
+     * Create an instance of {@link DataProductoArray }
+     * 
+     */
+    public DataProductoArray createDataProductoArray() {
+        return new DataProductoArray();
+    }
+
+    /**
+     * Create an instance of {@link DataCliente }
+     * 
+     */
+    public DataCliente createDataCliente() {
+        return new DataCliente();
+    }
+
+    /**
+     * Create an instance of {@link DataPedidoArray }
+     * 
+     */
+    public DataPedidoArray createDataPedidoArray() {
+        return new DataPedidoArray();
+    }
+
+    /**
+     * Create an instance of {@link DataCategoria }
+     * 
+     */
+    public DataCategoria createDataCategoria() {
+        return new DataCategoria();
+    }
+
+    /**
+     * Create an instance of {@link DataUsuarioArray }
+     * 
+     */
+    public DataUsuarioArray createDataUsuarioArray() {
+        return new DataUsuarioArray();
+    }
+
+    /**
+     * Create an instance of {@link DataRestaurante }
+     * 
+     */
+    public DataRestaurante createDataRestaurante() {
+        return new DataRestaurante();
+    }
+
+    /**
+     * Create an instance of {@link DataDireccion }
+     * 
+     */
+    public DataDireccion createDataDireccion() {
+        return new DataDireccion();
+    }
+
+    /**
+     * Create an instance of {@link DataClienteArray }
+     * 
+     */
+    public DataClienteArray createDataClienteArray() {
+        return new DataClienteArray();
     }
 
     /**

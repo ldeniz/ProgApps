@@ -58,7 +58,7 @@
                                     <form action="restaurantes" method="POST">
 					<div class="nombreResto"><%= res.getNombre()%></div>
 					<div class="descripcionResto"><%= res.getNickname()%></p>
-					<div class="direccionResto"><%= res.getDireccion()%></div>
+					<div class="direccionResto"><%= res.getDireccion().getCalle() + " " + res.getDireccion().getNumeroPuerta() + " " + res.getDireccion().getApto()%></div>
 					<div class="categoriasResto">Categorias</div>
 					<input style="visibility:hidden;" name="restaurante" value="<%= res.getNickname()%>">
 					

@@ -39,8 +39,6 @@ public class realizarPedido extends HttpServlet {
         String productos = request.getParameter("productos");
 
         try {
-//            pd.seleccionarCliente(cliente);
-//            pd.seleccionarRestaurante(restaurante);
 
             JSONArray jsonArray = new JSONArray(productos);
             IntArray cant = new IntArray();
@@ -59,10 +57,8 @@ public class realizarPedido extends HttpServlet {
             Logger.getLogger(realizarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //System.out.println(report);
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        //out.write(report);
         out.flush();
         out.close();
     }

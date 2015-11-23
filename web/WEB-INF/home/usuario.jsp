@@ -40,7 +40,7 @@
                         (<%= usr.getNombre()%>)</p>
 
                     <p><span style="padding-right:5px;" class="glyphicon glyphicon-envelope" aria-hidden="true"></span><%= usr.getMail()%></p>
-                    <p><span style="padding-right:5px;" class="glyphicon glyphicon-home" aria-hidden="true"></span><%= usr.getDireccion()%></p>
+                    <p><span style="padding-right:5px;" class="glyphicon glyphicon-home" aria-hidden="true"></span><%= usr.getDireccion().getCalle() + " " + usr.getDireccion().getNumeroPuerta() + " " + usr.getDireccion().getApto()%></p>
 
                 </div>
             </div>
@@ -64,7 +64,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <span class="glyphicon glyphicon-cutlery" style="margin-right:5px;"></span><%= pedido.getNickNameRestaurante()%><span style="float:right;" class="badge"><%= pedido.getFechaPedido().toString() %></span>
+                    <span class="glyphicon glyphicon-cutlery" style="margin-right:5px;"></span><%= pedido.getNickNameRestaurante()%><span style="float:right;" class="badge"><%= pedido.getFechaPedido().toString()%></span>
                 </h3>
             </div>  
             <div class="panel-body">
@@ -91,7 +91,7 @@
                     </div>
                 </div>      
 
-                <%} else if(pedido.getEstado() == EnumEstado.RECIBIDO){%>
+                <%} else if (pedido.getEstado() == EnumEstado.RECIBIDO) {%>
 
                 <button type="button" class="realizarComentario btn btn-primary btn-sh" data-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comentar
@@ -99,7 +99,7 @@
                 </button>
 
                 <%
-                                      }%>  
+                    }%>  
                 <span style="float:right;" class="label label-success <%= " " + pedido.getEstado()%>"><%= pedido.getEstado()%></span>
 
             </div>
@@ -159,7 +159,7 @@
                 dataType: 'json',
                 data: {comentario: $comentario, puntuacion: $puntuacion, idPedido: $idPedido},
                 type: 'get',
-    cache: false,
+                cache: false,
                 complete: function (request, textStatus)
                 {
                     //PEDIDO AGREGADO CORECTAMENTE.

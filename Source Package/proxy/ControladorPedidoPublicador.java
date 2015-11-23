@@ -72,35 +72,27 @@ public interface ControladorPedidoPublicador {
 
     /**
      * 
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/cancelarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/cancelarPedidoResponse")
-    public void cancelarPedido();
-
-    /**
-     * 
-     */
-    @WebMethod
-    @Action(input = "http://servidor/ControladorPedidoPublicador/limpiarMermoriaRequest", output = "http://servidor/ControladorPedidoPublicador/limpiarMermoriaResponse")
-    public void limpiarMermoria();
-
-    /**
-     * 
+     * @param nuevoEstadoPedido
+     * @param numeroPedido
      * @throws Exception_Exception
      */
     @WebMethod
     @Action(input = "http://servidor/ControladorPedidoPublicador/actualizarPedidoRequest", output = "http://servidor/ControladorPedidoPublicador/actualizarPedidoResponse", fault = {
         @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/actualizarPedido/Fault/Exception")
     })
-    public void actualizarPedido()
+    public void actualizarPedido(
+        @WebParam(name = "numeroPedido", partName = "numeroPedido")
+        int numeroPedido,
+        @WebParam(name = "nuevoEstadoPedido", partName = "nuevoEstadoPedido")
+        EnumEstado nuevoEstadoPedido)
         throws Exception_Exception
     ;
 
     /**
      * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
+     * @param puntuacion
+     * @param numeroPedido
+     * @param comentario
      * @throws Exception_Exception
      */
     @WebMethod
@@ -108,12 +100,12 @@ public interface ControladorPedidoPublicador {
         @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorPedidoPublicador/agregarComentario/Fault/Exception")
     })
     public void agregarComentario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        float arg2)
+        @WebParam(name = "numeroPedido", partName = "numeroPedido")
+        int numeroPedido,
+        @WebParam(name = "comentario", partName = "comentario")
+        String comentario,
+        @WebParam(name = "puntuacion", partName = "puntuacion")
+        float puntuacion)
         throws Exception_Exception
     ;
 

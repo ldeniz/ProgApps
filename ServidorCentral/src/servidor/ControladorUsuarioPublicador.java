@@ -13,6 +13,8 @@ import datatype.DataPedido;
 import datatype.DataProducto;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
+import fabrica.Fabrica;
+import interfaces.IControladorUsuario;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -60,21 +62,23 @@ public class ControladorUsuarioPublicador {
     }
 
     @WebMethod
-    public void CargarDatosUsuario(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String apellido, Date fechaNacimiento, String rutaImagen) {
-        ControladorUsuario cu = new ControladorUsuario();
-        cu.CargarDatosUsuario(nickname, mail, nombre, pass, direccion, apellido, fechaNacimiento, rutaImagen);
-    }
-
-    @WebMethod
-    public void CargarDatosUsuario2(String nickname, String mail, String nombre, String pass, DataDireccion direccion, String[] rutaImagen) throws Exception {
-        ControladorUsuario cu = new ControladorUsuario();
-        cu.CargarDatosUsuario(nickname, mail, nombre, pass, direccion, rutaImagen);
-    }
-
-    @WebMethod
-    public void seleccionarCategoria(String name) {
-        ControladorUsuario cu = new ControladorUsuario();
-        cu.seleccionarCategoria(name);
+    public void registrarCliente(
+            @WebParam(name = "email") String mail, 
+            @WebParam(name = "nickName") String nickname,
+            @WebParam(name = "password") String pass, @WebParam(name = "direccion") DataDireccion direccion,
+            @WebParam(name = "nombre") String nombre,
+            @WebParam(name = "apellido") String apellido,
+            @WebParam(name = "fechaNacimiento") Date fechaNacimiento,
+            @WebParam(name = "nombreImagen") String rutaImagen) throws Exception {
+        
+        IControladorUsuario icu = Fabrica.getInstance().obtenerControladorUsuario();
+        if (icu.existeUsuario(nickname, mail)){
+            throw new Exception("El usuario ya existe");
+        }else{
+            icu.CargarDatosUsuario(nickname, mail, nombre, pass, direccion, apellido, fechaNacimiento, rutaImagen);
+            icu.altaUsuario();
+            icu.limpiarMemoria();
+        }
     }
 
     @WebMethod
@@ -87,18 +91,6 @@ public class ControladorUsuarioPublicador {
     public boolean existeUsuario2(String nickname, String mail) {
         ControladorUsuario cu = new ControladorUsuario();
         return cu.existeUsuario(nickname, mail);
-    }
-
-    @WebMethod
-    public void altaUsuario() {
-        ControladorUsuario cu = new ControladorUsuario();
-        cu.altaUsuario();
-    }
-
-    @WebMethod
-    public void limpiarMemoria() {
-        ControladorUsuario cu = new ControladorUsuario();
-        cu.limpiarMemoria();
     }
 
     @WebMethod
@@ -160,9 +152,9 @@ public class ControladorUsuarioPublicador {
         var = ldr.toArray(var);
         return var;
     }
-    
+
     @WebMethod
-    public byte[] getImage(@WebParam(name = "fileName") String name) throws Exception{
+    public byte[] getImage(@WebParam(name = "fileName") String name) throws Exception {
         byte[] byteArray = null;
         try {
             File f = new File(name);

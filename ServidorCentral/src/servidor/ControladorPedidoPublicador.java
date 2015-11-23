@@ -44,71 +44,46 @@ public class ControladorPedidoPublicador {
         return endpoint;
     }
 
-//    @WebMethod
-//    public void seleccionarCliente(String nickName) throws Exception {
-//        ControladorPedido cp = new ControladorPedido();
-//        cp.seleccionarCliente(nickName);
-//    }
-//
-//    @WebMethod
-//    public void seleccionarRestaurante(String nickName) throws Exception {
-//        ControladorPedido cp = new ControladorPedido();
-//        cp.seleccionarRestaurante(nickName);
-//    }
-//
-//    @WebMethod
-//    public void seleccionarProducto(String nickName, String nombreProducto, int cantidad) throws Exception {
-//        ControladorPedido cp = new ControladorPedido();
-//        cp.seleccionarProducto(nickName, nombreProducto, cantidad);
-//    }
-//
-//    @WebMethod
-//    public void seleccionarPedido(int numero) {
-//        ControladorPedido cp = new ControladorPedido();
-//        cp.seleccionarPedido(numero);
-//    }
-//
-//    @WebMethod
-//    public void seleccionarEstado(EnumEstado estado) {
-//        ControladorPedido cp = new ControladorPedido();
-//        cp.seleccionarEstado(estado);
-//    }
-
     @WebMethod
     public DataPedido realizarPedido(@WebParam(name = "nickNameCliente") String cliente,
-            @WebParam(name = "nickNameRestaurante") String restaurante, 
-            @WebParam(name = "productos") String[] productos, 
+            @WebParam(name = "nickNameRestaurante") String restaurante,
+            @WebParam(name = "productos") String[] productos,
             @WebParam(name = "cantidades") int[] cantidades) throws Exception {
         IControladorPedido icp = Fabrica.getInstance().obtenerControladorPedido();
         try {
             icp.seleccionarCliente(cliente);
             icp.seleccionarRestaurante(restaurante);
-            if (productos.length != cantidades.length){
+            if (productos.length != cantidades.length) {
                 throw new Exception("La cantidad de productos debe ser consistente.");
-            }else{
-                for (int x = 0;x < productos.length;x ++){
+            } else {
+                for (int x = 0; x < productos.length; x++) {
                     icp.seleccionarProducto(restaurante, productos[x], cantidades[x]);
-                }            
+                }
             }
         } catch (Exception ex) {
             throw ex;
         }
-        return icp.finalizarPedido();
+        DataPedido dp = icp.finalizarPedido();
+        icp.limpiarMermoria();
+        return dp;
     }
 
     @WebMethod
     public void actualizarPedido(@WebParam(name = "numeroPedido") int numero,
-            @WebParam(name = "nuevoEstadoPedido") EnumEstado estado ) throws Exception {
+            @WebParam(name = "nuevoEstadoPedido") EnumEstado estado) throws Exception {
         IControladorPedido icp = Fabrica.getInstance().obtenerControladorPedido();
         icp.seleccionarPedido(numero);
         icp.seleccionarEstado(estado);
         icp.actualizarPedido();
     }
-
+    
     @WebMethod
-    public void cancelarPedido() {
-        ControladorPedido cp = new ControladorPedido();
-        cp.cancelarPedido();
+    public void agregarComentario(
+            @WebParam(name = "numeroPedido") int numero, 
+            @WebParam(name = "comentario") String comentario,
+            @WebParam(name = "puntuacion") float puntuacion) throws Exception{
+        IControladorPedido icp = Fabrica.getInstance().obtenerControladorPedido();
+        icp.agregarComentario(numero, comentario, puntuacion);
     }
 
     @WebMethod
@@ -121,24 +96,12 @@ public class ControladorPedidoPublicador {
     }
 
     @WebMethod
-    public DataPedido[] listarPedidos2(String nickNameRestaurante) throws Exception{
+    public DataPedido[] listarPedidos2(String nickNameRestaurante) throws Exception {
         ControladorPedido cp = new ControladorPedido();
         ArrayList<DataPedido> ldp = cp.listarPedidos(nickNameRestaurante);
         DataPedido[] var = new DataPedido[ldp.size()];
         var = ldp.toArray(var);
         return var;
-    }
-
-    @WebMethod
-    public void agregarComentario(int numPedido, String comentario, float puntaje) throws Exception{
-        ControladorPedido cp = new ControladorPedido();
-        cp.agregarComentario(numPedido, comentario, puntaje);
-    }
-
-    @WebMethod
-    public void limpiarMermoria() {
-        ControladorPedido cp = new ControladorPedido();
-        cp.limpiarMermoria();
     }
 
 }

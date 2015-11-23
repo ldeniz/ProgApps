@@ -5,11 +5,12 @@
  */
 package controllers;
 
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import java.io.IOException;
-import static java.lang.System.out;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +18,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.xml.datatype.XMLGregorianCalendar;
+import proxy.ControladorUsuarioPublicador;
+import proxy.ControladorUsuarioPublicadorService;
+import proxy.DataDireccion;
 
 /**
  *
@@ -25,14 +29,9 @@ import javax.servlet.http.HttpSession;
  */
 public class registrarCliente extends HttpServlet {
 
-    
-    
-        
-
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException, Exception {
-        HttpSession objSesion = request.getSession();
-        
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         String nickname = request.getParameter("nickname");
@@ -43,33 +42,19 @@ public class registrarCliente extends HttpServlet {
         String direccion = request.getParameter("direccion");
         String rutaImagen = "";
         Date nacimiento = formatter.parse(request.getParameter("nacimiento"));
-        out.println(nacimiento);
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(nacimiento);
-
-        int mes = cal.get(Calendar.MONTH);
-        int dia = cal.get(Calendar.DAY_OF_MONTH);
-        int anio = cal.get(Calendar.YEAR);
+        
+        XMLGregorianCalendar fechaNacimiento = new XMLGregorianCalendarImpl((GregorianCalendar) cal);
+        
+        DataDireccion dd = new DataDireccion();
+        dd.setCalle(direccion);
 
         try {
-            /*
-            ARREGLAR ESTO!
-            
-            
-            ARREGLAR ESTO!
-            
-            
-            ARREGLAR ESTO!
-            
-            u.CargarDatosUsuario(nickname, mail, nombre, pass, new DataDireccion(direccion), apellido, new Date(anio, mes, dia), rutaImagen);
-            u.altaUsuario();
-            out.println("LLEGO A CARGAR EL USUARIO");
-                    */
-            out.println(dia);
-            out.println(mes);
-            out.println(anio);
-
+            ControladorUsuarioPublicadorService cups = new ControladorUsuarioPublicadorService();
+            ControladorUsuarioPublicador cup = cups.getControladorUsuarioPublicadorPort();
+            cup.registrarCliente(mail, nickname, pass, dd, nombre, apellido, fechaNacimiento, rutaImagen);
         } catch (Exception ex) {
             Logger.getLogger(registrarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }

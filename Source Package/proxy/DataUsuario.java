@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlType;
     "pedidos"
 })
 @XmlSeeAlso({
+    DataCliente.class,
     DataRestaurante.class
 })
 public class DataUsuario {

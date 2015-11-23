@@ -150,7 +150,7 @@
 
                     <p>Nombre : <%=datosRes.getNombre()%></p>
                     <p>Nickname: <span id="idRestaurante"><%=datosRes.getNickname()%></span></p>
-                    <p>Direccion: <%=datosRes.getDireccion()%></p>
+                    <p>Direccion: <%=datosRes.getDireccion().getCalle() + " " + datosRes.getDireccion().getNumeroPuerta() + " " + datosRes.getDireccion().getApto() %></p>
                     <p> Email: <%=datosRes.getMail()%></p>
                 </div>
             </div>  
