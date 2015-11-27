@@ -90,6 +90,32 @@ public interface ControladorProductoPublicador {
 
     /**
      * 
+     * @return
+     *     returns proxy.DataProductoArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorProductoPublicador/listarProductosRequest", output = "http://servidor/ControladorProductoPublicador/listarProductosResponse")
+    public DataProductoArray listarProductos();
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorProductoPublicador/existeProductoRequest", output = "http://servidor/ControladorProductoPublicador/existeProductoResponse")
+    public boolean existeProducto(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
      */
     @WebMethod
     @Action(input = "http://servidor/ControladorProductoPublicador/limpiarMemoriaRequest", output = "http://servidor/ControladorProductoPublicador/limpiarMemoriaResponse")
@@ -146,25 +172,15 @@ public interface ControladorProductoPublicador {
 
     /**
      * 
-     * @return
-     *     returns proxy.DataProductoArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorProductoPublicador/listarProductosRequest", output = "http://servidor/ControladorProductoPublicador/listarProductosResponse")
-    public DataProductoArray listarProductos();
-
-    /**
-     * 
      * @param arg1
      * @param arg0
      * @return
-     *     returns boolean
+     *     returns proxy.DataProducto
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorProductoPublicador/existeProductoRequest", output = "http://servidor/ControladorProductoPublicador/existeProductoResponse")
-    public boolean existeProducto(
+    @Action(input = "http://servidor/ControladorProductoPublicador/obtenerDatosRestauranteNombreRequest", output = "http://servidor/ControladorProductoPublicador/obtenerDatosRestauranteNombreResponse")
+    public DataProducto obtenerDatosRestauranteNombre(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")
@@ -198,21 +214,5 @@ public interface ControladorProductoPublicador {
     @WebMethod(operationName = "ModificarProducto")
     @Action(input = "http://servidor/ControladorProductoPublicador/ModificarProductoRequest", output = "http://servidor/ControladorProductoPublicador/ModificarProductoResponse")
     public void modificarProducto();
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns proxy.DataProducto
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorProductoPublicador/obtenerDatosRestauranteNombreRequest", output = "http://servidor/ControladorProductoPublicador/obtenerDatosRestauranteNombreResponse")
-    public DataProducto obtenerDatosRestauranteNombre(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
 
 }

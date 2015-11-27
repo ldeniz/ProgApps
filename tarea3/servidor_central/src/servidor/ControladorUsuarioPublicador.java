@@ -9,8 +9,10 @@ import controlador.ControladorUsuario;
 import datatype.DataCategoria;
 import datatype.DataCliente;
 import datatype.DataDireccion;
+import datatype.DataIndividual;
 import datatype.DataPedido;
 import datatype.DataProducto;
+import datatype.DataPromocion;
 import datatype.DataRestaurante;
 import datatype.DataUsuario;
 import fabrica.Fabrica;
@@ -44,7 +46,7 @@ public class ControladorUsuarioPublicador {
     //Operaciones las cuales quiero publicar
     @WebMethod(exclude = true)
     public void publicar() {
-        endpoint = Endpoint.publish("http://localhost:9128/usuario", this);
+        endpoint = Endpoint.publish("http://localhost:9129/usuario", this);
     }
 
     @WebMethod(exclude = true)
@@ -63,18 +65,18 @@ public class ControladorUsuarioPublicador {
 
     @WebMethod
     public void registrarCliente(
-            @WebParam(name = "email") String mail, 
+            @WebParam(name = "email") String mail,
             @WebParam(name = "nickName") String nickname,
             @WebParam(name = "password") String pass, @WebParam(name = "direccion") DataDireccion direccion,
             @WebParam(name = "nombre") String nombre,
             @WebParam(name = "apellido") String apellido,
             @WebParam(name = "fechaNacimiento") Date fechaNacimiento,
             @WebParam(name = "nombreImagen") String rutaImagen) throws Exception {
-        
+
         IControladorUsuario icu = Fabrica.getInstance().obtenerControladorUsuario();
-        if (icu.existeUsuario(nickname, mail)){
+        if (icu.existeUsuario(nickname, mail)) {
             throw new Exception("El usuario ya existe");
-        }else{
+        } else {
             icu.CargarDatosUsuario(nickname, mail, nombre, pass, direccion, apellido, fechaNacimiento, rutaImagen);
             icu.altaUsuario();
             icu.limpiarMemoria();
@@ -117,6 +119,36 @@ public class ControladorUsuarioPublicador {
         ArrayList<DataProducto> ldp = cu.listarProductos(nickName);
         DataProducto[] var = new DataProducto[ldp.size()];
         var = ldp.toArray(var);
+        return var;
+    }
+
+    @WebMethod
+    public DataIndividual[] listarProductosIndividuales(String nickName) {
+        ControladorUsuario cu = new ControladorUsuario();
+        ArrayList<DataProducto> ldp = cu.listarProductos(nickName);
+        ArrayList<DataIndividual> aux = new ArrayList<>();
+        for (DataProducto p : ldp) {
+            if ("individual".equals(p.getTipoProducto())) {
+                aux.add((DataIndividual) p);
+            }
+        }
+        DataIndividual[] var = new DataIndividual[aux.size()];
+        var = aux.toArray(var);
+        return var;
+    }
+
+    @WebMethod
+    public DataPromocion[] listarProductosPromociones(String nickName) {
+        ControladorUsuario cu = new ControladorUsuario();
+        ArrayList<DataProducto> ldp = cu.listarProductos(nickName);
+        ArrayList<DataPromocion> aux = new ArrayList<>();
+        for (DataProducto p : ldp) {
+            if ("promocion".equals(p.getTipoProducto())) {
+                aux.add((DataPromocion) p);
+            }
+        }
+        DataPromocion[] var = new DataPromocion[aux.size()];
+        var = aux.toArray(var);
         return var;
     }
 

@@ -44,13 +44,16 @@ public interface ControladorUsuarioPublicador {
 
     /**
      * 
+     * @param arg0
      * @return
-     *     returns proxy.DataUsuarioArray
+     *     returns proxy.DataIndividualArray
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarUsuariosRequest", output = "http://servidor/ControladorUsuarioPublicador/listarUsuariosResponse")
-    public DataUsuarioArray listarUsuarios();
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarProductosIndividualesRequest", output = "http://servidor/ControladorUsuarioPublicador/listarProductosIndividualesResponse")
+    public DataIndividualArray listarProductosIndividuales(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 
@@ -69,6 +72,29 @@ public interface ControladorUsuarioPublicador {
         String arg0)
         throws Exception_Exception
     ;
+
+    /**
+     * 
+     * @return
+     *     returns proxy.DataUsuarioArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarUsuariosRequest", output = "http://servidor/ControladorUsuarioPublicador/listarUsuariosResponse")
+    public DataUsuarioArray listarUsuarios();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns proxy.DataPromocionArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarProductosPromocionesRequest", output = "http://servidor/ControladorUsuarioPublicador/listarProductosPromocionesResponse")
+    public DataPromocionArray listarProductosPromociones(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 
@@ -105,6 +131,60 @@ public interface ControladorUsuarioPublicador {
         String fileName)
         throws Exception_Exception
     ;
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/existeUsuarioRequest", output = "http://servidor/ControladorUsuarioPublicador/existeUsuarioResponse")
+    public boolean existeUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns proxy.DataCategoriaArray
+     * @throws Exception_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarCategoriasRequest", output = "http://servidor/ControladorUsuarioPublicador/listarCategoriasResponse", fault = {
+        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorUsuarioPublicador/listarCategorias/Fault/Exception")
+    })
+    public DataCategoriaArray listarCategorias(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0)
+        throws Exception_Exception
+    ;
+
+    /**
+     * 
+     * @return
+     *     returns proxy.DataRestauranteArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarRestaurantesRequest", output = "http://servidor/ControladorUsuarioPublicador/listarRestaurantesResponse")
+    public DataRestauranteArray listarRestaurantes();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns proxy.DataProductoArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarProductosRequest", output = "http://servidor/ControladorUsuarioPublicador/listarProductosResponse")
+    public DataProductoArray listarProductos(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 
@@ -145,29 +225,6 @@ public interface ControladorUsuarioPublicador {
     /**
      * 
      * @return
-     *     returns proxy.DataRestauranteArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarRestaurantesRequest", output = "http://servidor/ControladorUsuarioPublicador/listarRestaurantesResponse")
-    public DataRestauranteArray listarRestaurantes();
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns proxy.DataProductoArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarProductosRequest", output = "http://servidor/ControladorUsuarioPublicador/listarProductosResponse")
-    public DataProductoArray listarProductos(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @return
      *     returns proxy.DataClienteArray
      */
     @WebMethod
@@ -187,36 +244,5 @@ public interface ControladorUsuarioPublicador {
     public DataPedidoArray listarPedidosCliente(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/existeUsuarioRequest", output = "http://servidor/ControladorUsuarioPublicador/existeUsuarioResponse")
-    public boolean existeUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns proxy.DataCategoriaArray
-     * @throws Exception_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorUsuarioPublicador/listarCategoriasRequest", output = "http://servidor/ControladorUsuarioPublicador/listarCategoriasResponse", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://servidor/ControladorUsuarioPublicador/listarCategorias/Fault/Exception")
-    })
-    public DataCategoriaArray listarCategorias(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0)
-        throws Exception_Exception
-    ;
 
 }

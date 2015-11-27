@@ -6,6 +6,7 @@
 package GUI;
 
 import java.awt.HeadlessException;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +17,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -55,10 +58,16 @@ public class QOMobileGUI extends javax.swing.JFrame {
         }
         if (propiedades.isEmpty()) {
             try {
+                FileInputStream file = new FileInputStream("./config.properties");
+                propiedades.load(file);
+            } catch (IOException ex) {
                 InputStream entrada;
                 entrada = this.getClass().getResourceAsStream("/resources/config.properties");
-                propiedades.load(entrada);
-            } catch (IOException ex) {
+                try {
+                    propiedades.load(entrada);
+                } catch (IOException ex1) {
+                    Logger.getLogger(QOMobileGUI.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
         }
         initComponents();
@@ -579,20 +588,6 @@ public class QOMobileGUI extends javax.swing.JFrame {
         em.close();
     }
 
-    private static DataPedido obtenerPedido(int numero) throws FileNotFoundException {
-
-        ControladorPedidoPublicadorService service = new ControladorPedidoPublicadorService();
-        ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
-        //port.seleccionarPedido(numero);
-        return null;
-    }
-
-    private static void actualizarEstado(int numero, EnumEstado estado) throws FileNotFoundException, Exception_Exception {
-        ControladorPedidoPublicadorService service = new ControladorPedidoPublicadorService();
-        ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
-        port.actualizarPedido(numero, estado);
-    }
-
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
 
@@ -674,7 +669,11 @@ public class QOMobileGUI extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        actualizarEstado(numero, estado);
+        try {
+            actualizarEstado(numero, estado);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(QOMobileGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
         int k = modeloPedidos.getRowCount();
@@ -712,8 +711,6 @@ public class QOMobileGUI extends javax.swing.JFrame {
             for (DataPedido entry : losPedidos) {
 
                 List consulta = em.createQuery("SELECT a FROM THistorial a WHERE (a.numero = " + entry.getNumero() + ") ORDER BY a.estado DESC").getResultList();
-                Object est = consulta.get(0);
-                EnumEstado estadoLocal = ((THistorial) est).getEstado();
 
                 String[] fila1 = new String[4];
                 fila1[0] = "" + (Integer) entry.getNumero();
@@ -721,14 +718,18 @@ public class QOMobileGUI extends javax.swing.JFrame {
                 fila1[2] = "" + entry.getEstado();
                 fila1[3] = "" + entry.getFechaPedido();
 
-                if (estadoLocal != entry.getEstado()) {
-                    if ((estadoLocal == EnumEstado.RECIBIDO) && (entry.getEstado() == EnumEstado.PREPARACION)) {
-                        actualizarPedido(entry.getNumero(), EnumEstado.ENVIADO);
-                    }
-                    actualizarPedido(entry.getNumero(), estadoLocal);
-                    fila1[2] = "" + estadoLocal;
-                }
+                if (!consulta.isEmpty()) {
+                    Object est = consulta.get(0);
+                    EnumEstado estadoLocal = ((THistorial) est).getEstado();
 
+                    if (estadoLocal != entry.getEstado()) {
+                        if ((estadoLocal == EnumEstado.RECIBIDO) && (entry.getEstado() == EnumEstado.PREPARACION)) {
+                            actualizarPedido(entry.getNumero(), EnumEstado.ENVIADO);
+                        }
+                        actualizarPedido(entry.getNumero(), estadoLocal);
+                        fila1[2] = "" + estadoLocal;
+                    }
+                }
                 modeloPedidos.addRow(fila1);
             }
             em.getTransaction().begin();
@@ -944,6 +945,20 @@ public class QOMobileGUI extends javax.swing.JFrame {
         ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
 
         return port.existeUsuario(arg0);
+    }
+
+    private DataPedido obtenerPedido(int numero) throws FileNotFoundException, MalformedURLException {
+        URL url = new URL(propiedades.getProperty("pedidoUrl"));
+        ControladorPedidoPublicadorService service = new ControladorPedidoPublicadorService(url);
+        ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
+        return null;
+    }
+
+    private void actualizarEstado(int numero, EnumEstado estado) throws FileNotFoundException, Exception_Exception, MalformedURLException {
+        URL url = new URL(propiedades.getProperty("pedidoUrl"));
+        ControladorPedidoPublicadorService service = new ControladorPedidoPublicadorService(url);
+        ControladorPedidoPublicador port = service.getControladorPedidoPublicadorPort();
+        port.actualizarPedido(numero, estado);
     }
 
 }

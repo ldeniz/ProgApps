@@ -6,6 +6,7 @@
 package controllers;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -14,6 +15,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,10 +41,17 @@ public class registrarCliente extends HttpServlet {
         }
         if (propiedades.isEmpty()) {
             try {
-                InputStream entrada;
-                entrada = Restaurantes.class.getResourceAsStream("/Resources/config.properties");
-                propiedades.load(entrada);
+                FileInputStream file = new FileInputStream("./config.properties");
+                propiedades.load(file);
             } catch (IOException ex) {
+                InputStream entrada;
+                entrada = registrarCliente.class.getResourceAsStream("/Resources/config.properties");
+                try {
+                    propiedades.load(entrada);
+                } catch (IOException ex1) {
+                    Logger.getLogger(registrarCliente.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+
             }
         }
     }

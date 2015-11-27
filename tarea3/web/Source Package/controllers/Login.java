@@ -5,6 +5,7 @@
 package controllers;
 
 import exceptions.UsuarioNoEncontrado;
+import java.io.FileInputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,10 +33,17 @@ public class Login extends HttpServlet {
         }
         if (propiedades.isEmpty()) {
             try {
-                InputStream entrada;
-                entrada = Restaurantes.class.getResourceAsStream("/Resources/config.properties");
-                propiedades.load(entrada);
+                FileInputStream file = new FileInputStream("./config.properties");
+                propiedades.load(file);
             } catch (IOException ex) {
+                InputStream entrada;
+                entrada = Login.class.getResourceAsStream("/Resources/config.properties");
+                try {
+                    propiedades.load(entrada);
+                } catch (IOException ex1) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+
             }
         }
     }
@@ -96,7 +104,7 @@ public class Login extends HttpServlet {
 
         loadProperties();
         URL url = new URL(propiedades.getProperty("usuarioUrl"));
-        ControladorUsuarioPublicadorService service = new ControladorUsuarioPublicadorService();
+        ControladorUsuarioPublicadorService service = new ControladorUsuarioPublicadorService(url);
         ControladorUsuarioPublicador port = service.getControladorUsuarioPublicadorPort();
         return port.obtenerUsuario(
                 (String) request.getSession().getAttribute("usuario_logueado")

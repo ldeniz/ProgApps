@@ -1,3 +1,5 @@
+<%@page import="org.apache.tomcat.util.codec.binary.Base64"%>
+<%@page import="controllers.Restaurantes"%>
 <%@page import="java.util.List"%>
 <%@page import="proxy.DataIndividualPromocion"%>
 <%@page import="proxy.DataPromocion"%>
@@ -18,11 +20,11 @@
             <div class="media-left media-middle">
                 <a href="#">
                     <% 	DataRestaurante datosRes = (DataRestaurante) request.getAttribute("datosRes");
-                    String aca = datosRes.getRutaImagen().toArray().toString();
-                                        aca = aca.substring(1, aca.length()-3);
-                                        aca = aca.replace(",", "");
+                        if (datosRes.getRutaImagen().size() > 0){
+                            String aca = datosRes.getRutaImagen().get(0);
+                            byte[] imagen = Restaurantes.getImagen(request, aca);
                     %>
-                    <img style="with:64px;height:64px;" class="media-object" src=<%out.println(""+aca+"");%> alt="...">
+                    <img style="with:64px;height:64px;" class="media-object" src=data:image/png;base64,<%=Base64.encodeBase64String(imagen)%> alt="...">
                 </a>
             </div>
 
@@ -45,7 +47,7 @@
                 <div id="categorias">
                     <h5 style="padding-top:15px;padding-left:10px;" class="media-heading"><b>Categoría De Ejemplo</b></h3>
 
-                        <% List<DataProducto> productos = datosRes.getDataProductos();
+                        <% } List<DataProducto> productos = datosRes.getDataProductos();
                         Integer contador = 1;    
                         for (DataProducto producto : productos) {
                         %>

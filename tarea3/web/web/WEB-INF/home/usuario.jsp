@@ -1,3 +1,5 @@
+<%@page import="org.apache.tomcat.util.codec.binary.Base64"%>
+<%@page import="controllers.Restaurantes"%>
 <%@page import="java.util.List"%>
 <%@page import="proxy.EnumEstado"%>
 <%@page import="proxy.DataCliente"%>
@@ -33,7 +35,8 @@
             <div class="card">
                 <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
                 <div class="avatar">
-                    <img src="<%= cliente.getRutaImagen()%>" alt="" />
+                    <%byte[] imagen = Restaurantes.getImagen(request, cliente.getRutaImagen());%>
+                    <img src=data:image/png;base64,<%=Base64.encodeBase64String(imagen)%>" alt="" />
                 </div>
                 <div class="content">
                     <p><span  style="padding-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname()%><br>
@@ -164,7 +167,7 @@
                 {
                     //PEDIDO AGREGADO CORECTAMENTE.
                     alert("Gracias, hemos registrado tu comentario");
-                    window.location = "/usuario";
+                    window.location = "/qoweb/usuario";
                 }
             });
         });

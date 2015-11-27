@@ -6,6 +6,7 @@
 package controllers;
 
 import static controllers.Home.initSession;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,10 +45,17 @@ public class Restaurantes extends HttpServlet {
         }
         if (propiedades.isEmpty()) {
             try {
+                FileInputStream file = new FileInputStream("./config.properties");
+                propiedades.load(file);
+            } catch (IOException ex) {
                 InputStream entrada;
                 entrada = Restaurantes.class.getResourceAsStream("/Resources/config.properties");
-                propiedades.load(entrada);
-            } catch (IOException ex) {
+                try {
+                    propiedades.load(entrada);
+                } catch (IOException ex1) {
+                    Logger.getLogger(Restaurantes.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+
             }
         }
     }

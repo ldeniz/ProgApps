@@ -37,9 +37,19 @@ public interface ControladorCategoriaPublicador {
 
     /**
      * 
+     * @return
+     *     returns proxy.DataCategoriaArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://servidor/ControladorCategoriaPublicador/listarCategoriasRequest", output = "http://servidor/ControladorCategoriaPublicador/listarCategoriasResponse")
+    public DataCategoriaArray listarCategorias();
+
+    /**
+     * 
      * @param arg0
      * @return
-     *     returns client.DataRestauranteArray
+     *     returns proxy.DataRestauranteArray
      * @throws Exception_Exception
      */
     @WebMethod
@@ -65,15 +75,5 @@ public interface ControladorCategoriaPublicador {
     public boolean existeCategoria(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
-
-    /**
-     * 
-     * @return
-     *     returns client.DataCategoriaArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://servidor/ControladorCategoriaPublicador/listarCategoriasRequest", output = "http://servidor/ControladorCategoriaPublicador/listarCategoriasResponse")
-    public DataCategoriaArray listarCategorias();
 
 }

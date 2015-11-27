@@ -5,11 +5,14 @@
  */
 package controllers;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,10 +35,17 @@ public class comentarPedido extends HttpServlet {
         }
         if (propiedades.isEmpty()) {
             try {
-                InputStream entrada;
-                entrada = Restaurantes.class.getResourceAsStream("/Resources/config.properties");
-                propiedades.load(entrada);
+                FileInputStream file = new FileInputStream("./config.properties");
+                propiedades.load(file);
             } catch (IOException ex) {
+                InputStream entrada;
+                entrada = comentarPedido.class.getResourceAsStream("/Resources/config.properties");
+                try {
+                    propiedades.load(entrada);
+                } catch (IOException ex1) {
+                    Logger.getLogger(comentarPedido.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+
             }
         }
     }
@@ -45,7 +55,7 @@ public class comentarPedido extends HttpServlet {
             throws IOException, ServletException {
 
         loadProperties();
-        URL url = new URL(propiedades.getProperty("usuarioUrl"));
+        URL url = new URL(propiedades.getProperty("pedidoUrl"));
         ControladorPedidoPublicadorService service = new ControladorPedidoPublicadorService(url);
         ControladorPedidoPublicador pd = service.getControladorPedidoPublicadorPort();
 

@@ -49,7 +49,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/home">QuickOrder</a>
+          <a class="navbar-brand" href="/qoweb/home">QuickOrder</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             
@@ -64,7 +64,7 @@
 		
 		if(usr != null) {
                %>
-            <li class="active"><a data-toggle="tooltip" data-placement="bottom" title="Ver Información" href="/usuario" style="cursor:pointer;"><span style="margin-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname() %></a></li>
+            <li class="active"><a data-toggle="tooltip" data-placement="bottom" title="Ver Información" href="/qoweb/usuario" style="cursor:pointer;"><span style="margin-right:5px;" class="glyphicon glyphicon-user" aria-hidden="true"></span><%= usr.getNickname() %></a></li>
             <li><a id="seCierra" href="logout">Cerrar Sesion</a></li>
             
             <% }else{ %>

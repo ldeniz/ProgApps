@@ -72,7 +72,7 @@
               //PEDIDO AGREGADO CORECTAMENTE.
               localStorage.clear();
               alert("Bien hecho!, tu pedido se está preparando");
-              window.location = "/usuario";
+              window.location = "/qoweb/usuario";
             }
           });
     });

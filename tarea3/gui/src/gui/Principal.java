@@ -30,7 +30,7 @@ import servidor.ControladorUsuarioPublicador;
  * @author Mathi
  */
 public class Principal extends javax.swing.JFrame {
-    
+
     Properties propiedades = new Properties();
 
     /**
@@ -38,7 +38,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        
+
     }
 
     /**
@@ -281,7 +281,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_verInfoPedidoActionPerformed
 
     private void datosPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datosPruebaActionPerformed
-        
+
         datosPrueba.setVisible(false);
         // CARGAR DATOS DE PRUEBA
         IControladorCategoria c = Fabrica.getInstance().obtenerControladorCategoria();
@@ -319,7 +319,7 @@ public class Principal extends javax.swing.JFrame {
                 new DataDireccion("Monte Caseros ", "5615", "n/a"), "Weiss",
                 new Date(1978, 12, 23), propiedades.getProperty("rutaDeCarga") + "weiss.jpg");
         u.altaUsuario();
-        
+
         c.altaCategoria("Chivitos");
         c.altaCategoria("Minutas");
         c.altaCategoria("Parrilla");
@@ -335,8 +335,8 @@ public class Principal extends javax.swing.JFrame {
         c.altaCategoria("Entradas");
         c.altaCategoria("Bebidas");
         c.altaCategoria("Sushi");
-        
-        String[] rutaImagen = null;
+
+        String[] rutaImagen = {propiedades.getProperty("rutaDeCarga") + "mera.jpg"};
         u.seleccionarCategoria("Chivitos");
         u.seleccionarCategoria("Minutas");
         u.seleccionarCategoria("Parrilla");
@@ -349,7 +349,7 @@ public class Principal extends javax.swing.JFrame {
         }
         u.altaUsuario();
         u.limpiarMemoria();
-        
+
         String[] rutaImagen2 = {propiedades.getProperty("rutaDeCarga") + "BR1.png"};
         u.seleccionarCategoria("Chivitos");
         u.seleccionarCategoria("Milanesas");
@@ -363,7 +363,7 @@ public class Principal extends javax.swing.JFrame {
         }
         u.altaUsuario();
         u.limpiarMemoria();
-        
+
         String[] rutaImagen3 = {propiedades.getProperty("rutaDeCarga") + "EB1.png"};
         u.seleccionarCategoria("Empanadas");
         try {
@@ -374,7 +374,7 @@ public class Principal extends javax.swing.JFrame {
         }
         u.altaUsuario();
         u.limpiarMemoria();
-        
+
         String[] rutaImagen4 = {propiedades.getProperty("rutaDeCarga") + "WB1.jpg"};
         u.seleccionarCategoria("Woks");
         u.seleccionarCategoria("Comida China");
@@ -401,7 +401,7 @@ public class Principal extends javax.swing.JFrame {
         p.cargarDatosProducto("Pizza 2 Gustos", "Pizza con dos gustos a elección", (float) 130.0, null);
         p.altaProducto();
         p.limpiarMemoria();
-        
+
         p.seleccionarRestaurante("rossell");
         p.cargarDatosProducto("Chivito al plato", "Ensalada rusa, mixta, huevo, jamón, muzza, panceta, aceitunas y fritas", (float) 324.0, null);
         p.altaProducto();
@@ -415,7 +415,7 @@ public class Principal extends javax.swing.JFrame {
         p.cargarDatosProducto("Agnolotis", "Agnolotis de jamón y queso", (float) 225.0, propiedades.getProperty("rutaDeCarga") + "PAR.jpg");
         p.altaProducto();
         p.limpiarMemoria();
-        
+
         p.seleccionarRestaurante("bocatti");
         p.cargarDatosProducto("Empanada de Carne", "Carne, aceitunas, huevo duro, condimentos", (float) 44.0, propiedades.getProperty("rutaDeCarga") + "ECB.jpg");
         p.altaProducto();
@@ -429,7 +429,7 @@ public class Principal extends javax.swing.JFrame {
         p.cargarDatosProducto("Empanada Capresse", "Queso, tomate y albahaca", (float) 44.0, propiedades.getProperty("rutaDeCarga") + "ECA.jpg");
         p.altaProducto();
         p.limpiarMemoria();
-        
+
         p.seleccionarRestaurante("winb");
         p.cargarDatosProducto("Thai wok", "Cerdo, calamares, sweet chili, salsa de ostras, maní y jugo de lima, acompañado de tallarines o arroz.", (float) 240.0, propiedades.getProperty("rutaDeCarga") + "TWW.jpg");
         p.altaProducto();
@@ -451,13 +451,13 @@ public class Principal extends javax.swing.JFrame {
         p.seleccionarProducto("Pizza 2 Gustos", 1);
         p.altaProducto();
         p.limpiarMemoria();
-        
+
         p.cargarDatosProducto("MilaAsado", "3 Milanesas + 1 Asado para compartir", 30, null);
         p.seleccionarProducto("Milanesa de Carne", 3);
         p.seleccionarProducto("Asado", 1);
         p.altaProducto();
         p.limpiarMemoria();
-        
+
         p.seleccionarRestaurante("rossell");
         p.cargarDatosProducto("MilaPizza", "2 Milanesas a caballo + 1 Pizzas 2 gustos", 10, null);
         p.seleccionarProducto("Milanesa a caballo", 2);
@@ -484,7 +484,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pd.finalizarPedido();
         pd.limpiarMermoria();
         pd.seleccionarPedido(1);
@@ -493,9 +493,9 @@ public class Principal extends javax.swing.JFrame {
             pd.actualizarPedido();
             ManejadorPedido mp = ManejadorPedido.getInstance();
             Pedido pedido = mp.obtenerPedido(1);
-            
+
             Calendar fechaCambio = Calendar.getInstance();
-            
+
             fechaCambio = Calendar.getInstance();
             fechaCambio.set(2014, 11, 24, 21, 00);
             pedido.setFechaPedido(fechaCambio);
@@ -518,10 +518,10 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pd.finalizarPedido();
         pd.limpiarMermoria();
-        
+
         pd.seleccionarPedido(2);
         pd.seleccionarEstado(EnumEstado.ENVIADO);
         try {
@@ -532,7 +532,7 @@ public class Principal extends javax.swing.JFrame {
             Calendar fechaCambio = Calendar.getInstance();
             fechaCambio.set(2014, 11, 24, 21, 50);
             historial.add(fechaCambio);
-            
+
             pedido.setHistorial(historial);
             fechaCambio = Calendar.getInstance();
             fechaCambio.set(2014, 11, 24, 21, 05);
@@ -558,13 +558,12 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pd.finalizarPedido();
         pd.limpiarMermoria();
-        
+
         pd.seleccionarPedido(3);
-         //pd.seleccionarEstado(EnumEstado.RECIBIDO);
-        pd.seleccionarEstado(EnumEstado.ENVIADO);
+        pd.seleccionarEstado(EnumEstado.RECIBIDO);
         try {
             pd.actualizarPedido();
             ManejadorPedido mp = ManejadorPedido.getInstance();
@@ -600,10 +599,10 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pd.finalizarPedido();
         pd.limpiarMermoria();
-        
+
         pd.seleccionarPedido(4);
         pd.seleccionarEstado(EnumEstado.RECIBIDO);
         try {
@@ -641,10 +640,10 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pd.finalizarPedido();
         pd.limpiarMermoria();
-        
+
         pd.seleccionarPedido(5);
         pd.seleccionarEstado(EnumEstado.RECIBIDO);
         try {
@@ -664,9 +663,9 @@ public class Principal extends javax.swing.JFrame {
             pedido.setFechaPedido(fechaCambio);
         } catch (Exception ex) {
         }
-        
+
         //----------------
-         //--------
+        //--------
         try {
             pd.seleccionarCliente("roro");
         } catch (Exception ex) {
@@ -680,14 +679,14 @@ public class Principal extends javax.swing.JFrame {
         try {
             pd.seleccionarProducto("mera", "Milanesa de Carne", 1);
             pd.seleccionarProducto("mera", "Chivito Canadiense", 1);
-            
+
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pd.finalizarPedido();
         pd.limpiarMermoria();
-        
+
         pd.seleccionarPedido(6);
         pd.seleccionarEstado(EnumEstado.RECIBIDO);
         try {
@@ -707,9 +706,9 @@ public class Principal extends javax.swing.JFrame {
             pedido.setFechaPedido(fechaCambio);
         } catch (Exception ex) {
         }
-        
+
         //----------------
-         //--------
+        //--------
         try {
             pd.seleccionarCliente("andy");
         } catch (Exception ex) {
@@ -723,14 +722,14 @@ public class Principal extends javax.swing.JFrame {
         try {
             pd.seleccionarProducto("rossell", "Milanesa a caballo", 1);
             pd.seleccionarProducto("rossell", "Chivito al plato", 2);
-            
+
         } catch (Exception ex) {
 //            Logger.getLogger(ServidorCentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pd.finalizarPedido();
         pd.limpiarMermoria();
-        
+
         pd.seleccionarPedido(7);
         pd.seleccionarEstado(EnumEstado.RECIBIDO);
         try {
@@ -750,23 +749,22 @@ public class Principal extends javax.swing.JFrame {
             pedido.setFechaPedido(fechaCambio);
         } catch (Exception ex) {
         }
-        
-        
+
         try {
             pd.agregarComentario(3, "Si bien el thai wok y el china wok están ricos, me cobraron 60$ de envío y eso no estaba aclarado y no pueden hacerlo. Me dejó muy molesto.", 2);
         } catch (Exception ex) {
         }
-        
+
         try {
             pd.agregarComentario(5, "Los Agnolotis llegaron un poco fríos y demoraron más de la cuenta. Espero mejoren. De todas formas, muy ricos.", 3);
         } catch (Exception ex) {
         }
-        
+
         try {
             pd.agregarComentario(6, "Tanto la milanesa como el chivito llegaron 3 horas tarde!, obviamente helados!!, un desastre, nunca más pido ahí.", 1);
         } catch (Exception ex) {
         }
-        
+
         try {
             pd.agregarComentario(7, "Todo llegó en hora. El chivito y la milanesa a caballo estaban un poco aceitosos, pero más allá de eso se comió rico y en abundancia.", 4);
         } catch (Exception ex) {
@@ -810,7 +808,7 @@ public class Principal extends javax.swing.JFrame {
                 ControladorProductoPublicador cpp = new ControladorProductoPublicador();
                 cpp.publicar();
                 ControladorUsuarioPublicador cup = new ControladorUsuarioPublicador();
-                cup.publicar();                
+                cup.publicar();
                 ControladorPedidoPublicador cp = new ControladorPedidoPublicador();
                 cp.publicar();
             }
